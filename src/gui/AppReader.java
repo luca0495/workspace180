@@ -30,6 +30,7 @@ import javax.swing.Timer;
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
+import ProvaEmail.EmailSender;
 import connections.Client;
 import database.MQ_Check;
 import database.MQ_Insert;
@@ -38,6 +39,8 @@ import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenuBar;
@@ -385,6 +388,7 @@ public class AppReader extends SL_JFrame {
 		
 		btnReg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String to = txtEmail.getText();
 				
 				if(Check.checkAllReg(txtName.getText(), txtSurname.getText(),txtPhone.getText(),txtEmail.getText(),txtCF.getText(),
 						passwordField.getPassword(), passwordFieldCh.getPassword(), txtInquadr.getText()))
@@ -393,15 +397,22 @@ public class AppReader extends SL_JFrame {
 					String p = String.copyValueOf(passwordField.getPassword());
 					
 					try 
-					{						
-						MQ_Insert.insertUtente(txtName.getText(), txtSurname.getText(), txtInquadr.getText(), txtEmail.getText(), txtCF.getText(), txtPhone.getText(), p);
+					{	
+						System.out.println("Controllo errore:" + me.toString());
+						MQ_Insert.insertUtente(txtName.getText(), txtSurname.getText(), txtInquadr.getText(), txtEmail.getText(), txtCF.getText(), txtPhone.getText(), p,EmailSender.randomGenerator1());
+						System.out.println("Controllo errore:" + me.toString() + me.getUSERNAME() + me.getPASSWORD() );
+						EmailSender.send_uninsubria_email(to,me);
 					}
 					
 					catch (SQLException e1)
 					{
 						e1.printStackTrace();
-				     }
-					 PopUp.infoBox(c, "Registrazione avvenuta con successo");
+				     } catch (SendFailedException e1) {
+						e1.printStackTrace();
+					} catch (MessagingException e1) {
+						e1.printStackTrace();
+					}
+					 PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
 					// timer per panel nuovo RIVEDERE Ciao!!!
 				     }
 					else

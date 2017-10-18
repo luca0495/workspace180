@@ -1,5 +1,6 @@
 package gui;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -9,24 +10,32 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.SQLException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import Core.Clients;
 import Core.Commands;
+import Table.TableBooks;
+import Table.TableUpdateBooks;
 import connections.Client;
-import connections.Message;
 import connections.MessageBack;
+import connections.Message;
 import database.ChkDBandTab;
+import database.MQ_Read;
+
 import java.awt.Label;
 import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class AppMain extends SL_JFrame  {
 	
@@ -38,10 +47,15 @@ public class AppMain extends SL_JFrame  {
 	private JFrame 			frame;
 	public 	JPanel 			ac = new JPanel();
 	private JTextField 		text;
+	private JTextField txtResearch;
+	private JTable tableBooks;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JPanel panel;
+	private JPanel panelResearch;
+	private JPanel panel_1;
+    private TableBooks table;
+    private TableUpdateBooks table1;
+    private JTable table4;
 	
 	/**
 	 * Create the application.
@@ -89,46 +103,6 @@ public class AppMain extends SL_JFrame  {
 		frame.getContentPane().add(Research, "name_1471890526861409");
 		Research.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Cognome Autore");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel.setBounds(21, 129, 151, 24);
-		Research.add(lblNewLabel);
-		
-		JLabel lblNomeAutore = new JLabel("Nome Autore");
-		lblNomeAutore.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNomeAutore.setBounds(21, 78, 113, 24);
-		Research.add(lblNomeAutore);
-		
-		JLabel lblNewLabel_1 = new JLabel("Categoria");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(21, 184, 113, 24);
-		Research.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Titolo");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblNewLabel_2.setBounds(21, 248, 113, 24);
-		Research.add(lblNewLabel_2);
-		
-		textField = new JTextField();
-		textField.setBounds(163, 83, 270, 20);
-		Research.add(textField);
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(163, 134, 270, 20);
-		Research.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(163, 189, 270, 20);
-		Research.add(textField_2);
-		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(163, 253, 270, 20);
-		Research.add(textField_3);
-		
 	
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addMouseListener(new MouseAdapter() {
@@ -139,13 +113,14 @@ public class AppMain extends SL_JFrame  {
 			
 			}
 		});
-		btnIndietro.setBounds(617, 445, 89, 23);
+		btnIndietro.setBounds(558, 11, 89, 23);
 		Research.add(btnIndietro);
 		
 		JButton btnRicerca_1 = new JButton("Ricerca");
-		btnRicerca_1.setBounds(259, 310, 89, 23);
+		btnRicerca_1.setBounds(470, 11, 89, 23);
 		Research.add(btnRicerca_1);
-		 
+		
+		
 		
 		ImageIcon backgroundImage0 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Background0.jpg")));
 		ImageIcon backgroundImage1 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Background1.jpg")));
@@ -157,111 +132,22 @@ public class AppMain extends SL_JFrame  {
 		
 				try {
 					
-					System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
-					me.setCliType(Clients.Librarian);				
-					System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
-					me.setBusy(true);
-				
-					
-					
-					// Person				
-						try {
-							// ChkDBandTab.tableExistPerson();
-							me.getCmdLIST().put(Commands.tableExistPerson);	
-						} catch (Exception e) {
-							System.out.println("appMain :> problemi con accodamento comando check table exist PERSON");					
-						}
-						
-						
-					// Book				
-						try {
-							// ChkDBandTab.tableExistPerson();
-							me.getCmdLIST().put(Commands.tableExistBook);							
-						} catch (Exception e) {
-							System.out.println("appMain :> problemi con accodamento comando check table exist BOOK");					
-						}
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-				/*
-				// Person				
-					try {
-						// ChkDBandTab.tableExistPerson();
-						me.getCmdLIST().put(Commands.tableExistPerson);	
-						
-						
-						//MessageBack back = me.Request(Commands.tableExistPerson); // me == Client associato alla GUI
-						
-						
-						System.out.println("GUI :> risposta dal DB : "+back.getText());						
-						if (back.getText()!=""){
-							System.out.println("GUI :> PERSON : non ritorna nullo");
-						}
-						
-						
-					} catch (Exception e) {
-						System.out.println("appMain :> problemi con accodamento comando check table exist PERSON");					
-					}
-					*/
-					
-				
-				/*
+				System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
+	
 				// book					
-					try {						
-						//ChkDBandTab.tableExistBook();
-						MessageBack back = me.Request(Commands.tableExistBook); // me == Client associato alla GUI
-						System.out.println("GUI :> risposta dal DB : "+back.getText());						
-						if (back.getText()!=""){
-							System.out.println("GUI :> BOOK : non ritorna nullo");	
-						}
-					} catch (Exception e) {
-						System.out.println("appMain :> problemi con table exist book");
-					}
-				*/	
-					
-					
-					
-				/*	
+					//ChkDBandTab.tableExistBook();
+					MessageBack back = me.Request(Commands.tableExistBook); // me == Client associato alla GUI
+					System.out.println("GUI :> risposta dal DB : "+back.getText());					
+				// Person	
+					// ChkDBandTab.tableExistPerson();
+					MessageBack back2 = me.Request(Commands.tableExistPerson);
+					System.out.println("GUI :> risposta dal DB : "+back2.getText());	
 				//  Loans	
 					// ChkDBandTab.tableExistLoans();
-					try {
-						
-						//ChkDBandTab.tableExistBook();
-						MessageBack back = me.Request(Commands.tableExistLoans);    
+					MessageBack back1 = me.Request(Commands.tableExistLoans);    
+					System.out.println("GUI :> risposta dal DB : "+back1.getText());
 
-						System.out.println("GUI :> risposta dal DB : "+back.getText());						
-						if (back.getText()!=""){
-							System.out.println("GUI :> LOANS : non ritorna nullo");
-
-							System.out.println("GUI :> sondo in CLI Busy prima: "+me.isBusy());	
-							me.setBusy(false);
-							System.out.println("GUI :> sondo in CLI Busy dopo: "+me.isBusy());	
-						}
-					} catch (Exception e) {
-						System.out.println("appMain :> problemi con table exist LOANS");
-						me.setBusy(false);
-					}
-					*/
-					
-					
-					
-					
-					
-					
-					
-					
-				
-				me.setCliType(Clients.Default);	
-					
-					
-					
+	
 				} catch (Exception e) {
 					
 					e.printStackTrace();	
@@ -370,15 +256,29 @@ public class AppMain extends SL_JFrame  {
 		
 		JButton btnRicerca = new JButton("Ricerca");
 		btnRicerca.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				panelLog.setVisible(false);
-				Research.setVisible(true);
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	});
+		btnRicerca.addMouseListener(new MouseAdapter() {
+	 @Override
+		public void mousePressed(MouseEvent arg0) {
+			EventQueue.invokeLater(new Runnable() {
+					public void run() 
+					{
+					 try 
+					{
+					 ResearchBooks rb = new ResearchBooks(getFrame());
+				    } 
+					catch (Exception e) 
+					{
+					e.printStackTrace();
+					}
 				
-			}
-			
-			
-		});
-		
+				}	
+	
+			 });    
+		}
+ });
 		btnRicerca.setBounds(279, 11, 89, 23);
 		panelLog.add(btnRicerca);
 		
@@ -390,11 +290,7 @@ public class AppMain extends SL_JFrame  {
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
-		
-		
-		
-		
-		
+	
 	}
 	public JTextField getText() {
 		return text;
@@ -402,6 +298,7 @@ public class AppMain extends SL_JFrame  {
 	public void setText(JTextField text) {
 		this.text = text;
 	}
+	
 	
 	/**
 	 * Launch the application.
