@@ -68,7 +68,7 @@ public class ChkDBandTab {
 			System.out.println("SYS :> class not found");
 		}
 		return mb;
-		 * 
+		 
 		}
 	*/
 	   
@@ -93,7 +93,7 @@ public class ChkDBandTab {
                   +"titolo varchar(35) not null,"
                   +"primary key(codice,nome_autore,cognome_autore,categoria,titolo))")  ;
 		 
-		 	System.out.println("ChkDBandTable :> table Book CREATED !");		 
+		 	      System.out.println("ChkDBandTable :> table Book CREATED !");		 
 	 }
 	 else
 	 {
@@ -101,7 +101,6 @@ public class ChkDBandTab {
 		}
 	    resultSet.close();
 		DBmanager.closeConnection();
-
 	}
 	
 	public static void tableExistPerson()throws SQLException{
@@ -115,14 +114,14 @@ public class ChkDBandTab {
 		 statement.executeUpdate
                   ("CREATE TABLE  utente ( "
                   +"id serial primary key,"
-                  +"nome varchar(20) not null,"
-                  +"cognome varchar(20) not null,"
-                  +"email varchar(20) not null,"
-                  +"codice_fiscale varchar(16) not null,"
-                  +"inquadramento varchar(20) not null,"
-                  +"password varchar(20) not null,"
-                  +"password_temp varchar(20) not null,"
-                  +"ntel varchar(10) not null,"
+                  +"nome varchar(20) null,"
+                  +"cognome varchar(20) null,"
+                  +"email varchar(40) null,"
+                  +"codice_fiscale varchar(16) null,"
+                  +"inquadramento varchar(40) null,"
+                  +"password varchar(40) null,"
+                  +"password_temp integer null,"
+                  +"ntel varchar(10) null,"
                   +"unique (email))")  ;
 		 
 		 System.out.println("ChkDBandTable :> table Person CREATED !");
