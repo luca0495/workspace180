@@ -54,7 +54,21 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
+	private 			String				PASSWORD;
+	private 			String				USER;
 	
+	public String getPASSWORD() {
+		return PASSWORD;
+	}
+	public void setPASSWORD(String pASSWORD) {
+		PASSWORD = pASSWORD;
+	}
+	public String getUSER() {
+		return USER;
+	}
+	public void setUSER(String uSER) {
+		USER = uSER;
+	}
 	public Client() throws Exception {		
 		this.setCliType(Clients.Default);
 		System.out.println("Creato 		 Client");

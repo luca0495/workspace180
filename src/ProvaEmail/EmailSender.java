@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 import connections.Client;
 import database.MQ_Insert;
-import gui.UserAndPass;
+
 
 
 public class EmailSender{
