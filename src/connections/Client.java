@@ -55,7 +55,7 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
 	private 			String				PASSWORD;
-	private 			String				USER;
+	private 			String				USERNAME;
 	
 	public String getPASSWORD() {
 		return PASSWORD;
@@ -63,11 +63,11 @@ public class Client implements Serializable, Runnable  {
 	public void setPASSWORD(String pASSWORD) {
 		PASSWORD = pASSWORD;
 	}
-	public String getUSER() {
-		return USER;
+	public String getUSERNAME() {
+		return USERNAME;
 	}
-	public void setUSER(String uSER) {
-		USER = uSER;
+	public void setUSERNAME(String uSER) {
+		USERNAME = uSER;
 	}
 	public Client() throws Exception {		
 		this.setCliType(Clients.Default);
