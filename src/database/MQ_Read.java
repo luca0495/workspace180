@@ -2,8 +2,15 @@ package database;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import Books.Books;
+import Table.TableBooks;
+
 
 public class MQ_Read {
 	
@@ -55,6 +62,22 @@ public class MQ_Read {
 			
 			return dati;
 		}
-
+	public static String ReadPassTemp() throws SQLException
+	{
+	String query = "SELECT password_temp FROM utente;";
+	DBmanager.openConnection();
+	ResultSet rs = DBmanager.executeQuery(query);
+	String value = null;
+		while(rs.next()) 
+		{
+		   System.out.println(rs);
+		  value =rs.getString("password_temp");
+		}
+		
+	rs.close();
+	DBmanager.closeConnection();
+	return value;
+	}
+	
 	
 }

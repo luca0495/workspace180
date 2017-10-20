@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 
 import connections.Client;
 import database.MQ_Insert;
+import database.MQ_Read;
 
 
 
@@ -33,40 +34,48 @@ public class EmailSender{
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
 	
 	 //public static void send_uninsubria_email(String USER,String PASS,String to,Client Me) throws SendFailedException, MessagingException{
-	 public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException{
+	 public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
 	    // String hasher = hash;	  
 		 me=Me;
 		 System.out.println("Controllo errore:" + me.toString());
 	     String host = "smtp.office365.com";
 	     String from= me.getUSERNAME();
-	   
-		 Properties props = System.getProperties();
+	     
+	     Authenticator authenticator = new Authenticator()
+	      {         @Override
+	    	          protected PasswordAuthentication getPasswordAuthentication() {
+	    	             return new PasswordAuthentication(me.getUSERNAME(), me.getPASSWORD());
+	    	          }
+	      };
+	     
+	     //SMTPAuthenticator authenticator = new SMTPAuthenticator(me.getUSERNAME(), me.getPASSWORD());
+		 Properties props = new Properties();
 		 /*
 		 props.put( "mail.smtp.host" , "smtp.live.com");
 		 props.put( "mail.smtp.user" , USERNAME );
 		 
-		 props.put("mail.smtp.auth" , "true" );
+		
 		 props.put( "mail.smtp.starttls.enable" , "true" );
 		 props.put( "mail.smtp.password" , PASSWORD);
         */
-	     props.put("mail.smtp.host",host);
-	     props.put("mail.smtp.starttls.enable", "true");
-	     props.put("mail.smtp.port",587);
+		 //props.setProperty("mail.smtp.submitter", authenticator.getPasswordAuthentication().getUserName());
+		 props.setProperty("mail.smtp.auth" , "true" );
+		 props.setProperty("mail.smtp.host",host);
+	     props.setProperty("mail.smtp.port","587");
+	     props.setProperty("mail.smtp.starttls.enable", "true");
 	     
+	    // props.put("mail.debug", "true");
+	     System.out.println("Controllo props:" + props + "Controllo authenticator:" + authenticator );
+	     Session session = Session.getInstance( props, authenticator );
 		 // problema username e password perchè devi averle!!   
-	     Session session = Session.getInstance(props,
-	    	       new javax.mail.Authenticator() {
-	    	          protected PasswordAuthentication getPasswordAuthentication() {
-	    	             return new PasswordAuthentication(me.getUSERNAME(), me.getPASSWORD());
-	    	          }
-	    	       });
+	   
 	        
 	     //String link = MAIL_REGISTRATION_SITE_LINK+"?scope=activation&userId="+to+"&hash="+hash;
 		 StringBuilder bodyText = new StringBuilder(); 
 			 bodyText.append("<div>").append("Caro Utente<br/><br/>").append("  Grazie per la Registrazione. <br/>")
-			  .append("Il codice di attivazione temporaneo è").append("  <br/>").append(randomGenerator1())
+			  .append("Il codice di attivazione temporaneo è").append("  <br/>").append(MQ_Read.ReadPassTemp())
 		      .append("  <br/>").append("  Grazie <br/>").append("</div>");
-			
+		try{	
 		 Message msg = new MimeMessage(session);
 		 msg.setFrom(new InternetAddress(from));
 		 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
@@ -74,9 +83,12 @@ public class EmailSender{
 		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
 	      
 		 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
-	     Transport.send(msg,me.getUSERNAME(),me.getPASSWORD());
+	     Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());
 	     System.out.println("\nMail was sent successfully.");   
-	            
+		}catch(MessagingException exception)
+        {
+            exception.printStackTrace();
+        }      
 	 }
  
 	 public static int randomGenerator1(){
