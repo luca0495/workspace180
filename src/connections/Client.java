@@ -119,9 +119,7 @@ public class Client implements Serializable, Runnable  {
 					//Comando Arrivato					
 					//Comando Prelevo dalla lista CmdLIST
 					Commands com = getCmdLIST().take();
-							System.out.println("CLI :> Trovata richiesta in coda "+ com.Den );						
-					
-							
+							System.out.println("CLI :> Trovata richiesta in coda "+ com.Den );																		
 					/*		
 					while (Busy){
 							System.out.println("CLI :> Trovata richiesta in coda "+ com.Den + " [CLI  BUSY], attendo... ");
