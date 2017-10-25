@@ -393,15 +393,20 @@ public class AppReader extends SL_JFrame {
 				if(Check.checkAllReg(txtName.getText(), txtSurname.getText(),txtPhone.getText(),txtEmail.getText(),txtCF.getText(),
 						passwordField.getPassword(), passwordFieldCh.getPassword(), txtInquadr.getText()))
 				{
-				
+				 
 					String p = String.copyValueOf(passwordField.getPassword());
 					
 					try 
 					{	
 						System.out.println("Controllo errore:" + me.toString());
+						
+						//parte da portare su CLIENT
+						
 						MQ_Insert.insertUtente(txtName.getText(), txtSurname.getText(), txtInquadr.getText(), txtEmail.getText(), txtCF.getText(), txtPhone.getText(), p,EmailSender.randomGenerator1());
 						System.out.println("Controllo errore:" + me.toString() + me.getUSERNAME() + me.getPASSWORD() );
 						EmailSender.send_uninsubria_email(to,me);
+					
+					
 					}
 					
 					catch (SQLException e1)
@@ -412,8 +417,8 @@ public class AppReader extends SL_JFrame {
 					} catch (MessagingException e1) {
 						e1.printStackTrace();
 					}
-					 PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
-					// timer per panel nuovo RIVEDERE Ciao!!!
+							 PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
+							// timer per panel nuovo RIVEDERE Ciao!!!
 				     }
 					else
 				    {
