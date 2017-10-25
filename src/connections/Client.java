@@ -51,7 +51,7 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			Message				mSgTOsend;
 	
-	private				boolean				Busy=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
+	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
 	private 			String				PASSWORD;
@@ -80,7 +80,7 @@ public class Client implements Serializable, Runnable  {
 			public void run() {
 				try {
 					Client x  = new Client();
-					ClientConnectionController y1 = new ClientConnectionController(x,100);//1 CTLL OGNI 10 SEC					
+					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 CTLL OGNI 10 SEC					
 
 					AppMain StartWindow = new AppMain(x);
 					StartWindow.getFrame().setVisible(true);							

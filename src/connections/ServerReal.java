@@ -99,7 +99,12 @@ public class ServerReal extends ServerSkeleton {
 		
 		System.out.println("RealServer :> Rx Change ");
 		
+		
+		
+		
 		MessageRealServer M = this.MessageEncapsulation(Mes);
+		System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
+		
 		MessageBack x = new MessageBack();
 		MessageBack Answer = new MessageBack();
 		
