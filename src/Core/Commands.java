@@ -1,8 +1,7 @@
 package Core;
 
 public enum Commands{	
-	//COSTANTI ENUMERATIVE
-			
+	//COSTANTI ENUMERATIVE			
 			tableExistBook	("Check Tb Exist"	,		SearchFor.Book,			CommandsType.CHANGE,1,	0),
 			tableExistLoans	("Check Tb Exist"	,		SearchFor.Prenotation,	CommandsType.CHANGE,1,	0),
 			tableExistPerson("Check Tb Exist"	,		SearchFor.Account,		CommandsType.CHANGE,1,	0),
@@ -22,6 +21,11 @@ public enum Commands{
 		
 			UserLOGIN 		("User Login"		,		SearchFor.Account,		CommandsType.READ,1,	0), 
 			UserLOGOUT 		("User Logout"		,		SearchFor.Account,		CommandsType.READ,1,	0),
+			 
+			UserRegistration("User registration",		SearchFor.Account,		CommandsType.CHANGE,1,	0),
+			UserActivation	("User activation"  ,		SearchFor.Account,		CommandsType.CHANGE,1,	0),
+			
+	
 	// TEST
 			DBExist 		("Check DB Exist"	,		SearchFor.SystemPar,	CommandsType.TEST,1,	0),
 			//tableExistBook("Check Tb Exist"	,		SearchFor.SystemPar,	CommandsType.TEST,1,	0),

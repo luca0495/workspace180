@@ -9,7 +9,9 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
+import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
 import Core.CommandsList;
@@ -17,6 +19,7 @@ import Core.CommandsType;
 import Core.Requests;
 import Core.RequestsList;
 import Core.SearchFor;
+import database.MQ_Insert;
 
 import java.awt.Font;
 import java.awt.EventQueue;
@@ -31,10 +34,15 @@ import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
 
+import java.awt.Component;
+
 public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	
 	private 			SL_JFrame			ActW			=null;	//Active Window
+	private 			Component			ActC			=null;	//Active Component
+	
+	
 	private 			Clients				ClientType;
 	private 			ServerStub			srv;		
 	private 			boolean 			stubok			=false;
@@ -56,6 +64,8 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			String				PASSWORD;
 	private 			String				USERNAME;
+	
+	private 			String 				Sql;
 	
 	public String getPASSWORD() {
 		return PASSWORD;
@@ -211,7 +221,14 @@ public class Client implements Serializable, Runnable  {
 								case UserDELETE: 
 											
 									break;	
-								
+								case UserRegistration: 
+														ClientCHANGEuserRegistration();
+									break;
+								case UserActivation: 
+											
+									break;	
+									
+									
 						//	Loans
 								case Prenotation: 
 									
@@ -351,42 +368,7 @@ public class Client implements Serializable, Runnable  {
 		//************************************************************
 		}	
 		
-//------------------------------------------------------------------------		 
-	// sys
 
-		public Clients getCliType() {
-			return ClientType;
-		}
-		public void setCliType(Clients cliType) {
-			ClientType = cliType;
-		}		
-		boolean isStubok() {
-		return stubok;
-	}
-		public void setStubok(boolean stubok) {
-		this.stubok = stubok;
-	}
-		public boolean isRepeatconn() {
-		return repeatconn;
-	}
-		public void setRepeatconn(boolean repeatconn) {
-		this.repeatconn = repeatconn;
-	}
-		public int getRepeatconnCount() {
-		return repeatconnCount;
-	}
-		public void setRepeatconnCount(int repeatconnCount) {
-		this.repeatconnCount = repeatconnCount;
-	}
-		public void incRepeatconnCount(){
-		this.repeatconnCount++;
-	}
-		public ServerStub getSrv() {
-		return srv;
-	}
-		public void setSrv(ServerStub srv) {
-		this.srv = srv;
-	}	
 		
 	// comandi
 		
@@ -574,7 +556,28 @@ public class Client implements Serializable, Runnable  {
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
-						System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
+						
+						
+						
+						switch (Mb.getText()) {
+						case "OK":
+							
+							break;
+
+						case "SRV :> user Registration :> OK":
+							
+							PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
+							
+							break;
+							
+							
+						default:							
+							System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
+							
+							break;
+						}
+
+						
 						setBusy(false);
 						System.out.println("CLI -> Ritornato mb :"+Mb.getText());		
 			} 
@@ -644,7 +647,83 @@ public class Client implements Serializable, Runnable  {
 		
 
 	
+	private void ClientCHANGEuserRegistration(){
+		Commands cmd = Commands.UserRegistration;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message			
+			
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString(),			// id Client 
+					this.getSql()
+					);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			sendM(MsgSend, Mb);
+			
+			
+		}	
+	}
 	
+	
+	
+	//------------------------------------------------------------------------		 
+		// sys
+
+			public Clients getCliType() {
+				return ClientType;
+			}
+			public void setCliType(Clients cliType) {
+				ClientType = cliType;
+			}		
+			boolean isStubok() {
+			return stubok;
+		}
+			public void setStubok(boolean stubok) {
+			this.stubok = stubok;
+		}
+			public boolean isRepeatconn() {
+			return repeatconn;
+		}
+			public void setRepeatconn(boolean repeatconn) {
+			this.repeatconn = repeatconn;
+		}
+			public int getRepeatconnCount() {
+			return repeatconnCount;
+		}
+			public void setRepeatconnCount(int repeatconnCount) {
+			this.repeatconnCount = repeatconnCount;
+		}
+			public void incRepeatconnCount(){
+			this.repeatconnCount++;
+		}
+			public ServerStub getSrv() {
+			return srv;
+		}
+			public void setSrv(ServerStub srv) {
+			this.srv = srv;
+		}	
+			public String getSql() {
+				return Sql;
+		}
+			public void setSql(String sql) {
+				Sql = sql;
+		}
+			public Component getActC() {
+				return ActC;
+		}
+			public void setActC(Component actC) {
+				ActC = actC;
+		}		
 	
 	
 	
