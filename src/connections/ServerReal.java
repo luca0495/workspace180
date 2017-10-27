@@ -16,6 +16,7 @@ import Core.Commands;
 import Core.Guardian;
 import Core.Requests;
 import Core.SearchFor;
+import ProvaEmail.EmailSender;
 import gui.SystemClientStub;
 import gui.SystemServerSkeleton;
 

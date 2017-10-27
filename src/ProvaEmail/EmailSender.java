@@ -96,7 +96,7 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
-
+	 
 	public static void main(String[] argv) {
 	    try {
 			String password="";

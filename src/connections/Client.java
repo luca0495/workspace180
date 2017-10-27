@@ -62,8 +62,8 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
-	private 			String				PASSWORD;
-	private 			String				USERNAME;
+	public String USERNAME ="nerdslib@gmail.com";
+	public String PASSWORD ="libreria";
 	
 	private 			String 				Sql;
 	
