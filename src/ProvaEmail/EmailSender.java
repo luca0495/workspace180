@@ -5,19 +5,18 @@ import java.util.Properties;
 import java.util.Random;
 
 import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
-
 import javax.mail.internet.InternetAddress;
-
+import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 
 import connections.Client;
 import database.MQ_Insert;
@@ -77,7 +76,8 @@ public class EmailSender{
 			  .append("Il codice di attivazione temporaneo è").append("  <br/>").append(MQ_Read.ReadPassTemp())
 		      .append("  <br/>").append("  Grazie <br/>").append("</div>");
 		try{	
-		 Message msg = new Message(session);
+			
+		 Message msg = new MimeMessage(session);
 		 msg.setFrom(new InternetAddress(from));
 		 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
 		 msg.setSubject("Registrazione Email");
