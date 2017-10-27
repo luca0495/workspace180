@@ -11,6 +11,8 @@ import javax.mail.SendFailedException;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
+
+
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -79,7 +81,7 @@ public class Client implements Serializable, Runnable  {
 
 	
 	private 			String 				Sql;
-	private 			String				to=null;					//email destinatario per registrazione
+	private 			String				to=null;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	
 	
 	public String getTo() {
