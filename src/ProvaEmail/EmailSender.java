@@ -5,18 +5,19 @@ import java.util.Properties;
 import java.util.Random;
 
 import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.SendFailedException;
 import javax.mail.Session;
 import javax.mail.Transport;
+
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 
 import connections.Client;
 import database.MQ_Insert;
@@ -76,14 +77,22 @@ public class EmailSender{
 			  .append("Il codice di attivazione temporaneo è").append("  <br/>").append(MQ_Read.ReadPassTemp())
 		      .append("  <br/>").append("  Grazie <br/>").append("</div>");
 		try{	
-		 Message msg = new MimeMessage(session);
+		 Message msg = new Message(session);
 		 msg.setFrom(new InternetAddress(from));
 		 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
 		 msg.setSubject("Registrazione Email");
 		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
 	      
 		 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
-	     Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());
+		 
+		 
+		 
+
+		 
+		 Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());	     
+		 
+		 //Transport.send(msg);
+		 
 	     System.out.println("\nMail was sent successfully.");   
 		}catch(MessagingException exception)
         {
@@ -96,7 +105,11 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
+<<<<<<< HEAD
 	 
+=======
+/*
+>>>>>>> origin/master
 	public static void main(String[] argv) {
 	    try {
 			String password="";
@@ -145,6 +158,6 @@ public class EmailSender{
 			
 		}
 	}
-
+*/
 	
 }

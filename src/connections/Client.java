@@ -2,6 +2,9 @@ package connections;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
+
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -19,12 +22,14 @@ import Core.CommandsType;
 import Core.Requests;
 import Core.RequestsList;
 import Core.SearchFor;
+import ProvaEmail.EmailSender;
 import database.MQ_Insert;
 
 import java.awt.Font;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -62,11 +67,24 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
+<<<<<<< HEAD
 	public String USERNAME ="nerdslib@gmail.com";
 	public String PASSWORD ="libreria";
+=======
+	private 			String				PASSWORD="libreria";
+	private 			String				USERNAME="nerdslib@gmail.com";
+>>>>>>> origin/master
 	
 	private 			String 				Sql;
+	private 			String				to=null;					//email destinatario per registrazione
 	
+	
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
 	public String getPASSWORD() {
 		return PASSWORD;
 	}
@@ -552,7 +570,7 @@ public class Client implements Serializable, Runnable  {
 	
 	
 	
-	private void sendM(Message MsgSend,MessageBack Mb){
+	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
@@ -565,6 +583,11 @@ public class Client implements Serializable, Runnable  {
 	
 							case "SRV :> user Registration :> OK":							
 								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
+								EmailSender.send_uninsubria_email(getTo(),this);
+								
+								this.setTo(null);
+								this.setSql(null);
+								
 								break;
 															
 							default:							
@@ -592,7 +615,7 @@ public class Client implements Serializable, Runnable  {
 	
 	// check
 	
-	private void ClientCheckExistTableBook(){
+	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
 		
@@ -617,7 +640,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}			
 	
-	private void ClientCheckExistTablePerson(){
+	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
 		
@@ -644,7 +667,7 @@ public class Client implements Serializable, Runnable  {
 
 	
 	
-	private void ClientCheckExistTableLoans(){
+	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
 		
@@ -673,7 +696,7 @@ public class Client implements Serializable, Runnable  {
 		
 
 	
-	private void ClientCHANGEuserRegistration(){
+	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
 		
