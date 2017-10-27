@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="Drivers/mail.jar"/>
-	<classpathentry kind="lib" path="Drivers/postgresql-42.0.0.jre7.jar"/>
+	<classpathentry kind="lib" path="Driver/javax.mail.jar"/>
+	<classpathentry kind="lib" path="Driver/postgresql-42.0.0.jre7.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
