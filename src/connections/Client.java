@@ -75,14 +75,11 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
-
 	private 			String				PASSWORD="libreria";
 	private 			String				USERNAME="nerdslib@gmail.com";
-
 	
 	private 			String 				Sql;
 	private 			String				to=null;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
-	
 	
 	public String getTo() {
 		return to;
@@ -588,6 +585,9 @@ public class Client implements Serializable, Runnable  {
 	
 							case "SRV :> user Registration :> OK":							
 								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
+								
+								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());								
+								
 								EmailSender.send_uninsubria_email(getTo(),this);
 								
 								this.setTo(null);
