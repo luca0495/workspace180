@@ -100,9 +100,7 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
-<<<<<<< HEAD
-	 
-=======
+
 /*
 >>>>>>> origin/master
 	public static void main(String[] argv) {
