@@ -67,13 +67,10 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
-<<<<<<< HEAD
-	public String USERNAME ="nerdslib@gmail.com";
-	public String PASSWORD ="libreria";
-=======
+
 	private 			String				PASSWORD="libreria";
 	private 			String				USERNAME="nerdslib@gmail.com";
->>>>>>> origin/master
+
 	
 	private 			String 				Sql;
 	private 			String				to=null;					//email destinatario per registrazione
