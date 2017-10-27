@@ -7,7 +7,6 @@ import java.rmi.RemoteException;
 import java.util.StringTokenizer;
 import javax.swing.SingleSelectionModel;
 
-import com.sun.mail.handlers.message_rfc822;
 
 import Core.Commands;
 import database.ChkDBandTab;
