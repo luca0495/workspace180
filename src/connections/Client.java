@@ -3,10 +3,15 @@ package connections;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
+<<<<<<< HEAD
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
+=======
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
+>>>>>>> ae3b6238864efff6f3b033cfbe12aaca5d0a13fc
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
