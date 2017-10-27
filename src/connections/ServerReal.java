@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import Core.Clients;
+import Core.Commands;
 import Core.Guardian;
 import Core.Requests;
 import Core.SearchFor;
@@ -115,7 +116,8 @@ public class ServerReal extends ServerSkeleton {
 			System.out.println("RealServer :> Rx Librarian");			
 			switch ( M.getMsg().getCommand().getTarget()){
 			//------------------------------------------------------------------------------			
-			case Account:		//AL				
+			case Account:		//AL	
+				
 						System.out.println("RealServer :> Rx Account");
 						try {					
 							System.out.println("RealServer :> Accodo M [ AL ]");
@@ -131,21 +133,50 @@ public class ServerReal extends ServerSkeleton {
 								{}
 								System.out.println("REAL SERVER :> go "+Go);						
 							}	//Attesa del turno...
-							//******************************************************************************
-							System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPerson ");					
-							try {
-								ChkDBandTab.tableExistPerson();
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE Person Exist :> OK"));	
-							} catch (SQLException e) {
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE Person Exist :> NG..."));
-								System.out.println("problemi con controllo tabella person");
-								e.printStackTrace();
-							}
-							System.out.println("SYS AL :> srv ritorna "+x.getText());
-							//******************************************************************************										
-							return x;
+							
+							
+							//******************************************************************************							
+							switch (M.getMsg().getCommand()) {
+														
+							case UserRegistration:
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> userRegistration ");					
+								try {
+								
+									MQ_Insert.insertUtente(M.getMsg().getSQLQuery());				
+									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> user Registration :> OK"));	
+								} catch (SQLException e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> user Registration :> NG..."));
+									System.out.println("problemi con controllo tabella person");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;
+
+							case tableExistPerson:								
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPerson ");					
+								try {
+									ChkDBandTab.tableExistPerson();
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Person Exist :> OK"));	
+								} catch (SQLException e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Person Exist :> NG..."));
+									System.out.println("problemi con controllo tabella person");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;								
+								
+							default:
+								break;
+							} 							
+							//******************************************************************************	
+
 						} catch (InterruptedException e) {
 							System.out.println("RealServer :> Problemi Accodamento CMD AL");
 							e.printStackTrace();
@@ -195,17 +226,45 @@ public class ServerReal extends ServerSkeleton {
 
 			case Prenotation:	//PL
 			//
-			
-				System.out.println("RealServer :> Rx Prenotations");
-//TODO provvisorio...				
-				x.setText(new String ("SRV :> CHECK TABLE Prenotations Exist :> SIMULAZIONE"));
 				
-				System.out.println("SYS PL :> srv ritorna "+x.getText());
-				
-				try {
-					return x;	
-				} catch (Exception e) {
+				System.out.println("RealServer :> Rx Prenotation");
+				try {							
+					System.out.println("RealServer :> Accodo M [ PL ]");
+					System.out.println("RealServer :> PL in attesa prima... "+Req.getPL().getWr());
+					Req.getPL().put(M);
+					System.out.println("RealServer :> BL in attesa dopo... "+Req.getPL().getWr());	
+					System.out.println("RealServer :> GO : "+Go);	
+					while (!Go){
+						try {
+							Thread.sleep(10);
+						} catch (Exception e) 
+						{}
+						System.out.println("REAL SERVER :> go "+Go);						
+					}	//Attesa del turno...
+					//******************************************************************************
+					System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPrenotation ");					
+					try {
+						
+						ChkDBandTab.tableExistLoans();
+								
+						getMeS().addMsg(mSg);
+						x.setText(new String ("SRV :> CHECK TABLE Loans Exist :> OK"));	
+					} catch (SQLException e) {
+						getMeS().addMsg(mSg);
+						x.setText(new String ("SRV :> CHECK TABLE Loans Exist :> NG..."));
+						System.out.println("problemi con controllo tabella Loans ");
+						e.printStackTrace();
+					}
+					System.out.println("SYS BL :> srv ritorna "+x.getText());
+					return x;
+					//******************************************************************************
+									
+				} catch (InterruptedException e) {
+					System.out.println("RealServer :> Problemi Accodamento CMD PL");
+					e.printStackTrace();
 				}	
+			break;
+
 				
 				
 				/*
@@ -254,7 +313,7 @@ public class ServerReal extends ServerSkeleton {
 				}	
 				*/
 				
-	break;
+
 
 			default:
 			//
@@ -266,7 +325,6 @@ public class ServerReal extends ServerSkeleton {
 			}
 		break;	
 		//**********************************************************************************	
-
 //--------------------------------------------------------------------------------------------------------------			
 		case Reader :
 

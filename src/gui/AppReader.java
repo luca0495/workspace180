@@ -30,10 +30,12 @@ import javax.swing.Timer;
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
+import Core.Commands;
 import ProvaEmail.EmailSender;
 import connections.Client;
 import database.MQ_Check;
 import database.MQ_Insert;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 
 import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
@@ -74,9 +76,9 @@ public class AppReader extends SL_JFrame {
 	{
 		me = x;
 		me.setActW(this);
+		me.setActC(c);
 		me.setCliType(Clients.Reader);
-		
-		
+				
 		AppReader(c);
 	}
 	
@@ -388,41 +390,92 @@ public class AppReader extends SL_JFrame {
 		
 		btnReg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String to = txtEmail.getText();
-				
-				if(Check.checkAllReg(txtName.getText(), txtSurname.getText(),txtPhone.getText(),txtEmail.getText(),txtCF.getText(),
-						passwordField.getPassword(), passwordFieldCh.getPassword(), txtInquadr.getText()))
+				if	(	Check.checkAllReg	(
+																txtName.getText(), 
+																txtSurname.getText(),
+																txtPhone.getText(),
+																txtEmail.getText(),
+																txtCF.getText(),
+																passwordField.getPassword(), 
+																passwordFieldCh.getPassword(), 
+																txtInquadr.getText()
+											)
+					)
 				{
+					
+				String 	to 	= txtEmail.getText();	
+				String 	p 	= String.copyValueOf(passwordField.getPassword());
 				
-					String p = String.copyValueOf(passwordField.getPassword());
-					
-					try 
+				//*********************************************************************************
+				// in test 26 10 2017
+				int 	n	=EmailSender.randomGenerator1();
+				try {
+				// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
+					me.setSql(MQ_Insert.insertUtenteGetQuery(	
+																txtName.getText(), 
+																txtSurname.getText(),
+																txtInquadr.getText(),
+																to,
+																txtCF.getText(),
+																txtPhone.getText(),
+																p,
+																n
+															)
+							);
+				// accoda il comando alla lista comandi dalla quale legge il client
+					System.out.println("GUI AppReader:> creazione query ok:");	
+					try {
+						System.out.println("GUI AppReader:> cmd inserisci utente ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserRegistration);
+					} catch (InterruptedException e2) {
+						System.out.println("AppReader :> problemi con accodamento comando user registration");	
+						e2.printStackTrace();
+					}				
+
+				} catch (SQLException e2) {
+					System.out.println("AppReader :> creazione query NG ERRORE:");	
+					e2.printStackTrace();
+				}
+				//*********************************************************************************
+				/*
+				try 
 					{	
-						System.out.println("Controllo errore:" + me.toString());
-						MQ_Insert.insertUtente(txtName.getText(), txtSurname.getText(), txtInquadr.getText(), txtEmail.getText(), txtCF.getText(), txtPhone.getText(), p,EmailSender.randomGenerator1());
-						System.out.println("Controllo errore:" + me.toString() + me.getUSERNAME() + me.getPASSWORD() );
-						EmailSender.send_uninsubria_email(to,me);
-					}
-					
-					catch (SQLException e1)
-					{
-						e1.printStackTrace();
-				     } catch (SendFailedException e1) {
-						e1.printStackTrace();
-					} catch (MessagingException e1) {
-						e1.printStackTrace();
-					}
-					 PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
+						System.out.println("Controllo errore:" + me.toString());																		
+						MQ_Insert.insertUtente	(
+													txtName.getText(), 
+													txtSurname.getText(), 
+													txtInquadr.getText(), 
+													txtEmail.getText(), 
+													txtCF.getText(), 
+													txtPhone.getText(), 
+													p,
+													EmailSender.randomGenerator1()
+												);
+						System.out.println("Controllo errore:" + 
+								me.toString() + 
+								me.getUSERNAME() + 
+								me.getPASSWORD() );
+						EmailSender.send_uninsubria_email(to,me);				
+					}										
+					catch (SQLException e1)			{e1.printStackTrace();} 
+					catch (SendFailedException e1) 	{e1.printStackTrace();} 
+					catch (MessagingException e1) 	{e1.printStackTrace();}
+				
+				
+				*/
+					//*********************************************************************************
+				//TODO SPOSTARE ANCHE QUESTO SU CLIENT
+					// PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
 					// timer per panel nuovo RIVEDERE Ciao!!!
-				     }
-					else
-				    {
-							PopUp.warningBox(frmSchoolib, "Campi Errati");
-					}
-				     // timer per panel nuovo RIVEDERE
+				}
+				else
+				{
+					PopUp.warningBox(frmSchoolib, "Campi Errati");
+				}
+				    // timer per panel nuovo RIVEDERE
 							WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
 						    frmSchoolib.dispatchEvent(close);
-
 				}
 		});
 	   

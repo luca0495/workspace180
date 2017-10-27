@@ -1,9 +1,12 @@
 package Core;
 
 import java.io.Serializable;
-// prova lavatrice avete seguito il discorso
-// no
+// tipi di utente 
 
 public enum Clients implements Serializable {
-Admin,Librarian,Reader,Guest,Default
+Admin,
+Librarian,
+Reader,
+Guest,
+Default
 }

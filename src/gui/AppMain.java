@@ -154,7 +154,15 @@ public class AppMain extends SL_JFrame  {
 							System.out.println("appMain :> problemi con accodamento comando check table exist BOOK");					
 						}
 
-					
+					// Loans				
+						try {
+							// ChkDBandTab.tableExistPerson();
+							me.getCmdLIST().put(Commands.tableExistLoans);							
+						} catch (Exception e) {
+							System.out.println("appMain :> problemi con accodamento comando check table exist LOANS");					
+						}
+						
+						
 					
 					
 				/*	
