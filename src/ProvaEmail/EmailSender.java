@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
 
+import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -83,7 +84,15 @@ public class EmailSender{
 		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
 	      
 		 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
-	     Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());
+		 
+		 
+		 
+
+		 
+		 Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());	     
+		 
+		 //Transport.send(msg);
+		 
 	     System.out.println("\nMail was sent successfully.");   
 		}catch(MessagingException exception)
         {
@@ -96,7 +105,7 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
-
+/*
 	public static void main(String[] argv) {
 	    try {
 			String password="";
@@ -145,6 +154,6 @@ public class EmailSender{
 			
 		}
 	}
-
+*/
 	
 }

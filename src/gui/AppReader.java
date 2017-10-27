@@ -422,7 +422,11 @@ public class AppReader extends SL_JFrame {
 																n
 															)
 							);
-				// accoda il comando alla lista comandi dalla quale legge il client
+					me.setTo(to);
+
+					System.out.println("setto nel client destinatario :"+me.getTo());
+					
+					// accoda il comando alla lista comandi dalla quale legge il client
 					System.out.println("GUI AppReader:> creazione query ok:");	
 					try {
 						System.out.println("GUI AppReader:> cmd inserisci utente ");
