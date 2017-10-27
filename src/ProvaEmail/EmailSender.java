@@ -84,11 +84,6 @@ public class EmailSender{
 		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
 	      
 		 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
-		 
-		 
-		 
-
-		 
 		 Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());	     
 		 
 		 //Transport.send(msg);
