@@ -96,7 +96,7 @@ public class Client implements Serializable, Runnable  {
 					StartWindow.getFrame().setVisible(true);							
 					System.out.println("creato start windows");
 					StartWindow.addMsg("test");	
-					new Thread(x).start();	//parte > Logica
+					new Thread(x).start();	  //parte > Logica
 					new Thread(y1).start();  //connection controller
 
 						
@@ -193,17 +193,17 @@ public class Client implements Serializable, Runnable  {
 	
 								
 							case tableExistBook: 
-													ClientCheckExistTableBook();
+														ClientCheckExistTableBook();
 								break;
 							
 							
 							case tableExistLoans: 
-								
+														ClientCheckExistTableLoans();
 								break;
 							
 							
 							case tableExistPerson: 
-													ClientCheckExistTablePerson();
+														ClientCheckExistTablePerson();
 								break;
 					
 								
@@ -558,25 +558,21 @@ public class Client implements Serializable, Runnable  {
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
 						
 						
-						
+						// Reazioni di Client ai messaggi ritornati dal Server
 						switch (Mb.getText()) {
-						case "OK":
-							
-							break;
-
-						case "SRV :> user Registration :> OK":
-							
-							PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
-							
-							break;
-							
-							
-						default:							
-							System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
-							
-							break;
+							case "OK":							
+								break;
+	
+							case "SRV :> user Registration :> OK":							
+								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
+								break;
+															
+							default:							
+								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
+								
+								break;
 						}
-
+						// Reazioni di Client ai messaggi ritornati dal Server
 						
 						setBusy(false);
 						System.out.println("CLI -> Ritornato mb :"+Mb.getText());		
@@ -593,6 +589,8 @@ public class Client implements Serializable, Runnable  {
 			}
 	}
 	
+	
+	// check
 	
 	private void ClientCheckExistTableBook(){
 		Commands cmd = Commands.tableExistBook;
@@ -644,6 +642,34 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}	
 
+	
+	
+	private void ClientCheckExistTableLoans(){
+		Commands cmd = Commands.tableExistLoans;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message	
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString()				// id Client 
+									);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			sendM(MsgSend, Mb);
+		}	
+	}	
+	
+	
+	
 		
 
 	
@@ -725,6 +751,12 @@ public class Client implements Serializable, Runnable  {
 				ActC = actC;
 		}		
 	
+
+	
+	
+		
+		
+		
 	
 	
 }

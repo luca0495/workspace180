@@ -132,6 +132,12 @@ public Requests.RS getLastserved() {
 	public void incARcs() {
 		ARcs++;
 	}
+	public void incPLcs() {
+		PLcs++;
+	}
+	public void incPRcs() {
+		PRcs++;
+	}
 
 
 	public RequestsList getPL() {
@@ -151,5 +157,25 @@ public Requests.RS getLastserved() {
 
 	public void setPR(RequestsList pR) {
 		PR = pR;
+	}
+
+
+	public int getPRcs() {
+		return PRcs;
+	}
+
+
+	public void setPRcs(int pRcs) {
+		PRcs = pRcs;
+	}
+
+
+	public int getPLcs() {
+		return PLcs;
+	}
+
+
+	public void setPLcs(int pLcs) {
+		PLcs = pLcs;
 	}	
 }
