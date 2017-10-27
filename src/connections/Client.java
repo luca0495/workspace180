@@ -565,7 +565,7 @@ public class Client implements Serializable, Runnable  {
 	
 	
 	
-	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException{
+	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
@@ -610,7 +610,7 @@ public class Client implements Serializable, Runnable  {
 	
 	// check
 	
-	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
 		
@@ -635,7 +635,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}			
 	
-	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
 		
@@ -662,7 +662,7 @@ public class Client implements Serializable, Runnable  {
 
 	
 	
-	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
 		
@@ -691,7 +691,7 @@ public class Client implements Serializable, Runnable  {
 		
 
 	
-	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
 		
