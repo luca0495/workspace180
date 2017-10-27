@@ -1,8 +1,8 @@
 package connections;
+//aggiorna drivers
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.EventQueue;
-
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 import javax.swing.DropMode;
