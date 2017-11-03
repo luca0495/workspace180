@@ -32,10 +32,45 @@ public class EmailSender{
 	//String hash;
 	static Client me;
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
+
+	
+	public static void main(String[] args) {
+		
+		Client me;
+		try {
+			me = new Client();
+			me.setPASSWORD("ACmilan1994$");
+			me.setUSERNAME("llazzati@studenti.unisubria.it");				
+
+			String to="dexa@hotmail.it";
+		
+			send_uninsubria_email (to,me);
+			System.out.println("classe test");
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	
 	 //public static void send_uninsubria_email(String USER,String PASS,String to,Client Me) throws SendFailedException, MessagingException{
 	 public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
 	    // String hasher = hash;	  
+	
+		 
+		 
 		 me=Me;
 		 System.out.println("Controllo errore:" + me.toString());
 	     String host = "smtp.office365.com";
