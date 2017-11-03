@@ -79,7 +79,7 @@ public class Client implements Serializable, Runnable  {
 	private 			String				USERNAME="nerdslib@gmail.com";
 	
 	private 			String 				Sql;
-	private 			String				to=null;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
+	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	
 	public String getTo() {
 		return to;
@@ -572,7 +572,7 @@ public class Client implements Serializable, Runnable  {
 	
 	
 	
-	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
+	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
@@ -588,7 +588,7 @@ public class Client implements Serializable, Runnable  {
 								
 								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());								
 								
-								EmailSender.send_uninsubria_email(getTo(),this);
+								EmailSender.send_uninsubria_email(to,this);
 								
 								this.setTo(null);
 								this.setSql(null);
@@ -620,7 +620,7 @@ public class Client implements Serializable, Runnable  {
 	
 	// check
 	
-	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
+	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
 		
@@ -645,7 +645,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}			
 	
-	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
+	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
 		
@@ -672,7 +672,7 @@ public class Client implements Serializable, Runnable  {
 
 	
 	
-	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
+	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
 		
@@ -692,6 +692,8 @@ public class Client implements Serializable, Runnable  {
 									);
 			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
+			
+			//???????
 			sendM(MsgSend, Mb);
 		}	
 	}	
@@ -701,7 +703,7 @@ public class Client implements Serializable, Runnable  {
 		
 
 	
-	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException{
+	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
 		

@@ -409,7 +409,9 @@ public class AppReader extends SL_JFrame {
 				//*********************************************************************************
 				// in test 26 10 2017
 				int 	n	=EmailSender.randomGenerator1();
+				System.out.println("Destinatario:" + to +" Client:" + me);
 				try {
+					System.out.println("Destinatario:" + to +" Client:" + me);
 				// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
 					me.setSql(MQ_Insert.insertUtenteGetQuery(	
 																txtName.getText(), 
@@ -422,6 +424,7 @@ public class AppReader extends SL_JFrame {
 																n
 															)
 							);
+					System.out.println("Destinatario:" + to +" Client:" + me);
 					me.setTo(to);
 
 				// accoda il comando alla lista comandi dalla quale legge il client
