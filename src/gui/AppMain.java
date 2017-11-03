@@ -196,26 +196,27 @@ public class AppMain extends SL_JFrame  {
 				
 		});
 		
-		JButton btnNewButton_2 = new JButton("connection CLOSE");
+		JButton btnNewButton_2 = new JButton("LOGIN");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				me.closeconn();
+				//me.closeconn();
 				
 			}
 		});
-		btnNewButton_2.setBounds(581, 380, 195, 23);
+		btnNewButton_2.setBounds(124, 147, 154, 23);
 		panelLog.add(btnNewButton_2);
 		
-		JButton btnNewButton_1 = new JButton("connection TEST");
+		JButton btnNewButton_1 = new JButton("Attiva Account");
+		
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				me.testconn();
+				//me.testconn();
 				
 			}
 		});
-		btnNewButton_1.setBounds(581, 346, 195, 23);
+		btnNewButton_1.setBounds(581, 181, 154, 23);
 		panelLog.add(btnNewButton_1);
 		btnNewButton.setBounds(31, 63, 167, 23);
 		panelLog.add(btnNewButton);
