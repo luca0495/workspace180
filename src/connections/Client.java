@@ -75,8 +75,8 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	
-	private 			String				PASSWORD="libreria";
-	private 			String				USERNAME="nerdslib@gmail.com";
+	private 			String				PASSWORD="ACmilan1994$";
+	private 			String				USERNAME="llazzati@studenti.uninsubria.it";
 	
 	private 			String 				Sql;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
@@ -588,7 +588,10 @@ public class Client implements Serializable, Runnable  {
 								
 								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());								
 								
-								EmailSender.send_uninsubria_email(to,this);
+								
+								
+								
+								EmailSender.send_uninsubria_email(getTo(),this);
 								
 								this.setTo(null);
 								this.setSql(null);

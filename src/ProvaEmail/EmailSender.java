@@ -34,6 +34,8 @@ public class EmailSender{
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
 
 	
+	
+	//test ok -------------------------------------------------------
 	public static void main(String[] args) {
 		
 		Client me;
@@ -51,7 +53,7 @@ public class EmailSender{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+	//test ok -------------------------------------------------------	
 		
 		
 		
