@@ -40,7 +40,7 @@ public class EmailSender{
 		try {
 			me = new Client();
 			me.setPASSWORD("ACmilan1994$");
-			me.setUSERNAME("llazzati@studenti.unisubria.it");				
+			me.setUSERNAME("llazzati@studenti.uninsubria.it");				
 
 			String to="dexa@hotmail.it";
 		
