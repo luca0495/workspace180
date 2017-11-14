@@ -18,16 +18,28 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import Books.Books;
+import Check.Check;
+import Check.PopUp;
 import Table.TableBooks;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
+import database.MQ_Insert;
 import database.MQ_Read;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JMenu;
+import javax.swing.JRadioButtonMenuItem;
+import java.awt.Toolkit;
 
 public class ResearchBooks {
 
@@ -42,6 +54,17 @@ public class ResearchBooks {
     private JTable table4;
     private JTable tableBooks;
 	protected String ValToSearch;
+	private JTextField txtCod;
+	private JTextField txtName;
+	private JTextField txtSurname;
+	private JTextField txtCat;
+	private JTextField txtTitle;
+	private JLabel lblAdd;
+	private JLabel lblEr1;
+	private JLabel lblEr2;
+	private JLabel lblEr3;
+	private JLabel lblEr4;
+	private JTextField txtLoans;
 	/**
 	 * Create the application.
 	 */
@@ -53,11 +76,15 @@ public class ResearchBooks {
 	
 	private void initialize(Component c) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 893, 545);
+		frame.setBounds(100, 100, 1000, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(c);
 		frame.setVisible(true);
+		
+		ImageIcon iconLogoA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Add.png")));
+		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
+		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		
 		JLabel lblResearch = new JLabel("Ricerca");
 		lblResearch.setBounds(285, 11, 91, 14);
@@ -87,7 +114,7 @@ public class ResearchBooks {
 		 }
 	   }
    });
-		btnResearch.setBounds(662, 7, 89, 23);
+		btnResearch.setBounds(778, 7, 89, 23);
 		frame.getContentPane().add(btnResearch);
 		/*
 		tableBooks = new JTable();
@@ -103,17 +130,248 @@ public class ResearchBooks {
 		tableBooks.setBounds(10, 11, 837, 420);
 		*/
 		JPanel panelResearch = new JPanel();
-		panelResearch.setBounds(10, 53, 857, 442);
+		panelResearch.setBounds(10, 36, 964, 470);
 		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelResearch.setBackground(Color.WHITE);
 		frame.getContentPane().add(panelResearch);
 		panelResearch.setLayout(null);
 		
 		TableBooks panelTableResearch = new TableBooks(frame);
-		panelTableResearch.setBounds(10, 11, 837, 420);
+		panelTableResearch.setBounds(10, 11, 944, 420);
 		panelResearch.add(panelTableResearch);
 		
+		lblEr1 = new JLabel();
+		lblEr1.setBounds(234, 450, 19, 14);
+		panelResearch.add(lblEr1);
+		
+		lblEr2 = new JLabel();
+		lblEr2.setBounds(389, 450, 19, 14);
+		panelResearch.add(lblEr2);
+		
+		lblEr3 = new JLabel();
+		lblEr3.setBounds(554, 450, 19, 14);
+		panelResearch.add(lblEr3);
+		
+		lblEr4 = new JLabel();
+		lblEr4.setBounds(726, 450, 19, 14);
+		panelResearch.add(lblEr4);
+		
+		// codice ogni volta deve incrementarsi di uno quando c'è un aggiunta di un libro
+		txtCod = new JTextField();
+		txtCod.setEnabled(false);
+		txtCod.setEditable(false);
+		txtCod.setText("Codice");
+		txtCod.setBounds(10, 428, 156, 20);
+		panelResearch.add(txtCod);
+		txtCod.setColumns(10);
+		
+		txtName = new JTextField();
+		txtName.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(Check.checkName(txtName.getText()))
+				{
+					lblEr1.setIcon(iconLogoT);
+				}
+				else
+				{
+					lblEr1.setIcon(iconLogoC);
+				}
+			}
+		});
+		txtName.setBounds(163, 428, 156, 20);
+		panelResearch.add(txtName);
+		txtName.setColumns(10);
+		
+		txtSurname = new JTextField();
+		txtSurname.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(Check.checkName(txtSurname.getText()))
+				{
+					lblEr2.setIcon(iconLogoT);
+				}
+				else
+				{
+					lblEr2.setIcon(iconLogoC);
+				}
+			}
+		});
+		txtSurname.setBounds(318, 428, 156, 20);
+		panelResearch.add(txtSurname);
+		txtSurname.setColumns(10);
+		
+		txtCat = new JTextField();
+		txtCat.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if(Check.checkCat(txtCat.getText()))
+				{
+					lblEr3.setIcon(iconLogoT);
+				}
+				else
+				{
+					lblEr3.setIcon(iconLogoC);
+				}
+			}
+		});
+		txtCat.setBounds(472, 428, 156, 20);
+		panelResearch.add(txtCat);
+		txtCat.setColumns(10);
+		
+		txtTitle = new JTextField();
+		txtTitle.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				// mettere check sia con lettere che numeri(check name solo lettere)
+				if(Check.checkName(txtTitle.getText()))
+				{
+					lblEr4.setIcon(iconLogoT);
+				}
+				else
+				{
+					lblEr4.setIcon(iconLogoC);
+				}
+			}
+		});
+		txtTitle.setBounds(626, 428, 156, 20);
+		panelResearch.add(txtTitle);
+		txtTitle.setColumns(10);
+		
+		// contatore per il numero di prenotazioni
+		txtLoans = new JTextField();
+		txtLoans.setEnabled(false);
+		txtLoans.setEditable(false);
+		txtLoans.setText("Numero prenotazioni");
+		txtLoans.setBounds(781, 428, 156, 20);
+		panelResearch.add(txtLoans);
+		txtLoans.setColumns(10);
+		
+		lblAdd = new JLabel();
+		System.out.println("1" );
+		lblAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			
+			public void mousePressed(MouseEvent arg0) {
+				
+				if(Check.checkAllBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText()))
+				{
+					try 
+					{
+						System.out.println("5" );
+						MQ_Insert.insertBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText());						
+						System.out.println("6" );
+						
+						txtName.setText(null);
+						txtSurname.setText(null);
+						txtCat.setText(null);
+						txtTitle.setText(null);
+						System.out.println("7" );
+						lblEr1.setIcon(null);
+						lblEr2.setIcon(null);
+						lblEr3.setIcon(null);
+						lblEr4.setIcon(null);
+						System.out.println("8");
+						panelTableResearch.update();
+						System.out.println("9");
+						PopUp.infoBox(frame, "Inserimento Corretto");
+						
+					} 
+					catch (SQLException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
+				else
+				{
+					PopUp.errorBox(frame, "Campi Errati");
+					System.out.println("9");
+					if(Check.checkName(txtName.getText()))
+					{
+						System.out.println("10");
+						lblEr1.setIcon(iconLogoT);
+					}
+					else
+					{
+						lblEr1.setIcon(iconLogoC);
+					}
 
+					if(Check.checkName(txtSurname.getText()))
+					{
+						lblEr2.setIcon(iconLogoT);
+					}
+					else
+					{
+						lblEr2.setIcon(iconLogoC);
+					}
+					
+					if(Check.checkCat(txtCat.getText()))
+					{
+						lblEr3.setIcon(iconLogoT);
+					}
+					else
+					{
+						lblEr3.setIcon(iconLogoC);
+					}
+					
+					if(Check.checkName(txtTitle.getText()))
+					{
+						lblEr4.setIcon(iconLogoT);
+					}
+					else
+					{
+						lblEr4.setIcon(iconLogoC);
+					}
+				}
+			}
+		});
+		lblAdd.setBounds(935, 450, 19, 14);
+		lblAdd.setIcon(iconLogoA);
+		panelResearch.add(lblAdd);
+	
+	}
+	
+	public JTextField getTxtName() {
+		return txtName;
+	}
+
+
+	public void setTxtName(JTextField txtName) {
+		this.txtName = txtName;
+	}
+
+
+	public JTextField getTxtSurname() {
+		return txtSurname;
+	}
+
+
+	public void setTxtSurname(JTextField txtSurname) {
+		this.txtSurname = txtSurname;
+	}
+
+
+	public JTextField getTxtCat() {
+		return txtCat;
+	}
+
+
+	public void setTxtCat(JTextField txtCat) {
+		this.txtCat = txtCat;
+	}
+
+
+	public JTextField getTxtTitle() {
+		return txtTitle;
+	}
+
+
+	public void setTxtTitle(JTextField txtTitle) {
+		this.txtTitle = txtTitle;
 	}
 public void findBooks(String query){
 	TableRowSorter<DefaultTableModel> tr=new TableRowSorter<DefaultTableModel>();

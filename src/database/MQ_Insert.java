@@ -1,6 +1,10 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MQ_Insert {
 
@@ -66,7 +70,15 @@ public class MQ_Insert {
 			return 	query;
 		}	
 	
-	
+		public static void insertBooks(String name, String surname, String cat,String title) throws SQLException
+		{
+			String query = "INSERT INTO libro(nome_autore, cognome_autore, categoria, titolo) "
+					       + "VALUES('" + name + "' , '" + surname + "' , '" + cat + "' , '" + title + "')";
+			DBmanager.openConnection();
+			DBmanager.executeUpdate(query);
+			DBmanager.closeConnection();
+		}
+		
 /*
 public static void insertPassTemp(int x) throws SQLException
 {  // mettere null tutti

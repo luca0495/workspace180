@@ -3,15 +3,17 @@ package Table;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import Books.Books;
+import database.MQ_Delete;
 import database.MQ_Read;
 
 public class TableModelBooks extends AbstractTableModel  {
 	
 	private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo"};
+    private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo", "Num_Prenotazioni"};
     private Object[][] data = null;
     
     public TableModelBooks()

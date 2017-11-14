@@ -112,16 +112,6 @@ public class AppMain extends SL_JFrame  {
 		frame.getContentPane().add(Research, "name_1471890526861409");
 		Research.setLayout(null);
 		
-		JPanel PanelRegi = new JPanel();
-		frame.getContentPane().add(PanelRegi, "name_1495174434374087");
-		PanelRegi.setLayout(null);
-		
-
-		JPanel panelFirstacc = new JPanel();
-		frame.getContentPane().add(panelFirstacc, "name_1496299950569999");
-		panelFirstacc.setLayout(null);
-		
-	
 		JButton btnIndietro = new JButton("Indietro");
 		btnIndietro.addMouseListener(new MouseAdapter() {
 			@Override
@@ -217,18 +207,29 @@ public class AppMain extends SL_JFrame  {
 		JButton btnNewButton_2 = new JButton("LOGIN");
 		
 		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-					panelFirstacc.setVisible(false);
-					panelLog.setVisible(false);
-					Research.setVisible(false);
-					PanelRegi.setVisible(true);
-				}
-				
-				
-				//me.closeconn();
-	
+			public void actionPerformed(ActionEvent arg0) {
+			}
 		});
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+		 @Override
+			public void mousePressed(MouseEvent arg0) {
+				EventQueue.invokeLater(new Runnable() {
+						public void run() 
+						{
+						 try 
+						{
+						 Login lo = new Login(getFrame());
+					    } 
+						catch (Exception e) 
+						{
+						e.printStackTrace();
+						}
+					
+					}	
+		
+				 });    
+			}
+	 });
 		btnNewButton_2.setBounds(124, 147, 154, 23);
 		panelLog.add(btnNewButton_2);
 		
@@ -353,110 +354,17 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		JLabel lblBackgound1 = new JLabel();
-		lblBackgound1.setBounds(94, -21, 884, 511);
+		lblBackgound1.setBounds(0, 0, 884, 511);
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
 		
 	
 		
-		JLabel lblLogin = new JLabel("LOGIN");
-		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblLogin.setBounds(216, 11, 128, 46);
-		PanelRegi.add(lblLogin);
-		
-		JLabel lblUser = new JLabel("user");
-		lblUser.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUser.setBounds(20, 76, 46, 14);
-		PanelRegi.add(lblUser);
-		
-		JLabel lblPassword = new JLabel("password");
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPassword.setBounds(10, 115, 67, 17);
-		PanelRegi.add(lblPassword);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(114, 115, 142, 20);
-		PanelRegi.add(passwordField);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(114, 75, 142, 20);
-		PanelRegi.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JButton btnIndietro_1 = new JButton("Indietro");
-		btnIndietro_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				PanelRegi.setVisible(false);
-			}
-		});
-		btnIndietro_1.setBounds(124, 236, 89, 23);
-		PanelRegi.add(btnIndietro_1);
-		
-		JButton btnEntra = new JButton("ENTRA");
-		btnEntra.setBounds(124, 156, 89, 23);
-		PanelRegi.add(btnEntra);
-		
-		JButton btnPrimoAccesso = new JButton("PRIMO ACCESSO");
-		btnPrimoAccesso.setBounds(243, 156, 135, 23);
-		PanelRegi.add(btnPrimoAccesso);
+	
 		
 		
-		JLabel lblUser_1 = new JLabel("user");
-		lblUser_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblUser_1.setBounds(25, 37, 70, 26);
-		panelFirstacc.add(lblUser_1);
 		
-		JLabel lblPass = new JLabel("password temporanea");
-		lblPass.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblPass.setBounds(25, 74, 207, 26);
-		panelFirstacc.add(lblPass);
-		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(242, 81, 150, 20);
-		panelFirstacc.add(passwordField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(242, 44, 152, 20);
-		panelFirstacc.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblCambioPassword = new JLabel("CAMBIO PASSWORD");
-		lblCambioPassword.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblCambioPassword.setBounds(168, 148, 208, 26);
-		panelFirstacc.add(lblCambioPassword);
-		
-		JLabel lblPassword_1 = new JLabel("password");
-		lblPassword_1.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblPassword_1.setBounds(25, 221, 85, 26);
-		panelFirstacc.add(lblPassword_1);
-		
-		JLabel lblPassword_2 = new JLabel("password");
-		lblPassword_2.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblPassword_2.setBounds(25, 261, 85, 26);
-		panelFirstacc.add(lblPassword_2);
-		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setBounds(118, 228, 168, 20);
-		panelFirstacc.add(passwordField_2);
-		
-		passwordField_3 = new JPasswordField();
-		passwordField_3.setBounds(120, 268, 168, 20);
-		panelFirstacc.add(passwordField_3);
-		
-		JButton btnIndietro_2 = new JButton("Indietro");
-		btnIndietro_2.setBounds(303, 335, 89, 23);
-		panelFirstacc.add(btnIndietro_2);
-		
-		JLabel lblCredenziali = new JLabel("CREDENZIALI ");
-		lblCredenziali.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblCredenziali.setBounds(166, 11, 164, 22);
-		panelFirstacc.add(lblCredenziali);
-		
-		JButton btnConferma = new JButton("conferma");
-		btnConferma.setBounds(179, 335, 89, 23);
-		panelFirstacc.add(btnConferma);
 	
 	}
 	public JTextField getText() {

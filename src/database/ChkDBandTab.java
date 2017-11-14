@@ -86,11 +86,12 @@ public class ChkDBandTab {
 	 
 		 statement.executeUpdate
                   ("CREATE TABLE  libro ( "
-                  +"codice varchar(10) not null, "
+                  +"codice serial not null, "
                   +"nome_autore varchar(15) not null, "
                   +"cognome_autore varchar(15) not null, "
                   +"categoria varchar(15) not null,"
                   +"titolo varchar(35) not null,"
+                  +"num_prenotazioni integer null,"
                   +"primary key(codice,nome_autore,cognome_autore,categoria,titolo))")  ;
 		 
 		 	      System.out.println("ChkDBandTable :> table Book CREATED !");		 

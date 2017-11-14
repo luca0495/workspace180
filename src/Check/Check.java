@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import database.MQ_Check;
+import database.MQ_Insert;
 
 public class Check {
 
@@ -33,6 +34,28 @@ public class Check {
 	    }
 
 	    return true;
+    }
+	
+	public static boolean checkCat(String c)
+    {
+	    c = c.trim();
+	    
+	    String[] catPattern = new String[] {"romanzo","giallo"};
+
+	    if(c == null || c.equals(""))
+	    {
+	    	return false;
+	    }
+	    
+	    for(int i = 0; i < catPattern.length; i++)
+    	{
+    		if(catPattern[i].equals(c))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
 
 	
@@ -210,6 +233,11 @@ public class Check {
 	    			&& checkPassEq(pass, passC)&& checkInq(inq);
 	    }
 	 
+	 public static boolean checkAllBooks(String nome, String cognome, String categoria, String titolo)
+	    {
+	    	return checkName(nome) && checkName(cognome) && checkCat(categoria) && checkName(titolo);
+	    }
+	
 	 
 	//********************************************
 	/*
@@ -389,10 +417,6 @@ public class Check {
     */
     /*
      // CHECK ALLCLI
-    public static boolean checkAllCli(List<String> data)
-    {
-    	return checkCF(data.get(0)) && checkCodFisExist(data.get(0)) && checkMail(data.get(1)) && checkMailExist(data.get(1)) && checkPass(data.get(2)) && checkName(data.get(3)) && checkName(data.get(4)) && checkTel(data.get(5));
-    }
     
     public static boolean checkAllPre(List<String> data)
     {

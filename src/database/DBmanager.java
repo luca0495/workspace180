@@ -9,6 +9,17 @@ public class DBmanager {
 	//CAMPI
 	private static Connection connection;
 	//METODI
+	public static Connection openConnection1() 			throws SQLException
+	{
+		//String url ="jdbc:postgresql://localhost:5432/GestioneSpiaggia";
+		//String url ="jdbc:postgresql://localhost:5432/Dexodb";
+		
+		String url ="jdbc:postgresql://localhost:5432/schoolib";
+		String username="postgres";
+		String password="postgres";
+		return connection = DriverManager.getConnection(url,username,password);
+	}
+	
 	public static void 		openConnection() 			throws SQLException
 	{
 		//String url ="jdbc:postgresql://localhost:5432/GestioneSpiaggia";
@@ -19,7 +30,6 @@ public class DBmanager {
 		String password="postgres";
 		connection = DriverManager.getConnection(url,username,password);
 	}
-	
 	
 	public static void 		closeConnection() 			throws SQLException
 	{	
@@ -48,6 +58,15 @@ public class DBmanager {
 		//Use this method if you are using INSERT, DELETE, or UPDATE SQL statements.
 		
 		PreparedStatement stmt = connection.prepareStatement(query);
+		stmt.executeUpdate();
+	}
+	
+	public static void 		executeUpdate1(Statement stmt2) throws SQLException
+	{
+		//Returns an integer representing the number of rows affected by the SQL statement.
+		//Use this method if you are using INSERT, DELETE, or UPDATE SQL statements.
+		
+		PreparedStatement stmt = connection.prepareStatement(null);
 		stmt.executeUpdate();
 	}
 	public static Connection getConnection(String string, String string2, String string3) throws SQLException {

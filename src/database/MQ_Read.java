@@ -30,6 +30,7 @@ public class MQ_Read {
 				dati[0][2] = null;
 				dati[0][3] = null;
 				dati[0][4] = null;
+				dati[0][5] = null;
 				
 			}
 			else
@@ -41,8 +42,9 @@ public class MQ_Read {
 					results.add(rs.getString("cognome_autore"));
 					results.add(rs.getString("categoria"));
 					results.add(rs.getString("titolo"));
+					results.add(rs.getString("num_prenotazioni"));
 					
-					int cols = 5;
+					int cols = 6;
 			    	int rows = results.size() / cols;
 			    	
 			    	dati = new String[rows][cols];
