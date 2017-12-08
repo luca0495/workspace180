@@ -187,8 +187,7 @@ public class TableBooks extends JPanel implements TableModelListener {
 		model.addColumn("Num_Pren");
 		
 		System.out.println("Valore ritornato:" + x);
-		String query = "SELECT * FROM libro" + " WHERE (codice LIKE '%"+x+"%'" 
-				                             + " OR nome_autore LIKE '%"+x+"%'"
+		String query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
 		                                     + " OR cognome_autore LIKE '%"+x+"%'"
 		                                     + " OR categoria LIKE '%"+x+"%'"
 		                                     + " OR titolo LIKE '%"+x+"%')";

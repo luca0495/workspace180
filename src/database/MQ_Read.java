@@ -24,7 +24,7 @@ public class MQ_Read {
 			
 			if (!rs.isBeforeFirst()) 
 			{
-				dati = new String[1][5];
+				dati = new String[1][6];
 				dati[0][0] = null;
 				dati[0][1] = null;
 				dati[0][2] = null;
