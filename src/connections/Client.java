@@ -31,6 +31,7 @@ import Core.Requests;
 import Core.RequestsList;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
+import database.MQ_Delete;
 import database.MQ_Insert;
 
 import java.awt.Font;
@@ -191,8 +192,12 @@ public class Client implements Serializable, Runnable  {
 					case READ:
 								switch (com) {							
 						//	book
-								case BookREAD:							
-								
+								case BookREAD:		
+									
+
+//TODO MAURO: PASSA METODO POPULATEDATA DA GUI TABLEBOOKS
+									
+									
 									break;
 						//	Person
 								case UserREAD: 
@@ -230,8 +235,14 @@ public class Client implements Serializable, Runnable  {
 						//	book			
 								case BookUPDATE:							
 								
+									
+//TODO MAURO: PASSA METODO MQ_Insert.insertBooks DA GUI TABLEBOOKS									
+									
+									
 									break;
 								case BookDELETE: 
+
+//TODO MAURO: PASSA METODO MQ_Delete.deleteRowBooks(r); DA classe tableupdatebooks									
 									
 									break;
 						//	Person

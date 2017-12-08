@@ -73,7 +73,14 @@ public class TableBooks extends JPanel implements TableModelListener {
         			try 
         			{ 
         				System.out.println("5");
+        				
+ 
+        				
+//TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
 						TableUpdateBooks.deleteRow(rowData, table);
+						
+						
+						
 						tm.fireTableDataChanged();
 						table.repaint();
 					} 

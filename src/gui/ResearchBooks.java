@@ -23,6 +23,7 @@ import Check.PopUp;
 import Table.TableBooks;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
+import connections.Client;
 import database.MQ_Insert;
 import database.MQ_Read;
 
@@ -43,6 +44,8 @@ import java.awt.Toolkit;
 
 public class ResearchBooks {
 
+	private Client  		me ;
+	
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField2;
@@ -101,12 +104,16 @@ public class ResearchBooks {
 			String s=textField.getText();
 		    if(s.length()!=0){
 			 try {
+				 
+	//TODO PASSA A CLIENT	 
 				TableBooks.PopulateData(s);
-			} catch (SQLException e1) {
+			
+			 } catch (SQLException e1) {
 				e1.printStackTrace();
 			}
 		    }else{
 		      try {
+	//TODO PASSA A CLIENT
 				 TableBooks.PopulateData("");
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -262,7 +269,12 @@ public class ResearchBooks {
 					try 
 					{
 						System.out.println("5" );
+
+//TODO INSERISCI **** PASSA A CLIENT						
 						MQ_Insert.insertBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText());						
+						
+						
+						
 						System.out.println("6" );
 						
 						txtName.setText(null);
