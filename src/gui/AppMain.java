@@ -326,6 +326,73 @@ public class AppMain extends SL_JFrame  {
 		JButton btnRicerca = new JButton("Ricerca");
 		btnRicerca.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
+			
+			try {
+				
+				System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
+				
+				me.setCliType(Clients.Librarian); // siamo sicuri che sia Librarian?
+				System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
+				me.setBusy(true);		
+				// BookRead				
+					try {
+						me.getCmdLIST().put(Commands.BookREAD);	
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con accodamento comando per leggere database");					
+					}
+					
+					
+				// BookUpdate				
+					try {
+						
+						me.getCmdLIST().put(Commands.BookUPDATE);							
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con accodamento comando per aggiornare tabella");					
+					}
+
+				// BookAdd				
+					try {
+						me.getCmdLIST().put(Commands.BookADD);							
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con accodamento comando per aggiungere libro");					
+					}
+					
+				// BookDelete			
+					try {
+						me.getCmdLIST().put(Commands.BookDELETE);							
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con accodamento comando per eliminare libro");					
+					}
+					
+				
+				
+			/*	
+			//  Loans	
+				// ChkDBandTab.tableExistLoans();
+				try {
+					
+					//ChkDBandTab.tableExistBook();
+					MessageBack back = me.Request(Commands.tableExistLoans);    
+
+					System.out.println("GUI :> risposta dal DB : "+back.getText());						
+					if (back.getText()!=""){
+						System.out.println("GUI :> LOANS : non ritorna nullo");
+
+						System.out.println("GUI :> sondo in CLI Busy prima: "+me.isBusy());	
+						me.setBusy(false);
+						System.out.println("GUI :> sondo in CLI Busy dopo: "+me.isBusy());	
+					}
+				} catch (Exception e) {
+					System.out.println("appMain :> problemi con table exist LOANS");
+					me.setBusy(false);
+				}
+				*/			
+			me.setCliType(Clients.Default);	
+	
+			} catch (Exception e) {
+				
+				e.printStackTrace();	
+			}	
 		}
 	});
 		btnRicerca.addMouseListener(new MouseAdapter() {
@@ -336,7 +403,7 @@ public class AppMain extends SL_JFrame  {
 					{
 					 try 
 					{
-					 ResearchBooks rb = new ResearchBooks(getFrame());
+					 ResearchBooks rb = new ResearchBooks(getFrame(),me);
 				    } 
 					catch (Exception e) 
 					{

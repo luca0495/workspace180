@@ -8,7 +8,8 @@ public enum Commands{
 
 			BookREAD 		("Book Read			",		SearchFor.Book,			CommandsType.READ	,1,0), 
 			BookUPDATE 		("Book Update		",		SearchFor.Book,			CommandsType.CHANGE	,2,0),
-			BookDELETE		("Book Delete		",		SearchFor.Book,			CommandsType.CHANGE	,3,0),
+			BookADD	        ("Book Add		    ",		SearchFor.Book,			CommandsType.CHANGE	,3,0),
+			BookDELETE		("Book Delete		",		SearchFor.Book,			CommandsType.CHANGE	,4,0),
 			
 			PrenotationREAD	("Prenotation read	",		SearchFor.Prenotation,	CommandsType.READ	,4,0),
 			Prenotation		("Prenotation new	",		SearchFor.Prenotation,	CommandsType.CHANGE	,4,0),

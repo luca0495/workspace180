@@ -20,6 +20,7 @@ import javax.swing.table.TableRowSorter;
 import Books.Books;
 import Check.Check;
 import Check.PopUp;
+import Core.Clients;
 import Table.TableBooks;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
@@ -42,7 +43,7 @@ import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 import java.awt.Toolkit;
 
-public class ResearchBooks {
+public class ResearchBooks extends SL_JFrame {
 
 	private Client  		me ;
 	
@@ -70,14 +71,21 @@ public class ResearchBooks {
 	private JTextField txtLoans;
 	/**
 	 * Create the application.
+	 * @param me2 
+	 * @param me2 
 	 */
     
-	public ResearchBooks(Component c) {
+	public ResearchBooks(Component c, Client x) {
+		me = x;
+		me.setActW(this);
+		me.setActC(c);
+		me.setCliType(Clients.Reader); // sicuro che sia Reader?
+		
 		initialize(c);
 	}
 
 	
-	private void initialize(Component c) {
+	public void initialize(Component c) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1000, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
