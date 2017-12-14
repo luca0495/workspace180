@@ -422,10 +422,31 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		JLabel lblBackgound1 = new JLabel();
-		lblBackgound1.setBounds(0, 0, 884, 511);
+		lblBackgound1.setBounds(-34, 11, 884, 511);
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
+		
+		JPanel panel_2 = new JPanel();
+		frame.getContentPane().add(panel_2, "name_584559887195472");
+		panel_2.setLayout(null);
+		
+		JLabel lblRegistrazione = new JLabel("REGISTRAZIONE");
+		lblRegistrazione.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblRegistrazione.setBounds(207, 53, 164, 40);
+		panel_2.add(lblRegistrazione);
+		
+		JButton btnREADER = new JButton("READER");
+		btnREADER.setBounds(112, 190, 89, 23);
+		panel_2.add(btnREADER);
+		
+		JButton btnLIBRARIAN = new JButton("LIBRARIAN");
+		btnLIBRARIAN.setBounds(388, 190, 89, 23);
+		panel_2.add(btnLIBRARIAN);
+		
+		JButton btnIndietro_1 = new JButton("Indietro");
+		btnIndietro_1.setBounds(245, 306, 89, 23);
+		panel_2.add(btnIndietro_1);
 		
 	
 		
