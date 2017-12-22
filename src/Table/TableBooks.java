@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,9 +32,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import Check.PopUp;
+import Core.Commands;
+import connections.Client;
 import database.DBmanager;
 
-public class TableBooks extends JPanel implements TableModelListener {
+public class TableBooks extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private static JTable table;
@@ -52,7 +55,7 @@ public class TableBooks extends JPanel implements TableModelListener {
         super(new GridLayout(1,0));
         this.frame = frame;
         tm = new TableModelBooks();
-        table = new JTable(tm);
+        setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
         deleteItem.addActionListener(new ActionListener() {
@@ -77,12 +80,12 @@ public class TableBooks extends JPanel implements TableModelListener {
  
         				
 //TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
-						TableUpdateBooks.deleteRow(rowData, table);
+						TableUpdateBooks.deleteRow(rowData, getTable());
 						
 						
 						
 						tm.fireTableDataChanged();
-						table.repaint();
+						getTable().repaint();
 					} 
         			catch (SQLException e1)
         			{
@@ -94,7 +97,7 @@ public class TableBooks extends JPanel implements TableModelListener {
         System.out.println("6");
         popupMenu.add(deleteItem);
         
-		table.addMouseListener(new MouseAdapter() {
+		getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{
@@ -126,29 +129,29 @@ public class TableBooks extends JPanel implements TableModelListener {
             }
 		});
 		 System.out.println("12");
-	    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		ListSelectionModel listSelectionModel = table.getSelectionModel();
+	    getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ListSelectionModel listSelectionModel = getTable().getSelectionModel();
 	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(tm));	    
-		table.getModel().addTableModelListener(this);
-		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		table.setFillsViewportHeight(true);
-		table.getDefaultEditor(String.class).addCellEditorListener(ChangeNotification);
-	    table.setCellSelectionEnabled(true);
+		getTable().getModel().addTableModelListener(this);
+		getTable().setPreferredScrollableViewportSize(new Dimension(500, 70));
+		getTable().setFillsViewportHeight(true);
+		getTable().getDefaultEditor(String.class).addCellEditorListener(ChangeNotification);
+	    getTable().setCellSelectionEnabled(true);
 
 	    listSelectionModel.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) 
 			{
-				if(!(table.getSelectedRow() == -1) && !(table.getSelectedColumn() == -1))
+				if(!(getTable().getSelectedRow() == -1) && !(getTable().getSelectedColumn() == -1))
 				{
 					 System.out.println("13");
-					selectedR = table.getSelectedRow(); // riga
-					selectedC = table.getSelectedColumn(); // colonna	
-					oldValue = (String) table.getValueAt(selectedR, selectedC);
+					selectedR = getTable().getSelectedRow(); // riga
+					selectedC = getTable().getSelectedColumn(); // colonna	
+					oldValue = (String) getTable().getValueAt(selectedR, selectedC);
 				}
 			}
 	    });
 	    System.out.println("14");
-		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane(getTable());
 		add(scrollPane);
     }
     
@@ -177,15 +180,11 @@ public class TableBooks extends JPanel implements TableModelListener {
         }
     };
         
-    public static void PopulateData(String x) throws SQLException {
-		// Clear table
-   
-		table.setModel(new DefaultTableModel());
-	
-		// Model for Table
-		
-		DefaultTableModel model = (DefaultTableModel)table.getModel();
-		
+    public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
+		// Clear table   
+		getTable().setModel(new DefaultTableModel());	
+		// Model for Table		
+		DefaultTableModel model = (DefaultTableModel)getTable().getModel();		
 		model.addColumn("Codice");
 		model.addColumn("Nome_Autore");
 		model.addColumn("Cognome_Autore");
@@ -193,15 +192,25 @@ public class TableBooks extends JPanel implements TableModelListener {
 		model.addColumn("Titolo");
 		model.addColumn("Num_Pren");
 		
-		System.out.println("Valore ritornato:" + x);
+		System.out.println("Valore ritornato:" + x);		
+		
 		String query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
 		                                     + " OR cognome_autore LIKE '%"+x+"%'"
 		                                     + " OR categoria LIKE '%"+x+"%'"
 		                                     + " OR titolo LIKE '%"+x+"%')";
-		if(x=="" || x==null){
-			
+		if(x=="" || x==null){			
 		query = "SELECT * FROM libro ";
 		}
+		
+		// in test
+		
+		
+		me.setSql(query);
+		me.getCmdLIST().put(Commands.BookExecuteQuery);
+		
+		// in test
+		
+		/* OLD
 		//"ORDER BY CustomerID ASC";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
@@ -231,6 +240,9 @@ public class TableBooks extends JPanel implements TableModelListener {
 		System.out.println("Test10");
 		rs.close();
 		DBmanager.closeConnection();
+		
+		*/
+		
 		}
     
     
@@ -246,7 +258,7 @@ public class TableBooks extends JPanel implements TableModelListener {
 		{
         	TableUpdateBooks.setColumn(column);
         	TableUpdateBooks.setInput((String)model.getValueAt(row, column));
-        	TableUpdateBooks.check(frame, table);
+        	TableUpdateBooks.check(frame, getTable());
 		} 
 	}
 	
@@ -254,7 +266,17 @@ public class TableBooks extends JPanel implements TableModelListener {
 	public void update()
 	{
 		tm.fireTableDataChanged();
-		table.repaint();
+		getTable().repaint();
+	}
+
+
+	public static JTable getTable() {
+		return table;
+	}
+
+
+	public static void setTable(JTable table) {
+		TableBooks.table = table;
 	}
 	
 

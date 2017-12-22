@@ -18,7 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
@@ -31,6 +33,7 @@ import Core.Requests;
 import Core.RequestsList;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
+import Table.TableBooks;
 import database.MQ_Delete;
 import database.MQ_Insert;
 
@@ -38,6 +41,7 @@ import java.awt.Font;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Random;
@@ -53,9 +57,11 @@ import java.awt.Component;
 public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	
+	private 			JFrame 				ActF			=null;	//Active Frame
 	private 			SL_JFrame			ActW			=null;	//Active Window
 	private 			Component			ActC			=null;	//Active Component
 	
+	private 			JTable 				ActTable		=null;
 	
 	private 			Clients				ClientType;
 	private 			ServerStub			srv;		
@@ -192,9 +198,11 @@ public class Client implements Serializable, Runnable  {
 					case READ:
 								switch (com) {							
 						//	book
-								case BookREAD:		
+								case BookExecuteQuery:		
+			
+									System.out.println("passato come parametro sql : "+this.Sql);
+									BookPopulate();
 									
-
 //TODO MAURO: PASSA METODO POPULATEDATA DA GUI TABLEBOOKS
 									
 									
@@ -594,21 +602,57 @@ public class Client implements Serializable, Runnable  {
 							case "OK":							
 								break;
 	
+							case "STUB :> Eccezione *** nessuna risposta da SKELETON":
+								System.out.println("CLI - ECCEZIONE DA STUB");	
+								break;
+								
 							case "SRV :> user Registration :> OK":							
 								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
-								
-								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());								
-								
-								
-								
-								
-								EmailSender.send_uninsubria_email(getTo(),this);
-								
+								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());									
+								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
-								this.setSql(null);
-								
+								this.setSql(null);							
 								break;
-															
+								
+							case "SRV :> table book populate :> OK":
+								System.out.println("ritornato al client POPULATE OK : ");	
+								
+								System.out.println(Mb.getTab().toString());
+								setActTable(Mb.getTab());
+								
+								//test ok
+								System.out.println("ricavo valore record 0 campo 0 : "+ getActTable().getModel().getValueAt(0, 0));
+								System.out.println("ricavo valore record 0 campo 1 : "+ getActTable().getModel().getValueAt(0, 1));
+								System.out.println("ricavo valore record 0 campo 2 : "+ getActTable().getModel().getValueAt(0, 2));
+								System.out.println("ricavo valore record 0 campo 3 : "+ getActTable().getModel().getValueAt(0, 3));
+								System.out.println("ricavo valore record 0 campo 4 : "+ getActTable().getModel().getValueAt(0, 4));
+								System.out.println("ricavo valore record 0 campo 5 : "+ getActTable().getModel().getValueAt(0, 5));
+								
+								System.out.println("ricavo valore record 1 campo 0 : "+ getActTable().getModel().getValueAt(1, 0));
+								System.out.println("ricavo valore record 1 campo 1 : "+ getActTable().getModel().getValueAt(1, 1));
+								System.out.println("ricavo valore record 1 campo 2 : "+ getActTable().getModel().getValueAt(1, 2));
+								System.out.println("ricavo valore record 1 campo 3 : "+ getActTable().getModel().getValueAt(1, 3));
+								System.out.println("ricavo valore record 1 campo 4 : "+ getActTable().getModel().getValueAt(1, 4));
+								System.out.println("ricavo valore record 1 campo 5 : "+ getActTable().getModel().getValueAt(1, 5));
+								//test ok
+
+								
+								TableBooks.getTable().setModel(Mb.getTab().getModel());
+								
+								
+								//getActTable().update(null);
+
+								this.setActF(null);
+								this.setSql(null);	
+								break;
+							case "SRV :> table book populate :> NG":
+								System.out.println("ritornato al client POPULATE NG : ");	
+								
+								
+								this.setActF(null);
+								this.setSql(null);	
+								break;	
+								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								
@@ -683,8 +727,6 @@ public class Client implements Serializable, Runnable  {
 			sendM(MsgSend, Mb);
 		}	
 	}	
-
-	
 	
 	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.tableExistLoans;
@@ -712,11 +754,6 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}	
 	
-	
-	
-		
-
-	
 	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
@@ -743,6 +780,46 @@ public class Client implements Serializable, Runnable  {
 			
 		}	
 	}
+	
+	
+	private void BookPopulate () throws SendFailedException, MessagingException, SQLException{
+		
+		Commands cmd = Commands.BookExecuteQuery;
+		
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message			
+			
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString(),			// id Client 
+					this.getSql()
+					);
+			//MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			
+			sendM(MsgSend, Mb);
+			
+			
+		}	
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	
 	
 	
@@ -793,7 +870,19 @@ public class Client implements Serializable, Runnable  {
 		}
 			public void setActC(Component actC) {
 				ActC = actC;
-		}		
+		}
+			public JFrame getActF() {
+				return ActF;
+			}
+			public void setActF(JFrame actF) {
+				ActF = actF;
+			}
+			public JTable getActTable() {
+				return ActTable;
+			}
+			public void setActTable(JTable actTable) {
+				ActTable = actTable;
+			}		
 	
 
 	

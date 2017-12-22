@@ -35,6 +35,7 @@ public class ServerSkeleton implements IServer, Runnable {
 				Message myOper = ( Message ) istream.readObject() ;		//cast a Message della lettura dell'oggetto								
 				System.out.println("SKELETON :> rx cmd :> "+myOper.getCommand().getCommandType().name());
 				System.out.println("SKELETON :> rx cmd :> "+myOper.getCommand().Den);
+				
 				switch (myOper.getCommand().getCommandType()){	
 				
 				case CHANGE:

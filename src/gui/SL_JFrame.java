@@ -36,7 +36,13 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 	
 	
 	public void addMsg(String msg){
-		text.setText(msg);	
+		
+		if (msg!=null) {
+			text.setText(msg);
+		}else {
+			text.setText(null);
+		}
+		
 	}
 
 	// SET GET Metod

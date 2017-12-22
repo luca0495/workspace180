@@ -1,6 +1,7 @@
 package connections;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.util.Date;
 import Core.Clients;
 import Core.Commands;
@@ -15,6 +16,8 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	Date		DateOfRequest;
 	private 	String		SQLQuery;	
 	private 	String  	text;
+	private 	ResultSet 	rs;
+	
 	//Costruttori
 	public Message (Commands cmd){
 		setCommands(cmd);
@@ -37,12 +40,6 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
 		setSQLQuery(SQLQuery);
 	}	
-	
-	
-	
-	
-	
-	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
 	public boolean equalTo(Message x){
@@ -94,6 +91,12 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setSQLQuery(String sQLQuery) {
 		SQLQuery = sQLQuery;
-	}	
+	}
+	public ResultSet getRs() {
+		return rs;
+	}
+	public void setRs(ResultSet rs) {
+		this.rs = rs;
+	}
 	
 }

@@ -21,6 +21,7 @@ import Books.Books;
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
+import Core.Commands;
 import Table.TableBooks;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
@@ -56,7 +57,9 @@ public class ResearchBooks extends SL_JFrame {
     private TableBooks table;
     private TableUpdateBooks table1;
     private JTable table4;
+    
     private JTable tableBooks;
+    
 	protected String ValToSearch;
 	private JTextField txtCod;
 	private JTextField txtName;
@@ -79,7 +82,7 @@ public class ResearchBooks extends SL_JFrame {
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
-		me.setCliType(Clients.Reader); // sicuro che sia Reader?
+		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
 		
 		initialize(c);
 	}
@@ -111,21 +114,32 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent e) {
 			String s=textField.getText();
 		    if(s.length()!=0){
-			 try {
+			 
 				 
-	//TODO PASSA A CLIENT	 
-				TableBooks.PopulateData(s);
-			
+//TODO PASSA A CLIENT da TableBooks		 				 
+//me.getCmdLIST().put(Commands.tableBookPopulate);
+			try {	 	 
+				TableBooks.PopulateData(s,me);
 			 } catch (SQLException e1) {
+				e1.printStackTrace();	
+			} catch (InterruptedException e1) {
+				
 				e1.printStackTrace();
 			}
+			
 		    }else{
+//TODO PASSA A CLIENT da TableBooks	
+//me.getCmdLIST().put(Commands.tableBookPopulate);	
 		      try {
-	//TODO PASSA A CLIENT
-				 TableBooks.PopulateData("");
+				 TableBooks.PopulateData("",me);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+			} catch (InterruptedException e1) {
+				
+				e1.printStackTrace();
 			}
+		      		      
+		      
 		 }
 	   }
    });
@@ -150,6 +164,9 @@ public class ResearchBooks extends SL_JFrame {
 		panelResearch.setBackground(Color.WHITE);
 		frame.getContentPane().add(panelResearch);
 		panelResearch.setLayout(null);
+		
+		
+// TODO RISINCRONIZZA DOPO AVER PASSATO A CLIENT		
 		
 		TableBooks panelTableResearch = new TableBooks(frame);
 		panelTableResearch.setBounds(10, 11, 944, 420);
@@ -252,6 +269,9 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
+
+		
+		
 		txtTitle.setBounds(626, 428, 156, 20);
 		panelResearch.add(txtTitle);
 		txtTitle.setColumns(10);
@@ -269,6 +289,12 @@ public class ResearchBooks extends SL_JFrame {
 		System.out.println("1" );
 		lblAdd.addMouseListener(new MouseAdapter() {
 			@Override
+	
+			
+			
+			
+			
+			
 			
 			public void mousePressed(MouseEvent arg0) {
 				

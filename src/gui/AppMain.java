@@ -332,8 +332,11 @@ public class AppMain extends SL_JFrame  {
 				System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
 				
 				me.setCliType(Clients.Librarian); // siamo sicuri che sia Librarian?
+				
 				System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
-				me.setBusy(true);		
+				me.setBusy(true);
+				
+				
 				// BookRead				
 					try {
 						me.getCmdLIST().put(Commands.BookREAD);	

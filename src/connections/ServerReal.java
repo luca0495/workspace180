@@ -1,22 +1,35 @@
 package connections;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import Check.Check;
 import Core.Clients;
 import Core.Commands;
 import Core.Guardian;
 import Core.Requests;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
+import Table.TableBooks;
+import Table.TableModelBooks;
+import Table.TableUpdateBooks;
+
 import gui.SystemClientStub;
 import gui.SystemServerSkeleton;
 
@@ -86,11 +99,92 @@ public class ServerReal extends ServerSkeleton {
 	@Override
 	public MessageBack 	visualizza(Message Mes) {
 	// chiamata diretta al dbManager
-		MessageRealServer M = this.MessageEncapsulation(Mes);
-		MessageBack AnswerM = null;
-		//Query DIRETTA su dbManager
+		
+		System.out.println("RealServer :> Rx Visualizza ");
+		
+		MessageRealServer M 	= this.MessageEncapsulation(Mes);
+		MessageBack x 			= new MessageBack();
+		MessageBack AnswerM 	= new MessageBack();
+		//Query DIRETTA su dbManager		
+		// ****************************************************************************************************************
+		switch (M.getMsg().getCommand()) {
+		
+		//********************
+		case BookExecuteQuery:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query ");					
+			try {				
+				
+				JTable table=new JTable();
+				// Clear table
+				table.setModel(new DefaultTableModel());			
+				// Model for Table				
+				DefaultTableModel model = (DefaultTableModel)table.getModel();				
+				model.addColumn("Codice");
+				model.addColumn("Nome_Autore");
+				model.addColumn("Cognome_Autore");
+				model.addColumn("Categoria");
+				model.addColumn("Titolo");
+				model.addColumn("Num_Pren");					
+
+				DBmanager.openConnection();
+				ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
+
+				int row = 0;
+				System.out.println("Test1");
+				while((rs!=null) && (rs.next()))
+				{
+					System.out.println("Test2 addRow");	
+					model.addRow(new Object[0]);
+					System.out.println("Codice : "+rs.getString("codice"));																		System.out.println("Test3");
+				model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
+				model.setValueAt(rs.getString("nome_autore"), row, 1);		System.out.println("Test5");								
+				model.setValueAt(rs.getString("cognome_autore"), row, 2);	System.out.println("Test6");								
+				model.setValueAt(rs.getString("categoria"), row, 3);		System.out.println("Test7");								
+				model.setValueAt(rs.getString("titolo"), row, 4);			System.out.println("Test8");
+				model.setValueAt(rs.getString("num_prenotazioni"), row, 5);
+				row++;						
+				}
+					System.out.println("Test9");
+				
+				rs.close();
+				DBmanager.closeConnection();
+				
+				getMeS().addMsg(mSg);
+				x.setTab(table);
+				x.setText(new String ("SRV :> table book populate :> OK"));	
+				
+			} catch (SQLException e) {	
+				System.out.println("problemi con query book table populate");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> table book populate :> NG"));
+
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;								
+		
+		//********************	
+			
+			
+			
+		default:
+			break;
+		}
+		
+		
+
+		// ****************************************************************************************************************
 		
 		/*TODO PREPARA Answer*/
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return AnswerM;
 	}
@@ -101,16 +195,12 @@ public class ServerReal extends ServerSkeleton {
 		
 		System.out.println("RealServer :> Rx Change ");
 		
-		
-		
-		
 		MessageRealServer M = this.MessageEncapsulation(Mes);
 		System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
 		
-		MessageBack x = new MessageBack();
-		MessageBack Answer = new MessageBack();
-		
-		
+		MessageBack x 		= new MessageBack();
+		MessageBack Answer 	= new MessageBack();
+				
 		switch (M.getMsg().getUType()) {			// estrae tipo di utente da Message 				
 		//**********************************************************************************
 		case Librarian :

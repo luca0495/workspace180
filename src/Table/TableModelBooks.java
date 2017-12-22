@@ -1,5 +1,6 @@
 package Table;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import Books.Books;
 import database.MQ_Delete;
 import database.MQ_Read;
 
-public class TableModelBooks extends AbstractTableModel  {
+public class TableModelBooks extends AbstractTableModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo", "Num_Prenotazioni"};
