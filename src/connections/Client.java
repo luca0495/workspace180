@@ -637,7 +637,7 @@ public class Client implements Serializable, Runnable  {
 	
 	
 	
-	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException{
+	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
@@ -683,12 +683,15 @@ public class Client implements Serializable, Runnable  {
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
 								//getActTable().update(null);
 								this.setActF(null);
-								this.setSql(null);	
+								this.setSql(null);
+								setBusy(false);
 								break;
+								
 							case "SRV :> table book populate :> NG":
 								System.out.println("ritornato al client POPULATE NG : ");	
 								this.setActF(null);
-								this.setSql(null);	
+								this.setSql(null);
+								setBusy(false);
 								break;
 							
 							// BOOK Add	
@@ -697,20 +700,28 @@ public class Client implements Serializable, Runnable  {
 								
 								this.setActF(null);
 								this.setSql(null);	
+								
+								//AGGIORNA TABLE
+								TableBooks.PopulateData( null, this);
+								
+								
+								
 								break;
 							case "SRV :> book add :> NG":
 								System.out.println("ritornato al client BOOK Add NG : ");									
 
 								this.setActF(null);
-								this.setSql(null);	
+								this.setSql(null);
 								break;
 								
 							// BOOK Delete
 							case "SRV :> book del :> OK":
 								System.out.println("ritornato al client BOOK Del OK : ");									
-
 								this.setActF(null);
-								this.setSql(null);	
+								this.setSql(null);
+								
+								//AGGIORNA TABLE
+								TableBooks.PopulateData( null, this);
 								break;
 							case "SRV :> book del :> NG":
 								System.out.println("ritornato al client BOOK Del NG : ");									
@@ -718,15 +729,6 @@ public class Client implements Serializable, Runnable  {
 								this.setActF(null);
 								this.setSql(null);	
 								break;
-								
-								
-								
-								
-								
-								
-								
-								
-								
 								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -753,7 +755,7 @@ public class Client implements Serializable, Runnable  {
 	
 	// check
 	
-	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
 		
@@ -778,7 +780,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}			
 	
-	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
 		
@@ -803,7 +805,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}	
 	
-	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
 		
@@ -829,7 +831,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}	
 	
-	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException{
+	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
 		
@@ -857,7 +859,7 @@ public class Client implements Serializable, Runnable  {
 	}
 	
 	
-	private void BookPopulate () throws SendFailedException, MessagingException, SQLException{
+	private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookExecuteQuery;
 		
@@ -887,7 +889,7 @@ public class Client implements Serializable, Runnable  {
 
 	
 //TODO SISTEMA	
-	private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException{
+	private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.BookADD;
 		MessageBack Mb = new MessageBack();
 		
@@ -914,7 +916,7 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}
 	//TODO SISTEMA	
-		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException{
+		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.BookDELETE;
 			MessageBack Mb = new MessageBack();
 			

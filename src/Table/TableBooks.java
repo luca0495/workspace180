@@ -202,7 +202,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		query = "SELECT * FROM libro ";
 		}
 		
-		// in test
+		// TEST OK 27.12.2017
 				
 		me.setSql(query);
 		me.getCmdLIST().put(Commands.BookExecuteQuery);

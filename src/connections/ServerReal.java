@@ -218,11 +218,11 @@ public class ServerReal extends ServerSkeleton {
 							//listcmdDONE.put(Mes.getMesId(),null);
 							while (!Go){
 								try {
-									System.out.println("REAL SERVER :> in attesa GO da Guardian");
+									System.out.println("REAL SERVER L-A:> in attesa GO da Guardian");
 									Thread.sleep(10);
 								} catch (Exception e) 
 								{}
-								System.out.println("REAL SERVER :> go "+Go);						
+								System.out.println("REAL SERVER L-A:> go "+Go);						
 							}	//Attesa del turno...
 							
 							
@@ -290,16 +290,17 @@ public class ServerReal extends ServerSkeleton {
 									Thread.sleep(10);
 								} catch (Exception e) 
 								{}
-								System.out.println("REAL SERVER :> go "+Go);						
+								System.out.println("REAL SERVER B-L:> go "+Go);						
 							}	//Attesa del turno...
 							//******************************************************************************
-							System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBook ");					
+							System.out.println("REAL SERVER B-L:> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Librarian, target BOOK ");					
 							
 							
 								
 								switch ( M.getMsg().getCommand()){
 								//------------------------------------------------------------------------------			
 								case tableExistBook:		
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> TableExistBook");
 									try {
 										
 										ChkDBandTab.tableExistBook();
@@ -317,56 +318,34 @@ public class ServerReal extends ServerSkeleton {
 								case BookADD:	
 									
 									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Add book");					
-									try {				
-		
-										MQ_Insert.insertBooks(M.getMsg().getSQLQuery());
-										
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> book add :> OK"));	
+									try {					
+										MQ_Insert.insertBooks(M.getMsg().getSQLQuery());							
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book add :> OK"));	
 									
-								} catch (SQLException e) {	
-									System.out.println("problemi con query book Add");
-									e.printStackTrace();				
-									
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> book add :> NG"));
-
-								}
+									} catch (SQLException e) {	
+										System.out.println("problemi con query book Add");
+										e.printStackTrace();														
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book add :> NG"));
+									}
 								break;								
 								case BookDELETE:	
 									
 									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Delete book");					
 									try {				
-		
-										
 										MQ_Delete.deleteRowBooks(M.getMsg().getSQLQuery());
-										
-										
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> book del :> OK"));	
-									
-								} catch (SQLException e) {	
-									System.out.println("problemi con query book delete");
-									e.printStackTrace();				
-									
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> book del :> NG"));
-
-								}
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book del :> OK"));										
+									} catch (SQLException e) {	
+										System.out.println("problemi con query book delete");
+										e.printStackTrace();														
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book del :> NG"));
+									}
 								break;		
-								
-								
-								
 								}
-								
-									
-							
-							
-							
-							
-							
-							
-							
+
 							System.out.println("SYS BL :> srv ritorna "+x.getText());
 							return x;
 							//******************************************************************************
@@ -527,6 +506,12 @@ public class ServerReal extends ServerSkeleton {
 	}
 
 	//
+	
+	public ServerReal getSrvR() {
+		return this;
+	}
+	
+	
 	public Server getSrv() {
 		return Srv;
 	}
