@@ -337,6 +337,8 @@ public class AppMain extends SL_JFrame  {
 				me.setBusy(true);
 				
 				
+				
+				/* OLD TEST NG
 				// BookRead				
 					try {
 						me.getCmdLIST().put(Commands.BookREAD);	
@@ -366,7 +368,7 @@ public class AppMain extends SL_JFrame  {
 					} catch (Exception e) {
 						System.out.println("appMain :> problemi con accodamento comando per eliminare libro");					
 					}
-					
+				*/	
 				
 				
 			/*	
@@ -406,6 +408,8 @@ public class AppMain extends SL_JFrame  {
 					{
 					 try 
 					{
+						 
+						 
 					 ResearchBooks rb = new ResearchBooks(getFrame(),me);
 				    } 
 					catch (Exception e) 

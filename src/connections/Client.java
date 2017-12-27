@@ -48,6 +48,7 @@ import java.util.Random;
 
 import gui.AppLibrarian;
 import gui.AppReader;
+import gui.AppType;
 import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
@@ -241,15 +242,13 @@ public class Client implements Serializable, Runnable  {
 					
 								
 						//	book			
-								case BookUPDATE:							
+								case BookADD:							
 								
-									
+														ClientBookAdd();
 //TODO MAURO: PASSA METODO MQ_Insert.insertBooks DA GUI TABLEBOOKS									
-									
-									
 									break;
 								case BookDELETE: 
-
+														ClientBookDelete();
 //TODO MAURO: PASSA METODO MQ_Delete.deleteRowBooks(r); DA classe tableupdatebooks									
 									
 									break;
@@ -340,11 +339,37 @@ public class Client implements Serializable, Runnable  {
 																				
 																			
 																			//if (mSg.equals(new String ("SRV - Connessione OK"))){	
-																			if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){									
-																					getActW().addMsg(new String ("CLI:> Connection Test "+ctc+" result"+mSg));	
+																			if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){	
+																				
+																					if ( ActW.getSL_Type()==AppType.AppMain) {
+																						getActW().addMsg(new String ("CLI:> Connection Test "+ctc+" result"+mSg));	
+																					}
+																					else {
+																						if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+																							System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
+																						}
+																					}
+																						
+																					
+																					
 																		}else{
 																			setStubok(false);
-																					getActW().addMsg(new String ("CLI:> Connection Test result : NG"));	
+																			
+																			if ( ActW.getSL_Type()==AppType.AppMain) {
+																				getActW().addMsg(new String ("CLI:> Connection Test result : NG"));	
+																			}
+																			else {
+																				if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+																					System.out.println("  finestra attiva READER...  CLI:> Connection Test result : NG\\  ");																							
+																				}
+																			}
+																			
+																			
+																			
+																			
+																			
+																			
+																					
 																		}			
 															} catch (Exception e) {							
 																e.printStackTrace();
@@ -554,11 +579,32 @@ public class Client implements Serializable, Runnable  {
 																			System.out.println("CLI:> Logica > messaggio non letto");
 																		}
 																		
-																		if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){									
-																			getActW().addMsg(new String ("CLI:> Connection Test "+ctc+" result"+mSg));	
+																		if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){
+																			
+																			if ( ActW.getSL_Type()==AppType.AppMain) {
+																				getActW().addMsg(new String ("CLI:> Connection Test "+ctc+" result"+mSg));	
+																			}
+																			else {
+																				if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+																					System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
+																				}
+																			}
+
 																		}else{
 																			setStubok(false);
-																			getActW().addMsg(new String ("CLI:> Connection Test result : NG"));	
+																		
+																			if ( ActW.getSL_Type()==AppType.AppMain) {
+																				getActW().addMsg(new String ("CLI:> Connection Test result : NG"));	
+																			}
+																			else {
+																				if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+																					System.out.println("  finestra attiva READER...  CLI:> Connection Test result : NG\\  ");																							
+																				}
+																			}
+																			
+																			
+																		
+																		
 																		}
 																		
 													} catch (Exception e) {							
@@ -615,19 +661,17 @@ public class Client implements Serializable, Runnable  {
 								break;
 								
 							case "SRV :> table book populate :> OK":
-								System.out.println("ritornato al client POPULATE OK : ");	
-								
-								System.out.println(Mb.getTab().toString());
+								System.out.println("ritornato al client POPULATE OK : ");									
+								//System.out.println(Mb.getTab().toString());
 								setActTable(Mb.getTab());
-								
+								/*
 								//test ok
 								System.out.println("ricavo valore record 0 campo 0 : "+ getActTable().getModel().getValueAt(0, 0));
 								System.out.println("ricavo valore record 0 campo 1 : "+ getActTable().getModel().getValueAt(0, 1));
 								System.out.println("ricavo valore record 0 campo 2 : "+ getActTable().getModel().getValueAt(0, 2));
 								System.out.println("ricavo valore record 0 campo 3 : "+ getActTable().getModel().getValueAt(0, 3));
 								System.out.println("ricavo valore record 0 campo 4 : "+ getActTable().getModel().getValueAt(0, 4));
-								System.out.println("ricavo valore record 0 campo 5 : "+ getActTable().getModel().getValueAt(0, 5));
-								
+								System.out.println("ricavo valore record 0 campo 5 : "+ getActTable().getModel().getValueAt(0, 5));								
 								System.out.println("ricavo valore record 1 campo 0 : "+ getActTable().getModel().getValueAt(1, 0));
 								System.out.println("ricavo valore record 1 campo 1 : "+ getActTable().getModel().getValueAt(1, 1));
 								System.out.println("ricavo valore record 1 campo 2 : "+ getActTable().getModel().getValueAt(1, 2));
@@ -635,23 +679,54 @@ public class Client implements Serializable, Runnable  {
 								System.out.println("ricavo valore record 1 campo 4 : "+ getActTable().getModel().getValueAt(1, 4));
 								System.out.println("ricavo valore record 1 campo 5 : "+ getActTable().getModel().getValueAt(1, 5));
 								//test ok
-
-								
+								*/								
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
-								
-								
 								//getActTable().update(null);
-
 								this.setActF(null);
 								this.setSql(null);	
 								break;
 							case "SRV :> table book populate :> NG":
 								System.out.println("ritornato al client POPULATE NG : ");	
-								
+								this.setActF(null);
+								this.setSql(null);	
+								break;
+							
+							// BOOK Add	
+							case "SRV :> book add :> OK":
+								System.out.println("ritornato al client BOOK Add OK : ");
 								
 								this.setActF(null);
 								this.setSql(null);	
-								break;	
+								break;
+							case "SRV :> book add :> NG":
+								System.out.println("ritornato al client BOOK Add NG : ");									
+
+								this.setActF(null);
+								this.setSql(null);	
+								break;
+								
+							// BOOK Delete
+							case "SRV :> book del :> OK":
+								System.out.println("ritornato al client BOOK Del OK : ");									
+
+								this.setActF(null);
+								this.setSql(null);	
+								break;
+							case "SRV :> book del :> NG":
+								System.out.println("ritornato al client BOOK Del NG : ");									
+
+								this.setActF(null);
+								this.setSql(null);	
+								break;
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -806,26 +881,70 @@ public class Client implements Serializable, Runnable  {
 			//MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			
+			sendM(MsgSend, Mb);	
+		}		
+	}
+
+	
+//TODO SISTEMA	
+	private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException{
+		Commands cmd = Commands.BookADD;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message			
+			
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString(),			// id Client 
+					this.getSql()
+					);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
 			sendM(MsgSend, Mb);
 			
 			
 		}	
-		
-		
-		
-		
-		
-		
-		
 	}
-	
-	
+	//TODO SISTEMA	
+		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException{
+			Commands cmd = Commands.BookDELETE;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message			
+				
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()
+						);
+				MsgSend.setUType(Clients.Librarian);
+				// **** Client invia Message
+				sendM(MsgSend, Mb);
+				
+				
+			}	
+		}	
 	
 	
 	
 	//------------------------------------------------------------------------		 
 		// sys
-
 			public Clients getCliType() {
 				return ClientType;
 			}

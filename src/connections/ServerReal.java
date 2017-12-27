@@ -294,16 +294,79 @@ public class ServerReal extends ServerSkeleton {
 							}	//Attesa del turno...
 							//******************************************************************************
 							System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBook ");					
-							try {
-								ChkDBandTab.tableExistBook();
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE book Exist :> OK"));	
-							} catch (SQLException e) {
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE book Exist :> NG..."));
-								System.out.println("problemi con controllo tabella Book");
-								e.printStackTrace();
-							}
+							
+							
+								
+								switch ( M.getMsg().getCommand()){
+								//------------------------------------------------------------------------------			
+								case tableExistBook:		
+									try {
+										
+										ChkDBandTab.tableExistBook();
+										
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> CHECK TABLE book Exist :> OK"));
+									} 
+									catch (SQLException e) {
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> CHECK TABLE book Exist :> NG..."));
+										System.out.println("problemi con controllo tabella Book");
+										e.printStackTrace();
+									}
+								break;	
+								case BookADD:	
+									
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Add book");					
+									try {				
+		
+										MQ_Insert.insertBooks(M.getMsg().getSQLQuery());
+										
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> book add :> OK"));	
+									
+								} catch (SQLException e) {	
+									System.out.println("problemi con query book Add");
+									e.printStackTrace();				
+									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> book add :> NG"));
+
+								}
+								break;								
+								case BookDELETE:	
+									
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Delete book");					
+									try {				
+		
+										
+										MQ_Delete.deleteRowBooks(M.getMsg().getSQLQuery());
+										
+										
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> book del :> OK"));	
+									
+								} catch (SQLException e) {	
+									System.out.println("problemi con query book delete");
+									e.printStackTrace();				
+									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> book del :> NG"));
+
+								}
+								break;		
+								
+								
+								
+								}
+								
+									
+							
+							
+							
+							
+							
+							
+							
 							System.out.println("SYS BL :> srv ritorna "+x.getText());
 							return x;
 							//******************************************************************************

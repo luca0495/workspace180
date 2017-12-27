@@ -50,7 +50,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	
 	
 	
-    public TableBooks(JFrame frame)  
+    public TableBooks(JFrame frame,Client me)  
     {
         super(new GridLayout(1,0));
         this.frame = frame;
@@ -71,22 +71,22 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
-        			}
-        			
+        			}        			
         			try 
         			{ 
-        				System.out.println("5");
-        				
- 
-        				
+        				System.out.println("5");      				
 //TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
-						TableUpdateBooks.deleteRow(rowData, getTable());
-						
-						
-						
-						tm.fireTableDataChanged();
-						getTable().repaint();
-					} 
+        				
+        				//old OK
+						//TableUpdateBooks.deleteRow(rowData, getTable());
+        				
+						TableUpdateBooks.deleteRow(rowData, getTable(), me);
+
+						//tm.fireTableDataChanged();
+						//getTable().repaint();
+					
+        			
+        			} 
         			catch (SQLException e1)
         			{
 						e1.printStackTrace();
@@ -203,8 +203,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		}
 		
 		// in test
-		
-		
+				
 		me.setSql(query);
 		me.getCmdLIST().put(Commands.BookExecuteQuery);
 		
