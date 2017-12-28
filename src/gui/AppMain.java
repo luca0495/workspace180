@@ -332,8 +332,13 @@ public class AppMain extends SL_JFrame  {
 				System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
 				
 				me.setCliType(Clients.Librarian); // siamo sicuri che sia Librarian?
+				
 				System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
-				me.setBusy(true);		
+				me.setBusy(true);
+				
+				
+				
+				/* OLD TEST NG
 				// BookRead				
 					try {
 						me.getCmdLIST().put(Commands.BookREAD);	
@@ -363,7 +368,7 @@ public class AppMain extends SL_JFrame  {
 					} catch (Exception e) {
 						System.out.println("appMain :> problemi con accodamento comando per eliminare libro");					
 					}
-					
+				*/	
 				
 				
 			/*	
@@ -403,6 +408,8 @@ public class AppMain extends SL_JFrame  {
 					{
 					 try 
 					{
+						 
+						 
 					 ResearchBooks rb = new ResearchBooks(getFrame(),me);
 				    } 
 					catch (Exception e) 
@@ -422,10 +429,41 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		JLabel lblBackgound1 = new JLabel();
-		lblBackgound1.setBounds(0, 0, 884, 511);
+		lblBackgound1.setBounds(-34, 11, 884, 511);
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
+<<<<<<< HEAD
+=======
+		
+		JPanel panel_2 = new JPanel();
+		frame.getContentPane().add(panel_2, "name_584559887195472");
+		panel_2.setLayout(null);
+		
+		JLabel lblRegistrazione = new JLabel("REGISTRAZIONE");
+		lblRegistrazione.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		lblRegistrazione.setBounds(207, 53, 164, 40);
+		panel_2.add(lblRegistrazione);
+		
+		JButton btnREADER = new JButton("READER");
+		btnREADER.setBounds(112, 190, 89, 23);
+		panel_2.add(btnREADER);
+		
+		JButton btnLIBRARIAN = new JButton("LIBRARIAN");
+		btnLIBRARIAN.setBounds(388, 190, 89, 23);
+		panel_2.add(btnLIBRARIAN);
+		
+		JButton btnIndietro_1 = new JButton("Indietro");
+		btnIndietro_1.setBounds(245, 306, 89, 23);
+		panel_2.add(btnIndietro_1);
+		
+	
+		
+	
+		
+		
+		
+>>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
 	
 	}
 	public JTextField getText() {

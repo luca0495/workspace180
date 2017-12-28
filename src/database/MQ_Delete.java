@@ -20,7 +20,25 @@ public class MQ_Delete {
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
+	
+	
+	
+	public static void deleteRowBooks(String q) throws SQLException
+	{			
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	public static String deleteRowBooksGetQuery(List<String> r) throws SQLException
+	{		
+		String query = "DELETE FROM libro WHERE "
+				+ "codice = '" 					+ r.get(0) 
+				+ "' AND nome_autore = '" 		+ r.get(1) 
+				+ "' AND cognome_autore = '" 	+ r.get(2) 
+				+ "' AND categoria = '" 		+ r.get(3) 
+				+ "' AND titolo = '" 			+ r.get(4) + "';";
 
+<<<<<<< HEAD
 	public static void deleteRowPerson(List<String> r) throws SQLException
 	{			
 		String query = " DELETE FROM utente WHERE "
@@ -57,4 +75,9 @@ public class MQ_Delete {
 		//DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
+=======
+		return 	query;
+	}
+	
+>>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
 }

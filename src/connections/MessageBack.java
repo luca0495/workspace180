@@ -1,9 +1,14 @@
 package connections;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.util.Date;
+
+import javax.swing.JTable;
+
 import Core.Clients;
 import Core.Commands;
+import Table.TableBooks;
 
 // ver 2017 04 01 v7
 public class MessageBack implements Serializable {	/* l'oggetto prodotto da questa classe verrà serializzato ed usato per tx info */
@@ -15,6 +20,9 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private String  	Text;
 	private Record		Record;
 	private RecordSet	RecordSet;
+	//private ResultSet	rs;
+	private JTable	tab;
+	
 	
 	//Costruttori
 	public MessageBack (){	
@@ -43,6 +51,16 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	public RecordSet	getRecordSet(){
 		return RecordSet;
 	}
+	public JTable getTab() {
+		return tab;
+	}
+	public void setTab(JTable tab) {
+		this.tab = tab;
+	}
+
+
+
+
 
 
 }

@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Check.Check;
 import Check.PopUp;
+import Core.Commands;
+import connections.Client;
 import database.MQ_Delete;
 import database.MQ_Update;
 
@@ -76,10 +78,26 @@ public class TableUpdateBooks {
 			}
 		}
 	}
+	
+	// 	OLD TEST OK
 	 public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
-			MQ_Delete.deleteRowBooks(r);
+		 	MQ_Delete.deleteRowBooks(r);
 		}
+	 // NEW IN TEST 27.12.2017
+	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
+		{
+		 	String q = MQ_Delete.deleteRowBooksGetQuery(r);
+			me.setActTable(t);
+			me.setSql(q);
+			try {
+				me.getCmdLIST().put(Commands.BookDELETE);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}	 
+
+	 
 	public static int getColumn() {
 		return column;
 	}

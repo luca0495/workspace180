@@ -250,11 +250,12 @@ public class Guardian implements Runnable {
 		
 		//SERVE
 		
-		Busy			=true;
-		System.out.println("GPG :> SERVERREAL GO prima :"+r.getSrv().Go);
+		Busy			=true;		
+		System.out.println("GPG :> SERVERREAL GO prima :"+r.getSrv().Go);		
 		r.getSrv().Go	=true;
+
 		System.out.println("GPG :> SERVERREAL GO dopo :"+r.getSrv().Go);
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
@@ -280,7 +281,7 @@ public class Guardian implements Runnable {
 		
 		Busy			=true;
 		r.getSrv().Go	=true;
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
@@ -308,7 +309,7 @@ public class Guardian implements Runnable {
 		
 		Busy			=true;
 		r.getSrv().Go	=true;
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
@@ -333,7 +334,7 @@ public class Guardian implements Runnable {
 		
 		Busy			=true;
 		r.getSrv().Go	=true;
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
@@ -359,7 +360,7 @@ public class Guardian implements Runnable {
 		
 		Busy			=true;
 		r.getSrv().Go	=true;
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
@@ -384,7 +385,7 @@ public class Guardian implements Runnable {
 		
 		Busy			=true;
 		r.getSrv().Go	=true;
-		//Busy			=false;
+		Busy			=false;
 		
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	

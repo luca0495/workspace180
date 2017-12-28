@@ -1,22 +1,35 @@
 package connections;
 
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import Check.Check;
 import Core.Clients;
 import Core.Commands;
 import Core.Guardian;
 import Core.Requests;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
+import Table.TableBooks;
+import Table.TableModelBooks;
+import Table.TableUpdateBooks;
+
 import gui.SystemClientStub;
 import gui.SystemServerSkeleton;
 
@@ -86,11 +99,92 @@ public class ServerReal extends ServerSkeleton {
 	@Override
 	public MessageBack 	visualizza(Message Mes) {
 	// chiamata diretta al dbManager
-		MessageRealServer M = this.MessageEncapsulation(Mes);
-		MessageBack AnswerM = null;
-		//Query DIRETTA su dbManager
+		
+		System.out.println("RealServer :> Rx Visualizza ");
+		
+		MessageRealServer M 	= this.MessageEncapsulation(Mes);
+		MessageBack x 			= new MessageBack();
+		MessageBack AnswerM 	= new MessageBack();
+		//Query DIRETTA su dbManager		
+		// ****************************************************************************************************************
+		switch (M.getMsg().getCommand()) {
+		
+		//********************
+		case BookExecuteQuery:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query ");					
+			try {				
+				
+				JTable table=new JTable();
+				// Clear table
+				table.setModel(new DefaultTableModel());			
+				// Model for Table				
+				DefaultTableModel model = (DefaultTableModel)table.getModel();				
+				model.addColumn("Codice");
+				model.addColumn("Nome_Autore");
+				model.addColumn("Cognome_Autore");
+				model.addColumn("Categoria");
+				model.addColumn("Titolo");
+				model.addColumn("Num_Pren");					
+
+				DBmanager.openConnection();
+				ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
+
+				int row = 0;
+				System.out.println("Test1");
+				while((rs!=null) && (rs.next()))
+				{
+					System.out.println("Test2 addRow");	
+					model.addRow(new Object[0]);
+					System.out.println("Codice : "+rs.getString("codice"));																		System.out.println("Test3");
+				model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
+				model.setValueAt(rs.getString("nome_autore"), row, 1);		System.out.println("Test5");								
+				model.setValueAt(rs.getString("cognome_autore"), row, 2);	System.out.println("Test6");								
+				model.setValueAt(rs.getString("categoria"), row, 3);		System.out.println("Test7");								
+				model.setValueAt(rs.getString("titolo"), row, 4);			System.out.println("Test8");
+				model.setValueAt(rs.getString("num_prenotazioni"), row, 5);
+				row++;						
+				}
+					System.out.println("Test9");
+				
+				rs.close();
+				DBmanager.closeConnection();
+				
+				getMeS().addMsg(mSg);
+				x.setTab(table);
+				x.setText(new String ("SRV :> table book populate :> OK"));	
+				
+			} catch (SQLException e) {	
+				System.out.println("problemi con query book table populate");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> table book populate :> NG"));
+
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;								
+		
+		//********************	
+			
+			
+			
+		default:
+			break;
+		}
+		
+		
+
+		// ****************************************************************************************************************
 		
 		/*TODO PREPARA Answer*/
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return AnswerM;
 	}
@@ -101,16 +195,12 @@ public class ServerReal extends ServerSkeleton {
 		
 		System.out.println("RealServer :> Rx Change ");
 		
-		
-		
-		
 		MessageRealServer M = this.MessageEncapsulation(Mes);
 		System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
 		
-		MessageBack x = new MessageBack();
-		MessageBack Answer = new MessageBack();
-		
-		
+		MessageBack x 		= new MessageBack();
+		MessageBack Answer 	= new MessageBack();
+				
 		switch (M.getMsg().getUType()) {			// estrae tipo di utente da Message 				
 		//**********************************************************************************
 		case Librarian :
@@ -128,11 +218,11 @@ public class ServerReal extends ServerSkeleton {
 							//listcmdDONE.put(Mes.getMesId(),null);
 							while (!Go){
 								try {
-									System.out.println("REAL SERVER :> in attesa GO da Guardian");
+									System.out.println("REAL SERVER L-A:> in attesa GO da Guardian");
 									Thread.sleep(10);
 								} catch (Exception e) 
 								{}
-								System.out.println("REAL SERVER :> go "+Go);						
+								System.out.println("REAL SERVER L-A:> go "+Go);						
 							}	//Attesa del turno...
 							
 							
@@ -200,20 +290,62 @@ public class ServerReal extends ServerSkeleton {
 									Thread.sleep(10);
 								} catch (Exception e) 
 								{}
-								System.out.println("REAL SERVER :> go "+Go);						
+								System.out.println("REAL SERVER B-L:> go "+Go);						
 							}	//Attesa del turno...
 							//******************************************************************************
-							System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBook ");					
-							try {
-								ChkDBandTab.tableExistBook();
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE book Exist :> OK"));	
-							} catch (SQLException e) {
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE book Exist :> NG..."));
-								System.out.println("problemi con controllo tabella Book");
-								e.printStackTrace();
-							}
+							System.out.println("REAL SERVER B-L:> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Librarian, target BOOK ");					
+							
+							
+								
+								switch ( M.getMsg().getCommand()){
+								//------------------------------------------------------------------------------			
+								case tableExistBook:		
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> TableExistBook");
+									try {
+										
+										ChkDBandTab.tableExistBook();
+										
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> CHECK TABLE book Exist :> OK"));
+									} 
+									catch (SQLException e) {
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> CHECK TABLE book Exist :> NG..."));
+										System.out.println("problemi con controllo tabella Book");
+										e.printStackTrace();
+									}
+								break;	
+								case BookADD:	
+									
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Add book");					
+									try {					
+										MQ_Insert.insertBooks(M.getMsg().getSQLQuery());							
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book add :> OK"));	
+									
+									} catch (SQLException e) {	
+										System.out.println("problemi con query book Add");
+										e.printStackTrace();														
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book add :> NG"));
+									}
+								break;								
+								case BookDELETE:	
+									
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query Delete book");					
+									try {				
+										MQ_Delete.deleteRowBooks(M.getMsg().getSQLQuery());
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book del :> OK"));										
+									} catch (SQLException e) {	
+										System.out.println("problemi con query book delete");
+										e.printStackTrace();														
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> book del :> NG"));
+									}
+								break;		
+								}
+
 							System.out.println("SYS BL :> srv ritorna "+x.getText());
 							return x;
 							//******************************************************************************
@@ -374,6 +506,12 @@ public class ServerReal extends ServerSkeleton {
 	}
 
 	//
+	
+	public ServerReal getSrvR() {
+		return this;
+	}
+	
+	
 	public Server getSrv() {
 		return Srv;
 	}

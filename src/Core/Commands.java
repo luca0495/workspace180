@@ -6,6 +6,8 @@ public enum Commands{
 			tableExistLoans	("Check Tb Exist"	,		SearchFor.Prenotation,	CommandsType.CHANGE,1,	0),
 			tableExistPerson("Check Tb Exist"	,		SearchFor.Account,		CommandsType.CHANGE,1,	0),
 
+			BookExecuteQuery("Book Execute Query"	,	SearchFor.Book,			CommandsType.READ,1,	0),
+			
 			BookREAD 		("Book Read			",		SearchFor.Book,			CommandsType.READ	,1,0), 
 			BookUPDATE 		("Book Update		",		SearchFor.Book,			CommandsType.CHANGE	,2,0),
 			BookADD	        ("Book Add		    ",		SearchFor.Book,			CommandsType.CHANGE	,3,0),
