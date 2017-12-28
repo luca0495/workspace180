@@ -49,6 +49,7 @@ public class Login extends SL_JFrame  {
 	private Client me;
 	private List<String> rowData = new ArrayList<String>();
 	private String deleteRow;
+
 	
 	public Login(Component c,Client x)
 	{

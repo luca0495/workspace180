@@ -3,6 +3,7 @@ package connections;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JTable;
 
@@ -18,8 +19,14 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private Date		DateOfRequest;	
 	private Boolean		Response;
 	private String  	Text;
+	
+	private String[] 	RowUser;
+	private String[] 	RowBook;
+	private String[] 	RowLoans;
+	
 	private Record		Record;
 	private RecordSet	RecordSet;
+	
 	//private ResultSet	rs;
 	private JTable	tab;
 	
@@ -57,6 +64,25 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	public void setTab(JTable tab) {
 		this.tab = tab;
 	}
+	public String[] getRowUser() {
+		return RowUser;
+	}
+	public void setRowUser(String[] rowUser) {
+		RowUser = rowUser;
+	}
+	public String[] getRowBook() {
+		return RowBook;
+	}
+	public void setRowBook(String[] rowBook) {
+		RowBook = rowBook;
+	}
+	public String[] getRowLoans() {
+		return RowLoans;
+	}
+	public void setRowLoans(String[] rowLoans) {
+		RowLoans = rowLoans;
+	}
+
 
 
 

@@ -224,4 +224,41 @@ public class MQ_Read {
 		
 		return Person;
 	}
+	
+	
+	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
+	public static String[] selectUser(String email) throws SQLException
+	{
+		
+		String query = "SELECT nome,cognome,email,inquadramento,password,ntel,tipo_utente FROM utente WHERE email = '" + email +"';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		String[] Person = new String[7]; //3 email, 7 pass_temp
+		
+		if (!rs.isBeforeFirst()) 
+		{  
+			System.out.println("9");
+			Person[0] = "Nessun Dato";
+		}
+		else
+		{
+			System.out.println("10");
+			rs.next();
+			Person[1] = rs.getString("nome");
+			Person[2] = rs.getString("cognome");
+			Person[3] = rs.getString("email");
+			Person[5] = rs.getString("inquadramento");
+			Person[6] = rs.getString("password");
+			Person[9] = rs.getString("ntel");
+			Person[10] = rs.getString("tipo_utente");
+			
+		}
+		DBmanager.closeConnection();
+		
+		return Person;
+	}
+	
+	
+	
 	}
