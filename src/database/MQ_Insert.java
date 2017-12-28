@@ -53,19 +53,18 @@ public class MQ_Insert {
 				String typePerson
 				) throws SQLException
 		{
-<<<<<<< HEAD
-			String query = "INSERT INTO utente(nome,"
-=======
+
+		
 			String query = 		"INSERT INTO utente("
 					+ "nome,"
->>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
+
 					+ "cognome,"
 					+ "email,"
 					+ "codice_fiscale,"
 					+ "inquadramento,"
 					+ "password,"
 					+ "password_temp,"
-<<<<<<< HEAD
+
 					+ "ntel,"
 					+ "tipo_utente) "
 					+ "VALUES('" 	+ name 
@@ -77,17 +76,9 @@ public class MQ_Insert {
 									+ i + "' , '" 
 									+ tel + "' , '"
 									+ typePerson +"')";
-=======
-					+ "ntel) "
-					+ "VALUES('"		+ name 		+ "' , '" 	
-										+ surname	+ "' , '"
-										+ mail		+ "' , '" 
-										+ cf		+ "' , '" 
-										+ inq 		+ "' , '" 
-										+ pass 		+ "' , '" 
-										+ i 		+ "' , '" 
-										+ tel 		+ "')";
->>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
+
+
+
 			return 	query;
 		}	
 

@@ -433,8 +433,7 @@ public class AppMain extends SL_JFrame  {
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
-<<<<<<< HEAD
-=======
+
 		
 		JPanel panel_2 = new JPanel();
 		frame.getContentPane().add(panel_2, "name_584559887195472");
@@ -457,13 +456,7 @@ public class AppMain extends SL_JFrame  {
 		btnIndietro_1.setBounds(245, 306, 89, 23);
 		panel_2.add(btnIndietro_1);
 		
-	
-		
-	
-		
-		
-		
->>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
+
 	
 	}
 	public JTextField getText() {

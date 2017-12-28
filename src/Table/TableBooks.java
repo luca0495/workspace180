@@ -80,22 +80,22 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         				//old OK
 						//TableUpdateBooks.deleteRow(rowData, getTable());
         				
-<<<<<<< HEAD
+
 //TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
-						TableUpdateBooks.deleteRow(rowData, table);
 						
-						tm.fireTableDataChanged();
-						table.repaint();
-					} 
-=======
-						TableUpdateBooks.deleteRow(rowData, getTable(), me);
+        				//TableUpdateBooks.deleteRow(rowData, table);
+						
+        				//tm.fireTableDataChanged();
+						//table.repaint();					
+						
+        				TableUpdateBooks.deleteRow(rowData, getTable(), me);
 
 						//tm.fireTableDataChanged();
 						//getTable().repaint();
 					
         			
         			} 
->>>>>>> 24214355c305881e61c5843860a2b9aac969b2d2
+
         			catch (SQLException e1)
         			{
 						e1.printStackTrace();
