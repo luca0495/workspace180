@@ -60,21 +60,13 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}
 	
-	public static void deleteRowPerson1() throws SQLException
+	public static void deleteRowPerson1(String email) throws SQLException
 	{	
-		Statement stmt;
-		Connection con;
-		con =DBmanager.openConnection1();
-		stmt = con.createStatement();
-		String query = " DELETE FROM utente ;";
-		int deletedRows=stmt.executeUpdate(query);
-		if(deletedRows>0){
-		     System.out.println("Deleted All Rows In The Table Successfully...");
-		   }else{
-                        System.out.println("Table already empty."); 
-		  }
-
-		//DBmanager.executeUpdate(query);
+		
+		String query = " DELETE FROM utente WHERE email ='" + email + "';";
+		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
 

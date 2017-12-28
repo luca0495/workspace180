@@ -62,7 +62,6 @@ public class Account extends JFrame{
 		panelAccount.add(lblNome);
 		
 		JLabel lblSetNome = new JLabel();
-		lblSetNome.setText(l.setName(r));
 		lblSetNome.setBounds(106, 19, 186, 20);
 		panelAccount.add(lblSetNome);
 		
