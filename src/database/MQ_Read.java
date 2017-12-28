@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import Books.Books;
+import Core.Commands;
 import Table.TableBooks;
 
 
@@ -225,6 +226,48 @@ public class MQ_Read {
 		return Person;
 	}
 	
+
+	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
+	
+	//TODO il comando deve comprendere:
+	//TODO String q = MQ_READ.selectUserGetQuery(email);
+	//TODO me.setSql(q);
+	//TODO me.setActW(FINESTRA ATTIVA CON ACCOUNT UTENTE);
+	//TODO me.getCmdLIST().put(Commands.UserREAD);
+
+	public static String selectUserGetQuery(String email) throws SQLException
+	{	
+		String query = "SELECT nome,cognome,email,inquadramento,password,ntel,tipo_utente FROM utente WHERE email = '" + email +"';";
+		return query;
+	}
+	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
+	public static String[] selectUserByQuery(String q) throws SQLException
+	{
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);		
+		String[] Person = new String[7]; //3 email, 7 pass_temp		
+		if (!rs.isBeforeFirst()) 
+		{  
+			System.out.println("9");
+			Person[0] = "Nessun Dato";
+		}
+		else
+		{
+			System.out.println("10");
+			rs.next();
+			Person[1] = rs.getString("nome");
+			Person[2] = rs.getString("cognome");
+			Person[3] = rs.getString("email");
+			Person[5] = rs.getString("inquadramento");
+			Person[6] = rs.getString("password");
+			Person[9] = rs.getString("ntel");
+			Person[10] = rs.getString("tipo_utente");
+			
+		}
+		DBmanager.closeConnection();	
+		return Person;
+	}
+
 	
 	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
 	public static String[] selectUser(String email) throws SQLException

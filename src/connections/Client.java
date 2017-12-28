@@ -60,10 +60,8 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			JFrame 				ActF			=null;	//Active Frame
 	private 			SL_JFrame			ActW			=null;	//Active Window
-	private 			Component			ActC			=null;	//Active Component
-	
+	private 			Component			ActC			=null;	//Active Component	
 	private 			JTable 				ActTable		=null;
-	
 	private 			Clients				ClientType;
 	private 			ServerStub			srv;		
 	private 			boolean 			stubok			=false;
@@ -82,31 +80,14 @@ public class Client implements Serializable, Runnable  {
 	
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
-	
+
+//		
 	private 			String				PASSWORD="ACmilan1994$";
 	private 			String				USERNAME="llazzati@studenti.uninsubria.it";
 	
 	private 			String 				Sql;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	
-	public String getTo() {
-		return to;
-	}
-	public void setTo(String to) {
-		this.to = to;
-	}
-	public String getPASSWORD() {
-		return PASSWORD;
-	}
-	public void setPASSWORD(String pASSWORD) {
-		PASSWORD = pASSWORD;
-	}
-	public String getUSERNAME() {
-		return USERNAME;
-	}
-	public void setUSERNAME(String uSER) {
-		USERNAME = uSER;
-	}
 	public Client() throws Exception {		
 		this.setCliType(Clients.Default);
 		System.out.println("Creato 		 Client");
@@ -118,16 +99,14 @@ public class Client implements Serializable, Runnable  {
 			public void run() {
 				try {
 					Client x  = new Client();
-					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 CTLL OGNI 10 SEC					
+					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
 
 					AppMain StartWindow = new AppMain(x);
 					StartWindow.getFrame().setVisible(true);							
 					System.out.println("creato start windows");
 					StartWindow.addMsg("test");	
-					new Thread(x).start();	  //parte > Logica
-					new Thread(y1).start();  //connection controller
-
-						
+					new Thread(x).start();	  // Logica di controllo comandi ricevuti
+					new Thread(y1).start();  // Client Connection Controller [CCC]	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -139,10 +118,8 @@ public class Client implements Serializable, Runnable  {
 	public void run() {	
 		try {
 			while (isClientON()){
-					//Attesa comandi...
-					
-					while ( getCmdLIST().getCmdList().size() < 1){			
-					
+					//Attesa comandi...					
+					while ( getCmdLIST().getCmdList().size() < 1){								
 							System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
 							System.out.println("CLI :> IN ATTESA di COMANDI... ");
 						try {
@@ -152,8 +129,7 @@ public class Client implements Serializable, Runnable  {
 						}
 					}
 							System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
-							System.out.println("CLI :> Comandi in LISTA ");
-					
+							System.out.println("CLI :> Comandi in LISTA ");					
 					//Comando Arrivato					
 					//Comando Prelevo dalla lista CmdLIST
 					Commands com = getCmdLIST().take();
@@ -199,18 +175,17 @@ public class Client implements Serializable, Runnable  {
 					case READ:
 								switch (com) {							
 						//	book
-								case BookExecuteQuery:		
-			
-									System.out.println("passato come parametro sql : "+this.Sql);
-									BookPopulate();
-									
-//TODO MAURO: PASSA METODO POPULATEDATA DA GUI TABLEBOOKS
-									
-									
+								case BookExecuteQuery:	//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
+														BookPopulate();
 									break;
 						//	Person
-								case UserREAD: 
-											
+								case UserREAD: 			
+									
+									
+//TODO arriva DA GUI Login aprendo GUI , settare la finestra attiva ActW !!!!
+//TODO dal comando per aprire finestra user account : setActF(this);
+														
+														UserGetData();	//necessario setSql
 									break;
 						//	Loans
 								case PrenotationREAD: 
@@ -225,75 +200,60 @@ public class Client implements Serializable, Runnable  {
 					case CHANGE:
 								switch (com) {							
 	
-								
+						//	All Table		
 							case tableExistBook: 
 														ClientCheckExistTableBook();
-								break;
-							
+								break;	
 							
 							case tableExistLoans: 
 														ClientCheckExistTableLoans();
 								break;
 							
-							
 							case tableExistPerson: 
 														ClientCheckExistTablePerson();
 								break;
-					
 								
 						//	book			
-								case BookADD:							
-								
+							case BookADD:				// arriva DA GUI 		TABLEBOOKS									
 														ClientBookAdd();
-//TODO MAURO: PASSA METODO MQ_Insert.insertBooks DA GUI TABLEBOOKS									
-									break;
-								case BookDELETE: 
-														ClientBookDelete();
-//TODO MAURO: PASSA METODO MQ_Delete.deleteRowBooks(r); DA classe tableupdatebooks									
-									
-									break;
+								break;
+							case BookDELETE: 			// arriva DA classe 	tableupdatebooks
+														ClientBookDelete();				
+								break;
+						
 						//	Person
-								case UserUPDATE: 
+							case UserUPDATE: 
 											
-									break;
-								case UserDELETE: 
+								break;
+							case UserDELETE: 
 											
-									break;	
-								case UserRegistration: 
+								break;	
+							case UserRegistration: 
 														ClientCHANGEuserRegistration();
-									break;
-								case UserActivation: 
+								break;
+							case UserActivation: 
 											
-									break;	
-									
+								break;				
 									
 						//	Loans
-								case Prenotation: 
+							case Prenotation: 
 									
-									break;
-								case BookGet: 
+								break;
+							case BookGet: 
 									
-									break;
-								case BookGiveback: 
-									
-									break;
-								default:
-									
-									break;
+								break;
+							case BookGiveback: 
+								
+								break;
+							default:				
+								break;
 								}
 					break;
 				//	****************************************************	Default		   		***			
 					default:
 						
 					break;
-				}									
-
-					
-				
-				
-				
-				
-				
+				}													
 				
 			}//Client settato off		
 			//Logica();
@@ -303,12 +263,9 @@ public class Client implements Serializable, Runnable  {
 	}
 	//------------------------------------------------------------------------------------------
 
-
 	void Logica() throws Exception {	
 		 		int ctc=0;						//---- Connection test counter				
 		 		while (isRepeatconn()) {		//---- Controllo continuo della connessione con il Server		
-									
-		 							
 		 							while (Busy){
 		 								System.out.println("CLI :> Logica > attesa ritorno CMD , skippo controllo connessione");
 		 								try {
@@ -336,8 +293,6 @@ public class Client implements Serializable, Runnable  {
 																					e.printStackTrace();
 																					System.out.println("CLI:> Logica > messaggio non letto");
 																				}
-																				
-																			
 																			//if (mSg.equals(new String ("SRV - Connessione OK"))){	
 																			if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){	
 																				
@@ -348,10 +303,7 @@ public class Client implements Serializable, Runnable  {
 																						if ( ActW.getSL_Type()==AppType.AppLoginReader) {
 																							System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
 																						}
-																					}
-																						
-																					
-																					
+																					}			
 																		}else{
 																			setStubok(false);
 																			
@@ -362,14 +314,7 @@ public class Client implements Serializable, Runnable  {
 																				if ( ActW.getSL_Type()==AppType.AppLoginReader) {
 																					System.out.println("  finestra attiva READER...  CLI:> Connection Test result : NG\\  ");																							
 																				}
-																			}
-																			
-																			
-																			
-																			
-																			
-																			
-																					
+																			}			
 																		}			
 															} catch (Exception e) {							
 																e.printStackTrace();
@@ -425,15 +370,11 @@ public class Client implements Serializable, Runnable  {
 				Mb.setText("CLI:>  class not found");	
 			}
 		}
-		
 			//************************************************************	
 			// RITORNA UN MESSAGE-BACK
 			return Mb;			
 		//************************************************************
 		}	
-		
-
-		
 	// comandi
 		
 	/*
@@ -466,12 +407,7 @@ public class Client implements Serializable, Runnable  {
 		}
 		return this.mSgBack;
 	}	
-	
-	
-	
-	
 	/*
-	
 	// test
 	public void metodo1 () throws IOException, ClassNotFoundException{		
 			for (int i = 0 ; i< 10; i++){	
@@ -501,67 +437,6 @@ public class Client implements Serializable, Runnable  {
 	
 	}
 */
-
-	
-/*	
-	public SystemClientStub getMeG_Sys() {
-		return meG_Sys;
-	}
-	public void setMeG_Sys(SystemClientStub meG_Sys) {
-		this.meG_Sys = meG_Sys;
-	}
-	public Main getMeG_Main() {
-		return meG_Main;
-	}
-	public void setMeG_Main(Main meG_Main) {
-		this.meG_Main = meG_Main;
-	}
-	public AppLibrarian getMeG_Lib() {
-		return meG_Lib;
-	}
-	public void setMeG_Lib(AppLibrarian meG_Lib) {
-		this.meG_Lib = meG_Lib;
-	}
-	public AppReader getMeG_Rd() {
-		return meG_Rd;
-	}
-	public void setMeG_Rd(AppReader meG_Rd) {
-		this.meG_Rd = meG_Rd;
-	}
-	
-*/	
-	public SL_JFrame getActW() {
-		return ActW;
-	}
-	public void setActW(SL_JFrame actW) {
-		ActW = actW;
-	}
-	public boolean isBusy() {
-		return Busy;
-	}
-	public void setBusy(boolean busy) {
-		this.Busy = busy;
-	}
-	public boolean isBusyControl() {
-		return BusyControl;
-	}
-	public void setBusyControl(boolean busyControl) {
-		BusyControl = busyControl;
-	}
-	public CommandsList getCmdLIST() {
-		return CmdLIST;
-	}
-	public void setCmdLIST(CommandsList cmdLIST) {
-		CmdLIST = cmdLIST;
-	}
-	public boolean isClientON() {
-		return ClientON;
-	}
-	public void setClientON(boolean clientON) {
-		ClientON = clientON;
-	}
-
-
 	void ClientConnectionTest() throws Exception {	
  								try{									
 								System.out.println(mSg = "CLI :> CType:"	+ getCliType());										
@@ -571,14 +446,11 @@ public class Client implements Serializable, Runnable  {
 														System.out.println("CLIENT :> ciclo di controllo "+ctc);																																							
 																		try {											
 																			this.mSgBack = 	Request(Commands.ConnTEST);																																							
-																			this.mSg 	= 	mSgBack.getText();														
-																			
-																			
+																			this.mSg 	= 	mSgBack.getText();															
 																		} catch (Exception e) {				
 																			e.printStackTrace();
 																			System.out.println("CLI:> Logica > messaggio non letto");
-																		}
-																		
+																		}																		
 																		if (mSgBack.getText().equals(new String ("SRV - Connessione OK"))){
 																			
 																			if ( ActW.getSL_Type()==AppType.AppMain) {
@@ -589,7 +461,6 @@ public class Client implements Serializable, Runnable  {
 																					System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
 																				}
 																			}
-
 																		}else{
 																			setStubok(false);
 																		
@@ -601,12 +472,7 @@ public class Client implements Serializable, Runnable  {
 																					System.out.println("  finestra attiva READER...  CLI:> Connection Test result : NG\\  ");																							
 																				}
 																			}
-																			
-																			
-																		
-																		
-																		}
-																		
+																		}																		
 													} catch (Exception e) {							
 														e.printStackTrace();
 														System.out.println(mSg = "CLI :> srv stub ERROR ");	
@@ -641,8 +507,7 @@ public class Client implements Serializable, Runnable  {
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
-						
-						
+								
 						// Reazioni di Client ai messaggi ritornati dal Server
 						switch (Mb.getText()) {
 							case "OK":							
@@ -660,8 +525,7 @@ public class Client implements Serializable, Runnable  {
 								this.setSql(null);							
 								break;
 								
-							case "SRV :> table book populate :> OK":
-								System.out.println("ritornato al client POPULATE OK : ");									
+							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");									
 								//System.out.println(Mb.getTab().toString());
 								setActTable(Mb.getTab());
 								/*
@@ -685,50 +549,55 @@ public class Client implements Serializable, Runnable  {
 								this.setActF(null);
 								this.setSql(null);
 								setBusy(false);
-								break;
-								
-							case "SRV :> table book populate :> NG":
-								System.out.println("ritornato al client POPULATE NG : ");	
-								this.setActF(null);
-								this.setSql(null);
-								setBusy(false);
+								break;		
+							case "SRV :> table book populate :> NG":System.out.println("ritornato al client POPULATE NG : ");	
+								clrParFS();
 								break;
 							
 							// BOOK Add	
-							case "SRV :> book add :> OK":
-								System.out.println("ritornato al client BOOK Add OK : ");
-								
-								this.setActF(null);
-								this.setSql(null);	
-								
-								//AGGIORNA TABLE
-								TableBooks.PopulateData( null, this);
-								
-								
-								
+							case "SRV :> book add :> OK":			System.out.println("ritornato al client BOOK Add OK : ");
+								clrParFS();	
+								TableBooks.PopulateData( null, this);//AGGIORNA TABLE me.ActTable
 								break;
 							case "SRV :> book add :> NG":
 								System.out.println("ritornato al client BOOK Add NG : ");									
-
-								this.setActF(null);
-								this.setSql(null);
+								clrParFS();
 								break;
 								
 							// BOOK Delete
-							case "SRV :> book del :> OK":
-								System.out.println("ritornato al client BOOK Del OK : ");									
-								this.setActF(null);
-								this.setSql(null);
-								
-								//AGGIORNA TABLE
-								TableBooks.PopulateData( null, this);
+							case "SRV :> book del :> OK":			System.out.println("ritornato al client BOOK Del OK : ");									
+								clrParFS();
+								TableBooks.PopulateData( null, this);//AGGIORNA TABLE me.ActTable
 								break;
 							case "SRV :> book del :> NG":
 								System.out.println("ritornato al client BOOK Del NG : ");									
-
-								this.setActF(null);
-								this.setSql(null);	
+								clrParFS();	
 								break;
+								
+							// USER Read Data
+							case "SRV :> selected user :> OK" :
+								System.out.println("ritornato al client UserDATA OK : ");
+								//contiene gli user's data
+								
+								
+								String name 		= Mb.getRowUser()[0];
+								String surname 		= Mb.getRowUser()[1];
+								
+								//etc...
+								//da qui lanciamo i metodi previsti nella finestra per aggiornare le labels...
+								
+//TODO								ActF.fillinLabelName(name);
+//TODO								ActF.fillinLabelSurName(surname);
+								
+								
+								clrParFS();	
+								break;
+							case "SRV :> selected user :> NG" :
+								System.out.println("ritornato al client UserDATA NG : ");
+								
+								clrParFS();	
+								break;
+								
 								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -842,8 +711,7 @@ public class Client implements Serializable, Runnable  {
 			getActW().addMsg(new String ("Connection Test result"+mSg));
 		}else{	
 			System.out.println("CLI :> Stub OK");
-			// **** Client crea Message			
-			
+			// **** Client crea Message						
 			Message MsgSend = new Message(	
 					cmd,						// Comando richiesto
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
@@ -872,8 +740,7 @@ public class Client implements Serializable, Runnable  {
 			getActW().addMsg(new String ("Connection Test result"+mSg));
 		}else{	
 			System.out.println("CLI :> Stub OK");
-			// **** Client crea Message			
-			
+			// **** Client crea Message						
 			Message MsgSend = new Message(	
 					cmd,						// Comando richiesto
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
@@ -900,8 +767,7 @@ public class Client implements Serializable, Runnable  {
 			getActW().addMsg(new String ("Connection Test result"+mSg));
 		}else{	
 			System.out.println("CLI :> Stub OK");
-			// **** Client crea Message			
-			
+			// **** Client crea Message						
 			Message MsgSend = new Message(	
 					cmd,						// Comando richiesto
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
@@ -915,7 +781,6 @@ public class Client implements Serializable, Runnable  {
 			
 		}	
 	}
-	//TODO SISTEMA	
 		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.BookDELETE;
 			MessageBack Mb = new MessageBack();
@@ -927,8 +792,7 @@ public class Client implements Serializable, Runnable  {
 				getActW().addMsg(new String ("Connection Test result"+mSg));
 			}else{	
 				System.out.println("CLI :> Stub OK");
-				// **** Client crea Message			
-				
+				// **** Client crea Message							
 				Message MsgSend = new Message(	
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
@@ -938,15 +802,37 @@ public class Client implements Serializable, Runnable  {
 				MsgSend.setUType(Clients.Librarian);
 				// **** Client invia Message
 				sendM(MsgSend, Mb);
-				
-				
 			}	
 		}	
-	
+
+		private void UserGetData() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREAD;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()
+						);
+				//MsgSend.setUType(Clients.Librarian);
+				// **** Client invia Message
+				sendM(MsgSend, Mb);
+			}	
+		}		
 	
 	
 	//------------------------------------------------------------------------		 
-		// sys
+	// get & set
+		
 			public Clients getCliType() {
 				return ClientType;
 			}
@@ -1004,8 +890,89 @@ public class Client implements Serializable, Runnable  {
 			public void setActTable(JTable actTable) {
 				ActTable = actTable;
 			}		
-	
-
+			public String getTo() {
+				return to;
+			}
+			public void setTo(String to) {
+				this.to = to;
+			}
+			public String getPASSWORD() {
+				return PASSWORD;
+			}
+			public void setPASSWORD(String pASSWORD) {
+				PASSWORD = pASSWORD;
+			}
+			public String getUSERNAME() {
+				return USERNAME;
+			}
+			public void setUSERNAME(String uSER) {
+				USERNAME = uSER;
+			}
+			public SL_JFrame getActW() {
+				return ActW;
+			}
+			public void setActW(SL_JFrame actW) {
+				ActW = actW;
+			}
+			public boolean isBusy() {
+				return Busy;
+			}
+			public void setBusy(boolean busy) {
+				this.Busy = busy;
+			}
+			public boolean isBusyControl() {
+				return BusyControl;
+			}
+			public void setBusyControl(boolean busyControl) {
+				BusyControl = busyControl;
+			}
+			public CommandsList getCmdLIST() {
+				return CmdLIST;
+			}
+			public void setCmdLIST(CommandsList cmdLIST) {
+				CmdLIST = cmdLIST;
+			}
+			public boolean isClientON() {
+				return ClientON;
+			}
+			public void setClientON(boolean clientON) {
+				ClientON = clientON;
+			}
+		/*	
+			public SystemClientStub getMeG_Sys() {
+				return meG_Sys;
+			}
+			public void setMeG_Sys(SystemClientStub meG_Sys) {
+				this.meG_Sys = meG_Sys;
+			}
+			public Main getMeG_Main() {
+				return meG_Main;
+			}
+			public void setMeG_Main(Main meG_Main) {
+				this.meG_Main = meG_Main;
+			}
+			public AppLibrarian getMeG_Lib() {
+				return meG_Lib;
+			}
+			public void setMeG_Lib(AppLibrarian meG_Lib) {
+				this.meG_Lib = meG_Lib;
+			}
+			public AppReader getMeG_Rd() {
+				return meG_Rd;
+			}
+			public void setMeG_Rd(AppReader meG_Rd) {
+				this.meG_Rd = meG_Rd;
+			}
+		*/	
+			
+			
+			//*************************************
+			public void clrParFS () {
+				this.setActF(null);	//F
+				this.setSql(null);	//S
+				setBusy(false);
+			}
+			
 	
 	
 		

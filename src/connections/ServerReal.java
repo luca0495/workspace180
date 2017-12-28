@@ -163,7 +163,28 @@ public class ServerReal extends ServerSkeleton {
 			}
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
 			return x;								
-		
+
+			//********************
+			case UserREAD:
+				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read ");					
+				try {				
+
+				String[] UserData = MQ_Read.selectUserByQuery(M.getMsg().getSQLQuery());
+				x.setRowUser(UserData);
+				x.setText(new String ("SRV :> selected user :> OK"));
+					
+				} catch (SQLException e) {	
+					System.out.println("problemi con query select user ");
+					e.printStackTrace();				
+					
+					getMeS().addMsg(mSg);
+					x.setText(new String ("SRV :> selected user :> NG"));
+
+				}
+				System.out.println("SYS AL :> srv ritorna "+x.getText());										
+				return x;				
+			
+			
 		//********************	
 			
 			
