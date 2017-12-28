@@ -11,6 +11,7 @@ import java.util.List;
 
 import database.MQ_Check;
 import database.MQ_Insert;
+import database.MQ_Read;
 
 public class Check {
 
@@ -225,6 +226,42 @@ public class Check {
 	 public static boolean checkInq(String s)
 	    {	
 	    	return (s.length() <= 50);
+	    }
+	 
+	  public static String checkAdminLogIn(String email, String pass) throws SQLException
+	    {
+	    	
+	    	if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals(""))
+	    	{
+	    		System.out.println("5");
+	    		return new String("I Campi Non Possono Essere Vuoti");
+	    	}
+	    	else
+	    	{
+	    		String[] datiUtente= MQ_Read.selectAdminLogIn(email);
+	    		System.out.println("6");
+	        	if(datiUtente[0].equals("Nessun Dato"))
+	        	{
+	        		System.out.println("7");
+	        		return new String("L'Email Non Esiste");
+	        	}
+	        	else
+	        	{        		
+	    			if(pass.equals(datiUtente[1]))
+	    			{
+	    				System.out.println("99");
+	    				return new String("Login Corretto");
+	    				
+	    			}
+	    			else
+	    			{
+	    				System.out.println("88");
+	    				return new String("Password Errata");
+	    			}
+	        	}
+
+	    	}
+			
 	    }
 	 
 	 public static boolean checkAllReg(String nome, String cognome, String telefono, String email, String codicefiscale, char[] pass, char[] passC, String inq)

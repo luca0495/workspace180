@@ -95,8 +95,8 @@ public class AppMain extends SL_JFrame  {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		setFrame(new JFrame());
-
 		getFrame().setTitle("Schoolib");
 		getFrame().setBounds(100, 100, 890, 540);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,7 +219,7 @@ public class AppMain extends SL_JFrame  {
 						{
 						 try 
 						{
-						 Login lo = new Login(getFrame());
+						 Login lo = new Login(getFrame(), me);
 					    } 
 						catch (Exception e) 
 						{
@@ -426,13 +426,6 @@ public class AppMain extends SL_JFrame  {
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
-		
-	
-		
-	
-		
-		
-		
 	
 	}
 	public JTextField getText() {
@@ -469,7 +462,7 @@ public class AppMain extends SL_JFrame  {
 		});
 	}
 
-	
+
 	
 	
 	public static void main(String[] args) {

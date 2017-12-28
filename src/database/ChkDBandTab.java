@@ -121,8 +121,9 @@ public class ChkDBandTab {
                   +"codice_fiscale varchar(16) null,"
                   +"inquadramento varchar(40) null,"
                   +"password varchar(40) null,"
-                  +"password_temp integer null,"
+                  +"password_temp varchar(40) null,"
                   +"ntel varchar(10) null,"
+                  +"tipo_utente varchar(30) not null,"
                   +"unique (email))")  ;
 		 
 		 System.out.println("ChkDBandTable :> table Person CREATED !");

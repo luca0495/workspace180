@@ -2,19 +2,35 @@ package gui;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.awt.FlowLayout;
 
-public class Login extends JFrame {
+import Check.Check;
+import Check.PopUp;
+import Core.Clients;
+import connections.Client;
+import database.MQ_Delete;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Login extends SL_JFrame  {
 	private JFrame frmSchoolib;	
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
@@ -26,13 +42,25 @@ public class Login extends JFrame {
 	private JPasswordField passwordField_4;
 	private JPasswordField passwordField_5;
 	private JPasswordField passwordField_6;
+	private boolean result = false;	
+	private static final long serialVersionUID = 1L;
+	private int clicked = 0;
+	private JFrame 			frame;
+	private Client me;
+	private List<String> rowData = new ArrayList<String>();
+	private String deleteRow;
 	
-	public Login(Component c)
+	public Login(Component c,Client x)
 	{
+		me = x;
+		me.setActW(this);
+		me.setActC(c);
+		me.setCliType(Clients.Reader);
+				
 		Login(c);
 	}
-
-	public void Login(Component c) {
+	public void Login(Component c)
+	{
 		frmSchoolib = new JFrame();
 		frmSchoolib.setTitle("Login");
 		frmSchoolib.setBounds(100, 100, 893, 545);
@@ -48,6 +76,7 @@ public class Login extends JFrame {
 		JPanel PanelFirstAcc = new JPanel();
 		frmSchoolib.getContentPane().add(PanelFirstAcc, "name_120013554778492");
 		PanelFirstAcc.setLayout(null);
+		
 		
 		JLabel lblLogin = new JLabel("LOGIN");
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 19));
@@ -91,6 +120,7 @@ public class Login extends JFrame {
 		btnPrimoAccesso.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+				
 				PanelRegi.setVisible(false);
 				PanelFirstAcc.setVisible(true);
 			}
@@ -146,15 +176,66 @@ public class Login extends JFrame {
 		PanelFirstAcc.add(btnIndietro_2);
 		
 		JButton btnConferma = new JButton("Conferma");
+		btnConferma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			String email = textField_2.getText();
+			String pass = String.copyValueOf(passwordField_1.getPassword());
+			String r = null;
+			
+			try 
+			{
+				  System.out.println("1");
+				r = Check.checkAdminLogIn(email, pass);
+			} 
+			catch (SQLException e1) 
+			{
+				e1.printStackTrace();
+			}
+			if(r.equals("Login Corretto"))
+			    {
+				// cambiare pannello
+				   System.out.println("2");
+				   System.out.println("Numero di clicked1" + clicked);
+				 			
+					Account lo = new Account(getFrame());
+					PanelFirstAcc.setVisible(false);
+					PanelRegi.setVisible(false);
+					WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+					frmSchoolib.dispatchEvent(close);	
+			
+				
+			    }
+			    else 
+			    {
+				    System.out.println("3");
+				PopUp.errorBox(c, r);
+				    System.out.println("Numero di clicked3: " + clicked);
+				clicked++;
+				if (clicked ==5){
+					PopUp.errorBox(c, "Hai provato 5 volte, cancellazione automatica del profilo");
+					
+				   try {
+					   MQ_Delete.deleteRowPerson1();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				}
+			  }   
+		}
+			
+});
 		btnConferma.setBounds(201, 428, 141, 23);
-		PanelFirstAcc.add(btnConferma);
+		PanelFirstAcc.add(btnConferma);	
+	}
+		//METODI
+		public boolean isResult() {
+			return result;
+		}
 		
+		public JFrame getFrame() {
+			return frame;
+		}
 	
-		
-		
-	
-		
 		
 		
 	}
-}

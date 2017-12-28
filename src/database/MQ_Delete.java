@@ -1,6 +1,8 @@
 package database;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class MQ_Delete {
@@ -19,4 +21,40 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}
 
+	public static void deleteRowPerson(List<String> r) throws SQLException
+	{			
+		String query = " DELETE FROM utente WHERE "
+				+ "id = '" 					+ r.get(0) 
+				+ "' AND nome = '" 		    + r.get(1) 
+				+ "' AND cognome  = '" 	    + r.get(2) 
+				+ "' AND email = '" 	    + r.get(3) 
+				+ "' AND codice_fiscale = '"+ r.get(4) 
+		        + "' AND inquadramento = '" + r.get(5) 
+		        + "' AND password = '"      + r.get(6)
+		        + "' AND password_temp = '" + r.get(7) 
+		        + "' AND ntel = '"          + r.get(8) 
+		        + "' AND tipo_utente = '"   + r.get(9) + "';";
+		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
+	
+	public static void deleteRowPerson1() throws SQLException
+	{	
+		Statement stmt;
+		Connection con;
+		con =DBmanager.openConnection1();
+		stmt = con.createStatement();
+		String query = " DELETE FROM utente ;";
+		int deletedRows=stmt.executeUpdate(query);
+		if(deletedRows>0){
+		     System.out.println("Deleted All Rows In The Table Successfully...");
+		   }else{
+                        System.out.println("Table already empty."); 
+		  }
+
+		//DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
 }

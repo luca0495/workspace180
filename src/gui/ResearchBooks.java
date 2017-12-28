@@ -53,8 +53,6 @@ public class ResearchBooks extends SL_JFrame {
 	private JPanel panel;
 	private JPanel panelResearch;
 	private JPanel panel_1;
-    private TableBooks table;
-    private TableUpdateBooks table1;
     private JTable table4;
     private JTable tableBooks;
 	protected String ValToSearch;

@@ -79,8 +79,6 @@ public class TableBooks extends JPanel implements TableModelListener {
 //TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
 						TableUpdateBooks.deleteRow(rowData, table);
 						
-						
-						
 						tm.fireTableDataChanged();
 						table.repaint();
 					} 
@@ -249,7 +247,6 @@ public class TableBooks extends JPanel implements TableModelListener {
         	TableUpdateBooks.check(frame, table);
 		} 
 	}
-	
 	
 	public void update()
 	{

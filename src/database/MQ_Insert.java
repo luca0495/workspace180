@@ -49,16 +49,19 @@ public class MQ_Insert {
 				String cf, 
 				String tel, 
 				String pass, 
-				int i) throws SQLException
+				int i, 
+				String typePerson
+				) throws SQLException
 		{
-			String query = 		"INSERT INTO utente(nome,"
+			String query = "INSERT INTO utente(nome,"
 					+ "cognome,"
 					+ "email,"
 					+ "codice_fiscale,"
 					+ "inquadramento,"
 					+ "password,"
 					+ "password_temp,"
-					+ "ntel) "
+					+ "ntel,"
+					+ "tipo_utente) "
 					+ "VALUES('" 	+ name 
 									+ "' , '" + surname 
 									+ "' , '" + mail + "' , '" 
@@ -66,7 +69,8 @@ public class MQ_Insert {
 									+ inq + "' , '" 
 									+ pass + "' , '" 
 									+ i + "' , '" 
-									+ tel + "')";
+									+ tel + "' , '"
+									+ typePerson +"')";
 			return 	query;
 		}	
 	

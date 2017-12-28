@@ -43,6 +43,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
+import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JMenuBar;
@@ -65,6 +66,7 @@ public class AppReader extends SL_JFrame {
 	private JPasswordField passwordFieldCh;
 	public static String SearchParam = "1A";
 	private JTextField text;
+	private String TypePerson;
 	//private static JComboBox<String> Inq;
 	//private static final String[] Students =
 		// {"	A1" , "A2"};
@@ -388,6 +390,33 @@ public class AppReader extends SL_JFrame {
 		panelSelection.add(txtPhone);
 		txtPhone.setColumns(10);
 		
+		JLabel lblChoise = new JLabel("Scegliere tipo di Utente");
+		lblChoise.setBounds(582, 247, 147, 35);
+		panelSelection.add(lblChoise);
+		
+		JRadioButton rdbtnReader = new JRadioButton("Lettore");
+		rdbtnReader.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TypePerson="Lettore";
+			}
+		});
+		rdbtnReader.setBounds(558, 300, 109, 23);
+		panelSelection.add(rdbtnReader);
+		
+		JRadioButton rdbtnLibrarian = new JRadioButton("Libraio");
+		rdbtnLibrarian.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TypePerson="Libraio";
+			}
+		});
+		rdbtnLibrarian.setBounds(664, 300, 109, 23);
+		panelSelection.add(rdbtnLibrarian);
+		
+
+		ButtonGroup bgMod = new ButtonGroup();
+		bgMod.add(rdbtnReader);
+		bgMod.add(rdbtnLibrarian);	
+		
 		btnReg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if	(	Check.checkAllReg	(
@@ -399,6 +428,7 @@ public class AppReader extends SL_JFrame {
 																passwordField.getPassword(), 
 																passwordFieldCh.getPassword(), 
 																txtInquadr.getText()
+																
 											)
 					)
 				{
@@ -421,7 +451,8 @@ public class AppReader extends SL_JFrame {
 																txtCF.getText(),
 																txtPhone.getText(),
 																p,
-																n
+																n,
+																TypePerson
 															)
 							);
 					System.out.println("Destinatario:" + to +" Client:" + me);
@@ -512,10 +543,10 @@ public class AppReader extends SL_JFrame {
 		
 		
 		text = new JTextField();
-		
 		text.setBounds(20, 444, 239, 20);
 		panelSelection.add(text);
 		text.setColumns(10);
+	
 		/*
 		Inq = new JComboBox<String>(Students); // set up JComboBox
 		Inq.setMaximumRowCount(5);
@@ -533,6 +564,14 @@ public class AppReader extends SL_JFrame {
 		panelSelection.add(rdbtnA1);
 	*/	
     }
+
+	public String getTypePerson() {
+		return TypePerson;
+	}
+
+	public void setTypePerson(String typePerson) {
+		TypePerson = typePerson;
+	}
 
 	public JFrame getFrmSchoolib() {
 		return frmSchoolib;
