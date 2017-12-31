@@ -1,5 +1,6 @@
 package database;
 
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -14,10 +16,13 @@ import javax.swing.table.DefaultTableModel;
 import Books.Books;
 import Core.Commands;
 import Table.TableBooks;
+import gui.Account;
+import gui.Login;
 
 
 public class MQ_Read {
 	
+	public LoadUser l;
 	public static String [][] RicercaLibro ()throws SQLException{			
 			String query = "SELECT * FROM libro;";
 			DBmanager.openConnection();
@@ -169,13 +174,13 @@ public class MQ_Read {
 	return value;
 	}
 	
-	public static String[] selectAdminLogIn(String email) throws SQLException
+	public static String[] selectAdminLogIn(String email,String pass) throws SQLException
 	{
 		
 		String query = "SELECT email, password_temp FROM utente WHERE email = '" + email + "';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
-		
+		System.out.println(query);
 		String[] Person = new String[2]; //3 email, 7 pass_temp
 		
 		if (!rs.isBeforeFirst()) 
@@ -243,6 +248,7 @@ public class MQ_Read {
 	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
 	public static String[] selectUserByQuery(String q) throws SQLException
 	{
+		LoadUser loaduser = new LoadUser();
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);		
 		String[] Person = new String[7]; //3 email, 7 pass_temp		
@@ -255,14 +261,13 @@ public class MQ_Read {
 		{
 			System.out.println("10");
 			rs.next();
-			Person[1] = rs.getString("nome");
-			Person[2] = rs.getString("cognome");
-			Person[3] = rs.getString("email");
-			Person[5] = rs.getString("inquadramento");
-			Person[6] = rs.getString("password");
-			Person[9] = rs.getString("ntel");
-			Person[10] = rs.getString("tipo_utente");
-			
+			Person[0] = loaduser.setName(rs.getString("nome"));
+			Person[1] = loaduser.setSurname(rs.getString("cognome"));
+			Person[2] = rs.getString("email");
+			Person[3] = rs.getString("inquadramento");
+			Person[4] = rs.getString("password");
+			Person[5] = rs.getString("ntel");
+			Person[6] = rs.getString("tipo_utente");
 		}
 		DBmanager.closeConnection();	
 		return Person;
@@ -302,6 +307,54 @@ public class MQ_Read {
 		return Person;
 	}
 	
+	public static void ReadUser2 ()throws SQLException{			
+		String query = "SELECT * FROM utente;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		final LoadUser loaduser = new LoadUser();
+		List<LoadUser> results = new ArrayList<LoadUser>();
+		String[][] dati = null;
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			dati = new String[1][10];
+			dati[0][0] = null;
+			dati[0][1] = null;
+			dati[0][2] = null;
+			dati[0][3] = null;
+			dati[0][4] = null;
+			dati[0][5] = null;
+			dati[0][6] = null;
+			dati[0][7] = null;
+			dati[0][8] = null;
+			dati[0][9] = null;
+			
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				loaduser.setId(rs.getInt("id"));
+				loaduser.setName(rs.getString("nome"));
+				loaduser.setSurname(rs.getString("cognome"));
+				loaduser.setEmail(rs.getString("email"));
+				loaduser.setCod_fis(rs.getString("codice_fiscale"));
+				loaduser.setInq(rs.getString("inquadramento"));
+				loaduser.setPass(rs.getString("password"));
+				loaduser.setPass_temp(rs.getString("password_temp"));
+				loaduser.setNtel(rs.getString("ntel"));
+				loaduser.setType_user(rs.getString("tipo_utente"));
+				results.add(loaduser);
+			
 	
+		}
+ 
+		rs.close();
+		DBmanager.closeConnection();
+		
+	}
+		
 	
 	}
+}
+

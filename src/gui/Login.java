@@ -237,6 +237,10 @@ public class Login extends SL_JFrame  {
 			return frame;
 		}
 	
-		
-		
+		public JTextField getTextField_2() {
+			return textField_2;
+		}
+		public JTextField setTextField_2(JTextField textField_2) {
+			return this.textField_2 = textField_2;
+		}
 	}

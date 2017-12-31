@@ -7,7 +7,9 @@ package database;
 	    private String name;
 	    private String surname;
 	    private String email;
-	    private String inq;
+	    private String cod_fis;
+	    private String pass_temp;
+		private String inq;
 	    private String pass;
 	    private String ntel;
 	    private String type_user;
@@ -61,11 +63,11 @@ package database;
 	        return id;
 	    }
 
-	    public void setId(int Id) {
-	        this.id = Id;
+	    public void setId(int i) {
+	        this.id = i;
 	    }
 
-	    public String getName() {
+	    public String getName(String p1) {
 	        return name;
 	    }
 
@@ -77,10 +79,23 @@ package database;
 	        return surname;
 	    }
 
-	    public void setSurname(String surname) {
-	        this.surname = surname;
+	    public String setSurname(String surname) {
+	        return this.surname = surname;
 	    }
+	    public String getCod_fis() {
+			return cod_fis;
+		}
 
+		public void setCod_fis(String cod_fis) {
+			this.cod_fis = cod_fis;
+		}
+		public String getPass_temp() {
+			return pass_temp;
+		}
+
+		public void setPass_temp(String pass_temp) {
+			this.pass_temp = pass_temp;
+		}
 	}
 
 

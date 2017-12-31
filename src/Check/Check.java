@@ -238,7 +238,7 @@ public class Check {
 	    	}
 	    	else
 	    	{
-	    		String[] datiUtente= MQ_Read.selectAdminLogIn(email);
+	    		String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
 	    		System.out.println("6");
 	        	if(datiUtente[0].equals("Nessun Dato"))
 	        	{
