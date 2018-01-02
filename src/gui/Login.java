@@ -216,7 +216,7 @@ public class Login extends SL_JFrame  {
 					PopUp.errorBox(c, "Hai provato 5 volte, cancellazione automatica del profilo");
 					
 				   try {
-					   MQ_Delete.deleteRowPerson1(r);
+					   MQ_Delete.deleteRowPerson1();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

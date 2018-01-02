@@ -307,54 +307,44 @@ public class MQ_Read {
 		return Person;
 	}
 	
-	public static void ReadUser2 ()throws SQLException{			
-		String query = "SELECT * FROM utente;";
+	public static String[] retrieveUserId() throws SQLException
+	{		
+		String query = "SELECT nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
-		final LoadUser loaduser = new LoadUser();
-		List<LoadUser> results = new ArrayList<LoadUser>();
-		String[][] dati = null;
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
 		
 		if (!rs.isBeforeFirst()) 
 		{
-			dati = new String[1][10];
-			dati[0][0] = null;
-			dati[0][1] = null;
-			dati[0][2] = null;
-			dati[0][3] = null;
-			dati[0][4] = null;
-			dati[0][5] = null;
-			dati[0][6] = null;
-			dati[0][7] = null;
-			dati[0][8] = null;
-			dati[0][9] = null;
-			
+			results.add("Nessun Dato");
 		}
 		else
 		{
 			while(rs.next()) 
 			{
-				loaduser.setId(rs.getInt("id"));
-				loaduser.setName(rs.getString("nome"));
-				loaduser.setSurname(rs.getString("cognome"));
-				loaduser.setEmail(rs.getString("email"));
-				loaduser.setCod_fis(rs.getString("codice_fiscale"));
-				loaduser.setInq(rs.getString("inquadramento"));
-				loaduser.setPass(rs.getString("password"));
-				loaduser.setPass_temp(rs.getString("password_temp"));
-				loaduser.setNtel(rs.getString("ntel"));
-				loaduser.setType_user(rs.getString("tipo_utente"));
-				results.add(loaduser);
-			
-	
+				results.add(rs.getString("nome"));
+				results.add(rs.getString("cognome"));
+				results.add(rs.getString("email"));
+				results.add(rs.getString("password"));
+				results.add(rs.getString("inquadramento"));
+				results.add(rs.getString("ntel"));
+				results.add(rs.getString("tipo_utente"));
+			}
 		}
- 
+		
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
 		rs.close();
 		DBmanager.closeConnection();
 		
+		return user;
 	}
-		
 	
 	}
-}
+
 

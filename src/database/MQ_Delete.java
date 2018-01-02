@@ -41,8 +41,9 @@ public class MQ_Delete {
 		return query;
 	}
 
-	public static void deleteRowPerson(List<String> r) throws SQLException
+	public static String deleteRowPerson(List<String> r) throws SQLException
 	{			
+		
 		String query = " DELETE FROM utente WHERE "
 				+ "id = '" 					+ r.get(0) 
 				+ "' AND nome = '" 		    + r.get(1) 
@@ -58,12 +59,15 @@ public class MQ_Delete {
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
+		
+		return query;
+		
 	}
 	
-	public static void deleteRowPerson1(String email) throws SQLException
+	public static void deleteRowPerson1() throws SQLException
 	{	
 		
-		String query = " DELETE FROM utente WHERE email ='" + email + "';";
+		String query = " DELETE FROM utente;";
 		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);

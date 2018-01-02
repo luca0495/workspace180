@@ -123,8 +123,8 @@ public class ChkDBandTab {
                   +"password varchar(40) null,"
                   +"password_temp varchar(40) null,"
                   +"ntel varchar(10) null,"
-                  +"tipo_utente varchar(30) not null,"
-                  +"unique (email))")  ;
+                  +"tipo_utente varchar(30) null)"
+                  )  ;
 		 
 		 System.out.println("ChkDBandTable :> table Person CREATED !");
 	 }

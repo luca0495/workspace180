@@ -180,6 +180,18 @@ public class Check {
     	return isUguale;
     }
 
+	public static boolean checkPassEq1(String c1,String c2)
+    {
+		boolean isUguale = false;
+    	String p1 = new String(c1);
+    	String p2 = new String(c2);
+    	if((checkPass(c1)) && (checkPass(c2)))
+    	{
+    		isUguale = (p1.equals(p2));
+    	}
+    	
+    	return isUguale;
+    }
 	public static boolean checkCF(String b)
     {
     	
@@ -264,6 +276,12 @@ public class Check {
 			
 	    }
 	 
+	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
+	    {
+	    
+			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkMailExist(mail) && checkPass(pass) && checkPass(checkPassword) 
+	    			&& checkPassEq(pass, checkPassword)&& checkInq(inq) && checkTel(tel) ;
+	    }
 	 public static boolean checkAllReg(String nome, String cognome, String telefono, String email, String codicefiscale, char[] pass, char[] passC, String inq)
 	    {
 	    	return checkName(nome) && checkName(cognome) && checkTel(telefono) && checkMail(email) && checkMailExist(email) && checkCF(codicefiscale) && checkCodFisExist(codicefiscale) && checkPass(pass) && checkPass(passC) 

@@ -13,7 +13,7 @@ package database;
 	    private String pass;
 	    private String ntel;
 	    private String type_user;
-	    
+	    private Object[][] data = null;
 
 	    public String getEmail() {
 			return email;
@@ -96,6 +96,7 @@ package database;
 		public void setPass_temp(String pass_temp) {
 			this.pass_temp = pass_temp;
 		}
+		
 	}
 
 

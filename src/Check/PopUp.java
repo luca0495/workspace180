@@ -22,7 +22,12 @@ public class PopUp
 	{		
 	    JOptionPane.showMessageDialog(c, errorMessage, "Errore", JOptionPane.ERROR_MESSAGE);
 	}
-		    
+    
+	public static boolean errorBox1(Component c,String errorMessage)
+	{		
+	    JOptionPane.showMessageDialog(c, errorMessage, "Errore", JOptionPane.ERROR_MESSAGE);
+		return true;
+	}
 	public static boolean confirmBox(Component c)
 	{
 	    if (JOptionPane.showConfirmDialog(c, "Sei sicuro ?", "Richiesta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
