@@ -310,12 +310,12 @@ public class MQ_Read {
 	
 	public static String[] retrieveUserId() throws SQLException
 	{		
-		String query = "SELECT nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
+		String query = "SELECT id, nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
 		List<String> results = new ArrayList<String>();
-		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
 		
 		if (!rs.isBeforeFirst()) 
 		{
@@ -325,6 +325,7 @@ public class MQ_Read {
 		{
 			while(rs.next()) 
 			{
+				results.add(rs.getString("id"));
 				results.add(rs.getString("nome"));
 				results.add(rs.getString("cognome"));
 				results.add(rs.getString("email"));
@@ -348,12 +349,12 @@ public class MQ_Read {
 	
 	public static String[] retrieveUserIdbyemail(String email) throws SQLException
 	{		
-		String query = "SELECT nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE email= '"+email+"';";
+		String query = "SELECT id,nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE email= '"+email+"';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
 		List<String> results = new ArrayList<String>();
-		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
 		
 		if (!rs.isBeforeFirst()) 
 		{
@@ -363,6 +364,7 @@ public class MQ_Read {
 		{
 			while(rs.next()) 
 			{
+				results.add(rs.getString("id"));
 				results.add(rs.getString("nome"));
 				results.add(rs.getString("cognome"));
 				results.add(rs.getString("email"));

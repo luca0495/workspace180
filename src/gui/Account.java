@@ -56,8 +56,8 @@ public class Account extends SL_JFrame{
     static int cols = 0; 
     String r = null;
     private static JTextField s1;
-    static String idUser = null;
-    static int userRow = 0;
+    private String idUser= null;
+	static int userRow = 0;
     private JLabel lblSetNome;
     private JLabel lblSetCognome;
     private JLabel lblSetEmail;
@@ -75,7 +75,7 @@ public class Account extends SL_JFrame{
 	private JPasswordField passwordFieldMod;
 	private JPasswordField passwordFieldConfMod;
 	private String input;
-	private ArrayList<String> rowData = new ArrayList<String>();
+	private List<String> rowData;
 	private int column;
 	private int deleteRow;
 	private String[] user = null;
@@ -201,10 +201,12 @@ public class Account extends SL_JFrame{
              PopUp.warningBox(frmSchoolib,"Questa azione cancellerà in modo completo e definitivo il profilo utenete attualmente in uso !!!");
 				if(PopUp.confirmBox(frmSchoolib))
 				{
-                // List<String> rowData1 = new ArrayList<String>();
+                rowData = new ArrayList<String>();
 					
+				rowData.add(0, idUser);
+			
 				try {
-					MQ_Delete.deleteRowPerson1();
+					MQ_Delete.deleteRowPerson(rowData);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -776,12 +778,13 @@ public class Account extends SL_JFrame{
 	
 	public void updateall(String[] user )
 	{
-		lblSetNome.setText(user[0]);
-		lblSetCognome.setText(user[1]);
-		lblSetEmail.setText(user[2]);
-		lblSetInq.setText(user[4]);
-		lblSetTel.setText(user[5]);
-		lblSetTipoUte.setText(user[6]);
+		setIdUser(user[0]);
+		lblSetNome.setText(user[1]);
+		lblSetCognome.setText(user[2]);
+		lblSetEmail.setText(user[3]);
+		lblSetInq.setText(user[5]);
+		lblSetTel.setText(user[6]);
+		lblSetTipoUte.setText(user[7]);
 		
 	}
 	
@@ -794,6 +797,14 @@ public class Account extends SL_JFrame{
 	{
 		lblSetCognome.setText(user[1]);	
 	}	
+	
+	public String getIdUser() {
+			return idUser;
+	}
+
+	public void setIdUser(String idUser) {
+			this.idUser = idUser;
+	}
 	//TODO E SEGUENTI CAMPI...
 	
 	

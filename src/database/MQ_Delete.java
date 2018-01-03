@@ -45,16 +45,16 @@ public class MQ_Delete {
 	{			
 		
 		String query = " DELETE FROM utente WHERE "
-				+ "id = '" 					+ r.get(0) 
-				+ "' AND nome = '" 		    + r.get(1) 
-				+ "' AND cognome  = '" 	    + r.get(2) 
-				+ "' AND email = '" 	    + r.get(3) 
-				+ "' AND codice_fiscale = '"+ r.get(4) 
-		        + "' AND inquadramento = '" + r.get(5) 
-		        + "' AND password = '"      + r.get(6)
-		        + "' AND password_temp = '" + r.get(7) 
-		        + "' AND ntel = '"          + r.get(8) 
-		        + "' AND tipo_utente = '"   + r.get(9) + "';";
+				+ "  id = '" 				+ r.get(0) + "';";
+			//	+ "' AND nome = '" 		    + r.get(1) 
+			//	+ "' AND cognome  = '" 	    + r.get(2) 
+			//	+ "' AND email = '" 	    + r.get(3) 
+			//	+ "' AND codice_fiscale = '"+ r.get(4) 
+		    //    + "' AND inquadramento = '" + r.get(5) 
+		    //    + "' AND password = '"      + r.get(6)
+		    //    + "' AND password_temp = '" + r.get(7) 
+		    //    + "' AND ntel = '"          + r.get(8) 
+		    //    + "' AND tipo_utente = '"   + r.get(9) + "';";
 		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
