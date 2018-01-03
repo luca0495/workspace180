@@ -17,8 +17,9 @@ public enum Commands{
 			Prenotation		("Prenotation new	",		SearchFor.Prenotation,	CommandsType.CHANGE	,4,0),
 			BookGet			("Prenotation Get	",		SearchFor.Prenotation,	CommandsType.CHANGE	,4,0),
 			BookGiveback	("Prenotation Give back	",	SearchFor.Prenotation,	CommandsType.CHANGE	,4,0),
-			
-			UserREAD 		("User Read			",		SearchFor.Account,		CommandsType.READ	,1,	0), 
+
+			UserREAD 		("User Read			",		SearchFor.Account,		CommandsType.READ	,1,	0),
+			UserREADbyEmail	("User Read by email",		SearchFor.Account,		CommandsType.READ	,1,	0), 
 			UserUPDATE 		("User Update		",		SearchFor.Account,		CommandsType.CHANGE	,2,	0),
 			UserDELETE		("User Delete		",		SearchFor.Account,		CommandsType.CHANGE	,3,	0),		
 		

@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
+import Core.Commands;
 import connections.Client;
 import database.MQ_Delete;
 
@@ -186,6 +187,10 @@ public class Login extends SL_JFrame  {
 			try 
 			{
 				  System.out.println("1");
+				  
+//TODO MAURO
+//TODO Passare tramite server con controllo LETTURA
+				  
 				r = Check.checkAdminLogIn(email, pass);
 			} 
 			catch (SQLException e1) 
@@ -197,13 +202,35 @@ public class Login extends SL_JFrame  {
 				// cambiare pannello
 				   System.out.println("2");
 				   System.out.println("Numero di clicked1" + clicked);
-				 			
-					Account lo = new Account(getFrame());
+
+// APERTA FINESTRA				   
+				   
+				   
+				   	me.setSql(email);
+				   	System.out.println("passato da login a client la email : "+me.getSql());
+					Account lo = new Account(getFrame(),me);				
+					
+					me.setActW(lo);
+					me.setActF(frmSchoolib);
+					
+					
 					PanelFirstAcc.setVisible(false);
 					PanelRegi.setVisible(false);
 					WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
 					frmSchoolib.dispatchEvent(close);	
+					
+			// ***
 			
+					try {
+						System.out.println("GUI login:> cmd tentativo di login ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserREADbyEmail);
+					} catch (InterruptedException e2) {
+						System.out.println("GUI login :> problemi con tentativo di login ");	
+						e2.printStackTrace(); 
+					}	
+					
+			// ***
 				
 			    }
 			    else 
@@ -216,7 +243,9 @@ public class Login extends SL_JFrame  {
 					PopUp.errorBox(c, "Hai provato 5 volte, cancellazione automatica del profilo");
 					
 				   try {
+					   
 					   MQ_Delete.deleteRowPerson1();
+					   
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

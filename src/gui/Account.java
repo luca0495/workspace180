@@ -40,7 +40,7 @@ import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
 
-public class Account extends JFrame{
+public class Account extends SL_JFrame{
 
 	
 	
@@ -83,8 +83,12 @@ public class Account extends JFrame{
 	private JTextField passwordFieldMod1;
 	private JTextField passwordFieldConfMod1;
 	
-	public Account(Component c)
+	public Account(Component c,Client x)
 	{
+		me = x;
+		me.setActW(this);
+		me.setActC(c);
+		me.setCliType(Clients.Reader);		
 		Account(c);
 		
 	}
@@ -111,18 +115,28 @@ public class Account extends JFrame{
 		frmSchoolib.getContentPane().add(panelModify, "name_454607080642439");
 		panelModify.setLayout(null);
 		
+		
+		//old ora comando passato da finestra login a client
+		//***
+		/*
 		 try 
 		   {
-			user = MQ_Read.retrieveUserId();
+			
+			 user = MQ_Read.retrieveUserId();
+			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		 */
+		 //***
+		 
+		 
 		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 14, 42, 30);
 		panelAccount.add(lblNome);
 		
 	    lblSetNome = new JLabel();
-	    lblSetNome.setText(user[0]);
+	    //lblSetNome.setText(user[0]);
 		lblSetNome.setBounds(106, 19, 186, 20);
 		panelAccount.add(lblSetNome);
 		
@@ -131,7 +145,7 @@ public class Account extends JFrame{
 		panelAccount.add(lblCognome);
 		
 		lblSetCognome = new JLabel();
-		lblSetCognome.setText(user[1]);
+		//lblSetCognome.setText(user[1]);
 		lblSetCognome.setBounds(106, 64, 186, 20);
 		panelAccount.add(lblSetCognome);
 		
@@ -140,7 +154,7 @@ public class Account extends JFrame{
 		panelAccount.add(lblEmail);
 		
 		lblSetEmail = new JLabel();
-		lblSetEmail.setText(user[2]);
+		//lblSetEmail.setText(user[2]);
 		lblSetEmail.setBounds(106, 112, 186, 20);
 		panelAccount.add(lblSetEmail);
 			
@@ -149,7 +163,7 @@ public class Account extends JFrame{
 		panelAccount.add(lblInq);
 		
 		lblSetInq = new JLabel();
-		lblSetInq.setText(user[4]);
+		//lblSetInq.setText(user[4]);
 		lblSetInq.setBounds(106, 156, 186, 20);
 		panelAccount.add(lblSetInq);
 		
@@ -158,7 +172,7 @@ public class Account extends JFrame{
 		panelAccount.add(lblTipoUte);
 		
 		lblSetTipoUte = new JLabel();
-		lblSetTipoUte.setText(user[6]);
+		//lblSetTipoUte.setText(user[6]);
 		lblSetTipoUte.setBounds(106, 211, 186, 20);
 		panelAccount.add(lblSetTipoUte);
 		
@@ -167,7 +181,7 @@ public class Account extends JFrame{
 		panelAccount.add(lblTel);
 		
 		lblSetTel = new JLabel();
-		lblSetTel.setText(user[5]);
+		//lblSetTel.setText(user[5]);
 		lblSetTel.setBounds(106, 261, 186, 14);
 		panelAccount.add(lblSetTel);
 		
@@ -276,7 +290,7 @@ public class Account extends JFrame{
 		
 		txtNameMod = new JTextField();
 		txtNameMod.setEditable(false);
-		txtNameMod.setText(user[0]);
+		//txtNameMod.setText(user[0]);
 		txtNameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -304,7 +318,7 @@ public class Account extends JFrame{
 		
 		txtSurnameMod = new JTextField();
 		txtSurnameMod.setEditable(false);
-		txtSurnameMod.setText(user[1]);
+		//txtSurnameMod.setText(user[1]);
 		txtSurnameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -332,7 +346,7 @@ public class Account extends JFrame{
 		
 		txtMailMod = new JTextField();
 		txtMailMod.setEditable(false);
-		txtMailMod.setText(user[2]);
+		//txtMailMod.setText(user[2]);
 		txtMailMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -418,7 +432,7 @@ public class Account extends JFrame{
        
 		passwordFieldMod = new JPasswordField();
 		passwordFieldMod.setEditable(false);
-		passwordFieldMod.setText(user[3]);
+		//passwordFieldMod.setText(user[3]);
 		passwordFieldMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -445,7 +459,7 @@ public class Account extends JFrame{
 		
 		passwordFieldConfMod = new JPasswordField();
 		passwordFieldConfMod.setEditable(false);
-		passwordFieldConfMod.setText(user[3]);
+		//passwordFieldConfMod.setText(user[3]);
 		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -474,7 +488,7 @@ public class Account extends JFrame{
 		
 		txtInqMod = new JTextField();
 		txtInqMod.setEditable(false);
-		txtInqMod.setText(user[4]);
+		//txtInqMod.setText(user[4]);
 		txtInqMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -504,7 +518,7 @@ public class Account extends JFrame{
 		
 		txtTelMod = new JTextField();
 		txtTelMod.setEditable(false);
-		txtTelMod.setText(user[5]);
+		//txtTelMod.setText(user[5]);
 		txtTelMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -759,6 +773,28 @@ public class Account extends JFrame{
 		
 		
 	}
+	
+	public void updateall(String[] user )
+	{
+		lblSetNome.setText(user[0]);
+		lblSetCognome.setText(user[1]);
+		//etc...
+		
+	}
+	
+	
+	public void updatelblSetNome(String[] user )
+	{
+		lblSetNome.setText(user[0]);	
+	}
+	public void updatelblSetCognome(String[] user )
+	{
+		lblSetCognome.setText(user[1]);	
+	}	
+	//TODO E SEGUENTI CAMPI...
+	
+	
+	
 	/*
 	public static void ReadUser1 ()throws SQLException{	
 		String query = "SELECT * FROM utente ORDER BY id DESC LIMIT 1;";  //  

@@ -31,7 +31,10 @@ public class Guardian implements Runnable {
 			xx++;
 			//System.out.println("GPG :> Guardian Busy - Query in esecuzione");	
 			while (isBusy()){}	//attesa query in esecuzione...
-			System.out.println("GPG :> Guardian Valuta no "+xx);
+			
+			//TODO RIMETTI println
+			//System.out.println("GPG :> Guardian Valuta no "+xx);
+			
 			if (xx==1000)xx=0;
 			
 			try {
@@ -73,7 +76,7 @@ public class Guardian implements Runnable {
 	public void Val_BL() throws InterruptedException{	
 		int x;
 		
-		System.out.println("GPG :> Guardian valuta BL");
+		//System.out.println("GPG :> Guardian valuta BL");
 		
 		if (R.getBL().getWr()>0){		//richieste in attesa per BL
 				if(R.getLastserved()!=Requests.RS.BL){	//ultima richiesta servita diversa da 	BL
@@ -98,7 +101,7 @@ public class Guardian implements Runnable {
 	//------------------------------------------------------------
 	public void Val_BR() throws InterruptedException{	
 		
-		System.out.println("GPG :> Guardian valuta BR");
+		//System.out.println("GPG :> Guardian valuta BR");
 		
 		int x;
 		if (R.getBR().getWr()>0){		//richieste in attesa per BR
@@ -126,7 +129,7 @@ public class Guardian implements Runnable {
 	public void Val_PL() throws InterruptedException{	
 		int x;
 		
-		System.out.println("GPG :> Guardian valuta PL");
+		//System.out.println("GPG :> Guardian valuta PL");
 		
 		if (R.getPL().getWr()>0){		//richieste in attesa per BL
 				if(R.getLastserved()!=Requests.RS.PL){	//ultima richiesta servita diversa da 	BL
@@ -151,7 +154,7 @@ public class Guardian implements Runnable {
 	//------------------------------------------------------------
 	public void Val_PR() throws InterruptedException{	
 		
-		System.out.println("GPG :> Guardian valuta BR");
+		//System.out.println("GPG :> Guardian valuta BR");
 		
 		int x;
 		if (R.getPR().getWr()>0){		//richieste in attesa per BR
@@ -178,7 +181,7 @@ public class Guardian implements Runnable {
 	
 	public void Val_AL() throws InterruptedException{	
 		
-		System.out.println("GPG :> Guardian valuta AL");
+		//System.out.println("GPG :> Guardian valuta AL");
 		
 		int x;
 		if (R.getAL().getWr()>0){		//richieste in attesa per AL
@@ -204,7 +207,7 @@ public class Guardian implements Runnable {
 	//------------------------------------------------------------
 	public void Val_AR() throws InterruptedException{	
 		
-		System.out.println("GPG :> Guardian valuta AR");
+		//System.out.println("GPG :> Guardian valuta AR");
 		
 		int x;
 		if (R.getAR().getWr()>0){				//richieste in attesa per AR

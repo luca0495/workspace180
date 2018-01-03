@@ -164,12 +164,12 @@ public class ServerReal extends ServerSkeleton {
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
 			return x;								
 
-			//********************
 			case UserREAD:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read ");					
 				try {				
 
 				String[] UserData = MQ_Read.selectUserByQuery(M.getMsg().getSQLQuery());
+				
 				x.setRowUser(UserData);
 				x.setText(new String ("SRV :> selected user :> OK"));
 					
@@ -185,8 +185,27 @@ public class ServerReal extends ServerSkeleton {
 				return x;				
 			
 			
-		//********************	
-			
+			//********************	
+			case UserREADbyEmail:
+				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
+				try {				
+
+				String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email
+				
+				x.setRowUser(UserData);
+				x.setText(new String ("SRV :> selected user by email:> OK"));
+					
+				} catch (SQLException e) {	
+					System.out.println("problemi con query select user by email ");
+					e.printStackTrace();				
+					
+					getMeS().addMsg(mSg);
+					x.setText(new String ("SRV :> selected user by email:> NG"));
+
+				}
+				System.out.println("SYS AL :> srv ritorna "+x.getText());										
+				return x;				
+				
 			
 			
 		default:

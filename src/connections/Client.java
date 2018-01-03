@@ -46,6 +46,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Random;
 
+import gui.Account;
 import gui.AppLibrarian;
 import gui.AppReader;
 import gui.AppType;
@@ -87,6 +88,8 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			String 				Sql;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
+	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
+	
 	
 	public Client() throws Exception {		
 		this.setCliType(Clients.Default);
@@ -179,13 +182,11 @@ public class Client implements Serializable, Runnable  {
 														BookPopulate();
 									break;
 						//	Person
-								case UserREAD: 			
-									
-									
-//TODO arriva DA GUI Login aprendo GUI , settare la finestra attiva ActW !!!!
-//TODO dal comando per aprire finestra user account : setActF(this);
-														
-														UserGetData();	//necessario setSql
+								case UserREAD: 						
+														UserGetData();			//necessario setSql con query completa
+									break;
+								case UserREADbyEmail: 								
+														UserGetDatabyEmail();	//necessario setSql con email
 									break;
 						//	Loans
 								case PrenotationREAD: 
@@ -583,20 +584,40 @@ public class Client implements Serializable, Runnable  {
 								String name 		= Mb.getRowUser()[0];
 								String surname 		= Mb.getRowUser()[1];
 								
-								//etc...
-								//da qui lanciamo i metodi previsti nella finestra per aggiornare le labels...
-								
-//TODO								ActF.fillinLabelName(name);
-//TODO								ActF.fillinLabelSurName(surname);
-								
+
 								
 								clrParFS();	
 								break;
+								
 							case "SRV :> selected user :> NG" :
 								System.out.println("ritornato al client UserDATA NG : ");
 								
 								clrParFS();	
 								break;
+								
+								
+							// USER Read Data by email
+							case "SRV :> selected user by email:> OK":
+								System.out.println("ritornato al client UserDATA by email OK : ");									
+								
+								//etc...
+								//da qui lanciamo i metodi previsti nella finestra per aggiornare le labels...							
+								
+								Account X = (Account) ActW;
+								System.out.println(" settato account ");		
+								X.updateall(Mb.getRowUser());
+								System.out.println(" updatato finestra account ");		
+								
+								clrParFS();	
+								break;
+								
+							case "SRV :> selected user by email :> NG" :
+								System.out.println("ritornato al client UserDATA  by email NG : ");
+								
+								clrParFS();	
+								break;								
+								
+
 								
 								
 							default:							
@@ -821,14 +842,41 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()
+						this.getSql()				
+						
 						);
 				//MsgSend.setUType(Clients.Librarian);
 				// **** Client invia Message
 				sendM(MsgSend, Mb);
 			}	
 		}		
-	
+		private void UserGetDatabyEmail() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADbyEmail;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email !!!!
+						
+						);
+				//MsgSend.setUType(Clients.Librarian);
+				// **** Client invia Message
+				sendM(MsgSend, Mb);
+			}	
+		}
+		
+		
+		
 	
 	//------------------------------------------------------------------------		 
 	// get & set
@@ -972,6 +1020,7 @@ public class Client implements Serializable, Runnable  {
 				this.setSql(null);	//S
 				setBusy(false);
 			}
+
 			
 	
 	

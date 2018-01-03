@@ -306,10 +306,49 @@ public class MQ_Read {
 		
 		return Person;
 	}
+
 	
 	public static String[] retrieveUserId() throws SQLException
 	{		
 		String query = "SELECT nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			results.add("Nessun Dato");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("nome"));
+				results.add(rs.getString("cognome"));
+				results.add(rs.getString("email"));
+				results.add(rs.getString("password"));
+				results.add(rs.getString("inquadramento"));
+				results.add(rs.getString("ntel"));
+				results.add(rs.getString("tipo_utente"));
+			}
+		}
+		
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
+	}
+	
+	public static String[] retrieveUserIdbyemail(String email) throws SQLException
+	{		
+		String query = "SELECT nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE email= '"+email+"';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
