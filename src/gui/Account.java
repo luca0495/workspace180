@@ -778,7 +778,10 @@ public class Account extends SL_JFrame{
 	{
 		lblSetNome.setText(user[0]);
 		lblSetCognome.setText(user[1]);
-		//etc...
+		lblSetEmail.setText(user[2]);
+		lblSetInq.setText(user[4]);
+		lblSetTel.setText(user[5]);
+		lblSetTipoUte.setText(user[6]);
 		
 	}
 	

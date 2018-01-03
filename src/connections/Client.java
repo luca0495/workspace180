@@ -574,18 +574,15 @@ public class Client implements Serializable, Runnable  {
 								System.out.println("ritornato al client BOOK Del NG : ");									
 								clrParFS();	
 								break;
+							
 								
 							// USER Read Data
 							case "SRV :> selected user :> OK" :
 								System.out.println("ritornato al client UserDATA OK : ");
-								//contiene gli user's data
-								
-								
+								//contiene gli user's data	
 								String name 		= Mb.getRowUser()[0];
 								String surname 		= Mb.getRowUser()[1];
-								
 
-								
 								clrParFS();	
 								break;
 								
@@ -598,15 +595,12 @@ public class Client implements Serializable, Runnable  {
 								
 							// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
-								System.out.println("ritornato al client UserDATA by email OK : ");									
-								
-								//etc...
-								//da qui lanciamo i metodi previsti nella finestra per aggiornare le labels...							
+								System.out.println("ritornato al client UserDATA by email OK : ");															
 								
 								Account X = (Account) ActW;
-								System.out.println(" settato account ");		
+								//System.out.println(" settato account ");		
 								X.updateall(Mb.getRowUser());
-								System.out.println(" updatato finestra account ");		
+								//System.out.println(" updatato finestra account ");		
 								
 								clrParFS();	
 								break;
