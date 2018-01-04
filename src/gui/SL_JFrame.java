@@ -34,7 +34,6 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 	public SL_JFrame (){		
 	}
 	
-	
 	public void addMsg(String msg){
 		
 		if (msg!=null) {

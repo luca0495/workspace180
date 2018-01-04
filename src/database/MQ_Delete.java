@@ -21,6 +21,15 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}
 	
+	public static void deletePassTemp(String pass) throws SQLException
+	{			
+		String query = "DELETE FROM utente WHERE "
+				+ "password_temp = '" + pass + "';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
 	
 	
 	public static void deleteRowBooks(String q) throws SQLException
