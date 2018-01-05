@@ -206,7 +206,8 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		String query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
 		                                     + " OR cognome_autore LIKE '%"+x+"%'"
 		                                     + " OR categoria LIKE '%"+x+"%'"
-		                                     + " OR titolo LIKE '%"+x+"%')";
+		                                     + " OR titolo LIKE '%"+x+"%')"
+		                                     + " AND codice <=25 ORDER BY codice ASC";
 		if(x=="" || x==null){			
 		query = "SELECT * FROM libro ";
 		}

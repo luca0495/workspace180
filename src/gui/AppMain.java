@@ -108,26 +108,6 @@ public class AppMain extends SL_JFrame  {
 		getFrame().getContentPane().add(panelLog);
 		panelLog.setLayout(null);
 		
-		JPanel Research = new JPanel();
-		frame.getContentPane().add(Research, "name_1471890526861409");
-		Research.setLayout(null);
-		
-		JButton btnIndietro = new JButton("Indietro");
-		btnIndietro.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-			Research.setVisible(false);
-			panelLog.setVisible(true);
-			
-			}
-		});
-		btnIndietro.setBounds(558, 11, 89, 23);
-		Research.add(btnIndietro);
-		
-		JButton btnRicerca_1 = new JButton("Ricerca");
-		btnRicerca_1.setBounds(470, 11, 89, 23);
-		Research.add(btnRicerca_1);
-		
 		
 		
 		ImageIcon backgroundImage0 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Background0.jpg")));
@@ -429,32 +409,10 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		JLabel lblBackgound1 = new JLabel();
-		lblBackgound1.setBounds(-34, 11, 884, 511);
+		lblBackgound1.setBounds(0, 0, 874, 501);
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
-
-		
-		JPanel panel_2 = new JPanel();
-		frame.getContentPane().add(panel_2, "name_584559887195472");
-		panel_2.setLayout(null);
-		
-		JLabel lblRegistrazione = new JLabel("REGISTRAZIONE");
-		lblRegistrazione.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblRegistrazione.setBounds(207, 53, 164, 40);
-		panel_2.add(lblRegistrazione);
-		
-		JButton btnREADER = new JButton("READER");
-		btnREADER.setBounds(112, 190, 89, 23);
-		panel_2.add(btnREADER);
-		
-		JButton btnLIBRARIAN = new JButton("LIBRARIAN");
-		btnLIBRARIAN.setBounds(388, 190, 89, 23);
-		panel_2.add(btnLIBRARIAN);
-		
-		JButton btnIndietro_1 = new JButton("Indietro");
-		btnIndietro_1.setBounds(245, 306, 89, 23);
-		panel_2.add(btnIndietro_1);
 		
 
 	

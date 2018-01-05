@@ -114,19 +114,10 @@ public class Account extends SL_JFrame{
 		JPanel panelModify = new JPanel();
 		frmSchoolib.getContentPane().add(panelModify, "name_454607080642439");
 		panelModify.setLayout(null);
-		
-		
 		//old ora comando passato da finestra login a client
 		//***
 		/*
-		 try 
-		   {
-			
-			 user = MQ_Read.retrieveUserId();
-			
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		 
 		 */
 		 //***
 		 
@@ -290,9 +281,16 @@ public class Account extends SL_JFrame{
 		lblTypeUserMod.setBounds(611, 176, 157, 19);
 		panelModify.add(lblTypeUserMod);
 		
+		try {
+			user = MQ_Read.retrieveUserId();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		txtNameMod = new JTextField();
 		txtNameMod.setEditable(false);
-		//txtNameMod.setText(user[0]);
+		txtNameMod.setText(user[1]);
 		txtNameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -320,7 +318,7 @@ public class Account extends SL_JFrame{
 		
 		txtSurnameMod = new JTextField();
 		txtSurnameMod.setEditable(false);
-		//txtSurnameMod.setText(user[1]);
+		txtSurnameMod.setText(user[2]);
 		txtSurnameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -348,7 +346,7 @@ public class Account extends SL_JFrame{
 		
 		txtMailMod = new JTextField();
 		txtMailMod.setEditable(false);
-		//txtMailMod.setText(user[2]);
+		txtMailMod.setText(user[3]);
 		txtMailMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -434,7 +432,7 @@ public class Account extends SL_JFrame{
        
 		passwordFieldMod = new JPasswordField();
 		passwordFieldMod.setEditable(false);
-		//passwordFieldMod.setText(user[3]);
+		passwordFieldMod.setText(user[4]);
 		passwordFieldMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -446,7 +444,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass(passwordFieldMod.getPassword()))
+				if(Check.checkPass1(passwordFieldMod.getPassword()))
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
 				}
@@ -461,12 +459,12 @@ public class Account extends SL_JFrame{
 		
 		passwordFieldConfMod = new JPasswordField();
 		passwordFieldConfMod.setEditable(false);
-		//passwordFieldConfMod.setText(user[3]);
+		passwordFieldConfMod.setText(user[4]);
 		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass(passwordFieldConfMod.getPassword()))
+				if(Check.checkPass1(passwordFieldConfMod.getPassword()))
 				{					
 					if(Check.checkPassEq(passwordFieldMod.getPassword(), passwordFieldConfMod.getPassword()))
 					{
@@ -490,7 +488,7 @@ public class Account extends SL_JFrame{
 		
 		txtInqMod = new JTextField();
 		txtInqMod.setEditable(false);
-		//txtInqMod.setText(user[4]);
+		txtInqMod.setText(user[5]);
 		txtInqMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -520,7 +518,7 @@ public class Account extends SL_JFrame{
 		
 		txtTelMod = new JTextField();
 		txtTelMod.setEditable(false);
-		//txtTelMod.setText(user[5]);
+		txtTelMod.setText(user[6]);
 		txtTelMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -589,28 +587,36 @@ public class Account extends SL_JFrame{
 				String tel = txtTelMod.getText();
 				String stato = TypePerson;
 				System.out.println("1");
-				if(Check.checkAllRegMod(nome, cognome,mail, pass, checkPassword,inq, tel ))
+				
+				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))
 				{
 					System.out.println("2");
 					try
 					{
 					System.out.println("3");
-					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), txtMailMod.getText(),txtInqMod.getText(),passwordFieldMod1.getText(),txtTelMod.getText(),stato);
-					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
+					String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
+					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), txtMailMod.getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
 					
+					}
+					catch (SQLException e) 
+					{
+						e.printStackTrace();
+					}
+					
+					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
 					 try 
 					{
 					  user = MQ_Read.retrieveUserId();
 					} catch (SQLException e) {
 							e.printStackTrace();
 					}
-					 
-					lblSetNome.setText(user[0]);
-					lblSetCognome.setText(user[1]);
-					lblSetEmail.setText(user[2]);
-					lblSetInq.setText(user[4]);
-					lblSetTel.setText(user[5]);
-					lblSetTipoUte.setText(user[6]);
+				    
+					lblSetNome.setText(user[1]);
+					lblSetCognome.setText(user[2]);
+					lblSetEmail.setText(user[3]);
+					lblSetInq.setText(user[5]);
+					lblSetTel.setText(user[6]);
+					lblSetTipoUte.setText(user[7]);
 					 
 					panelAccount.setVisible(true);
 					panelModify.setVisible(false);
@@ -631,19 +637,12 @@ public class Account extends SL_JFrame{
 					lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
-					}
-					catch (SQLException e) 
-					{
-						e.printStackTrace();
-					}
-					System.out.println("4");
-						
+					
 			    }
-				else
-		        System.out.println("4");
+				else 
 				{
-				PopUp.errorBox(frmSchoolib,"Campi non corretti");
-			
+				PopUp.errorBox1(frmSchoolib,"Campi non corretti");
+				
 				if(Check.checkName(nome))
 				{
 					System.out.println("7");
@@ -677,7 +676,7 @@ public class Account extends SL_JFrame{
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
 
-				if(Check.checkPass(pass))
+				if(Check.checkPass1(pass))
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
 				}
@@ -686,7 +685,7 @@ public class Account extends SL_JFrame{
 					lblChangePassCheck.setIcon(iconLogoC);
 				}
 				
-				if(Check.checkPass(checkPassword))
+				if(Check.checkPass1(checkPassword))
 				{
 					lblChangePassConfCheck.setIcon(iconLogoT);
 				}
@@ -723,6 +722,8 @@ public class Account extends SL_JFrame{
 					lblChangePhoneCheck.setIcon(iconLogoC);
 				}	
 				}
+			 
+				
 		}
 	});
 	
@@ -793,9 +794,9 @@ public class Account extends SL_JFrame{
 	{
 		lblSetNome.setText(user[0]);	
 	}
-	public void updatelblSetCognome(String[] user )
+	public void updatelblSetId(String[] user )
 	{
-		lblSetCognome.setText(user[1]);	
+		setIdUser(user[0]);	
 	}	
 	
 	public String getIdUser() {

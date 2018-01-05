@@ -77,11 +77,21 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
-	public static void updateModUser(String nome,  String cognome, String email,  String inq, String password, String ntel,String tipo_utente) throws SQLException
+	public static void updateModUser(String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
 	{	
 
-		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + password +
+		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
 				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query1);
+		DBmanager.closeConnection();
+	}
+	
+	public static void updatePassForgot(String email,String pass, int i) throws SQLException
+	{	
+
+		String query1 = "UPDATE utente SET email = '" + email + "', password = '" + pass + "' , password_temp = '" + i + "';";
     	
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query1);

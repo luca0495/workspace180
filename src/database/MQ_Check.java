@@ -32,7 +32,7 @@ public class MQ_Check {
 		return results;
 	}
 	
-	public static String selectCF(String mail) throws SQLException
+	public static String selectMail(String mail) throws SQLException
 	{
 		String query = "SELECT codice_fiscale FROM utente WHERE email = '" + mail + "';";
 		DBmanager.openConnection();
