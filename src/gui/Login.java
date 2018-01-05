@@ -190,8 +190,9 @@ public class Login extends SL_JFrame  {
 				  
 //TODO MAURO
 //TODO Passare tramite server con controllo LETTURA
-				  
-				r = Check.checkAdminLogIn(email, pass);
+				  			
+				  r = Check.checkAdminLogIn(email, pass);	
+				
 			} 
 			catch (SQLException e1) 
 			{
