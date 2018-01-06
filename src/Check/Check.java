@@ -240,6 +240,32 @@ public class Check {
 	    	return (s.length() <= 50);
 	    }
 	 
+	 // esamina password TEMPORANEA
+	 public static String checkAdminLogInFIRST(String email, String pass) throws SQLException {
+	    	
+
+	    	if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals("")){
+	    			return new String("I Campi Non Possono Essere Vuoti");
+	    	}else{
+	    			
+	    			//**********************************************************
+	    			String[] datiUtente= MQ_Read.selectAdminLogInFIRST(email, pass);
+	    			//**********************************************************
+	    			
+	    			if(datiUtente[0].equals("Nessun Dato"))	{
+	   	        			return new String("L'Email Non Esiste");
+	   	        	}else{        		
+	   	        			if(pass.equals(datiUtente[1])){
+	   	        					return new String("Login Corretto");
+	   	        			}else{
+	    							return new String("Password Errata");
+	   	        			}
+	   	        	}
+
+	    	}
+	    }
+	 
+	 // esamina password 
 	  public static String checkAdminLogIn(String email, String pass) throws SQLException
 	    {
 	    	

@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -108,8 +110,7 @@ public class ServerReal extends ServerSkeleton {
 		//Query DIRETTA su dbManager		
 		// ****************************************************************************************************************
 		switch (M.getMsg().getCommand()) {
-		
-		//********************
+		// ****************************************************************************************************************
 		case BookExecuteQuery:
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query ");					
 			try {				
@@ -164,54 +165,66 @@ public class ServerReal extends ServerSkeleton {
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
 			return x;								
 
-			case UserREAD:
+		case UserREAD:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read ");					
-				try {				
-
+				try {			
 				String[] UserData = MQ_Read.selectUserByQuery(M.getMsg().getSQLQuery());
-				
 				x.setRowUser(UserData);
 				x.setText(new String ("SRV :> selected user :> OK"));
-					
 				} catch (SQLException e) {	
 					System.out.println("problemi con query select user ");
 					e.printStackTrace();				
 					
 					getMeS().addMsg(mSg);
 					x.setText(new String ("SRV :> selected user :> NG"));
-
 				}
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;				
-			
-			
-			//********************	
-			case UserREADbyEmail:
+		
+		case UserREADbyEmail:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
 				try {				
-
-				String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email
-				
+				String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
 				x.setRowUser(UserData);
-				x.setText(new String ("SRV :> selected user by email:> OK"));
-					
+				x.setText(new String ("SRV :> selected user by email:> OK"));					
 				} catch (SQLException e) {	
 					System.out.println("problemi con query select user by email ");
 					e.printStackTrace();				
 					
 					getMeS().addMsg(mSg);
 					x.setText(new String ("SRV :> selected user by email:> NG"));
-
 				}
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;				
-				
-			
-			
-		default:
-			break;
-		}
 		
+		case UserREADlogin:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login");					
+			try {				
+				String email 	= M.getMsg().getSQLQuery();
+				String pass 	= M.getMsg().getSQLQuery2();	
+				String r 		= Check.checkAdminLogIn(email, pass);
+				
+				x.setUserEmail(email);
+				x.setText(new String ("SRV :> selected user login check:> "+r));
+				
+			} catch (SQLException e) {	
+				System.out.println("problemi con \"SRV :> selected user login check ");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> selected user login check:> NG"));
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;				
+			
+			
+
+			
+		
+		
+	default:
+		break;
+	}		
 		
 
 		// ****************************************************************************************************************
@@ -287,6 +300,80 @@ public class ServerReal extends ServerSkeleton {
 								return x;								
 								//break;
 
+							
+							case UserREADloginFIRST:
+								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login first time");					
+								try {				
+									String email 	= M.getMsg().getSQLQuery();
+									String pass 	= M.getMsg().getSQLQuery2();	
+									String[] user;
+									
+									
+									// RECUPERA VALORE NUMERO TENTATIVI
+									
+									//*****************************************
+									user = MQ_Read.UserLoginTryCounter(email);
+									//*****************************************
+									
+									String tent = user[1];
+									int tentativi = Integer.parseInt(tent);
+									
+									System.out.println("REAL SERVER L-A:> recuperati numero tentativi effettuati: "+tentativi);
+									
+									if (tentativi == 5) {
+										
+										String idUser = user[2];
+										System.out.println("REAL SERVER L-A:> PROCEDURA CANCELLAZIONE UTENTE id "+idUser );
+										// PROCEDURA CANCELLAZIONE UTENTE
+										List<String> rowData = new ArrayList<String>();
+										rowData.add(0, idUser);
+										MQ_Delete.deleteRowPerson(rowData);
+										
+										x.setText(new String ("SRV :> selected user login check FIRST:> PROCEDURA CANCELLAZIONE UTENTE" ));										
+										
+										
+									}else {
+										
+										
+										System.out.println("REAL SERVER L-A:> PROCEDURA INCREMENTO NUMERO TENTATIVI ");
+										// INCREMENTA CAMPO TENTATIVI
+										tentativi++;
+										System.out.println("REAL SERVER L-A:> recuperati numero tentativi aumentati: "+tentativi);	
+										// AGGIORNA DB test OK
+										MQ_Update.updateLoginTry(email, tentativi);
+										
+										System.out.println("REAL SERVER L-A:> PROCEDURA dopo update numero tentativi ");
+										
+										
+										//controllo esito operazione
+										user = MQ_Read.UserLoginTryCounter(email);
+										
+										//tent= String.valueOf(tentativi);
+										System.out.println("REAL SERVER L-A:> recuperati numero tentativi AGGIORNATO: "+tentativi);
+										
+										
+										
+										String r 		= Check.checkAdminLogInFIRST(email, pass);
+										x.setUserEmail(email);
+										x.setText(new String ("SRV :> selected user login check FIRST:> "+r));
+										
+									}
+	
+								} catch (SQLException e) {	
+									System.out.println("problemi con \"SRV :> selected user login check FIRST");
+									e.printStackTrace();				
+									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> selected user login check FIRST:> NG"));
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;		
+								
+								
+								
+								
+								
+								
 							case tableExistPerson:								
 								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPerson ");					
 								try {

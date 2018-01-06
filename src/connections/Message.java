@@ -15,8 +15,11 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private		String		MesId;
 	private 	Date		DateOfRequest;
 	private 	String		SQLQuery;	
+	private 	String		SQLQuery2;
 	private 	String  	text;
 	private 	ResultSet 	rs;
+	private 	int			LoginTry;
+	
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -40,6 +43,33 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
 		setSQLQuery(SQLQuery);
 	}	
+	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2){
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setSQLQuery(SQLQuery);
+		setSQLQuery2(SQLQuery2);
+		
+	}
+	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2,int tentativi){
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setSQLQuery(SQLQuery);
+		setSQLQuery2(SQLQuery2);
+		setLoginTry(tentativi);
+		
+	}	
+	
+	
+	
+	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
 	public boolean equalTo(Message x){
@@ -97,6 +127,18 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setRs(ResultSet rs) {
 		this.rs = rs;
+	}
+	public String getSQLQuery2() {
+		return SQLQuery2;
+	}
+	public void setSQLQuery2(String sQLQuery2) {
+		SQLQuery2 = sQLQuery2;
+	}
+	public int getLoginTry() {
+		return LoginTry;
+	}
+	public void setLoginTry(int loginTry) {
+		LoginTry = loginTry;
 	}
 	
 }

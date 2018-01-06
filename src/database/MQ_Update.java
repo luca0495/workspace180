@@ -97,5 +97,20 @@ public class MQ_Update {
 		DBmanager.executeUpdate(query1);
 		DBmanager.closeConnection();
 	}
+
+	public static void updateLoginTry(String email, int tentativi) throws SQLException
+	{	
+
+		String tent= String.valueOf(tentativi);
+		String query1 = "UPDATE utente SET password_temp_tentativi = '" + tent + "' WHERE email = '" + email + "';";
+		
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query1);
+		DBmanager.closeConnection();
+	}
+	
+	
+	
 	
 }

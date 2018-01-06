@@ -32,8 +32,9 @@ public class MQ_Insert {
 				+ "inquadramento,"
 				+ "password,"
 				+ "password_temp,"
-				+ "ntel) "
-				+ "VALUES('" + name + "' , '" + surname + "' , '" + mail + "' , '" + cf + "' , '" + inq + "' , '" + pass + "' , '" + i + "' , '" + tel + "')";
+				+ "ntel,) "
+				+ "password_temp_tentativi) "
+				+ "VALUES('" + name + "' , '" + surname + "' , '" + mail + "' , '" + cf + "' , '" + inq + "' , '" + pass + "' , '" + i + "' , '" + tel + "', '" + 0 + "')";
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
@@ -66,7 +67,8 @@ public class MQ_Insert {
 					+ "password_temp,"
 
 					+ "ntel,"
-					+ "tipo_utente) "
+					+ "tipo_utente, "
+					+ "password_temp_tentativi) "
 					+ "VALUES('" 	+ name 
 									+ "' , '" + surname 
 									+ "' , '" + mail + "' , '" 
@@ -75,8 +77,8 @@ public class MQ_Insert {
 									+ pass + "' , '" 
 									+ i + "' , '" 
 									+ tel + "' , '"
-									+ typePerson +"')";
-
+									+ typePerson + "','"
+									+ 0 +"')";
 
 
 			return 	query;

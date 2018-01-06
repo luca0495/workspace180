@@ -122,6 +122,7 @@ public class ChkDBandTab {
                   +"inquadramento varchar(40) null,"
                   +"password varchar(40) null,"
                   +"password_temp varchar(40) null,"
+                  +"password_temp_tentativi varchar(5) null,"
                   +"ntel varchar(10) null,"
                   +"tipo_utente varchar(30) null)"
                   )  ;

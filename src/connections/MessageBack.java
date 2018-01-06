@@ -19,6 +19,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private Date		DateOfRequest;	
 	private Boolean		Response;
 	private String  	Text;
+	private String  	UserEmail;
 	
 	private String[] 	RowUser;
 	private String[] 	RowBook;
@@ -81,6 +82,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setRowLoans(String[] rowLoans) {
 		RowLoans = rowLoans;
+	}
+	public String getUserEmail() {
+		return UserEmail;
+	}
+	public void setUserEmail(String userEmail) {
+		UserEmail = userEmail;
 	}
 
 

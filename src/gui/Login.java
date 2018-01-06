@@ -42,7 +42,11 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class Login extends SL_JFrame  {
-	private JFrame frmSchoolib;	
+	
+	private Login w;
+	private JFrame frmSchoolib;
+	private JPanel pr;
+	private JPanel pfa;
 	private JPasswordField passwordFieldUser;
 	private JPasswordField passwordField_1;
 	private JTextField txtUser;
@@ -66,6 +70,7 @@ public class Login extends SL_JFrame  {
 	
 	public Login(Component c,Client x)
 	{
+		setW(this);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
@@ -86,10 +91,12 @@ public class Login extends SL_JFrame  {
 		JPanel PanelRegi = new JPanel();
 		frmSchoolib.getContentPane().add(PanelRegi, "name_1495174434374087");
 		PanelRegi.setLayout(null);
+		setPr(PanelRegi);
 		
 		JPanel PanelFirstAcc = new JPanel();
 		frmSchoolib.getContentPane().add(PanelFirstAcc, "name_120013554778492");
 		PanelFirstAcc.setLayout(null);
+		setPfa(PanelFirstAcc);
 		
 		JPanel PanelForgPass = new JPanel();
 		frmSchoolib.getContentPane().add(PanelForgPass, "name_730685170965255");
@@ -156,7 +163,31 @@ public class Login extends SL_JFrame  {
 				String email = txtUser.getText();
 				String pass = String.copyValueOf(passwordFieldUser.getPassword());
 				String r = null;
+			
+				System.out.println("passo email    :"+email);
+				System.out.println("passo password :"+pass);
 				
+				me.setSql(email);
+				me.setSql2(pass);
+				me.setActW(getW());
+				me.setActF(frmSchoolib);
+				me.setActC(c);
+				
+				//da client se login ok:
+				//Account lo = new Account(getActF,this);				
+				//me.setActW(lo);
+				
+				try {
+					System.out.println("GUI login:> controllo user corretto ");
+				me.setCliType(Clients.Librarian);	
+					me.getCmdLIST().put(Commands.UserREADlogin);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI login :> problemi con controllo user corretto ");	
+					e2.printStackTrace(); 
+				}	
+				
+				//OLD
+				/*
 				try 
 				{
 					r = Check.checkAdminLogIn(email, pass);
@@ -165,32 +196,30 @@ public class Login extends SL_JFrame  {
 				{
 					e1.printStackTrace();
 				}
+				*/
+
+				
+/*			
 				if(r.equals("Login Corretto"))
 				    {
 					// cambiare pannello
 					   System.out.println("2");
 					   System.out.println("Numero di clicked1" + clicked);
 
+*/
 	// APERTA FINESTRA		
-					   /*
-						try {
-							
-						MQ_Delete.deletePassTemp(pass);
-						
-						} catch (SQLException e1) {
-							
+					   /*old passato a client
+						try {	
+						MQ_Delete.deletePassTemp(pass);						
+						} catch (SQLException e1) {							
 							e1.printStackTrace();
 						}
 						*/		   
-					   
-					   
-					   	me.setSql(email);
-					   	System.out.println("passato da login a client la email : "+me.getSql());
+/*
+					   	//System.out.println("passato da login a client la email : "+me.getSql());
 						Account lo = new Account(getFrame(),me);				
-						
 						me.setActW(lo);
 						me.setActF(frmSchoolib);
-						
 						
 						PanelFirstAcc.setVisible(false);
 						PanelRegi.setVisible(false);
@@ -212,13 +241,21 @@ public class Login extends SL_JFrame  {
 		    else 
 		    {
 			PopUp.errorBox(c, r);
-		    }
+		    }    
+*/
 		}
+		
+		
+		
 	});
 		btnEntra.setBounds(287, 212, 104, 46);
 		PanelRegi.add(btnEntra);
 		
 		JButton btnPrimoAccesso = new JButton("PRIMO ACCESSO");
+		btnPrimoAccesso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnPrimoAccesso.setBounds(443, 212, 135, 46);
 		btnPrimoAccesso.addMouseListener(new MouseAdapter() {
 			@Override
@@ -261,44 +298,67 @@ public class Login extends SL_JFrame  {
 			String email = textField_2.getText();
 			String pass = String.copyValueOf(passwordField_1.getPassword());
 			String r = null;
+		
+			System.out.println("passo email    :"+email);
+			System.out.println("passo password :"+pass);
 			
+			me.setSql(email);
+			me.setSql2(pass);
+			me.setActW(getW());
+			me.setActF(frmSchoolib);
+			me.setActC(c);
+			
+			try {
+				System.out.println("GUI login:> controllo user corretto ");
+			me.setCliType(Clients.Librarian);	
+				me.getCmdLIST().put(Commands.UserREADloginFIRST);
+			} catch (InterruptedException e2) {
+				System.out.println("GUI login :> problemi con controllo user corretto ");	
+				e2.printStackTrace(); 
+			}
+
+			
+			
+			/*old
 			try 
 			{
 				  System.out.println("1");
+
+				  // TEST OK
+				  //System.out.println("passo email    :"+email);
+				  //System.out.println("passo password :"+pass);
 				  
-//TODO MAURO
-//TODO Passare tramite server con controllo LETTURA
-				  			
-				  r = Check.checkAdminLogIn(email, pass);	
+				  r = Check.checkAdminLogInFIRST(email, pass);	
 				
 			} 
 			catch (SQLException e1) 
 			{
 				e1.printStackTrace();
 			}
+			*/
+			
+			/*
 			if(r.equals("Login Corretto"))
 			    {
 				// cambiare pannello
 				   System.out.println("2");
 				   System.out.println("Numero di clicked1" + clicked);
-
+			
 // APERTA FINESTRA		
-				   /*
+				   
 					try {
 						
-					MQ_Delete.deletePassTemp(pass);
-					
+					MQ_Delete.deletePassTemp(pass);				
 					} catch (SQLException e1) {
-						
 						e1.printStackTrace();
 					}
-					*/		   
+							   
 				   
 				   
 				   	me.setSql(email);
 				   	System.out.println("passato da login a client la email : "+me.getSql());
-					Account lo = new Account(getFrame(),me);				
 					
+				   	Account lo = new Account(getFrame(),me);				
 					me.setActW(lo);
 					me.setActF(frmSchoolib);
 					
@@ -343,9 +403,17 @@ public class Login extends SL_JFrame  {
 					e1.printStackTrace();
 				
 				}
-			  }   
+			  }
+			  
+			  
 		}
+			*/
+			
+			
       }
+		
+		
+		
 });
 		btnConferma.setBounds(186, 296, 141, 57);
 		PanelFirstAcc.add(btnConferma);	
@@ -575,5 +643,23 @@ public class Login extends SL_JFrame  {
 		}
 		public JTextField setTextField_2(JTextField textField_2) {
 			return this.textField_2 = textField_2;
+		}
+		public JPanel getPr() {
+			return pr;
+		}
+		public void setPr(JPanel pr) {
+			this.pr = pr;
+		}
+		public JPanel getPfa() {
+			return pfa;
+		}
+		public void setPfa(JPanel pfa) {
+			this.pfa = pfa;
+		}
+		public Login getW() {
+			return w;
+		}
+		public void setW(Login w) {
+			this.w = w;
 		}
 	}

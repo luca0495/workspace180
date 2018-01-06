@@ -36,8 +36,10 @@ import ProvaEmail.EmailSender;
 import Table.TableBooks;
 import database.MQ_Delete;
 import database.MQ_Insert;
+import database.MQ_Read;
 
 import java.awt.Font;
+import java.awt.event.WindowEvent;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.Serializable;
@@ -50,6 +52,7 @@ import gui.Account;
 import gui.AppLibrarian;
 import gui.AppReader;
 import gui.AppType;
+import gui.Login;
 import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
@@ -58,6 +61,7 @@ import java.awt.Component;
 
 public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
+	private				int 				LoginTry=0;
 	
 	private 			JFrame 				ActF			=null;	//Active Frame
 	private 			SL_JFrame			ActW			=null;	//Active Window
@@ -87,6 +91,7 @@ public class Client implements Serializable, Runnable  {
 	private 			String				USERNAME="llazzati@studenti.uninsubria.it";
 	
 	private 			String 				Sql;
+	private 			String 				Sql2;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
 	
@@ -188,6 +193,9 @@ public class Client implements Serializable, Runnable  {
 								case UserREADbyEmail: 								
 														UserGetDatabyEmail();	//necessario setSql con email
 									break;
+								case UserREADlogin: 								
+														UserGetDataLogin();		//necessario setSql con email setSql2 con password
+									break;						
 						//	Loans
 								case PrenotationREAD: 
 									
@@ -229,6 +237,11 @@ public class Client implements Serializable, Runnable  {
 							case UserDELETE: 
 											
 								break;	
+							
+							case UserREADloginFIRST: 								
+														UserGetDataLoginFIRST();//necessario setSql con email setSql2 con password_temp
+								break;									
+
 							case UserRegistration: 
 														ClientCHANGEuserRegistration();
 								break;
@@ -576,7 +589,7 @@ public class Client implements Serializable, Runnable  {
 								break;
 							
 								
-							// USER Read Data
+						// USER Read Data
 							case "SRV :> selected user :> OK" :
 								System.out.println("ritornato al client UserDATA OK : ");
 								//contiene gli user's data	
@@ -593,7 +606,7 @@ public class Client implements Serializable, Runnable  {
 								break;
 								
 								
-							// USER Read Data by email
+						// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
 								System.out.println("ritornato al client UserDATA by email OK : ");															
 								
@@ -611,9 +624,103 @@ public class Client implements Serializable, Runnable  {
 								clrParFS();	
 								break;								
 								
-
+							
+								
+						// USER Read Data Login check
+							case "SRV :> selected user login check:> I Campi Non Possono Essere Vuoti":								
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+								
+							case "SRV :> selected user login check:> Nessun Dato":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+								
+							case "SRV :> selected user login check:> L'Email Non Esiste":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;									
+								
+							case "SRV :> selected user login check:> Password Errata":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+	
+							case "SRV :> selected user login check:> Login Corretto":
+								Login l = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
+								Account lo = new Account(getActF(),this);				
+								setActW(lo);
+								//chiusura finesta login
+								l.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
+								l.getPr().setVisible(false);				//PanelRegi.setVisible(false);
+								WindowEvent close = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
+								getActF().dispatchEvent(close);
+								//invio comando login
+								try {
+									System.out.println("GUI login:> cmd tentativo di login ");
+									this.setCliType(Clients.Librarian);
+									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
+									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									this.getCmdLIST().put(Commands.UserREADbyEmail);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI login :> problemi con tentativo di login ");	
+									e2.printStackTrace(); 
+								}
+								//clrParFS();	i campi verranno ripuliti da user read by email	
+								break;
+							// LOGIN FINE	
+							
+							// USER Read Data Login check FIRST ACCESS
+							case "SRV :> selected user login check FIRST:> I Campi Non Possono Essere Vuoti":								
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+								
+							case "SRV :> selected user login check FIRST:> Nessun Dato":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+								
+							case "SRV :> selected user login check FIRST:> L'Email Non Esiste":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;									
+								
+							case "SRV :> selected user login check FIRST:> Password Errata":
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
+	
+							case "SRV :> selected user login check FIRST:> Login Corretto":
+								Login lF = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
+								Account loF = new Account(getActF(),this);				
+								setActW(loF);
+								//chiusura finesta login
+								lF.getPfa().setVisible(false);					//PanelFirstAcc.setVisible(false);
+								lF.getPr().setVisible(false);					//PanelRegi.setVisible(false);
+								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
+								getActF().dispatchEvent(closeF);
+								//invio comando login
+								try {
+									System.out.println("GUI login:> cmd tentativo di login ");
+									this.setCliType(Clients.Librarian);
+									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
+									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									this.getCmdLIST().put(Commands.UserREADbyEmail);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI login :> problemi con tentativo di login ");	
+									e2.printStackTrace(); 
+								}
+								//clrParFS();	i campi verranno ripuliti da user read by email	
+								break;
+							// LOGIN FIRST ACCESS FINE	
 								
 								
+								
+								
+								
+	
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								
@@ -839,8 +946,6 @@ public class Client implements Serializable, Runnable  {
 						this.getSql()				
 						
 						);
-				//MsgSend.setUType(Clients.Librarian);
-				// **** Client invia Message
 				sendM(MsgSend, Mb);
 			}	
 		}		
@@ -848,7 +953,7 @@ public class Client implements Serializable, Runnable  {
 			Commands cmd = Commands.UserREADbyEmail;
 			MessageBack Mb = new MessageBack();
 			
-			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getSql());
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
 				System.out.println(mSg);			
@@ -863,13 +968,53 @@ public class Client implements Serializable, Runnable  {
 						this.getSql()				// la finestra login passa la stringa email !!!!
 						
 						);
-				//MsgSend.setUType(Clients.Librarian);
-				// **** Client invia Message
 				sendM(MsgSend, Mb);
 			}	
 		}
-		
-		
+		private void UserGetDataLogin() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADlogin;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql(),				// la finestra login passa la stringa email 
+						this.getSql2()				// la finestra login passa la stringa password
+						
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}
+		private void UserGetDataLoginFIRST() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADloginFIRST;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email 
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}		
 		
 	
 	//------------------------------------------------------------------------		 
@@ -980,6 +1125,12 @@ public class Client implements Serializable, Runnable  {
 			public void setClientON(boolean clientON) {
 				ClientON = clientON;
 			}
+			public String getSql2() {
+				return Sql2;
+			}
+			public void setSql2(String sql2) {
+				Sql2 = sql2;
+			}
 		/*	
 			public SystemClientStub getMeG_Sys() {
 				return meG_Sys;
@@ -1011,8 +1162,19 @@ public class Client implements Serializable, Runnable  {
 			//*************************************
 			public void clrParFS () {
 				this.setActF(null);	//F
-				this.setSql(null);	//S
+				this.setSql(null);	//S	usato per email
+				this.setSql2(null);	//S usato per password
+				
 				setBusy(false);
+			}
+			public int getLoginTry() {
+				return LoginTry;
+			}
+			public void setLoginTry(int loginTry) {
+				LoginTry = loginTry;
+			}
+			public void incLoginTry() {
+				LoginTry++;
 			}
 
 			

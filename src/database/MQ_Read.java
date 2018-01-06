@@ -173,6 +173,62 @@ public class MQ_Read {
 	DBmanager.closeConnection();
 	return value;
 	}
+
+	public static String[] UserLoginTryCounter(String email) throws SQLException
+	{
+		
+		String query = "SELECT email, password_temp_tentativi, id FROM utente WHERE email = '" + email + "';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		System.out.println(query);
+		String[] User = new String[3]; //3 email, 7 pass_temp
+		
+		if (!rs.isBeforeFirst()) 
+		{  
+			System.out.println("9");
+			User[0] = "Nessun Dato";
+		}
+		else
+		{
+			System.out.println("10");
+			rs.next();
+			User[0] = rs.getString("email");
+			User[1] = rs.getString("password_temp_tentativi");
+			User[2] = rs.getString("id");
+		}
+		DBmanager.closeConnection();
+		
+		return User;
+	}
+	
+	
+	
+	public static String[] selectAdminLogInFIRST(String email,String pass) throws SQLException
+	{
+		
+		String query = "SELECT email, password_temp FROM utente WHERE email = '" + email + "';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		System.out.println(query);
+		String[] User = new String[2]; //3 email, 7 pass_temp
+		
+		if (!rs.isBeforeFirst()) 
+		{  
+			System.out.println("9");
+			User[0] = "Nessun Dato";
+		}
+		else
+		{
+			System.out.println("10");
+			rs.next();
+			User[0] = rs.getString("email");
+			User[1] = rs.getString("password_temp");
+		}
+		DBmanager.closeConnection();
+		
+		return User;
+	}
+	
 	
 	public static String[] selectAdminLogIn(String email,String pass) throws SQLException
 	{

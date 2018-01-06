@@ -114,6 +114,7 @@ public class Account extends SL_JFrame{
 		JPanel panelModify = new JPanel();
 		frmSchoolib.getContentPane().add(panelModify, "name_454607080642439");
 		panelModify.setLayout(null);
+		
 		//old ora comando passato da finestra login a client
 		//***
 		/*
