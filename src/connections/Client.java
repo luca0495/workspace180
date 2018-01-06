@@ -709,6 +709,7 @@ public class Client implements Serializable, Runnable  {
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 									
 									
+									
 //TODO ELIMINA PASSWORD TEMPORANEA
 //MQ_Delete.deletePassTemp(pass);
 								
@@ -723,7 +724,10 @@ public class Client implements Serializable, Runnable  {
 								break;
 							// LOGIN FIRST ACCESS FINE	
 								
-								
+							case "SRV :> selected user login check FIRST:> PROCEDURA CANCELLAZIONE UTENTE":								
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;	
 								
 								
 								
@@ -1017,7 +1021,9 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()				// la finestra login passa la stringa email 
+						this.getSql(),				// la finestra login passa la stringa email 
+						this.getSql2()				// la finestra login passa la stringa password 
+						
 						);
 				sendM(MsgSend, Mb);
 			}	

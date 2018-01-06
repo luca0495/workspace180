@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Check.Check;
+import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
 import Core.Guardian;
@@ -305,7 +306,23 @@ public class ServerReal extends ServerSkeleton {
 								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login first time");					
 								try {				
 									String email 	= M.getMsg().getSQLQuery();
-									String pass 	= M.getMsg().getSQLQuery2();	
+									String pass 	= M.getMsg().getSQLQuery2();
+									
+									String rf 		= Check.checkAdminLogInFIRST(email, pass);
+									
+									if(	rf.equals("I Campi Non Possono Essere Vuoti")
+										||	
+										rf.equals("Nessun Dato")
+										||
+										rf.equals("L'Email Non Esiste")) 
+									{
+										System.out.println("riscontrato campi vuoti "); 	
+										//ritorna
+										x.setText("SRV :> selected user login check FIRST:> "+rf);
+										return x;
+									}
+
+									
 									String[] user;
 									
 									
@@ -346,14 +363,17 @@ public class ServerReal extends ServerSkeleton {
 										
 										
 										//controllo esito operazione
-										user = MQ_Read.UserLoginTryCounter(email);
+
+
 										
 										//tent= String.valueOf(tentativi);
 										System.out.println("REAL SERVER L-A:> recuperati numero tentativi AGGIORNATO: "+tentativi);
 										
-										
+										System.out.println("email : "+email);
+										System.out.println("pass  : "+pass);
 										
 										String r 		= Check.checkAdminLogInFIRST(email, pass);
+										
 										x.setUserEmail(email);
 										x.setText(new String ("SRV :> selected user login check FIRST:> "+r));
 										
