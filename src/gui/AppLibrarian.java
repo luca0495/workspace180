@@ -2,18 +2,27 @@ package gui;
 
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JMenuBar;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+import Table.TableBooks;
+import connections.Client;
+
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 
 public class AppLibrarian extends JFrame  {
@@ -21,7 +30,11 @@ public class AppLibrarian extends JFrame  {
 	private JFrame frmSchoolib;	
 	private AppReader a;
 	private JTextField textField;
-
+	private JTextField txtEmailUser;
+	private Client  me ;
+	
+	private JFrame frame;
+    private JTable tableBooks;
 	
 	public AppLibrarian(Component c)
 	{
@@ -91,7 +104,69 @@ public class AppLibrarian extends JFrame  {
 		lblClassBook.setFont(new Font("Traditional Arabic", Font.BOLD, 18));
 		lblClassBook.setBounds(205, 331, 672, 21);
 		panelSelection1.add(lblClassBook);
+		
+		// PanelSearchUser
+		
+		JPanel panelSearchUser = new JPanel();
+		frmSchoolib.getContentPane().add(panelSearchUser, "name_3985911164799");
+		panelSearchUser.setLayout(null);
+		
+		JPanel panelSearchUser1 = new JPanel();
+		panelSearchUser1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelSearchUser1.setBackground(Color.WHITE);
+		panelSearchUser1.setBounds(10, 75, 857, 420);
+		panelSearchUser.add(panelSearchUser1);
+		panelSearchUser1.setLayout(null);
+		
+		TableBooks panelSearchUser2 = new TableBooks(frame,me);
+		panelSearchUser2.setBounds(0, 0, 857, 420);
+		panelSearchUser1.add(panelSearchUser2);
+		panelSearchUser2.setLayout(new GridLayout(1, 0, 0, 0));
 	
+		JLabel lblEmailUser = new JLabel("Email User");
+		lblEmailUser.setBounds(57, 23, 106, 36);
+		panelSearchUser.add(lblEmailUser);
+		
+		txtEmailUser = new JTextField();
+		txtEmailUser.setBounds(186, 31, 309, 20);
+		panelSearchUser.add(txtEmailUser);
+		txtEmailUser.setColumns(10);
+		
+		JButton btnSearchUser = new JButton("Cerca");
+		btnSearchUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			String s=txtEmailUser.getText();
+		    if(s.length()!=0){			 
+//TODO PASSA A CLIENT da TableBooks		 				 
+//me.getCmdLIST().put(Commands.tableBookPopulate);
+			try {	 	 
+				TableBooks.PopulateData(s,me);
+			 } catch (SQLException e1) {
+				e1.printStackTrace();	
+			} catch (InterruptedException e1) {				
+				e1.printStackTrace();
+			}			
+		    }else{
+//TODO PASSA A CLIENT da TableBooks	
+//me.getCmdLIST().put(Commands.tableBookPopulate);	
+		      try {
+				 TableBooks.PopulateData("",me);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			} catch (InterruptedException e1) {				
+				e1.printStackTrace();
+			}    
+		 }
+	   }
+	});
+		btnSearchUser.setBounds(569, 23, 121, 30);
+		panelSearchUser.add(btnSearchUser);
+		
+		JButton btnBack = new JButton("Cancella");
+		btnBack.setBounds(731, 23, 114, 30);
+		panelSearchUser.add(btnBack);
+		
+		
 		
 		
 	}
