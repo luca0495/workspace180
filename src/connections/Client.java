@@ -697,8 +697,8 @@ public class Client implements Serializable, Runnable  {
 								Account loF = new Account(getActF(),this);				
 								setActW(loF);
 								//chiusura finesta login
-								lF.getPfa().setVisible(false);					//PanelFirstAcc.setVisible(false);
-								lF.getPr().setVisible(false);					//PanelRegi.setVisible(false);
+								lF.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
+								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
 								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
 								getActF().dispatchEvent(closeF);
 								//invio comando login
