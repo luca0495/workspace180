@@ -707,6 +707,13 @@ public class Client implements Serializable, Runnable  {
 									this.setCliType(Clients.Librarian);
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									
+									
+//TODO ELIMINA PASSWORD TEMPORANEA
+//MQ_Delete.deletePassTemp(pass);
+								
+									
+									
 									this.getCmdLIST().put(Commands.UserREADbyEmail);
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
