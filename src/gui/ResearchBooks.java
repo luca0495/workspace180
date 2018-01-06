@@ -70,6 +70,7 @@ public class ResearchBooks extends SL_JFrame {
 	private JLabel lblEr3;
 	private JLabel lblEr4;
 	private JTextField txtLoans;
+	private JButton btnPrenotazione;
 	/**
 	 * Create the application.
 	 * @param me2 
@@ -136,7 +137,7 @@ public class ResearchBooks extends SL_JFrame {
 		 }
 	   }
    });
-		btnResearch.setBounds(778, 7, 89, 23);
+		btnResearch.setBounds(679, 7, 89, 23);
 		frame.getContentPane().add(btnResearch);
 		/*
 		tableBooks = new JTable();
@@ -151,6 +152,10 @@ public class ResearchBooks extends SL_JFrame {
 		tableBooks.setCellSelectionEnabled(true);
 		tableBooks.setBounds(10, 11, 837, 420);
 		*/
+		
+		btnPrenotazione = new JButton("Prenotazione Libro");
+		btnPrenotazione.setBounds(791, 7, 183, 23);
+		frame.getContentPane().add(btnPrenotazione);
 		JPanel panelResearch = new JPanel();
 		panelResearch.setBounds(10, 36, 964, 470);
 		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));

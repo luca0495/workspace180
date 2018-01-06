@@ -91,7 +91,7 @@ public class ChkDBandTab {
                   +"cognome_autore varchar(15) not null, "
                   +"categoria varchar(15) not null,"
                   +"titolo varchar(35) not null,"
-                  +"num_prenotazioni integer null,"
+                  +"disponibilità integer null,"
                   +"primary key(codice,nome_autore,cognome_autore,categoria,titolo))")  ;
 		 
 		 	      System.out.println("ChkDBandTable :> table Book CREATED !");		 
