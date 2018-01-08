@@ -309,8 +309,8 @@ public class Check {
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
 	    {
 	    
-			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkMailExist(mail) && checkPass1(pass) &&  checkPass1(checkPassword) && 
-	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel) ;
+			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass1(pass) && checkPass1(checkPassword) && 
+	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel);
 	    }
 	 public static boolean checkAllReg(String nome, String cognome, String telefono, String email, String codicefiscale, char[] pass, char[] passC, String inq)
 	    {
