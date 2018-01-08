@@ -83,6 +83,11 @@ public class Account extends SL_JFrame{
 	private JTextField passwordFieldMod1;
 	private JTextField passwordFieldConfMod1;
 	
+	// in test 
+	private String 	emailuser;
+	private boolean cambioemail=false;
+	
+	
 	public Account(Component c,Client x)
 	{
 		me = x;
@@ -359,6 +364,32 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
+				//******************************************************************
+				if(Check.checkMail(txtMailMod.getText())){
+				//sintatticamente corretta	
+				
+				
+								if (txtMailMod.getText()!=getEmailuser()) {
+									// modifica alla email
+									
+									if ( Check.checkMailExist(txtMailMod.getText())) {
+										// email inserita esiste gia... non va bene
+										lblChangeEmailCheck.setIcon(iconLogoC);
+										txtMailMod.setText(null);
+									}else {
+										// email non esiste gia
+										lblChangeEmailCheck.setIcon(iconLogoT);
+									}
+								}else {	//non modificata
+									lblChangeEmailCheck.setIcon(iconLogoT);
+								}	
+				}else {
+				//sintatticamente non corretta
+					lblChangeEmailCheck.setIcon(iconLogoC);
+				}
+				//******************************************************************	
+				
+				/*
 				if(Check.checkMail(txtMailMod.getText()) && (!Check.checkMailExist(txtMailMod.getText())))
 				{
 					lblChangeEmailCheck.setIcon(iconLogoT);
@@ -367,6 +398,8 @@ public class Account extends SL_JFrame{
 				{
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
+				*/
+				
 			}
 		});
 		txtMailMod.setBounds(120, 173, 224, 20);
@@ -775,6 +808,7 @@ public class Account extends SL_JFrame{
 		btnBackData.setBounds(523, 391, 175, 67);
 		panelModify.add(btnBackData);
 		
+		this.emailuser=txtMailMod.getText();
 		
 	}
 	
@@ -808,6 +842,22 @@ public class Account extends SL_JFrame{
 			this.idUser = idUser;
 	}
 	//TODO E SEGUENTI CAMPI...
+
+	public String getEmailuser() {
+		return emailuser;
+	}
+
+	public void setEmailuser(String emailuser) {
+		this.emailuser = emailuser;
+	}
+
+	public boolean isCambioemail() {
+		return cambioemail;
+	}
+
+	public void setCambioemail(boolean cambioemail) {
+		this.cambioemail = cambioemail;
+	}
 	
 	
 	
