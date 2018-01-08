@@ -240,6 +240,11 @@ public class Check {
 	    	return (s.length() <= 50);
 	    }
 	 
+
+	 
+	 
+	 
+	 
 	 // esamina password TEMPORANEA
 	 public static String checkAdminLogInFIRST(String email, String pass) throws SQLException {
 	    	

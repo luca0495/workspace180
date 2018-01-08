@@ -217,11 +217,6 @@ public class ServerReal extends ServerSkeleton {
 			}
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
 			return x;				
-			
-			
-
-			
-		
 		
 	default:
 		break;

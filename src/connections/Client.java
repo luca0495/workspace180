@@ -22,7 +22,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import Check.PopUp;
 import Core.Clients;
@@ -194,8 +194,14 @@ public class Client implements Serializable, Runnable  {
 														UserGetDatabyEmail();	//necessario setSql con email
 									break;
 								case UserREADlogin: 								
-														UserGetDataLogin();		//necessario setSql con email setSql2 con password
-									break;						
+														UserGetDataLogin();		//necessario setSql con email setSql2 con password					
+									break;
+								case UserREADaccountMod: 								
+														UserGetDataAccountMod();//necessario setSql con email setSql2 con password					
+									break;									
+									
+									
+									
 						//	Loans
 								case PrenotationREAD: 
 									
@@ -608,12 +614,23 @@ public class Client implements Serializable, Runnable  {
 								
 						// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
+								
 								System.out.println("ritornato al client UserDATA by email OK : ");															
 								
 								Account X = (Account) ActW;
-								//System.out.println(" settato account ");		
+								System.out.println(" settato finestra attiva : "+ActW.toString());		
+								
 								X.updateall(Mb.getRowUser());
+								X.updateallModify(Mb.getRowUser());
+								
 								//System.out.println(" updatato finestra account ");		
+
+								System.out.println("ricavo valore nome: "+Mb.getRowUser()[1]);
+								System.out.println("ricavo valore nome: "+Mb.getRowUser()[2]);
+								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
+								System.out.println("ricavo valore nome: "+Mb.getRowUser()[4]);
+								
+								
 								
 								clrParFS();	
 								break;
@@ -993,7 +1010,10 @@ public class Client implements Serializable, Runnable  {
 				getActW().addMsg(new String ("Connection Test result"+mSg));
 			}else{	
 				System.out.println("CLI :> Stub OK");
-				// **** Client crea Message							
+				// **** Client crea Message						
+				
+				System.out.println("client prende parametro sql "+this.getSql());
+				
 				Message MsgSend = new Message(	
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
@@ -1029,6 +1049,29 @@ public class Client implements Serializable, Runnable  {
 			}	
 		}		
 		
+		
+		
+		private void UserGetDataAccountMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADaccountMod;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email 
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}	
 	
 	//------------------------------------------------------------------------		 
 	// get & set

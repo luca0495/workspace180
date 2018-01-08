@@ -367,6 +367,7 @@ public class MQ_Read {
 	public static String[] retrieveUserId() throws SQLException
 	{		
 		String query = "SELECT id, nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
+		//String query = "SELECT id, nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE email = '" + email +"';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		

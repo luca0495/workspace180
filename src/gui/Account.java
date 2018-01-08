@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
+import Core.Commands;
 import connections.Client;
 import database.DBmanager;
 import database.LoadUser;
@@ -42,7 +43,7 @@ import javax.swing.JPasswordField;
 
 public class Account extends SL_JFrame{
 
-	
+	private Account w;
 	
 	private JFrame frmSchoolib;	
 	private AppReader a;
@@ -84,16 +85,19 @@ public class Account extends SL_JFrame{
 	private JTextField passwordFieldConfMod1;
 	
 	// in test 
-	private String 	emailuser;
-	private boolean cambioemail=false;
-	
+	private String 		emailuser;
+	private boolean 	cambioemail=false;
+	private String [] 	userdata;
 	
 	public Account(Component c,Client x)
 	{
+		
+		setW(this);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
 		me.setCliType(Clients.Reader);		
+		
 		Account(c);
 		
 	}
@@ -220,6 +224,37 @@ public class Account extends SL_JFrame{
 			public void actionPerformed(ActionEvent e) {
 				panelAccount.setVisible(false);
 				panelModify.setVisible(true);
+				
+				//************************************************************
+				String email = lblSetEmail.getText();
+				
+				System.out.println("passo email    :"+email);
+				
+				System.out.println(" settato finestra attiva : "+getW().toString());
+				
+				me.setSql(email);
+				
+				me.setActW(getW());
+				me.setActF(frmSchoolib);
+				me.setActC(c);
+				
+				try {
+					System.out.println("GUI account:> ottenuti dati user ");
+				me.setCliType(Clients.Librarian);	
+					me.getCmdLIST().put(Commands.UserREADbyEmail);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI account:> NON ottenuti dati user ");	
+					e2.printStackTrace(); 
+				}
+				//*************************************************************
+				
+				
+				
+				
+				
+				System.out.println(" gui account comando modifica  ");
+				
+				
 			}
 		});
 		btnModify.setBounds(428, 381, 186, 54);
@@ -288,11 +323,17 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblTypeUserMod);
 		
 		try {
-			user = MQ_Read.retrieveUserId();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			
+			//da girare al server...	
+				//user = MQ_Read.retrieveUserId();
+			setUserdata( MQ_Read.retrieveUserIdbyemail(getEmailuser()));
+			
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+		
+		user=getUserdata();
 		
 		txtNameMod = new JTextField();
 		txtNameMod.setEditable(false);
@@ -640,7 +681,11 @@ public class Account extends SL_JFrame{
 					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
 					 try 
 					{
-					  user = MQ_Read.retrieveUserId();
+					  //user = MQ_Read.retrieveUserId();
+					user = MQ_Read.retrieveUserIdbyemail(mail);
+					
+					
+					
 					} catch (SQLException e) {
 							e.printStackTrace();
 					}
@@ -808,7 +853,9 @@ public class Account extends SL_JFrame{
 		btnBackData.setBounds(523, 391, 175, 67);
 		panelModify.add(btnBackData);
 		
-		this.emailuser=txtMailMod.getText();
+		System.out.println("leggo dal campo email... "+txtMailMod);
+
+
 		
 	}
 	
@@ -823,7 +870,17 @@ public class Account extends SL_JFrame{
 		lblSetTipoUte.setText(user[7]);
 		
 	}
-	
+	public void updateallModify(String[] user )
+	{
+		setIdUser(user[0]);
+		txtNameMod.setText(user[1]);
+		txtSurnameMod.setText(user[2]);
+		txtMailMod.setText(user[3]);
+		txtInqMod.setText(user[5]);
+		txtTelMod.setText(user[6]);
+		//txt.setText(user[7]);
+		
+	}	
 	
 	public void updatelblSetNome(String[] user )
 	{
@@ -857,6 +914,22 @@ public class Account extends SL_JFrame{
 
 	public void setCambioemail(boolean cambioemail) {
 		this.cambioemail = cambioemail;
+	}
+
+	public String [] getUserdata() {
+		return userdata;
+	}
+
+	public void setUserdata(String [] userdata) {
+		this.userdata = userdata;
+	}
+
+	public Account getW() {
+		return w;
+	}
+
+	public void setW(Account w) {
+		this.w = w;
 	}
 	
 	
