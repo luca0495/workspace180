@@ -620,8 +620,8 @@ public class Client implements Serializable, Runnable  {
 								Account X = (Account) ActW;
 								System.out.println(" settato finestra attiva : "+ActW.toString());		
 								
-								X.updateall(Mb.getRowUser());
-								X.updateallModify(Mb.getRowUser());
+								X.updateall(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
+								X.updateallModify(Mb.getRowUser());		// PER PANNELLO MODIFY
 								
 								//System.out.println(" updatato finestra account ");		
 
