@@ -421,17 +421,16 @@ public class MQ_Read {
 		{
 			while(rs.next()) 
 			{
-				results.add(rs.getString("id"));
-				results.add(rs.getString("nome"));
-				results.add(rs.getString("cognome"));
-				results.add(rs.getString("email"));
-				results.add(rs.getString("password"));
-				results.add(rs.getString("inquadramento"));
-				results.add(rs.getString("ntel"));
-				results.add(rs.getString("tipo_utente"));
+				results.add(rs.getString("id")); //0 
+				results.add(rs.getString("nome")); // 1
+				results.add(rs.getString("cognome")); // 2
+				results.add(rs.getString("email")); // 3
+				results.add(rs.getString("password")); // 4
+				results.add(rs.getString("inquadramento")); // 5 
+				results.add(rs.getString("ntel")); // 6
+				results.add(rs.getString("tipo_utente")); //7
 			}
 		}
-		
 		for(int i = 0; i<results.size(); i++)
 		{
 			user[i]=results.get(i);

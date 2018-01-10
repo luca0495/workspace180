@@ -80,10 +80,11 @@ public class Account extends SL_JFrame{
 	private JPasswordField passwordFieldMod;
 	private JPasswordField passwordFieldConfMod;
 	private String input;
-	private List<String> rowData;
+	private List<String> rowData = new ArrayList<String>();
 	private int column;
 	private int deleteRow;
 	private String[] user = null;
+	private String[] user1 = null;
 	private boolean User = true;
 	private JTextField passwordFieldMod1;
 	private JTextField passwordFieldConfMod1;
@@ -713,13 +714,13 @@ public class Account extends SL_JFrame{
 				String cognome = txtSurnameMod.getText();
 				String mail = getTxtMailMod().getText();
 				char[] pass = passwordFieldMod.getPassword();
+				String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
 				char[] checkPassword = passwordFieldConfMod.getPassword();
+				String 	s 	= String.copyValueOf(passwordFieldConfMod.getPassword());
 				String inq = txtInqMod.getText();
 				String tel = txtTelMod.getText();
 				String stato = TypePerson;
 				System.out.println("1");
-				
-				
 				
 				
 				//TODO PASSA AL SERVER
@@ -731,8 +732,7 @@ public class Account extends SL_JFrame{
 					try
 					{
 					System.out.println("3");
-					String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
-					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
+					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
 					
 					}
 					catch (SQLException e) 
@@ -747,7 +747,6 @@ public class Account extends SL_JFrame{
 					user = MQ_Read.retrieveUserIdbyemail(mail);
 					
 					
-					
 					} catch (SQLException e) {
 							e.printStackTrace();
 					}
@@ -755,11 +754,11 @@ public class Account extends SL_JFrame{
 					lblSetNome.setText(user[1]);
 					lblSetCognome.setText(user[2]);
 					lblSetEmail.setText(user[3]);
+					lblSetPass.setText(user[4]);
 					lblSetInq.setText(user[5]);
 					lblSetTel.setText(user[6]);
 					lblSetTipoUte.setText(user[7]);
 					
-					 
 					panelAccount.setVisible(true);
 					panelModify.setVisible(false);
 					
@@ -891,9 +890,7 @@ public class Account extends SL_JFrame{
 					passwordFieldConfMod.setText(null);
 					txtInqMod.setText(null);
 					txtTelMod.setText(null);	
-					rdbtnTypeUserLibMod.setSelected(false);
-					rdbtnTypeUserLetMod.setSelected(true);
-					
+		
 					txtNameMod.setEditable(false);
 					txtSurnameMod.setEditable(false);
 					getTxtMailMod().setEditable(false);
@@ -940,7 +937,6 @@ public class Account extends SL_JFrame{
 	{
 		setIdUser(user[0]);
 		setEmailuser(user[3]);
-		
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
 		getTxtMailMod().setText(user[3]);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MQ_Update {
@@ -80,8 +81,8 @@ public class MQ_Update {
 	public static void updateModUser(String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
 	{	
 
-		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
-				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
+		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , inquadramento = '" + inq +
+				"' , password = '" + pass + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE email = '" + email +"';";
     	
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query1);
@@ -108,6 +109,45 @@ public class MQ_Update {
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query1);
 		DBmanager.closeConnection();
+	}
+	
+	public static String[] updateModUserId(String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+	{		
+		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
+				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query1);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			results.add("Nessun Dato");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("id"));
+				results.add(rs.getString("nome"));
+				results.add(rs.getString("cognome"));
+				results.add(rs.getString("email"));
+				results.add(rs.getString("password"));
+				results.add(rs.getString("inquadramento"));
+				results.add(rs.getString("ntel"));
+				results.add(rs.getString("tipo_utente"));
+			}
+		}
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
 	}
 	
 	
