@@ -62,7 +62,7 @@ public class Account extends SL_JFrame{
     private JLabel lblSetNome;
     private JLabel lblSetCognome;
     private JLabel lblSetEmail;
- 
+    private JLabel lblSetPass;
     private JLabel lblSetInq;
     private JLabel lblSetTipoUte;
     private JLabel lblSetTel;
@@ -83,7 +83,8 @@ public class Account extends SL_JFrame{
 	private boolean User = true;
 	private JTextField passwordFieldMod1;
 	private JTextField passwordFieldConfMod1;
-	
+	private JRadioButton rdbtnTypeUserLibMod;
+	private JRadioButton rdbtnTypeUserLetMod;
 	// in test 
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
@@ -139,7 +140,7 @@ public class Account extends SL_JFrame{
 		
 	    lblSetNome = new JLabel();
 	    //lblSetNome.setText(user[0]);
-		lblSetNome.setBounds(106, 31, 186, 20);
+		lblSetNome.setBounds(118, 31, 174, 20);
 		panelAccount.add(lblSetNome);
 		
 		JLabel lblCognome = new JLabel("Cognome: ");
@@ -148,60 +149,60 @@ public class Account extends SL_JFrame{
 		
 		lblSetCognome = new JLabel();
 		//lblSetCognome.setText(user[1]);
-		lblSetCognome.setBounds(106, 78, 186, 20);
+		lblSetCognome.setBounds(118, 78, 174, 20);
 		panelAccount.add(lblSetCognome);
+		
+		JLabel lblPass = new JLabel("Password:");
+		lblPass.setBounds(10, 173, 86, 14);
+		panelAccount.add(lblPass);
+		
+		lblSetPass = new JLabel();
+		lblSetPass.setBounds(118, 173, 174, 20);
+		panelAccount.add(lblSetPass);
 		
 		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setBounds(10, 130, 46, 14);
 		panelAccount.add(lblEmail);
 		
-		JLabel lblPass = new JLabel("Pasword");
-		lblPass.setBounds(10, 173, 86, 14);
-		panelAccount.add(lblPass);
-		
-		JLabel lblSetPass = new JLabel("");
-		lblSetPass.setBounds(116, 173, 174, 20);
-		panelAccount.add(lblSetPass);
-		
 		lblSetEmail = new JLabel();
 		//lblSetEmail.setText(user[2]);
-		lblSetEmail.setBounds(106, 124, 186, 20);
+		lblSetEmail.setBounds(118, 124, 174, 20);
 		panelAccount.add(lblSetEmail);
 			
 		JLabel lblInq = new JLabel("Inquadramento: ");
-		lblInq.setBounds(10, 211, 86, 14);
+		lblInq.setBounds(10, 217, 137, 14);
 		panelAccount.add(lblInq);
 		
 		lblSetInq = new JLabel();
 		//lblSetInq.setText(user[4]);
-		lblSetInq.setBounds(106, 211, 186, 20);
+		lblSetInq.setBounds(140, 211, 174, 20);
 		panelAccount.add(lblSetInq);
 		
 		JLabel lblTipoUte = new JLabel("Tipo Utente:");
-		lblTipoUte.setBounds(10, 248, 74, 14);
+		lblTipoUte.setBounds(10, 258, 74, 14);
 		panelAccount.add(lblTipoUte);
 		
 		lblSetTipoUte = new JLabel();
 		//lblSetTipoUte.setText(user[6]);
-		lblSetTipoUte.setBounds(116, 242, 186, 20);
+		lblSetTipoUte.setBounds(118, 252, 186, 20);
 		panelAccount.add(lblSetTipoUte);
 		
 		JLabel lblTel = new JLabel("Telefono:");
-		lblTel.setBounds(10, 289, 59, 14);
+		lblTel.setBounds(10, 300, 59, 14);
 		panelAccount.add(lblTel);
 		
 		lblSetTel = new JLabel();
 		//lblSetTel.setText(user[5]);
-		lblSetTel.setBounds(106, 261, 186, 42);
+		lblSetTel.setBounds(118, 294, 184, 20);
 		panelAccount.add(lblSetTel);
 		
 		JLabel lblNumPrenPend = new JLabel("Numero Di Prenotazioni:");
-		lblNumPrenPend.setBounds(10, 328, 132, 14);
+		lblNumPrenPend.setBounds(10, 347, 174, 14);
 		panelAccount.add(lblNumPrenPend);
 		
 		lblSetNumPrenPend = new JLabel();
 		// mettere anche questa nel metodo
-		lblSetNumPrenPend.setBounds(152, 328, 140, 14);
+		lblSetNumPrenPend.setBounds(172, 347, 186, 14);
 		panelAccount.add(lblSetNumPrenPend);
 		
 		JButton btnDelete = new JButton("Cancella Profilo");
@@ -542,7 +543,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass1(passwordFieldMod.getPassword()))
+				if(Check.checkPass(passwordFieldMod.getPassword()))
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
 				}
@@ -560,11 +561,8 @@ public class Account extends SL_JFrame{
 		//passwordFieldConfMod.setText(user[4]);
 		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				
-				if(Check.checkPass1(passwordFieldConfMod.getPassword()))
-				{					
-					if(Check.checkPassEq(passwordFieldMod.getPassword(), passwordFieldConfMod.getPassword()))
+			public void focusLost(FocusEvent e) {			
+					if(Check.checkPass(passwordFieldConfMod.getPassword())  && Check.checkPassEq(passwordFieldMod.getPassword(), passwordFieldConfMod.getPassword()))
 					{
 						lblChangePassConfCheck.setIcon(iconLogoT);
 					}
@@ -572,11 +570,6 @@ public class Account extends SL_JFrame{
 					{
 						lblChangePassConfCheck.setIcon(iconLogoC);
 					}
-				}
-				else
-				{
-					lblChangePassConfCheck.setIcon(iconLogoC);
-				}
 				
 			}
 		});
@@ -642,7 +635,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(txtTelMod);
 		txtTelMod.setColumns(10);
 		
-		JRadioButton rdbtnTypeUserLibMod = new JRadioButton("Libraio");
+		rdbtnTypeUserLibMod = new JRadioButton("Libraio");
 		rdbtnTypeUserLibMod.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(rdbtnTypeUserLibMod.isSelected())
@@ -654,7 +647,7 @@ public class Account extends SL_JFrame{
 		rdbtnTypeUserLibMod.setBounds(519, 246, 109, 23);
 		panelModify.add(rdbtnTypeUserLibMod);
 		
-		JRadioButton rdbtnTypeUserLetMod = new JRadioButton("Lettore");
+		rdbtnTypeUserLetMod = new JRadioButton("Lettore");
 		rdbtnTypeUserLetMod.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(rdbtnTypeUserLetMod.isSelected())
@@ -685,6 +678,8 @@ public class Account extends SL_JFrame{
 				String tel = txtTelMod.getText();
 				String stato = TypePerson;
 				System.out.println("1");
+				
+				
 				
 				
 				//TODO PASSA AL SERVER
@@ -723,6 +718,7 @@ public class Account extends SL_JFrame{
 					lblSetInq.setText(user[5]);
 					lblSetTel.setText(user[6]);
 					lblSetTipoUte.setText(user[7]);
+					
 					 
 					panelAccount.setVisible(true);
 					panelModify.setVisible(false);
@@ -782,7 +778,7 @@ public class Account extends SL_JFrame{
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
 
-				if(Check.checkPass1(pass))
+				if(Check.checkPass(pass))
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
 				}
@@ -791,7 +787,7 @@ public class Account extends SL_JFrame{
 					lblChangePassCheck.setIcon(iconLogoC);
 				}
 				
-				if(Check.checkPass1(checkPassword))
+				if(Check.checkPass(checkPassword))
 				{
 					lblChangePassConfCheck.setIcon(iconLogoT);
 				}
@@ -892,11 +888,12 @@ public class Account extends SL_JFrame{
 		lblSetNome.setText(user[1]);
 		lblSetCognome.setText(user[2]);
 		lblSetEmail.setText(user[3]);
+		lblSetPass.setText(user[4]);
 		lblSetInq.setText(user[5]);
 		lblSetTel.setText(user[6]);
 		lblSetTipoUte.setText(user[7]);
-		//in test...
-		//lblSetPass.setText(user[4]);
+		//in test..
+		
 		
 	}
 	public void updateallModify(String[] user )
@@ -907,11 +904,19 @@ public class Account extends SL_JFrame{
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
 		txtMailMod.setText(user[3]);
+		passwordFieldMod.setText(user[4]);
+		passwordFieldConfMod.setText(user[4]);
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
+		if(user[7].equals("Lettore"))
+		    {
+			  rdbtnTypeUserLetMod.setSelected(true);
+		    }
+		    else
+		    {
+		      rdbtnTypeUserLibMod.setSelected(true);
+		    }
 		
-		passwordFieldMod.setText(user[7]);
-		passwordFieldConfMod.setText(user[7]);
 	}	
 	
 	public void updatelblSetNome(String[] user )

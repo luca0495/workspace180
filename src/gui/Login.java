@@ -484,7 +484,7 @@ public class Login extends SL_JFrame  {
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass1(passwordFieldNewPass.getPassword()))
+				if(Check.checkPass(passwordFieldNewPass.getPassword()))
 				{
 					lblCheckNewPass.setIcon(iconLogoT);
 				}
@@ -508,7 +508,7 @@ public class Login extends SL_JFrame  {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkPass1(passwordFieldNewPassC.getPassword()) && Check.checkPassEq(passwordFieldNewPass.getPassword(), passwordFieldNewPassC.getPassword()))
+				if(Check.checkPass(passwordFieldNewPassC.getPassword()) && Check.checkPassEq(passwordFieldNewPass.getPassword(), passwordFieldNewPassC.getPassword()))
 				{
 					lblCheckCNewPass.setIcon(iconLogoT);
 				}
@@ -582,7 +582,7 @@ public class Login extends SL_JFrame  {
 						lblCheckEmailForg.setIcon(iconLogoC);
 					}
 
-					if(Check.checkPass1(passwordFieldNewPass.getPassword()))
+					if(Check.checkPass(passwordFieldNewPass.getPassword()))
 					{
 						lblCheckNewPass.setIcon(iconLogoT);
 					}
@@ -591,7 +591,7 @@ public class Login extends SL_JFrame  {
 						lblCheckNewPass.setIcon(iconLogoC);
 					}
 					
-					if(Check.checkPass1(passwordFieldNewPassC.getPassword()))
+					if(Check.checkPass(passwordFieldNewPassC.getPassword()))
 					{
 						lblCheckCNewPass.setIcon(iconLogoT);
 					}

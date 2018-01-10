@@ -127,7 +127,7 @@ public class Check {
     }
    
     
-	public static boolean checkPass1(char[] c)
+	public static boolean checkPass(char[] c)
     {
     	String p = new String(c);
     	
@@ -147,7 +147,7 @@ public class Check {
 
 	    return true;
     }
-	
+	/*
 	public static boolean checkPass(String p)
     {    	
 	    p = p.trim();
@@ -166,21 +166,8 @@ public class Check {
 
 	    return true;
     }
-	
+*/	  
 	public static boolean checkPassEq(char[] c1,char[] c2)
-    {
-		boolean isUguale = false;
-    	String p1 = new String(c1);
-    	String p2 = new String(c2);
-    	if((checkPass1(c1)) && (checkPass1(c2)))
-    	{
-    		isUguale = (p1.equals(p2));
-    	}
-    	
-    	return isUguale;
-    }
-
-	public static boolean checkPassEq1(String c1,String c2)
     {
 		boolean isUguale = false;
     	String p1 = new String(c1);
@@ -308,19 +295,19 @@ public class Check {
 	  public static boolean checkAllPassForg(String mail, char[] pass,char[] checkPassword )
 	    {
 	    
-			return checkMail(mail) && checkMailExist(mail) && checkPass1(pass) &&  checkPass1(checkPassword) && checkPassEq(pass, checkPassword);
+			return checkMail(mail) && checkMailExist(mail) && checkPass(pass) &&  checkPass(checkPassword) && checkPassEq(pass, checkPassword);
 	    }
 	 
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
 	    {
 	    
-			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass1(pass) && checkPass1(checkPassword) && 
+			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass(pass) && checkPass(checkPassword) && 
 	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel);
 	    }
 	 public static boolean checkAllReg(String nome, String cognome, String telefono, String email, String codicefiscale, char[] pass, char[] passC, String inq)
 	    {
-	    	return checkName(nome) && checkName(cognome) && checkTel(telefono) && checkMail(email) && checkMailExist(email) && checkCF(codicefiscale) && checkCodFisExist(codicefiscale) && checkPass1(pass) 
-	    			&& checkPass1(passC) && checkPassEq(pass, passC)&& checkInq(inq);
+	    	return checkName(nome) && checkName(cognome) && checkTel(telefono) && checkMail(email) && checkMailExist(email) && checkCF(codicefiscale) && checkCodFisExist(codicefiscale) && checkPass(pass) 
+	    			&& checkPass(passC) && checkPassEq(pass, passC)&& checkInq(inq);
 	    }
 	 
 	 public static boolean checkAllBooks(String nome, String cognome, String categoria, String titolo)
