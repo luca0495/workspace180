@@ -692,13 +692,9 @@ public class Account extends SL_JFrame{
 				String stato = TypePerson;
 				System.out.println("1");
 				
-				
-<<<<<<< HEAD
+
 				//TODO PASSA AL SERVER
-=======
-				
-				
->>>>>>> 9194e75c171e0d4df8ea8de6f881124dfd78f864
+
 				
 				
 				
@@ -708,19 +704,17 @@ public class Account extends SL_JFrame{
 					try
 					{
 					System.out.println("3");
-<<<<<<< HEAD
+
 					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
-=======
-					String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
+
+					
 					
 //TODO PASSA AL SERVER	
 					
 					
-					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
+					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
 						
 					
-					
->>>>>>> 9194e75c171e0d4df8ea8de6f881124dfd78f864
 					
 					}
 					catch (SQLException e) 
@@ -927,20 +921,10 @@ public class Account extends SL_JFrame{
 		setEmailuser(user[3]);
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
-
-
-		getTxtMailMod().setText(user[3]);
-
 		txtMailMod.setText(user[3]);
+		getTxtMailMod().setText(user[3]);
 		passwordFieldMod.setText(user[4]);
 		passwordFieldConfMod.setText(user[4]);
-
-
-		getTxtMailMod().setText(user[3]);
-		txtMailMod.setText(user[3]);
-		passwordFieldMod.setText(user[4]);
-		passwordFieldConfMod.setText(user[4]);
-
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
 		
