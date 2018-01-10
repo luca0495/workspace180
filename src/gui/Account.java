@@ -697,14 +697,6 @@ public class Account extends SL_JFrame{
 
 				//TODO PASSA AL SERVER
 
-<<<<<<< HEAD
-				
-				
-
-=======
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
-				
-				
 				
 				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
 				{
@@ -712,27 +704,9 @@ public class Account extends SL_JFrame{
 					try
 					{
 					System.out.println("3");
-
-					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
-
-<<<<<<< HEAD
-					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
-=======
-					
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
-					
 //TODO PASSA AL SERVER	
-					
-					
-					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
-						
-					
-					
-<<<<<<< HEAD
-
-					
-=======
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
+					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
+			
 					}
 					catch (SQLException e) 
 					{
