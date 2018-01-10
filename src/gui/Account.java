@@ -943,13 +943,10 @@ public class Account extends SL_JFrame{
 		
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
-<<<<<<< HEAD
 		getTxtMailMod().setText(user[3]);
-=======
 		txtMailMod.setText(user[3]);
 		passwordFieldMod.setText(user[4]);
 		passwordFieldConfMod.setText(user[4]);
->>>>>>> 34215c4ae98a6b35cac3a5670291869734f23a57
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
 		if(user[7].equals("Lettore"))
@@ -1012,7 +1009,7 @@ public class Account extends SL_JFrame{
 	public void setW(Account w) {
 		this.w = w;
 	}
-<<<<<<< HEAD
+
 
 	public JLabel getLblMAIL() {
 		return lblMAIL;
@@ -1089,6 +1086,4 @@ public class Account extends SL_JFrame{
 		
 	}
 */
-=======
->>>>>>> 34215c4ae98a6b35cac3a5670291869734f23a57
 }
