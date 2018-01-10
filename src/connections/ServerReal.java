@@ -182,28 +182,23 @@ public class ServerReal extends ServerSkeleton {
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;				
 		
-		case UserREADcheckEmail:
+		case UserREADcheckEmail://CHECK OK
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read check email exist");					
-			try {
-				
-			Boolean Ex = Check.checkMailExist(M.getMsg().getSQLQuery());
-			
+			try {			
+			Boolean Ex = Check.checkMailExist(M.getMsg().getSQLQuery());			
 				if (Ex){	//email esistente
 					x.setText(new String ("SRV :> URCE :> OK Exist"));
 				}else {		//email libera
 					x.setText(new String ("SRV :> URCE :> OK Not Exist"));
 				}
-
 			} catch (Exception e) {	
 				System.out.println("problemi con query select user ");
-				e.printStackTrace();				
-				
+				e.printStackTrace();								
 				getMeS().addMsg(mSg);
 				x.setText(new String ("SRV :> URCE :> NG"));
 			}
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
-			return x;			
-				
+			return x;							
 				
 		case UserREADbyEmail:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
@@ -244,20 +239,7 @@ public class ServerReal extends ServerSkeleton {
 	default:
 		break;
 	}		
-		
-
 		// ****************************************************************************************************************
-		
-		/*TODO PREPARA Answer*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		return AnswerM;
 	}
 
@@ -319,7 +301,32 @@ public class ServerReal extends ServerSkeleton {
 								return x;								
 								//break;
 
-							
+
+							case UserUPDATE:	//SRV UP
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
+								try {
+								
+									// METODO CON QUERY				
+									// LA QUERY ARRIVA DA M.getMsg().getSQLQuery()
+									// LANCIO QUERY 
+									
+									
+									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UP :> OK"));
+									
+									
+								} catch (Exception e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UP :> NG"));
+									System.out.println("problemi con controllo UPDATE UTENTE");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;	
+								
+								
 							case UserREADloginFIRST:
 								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login first time");					
 								try {				

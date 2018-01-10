@@ -240,7 +240,7 @@ public class Client implements Serializable, Runnable  {
 						
 						//	Person
 							case UserUPDATE: 
-											
+														UserUPDATE();	
 								break;
 							case UserDELETE: 
 											
@@ -617,8 +617,7 @@ public class Client implements Serializable, Runnable  {
 						// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
 								
-								System.out.println("ritornato al client UserDATA by email OK : ");															
-								
+								System.out.println("ritornato al client UserDATA by email OK : ");																							
 								Account X = (Account) ActW;
 								System.out.println(" settato finestra attiva : "+ActW.toString());		
 								
@@ -749,35 +748,44 @@ public class Client implements Serializable, Runnable  {
 								break;	
 								
 							//check mail exist	
-							case"SRV :> URCE :> NG":
-								
+							case"SRV :> URCE :> NG":			
+								Account eNGX = (Account) ActW;
+								eNGX.getLblMAIL().setIcon(eNGX.getIconLogoC());
+								eNGX.getTxtMailMod().setText("Errore interrogazione DB");
 								PopUp.errorBox(getActC(), Mb.getText());
 								clrParFS();	
 								break;
-							case"SRV :> URCE :> OK Exist":
-								
+							case"SRV :> URCE :> OK Exist":								
 								Account eX = (Account) ActW;
 								eX.getLblMAIL().setIcon(eX.getIconLogoC());
-								eX.getTxtMailMod().setText("email gia assegnata...");
-								
-								//.lblChangeEmailCheck.setIcon(iconLogoC);
-								//txtMailMod.setText(null);
-								
+								eX.getTxtMailMod().setText("email gia assegnata...");															
 								PopUp.errorBox(getActC(), Mb.getText());
 								clrParFS();	
 								break;
 							case"SRV :> URCE :> OK Not Exist":
 								Account neX = (Account) ActW;
 								neX.getLblMAIL().setIcon(neX.getIconLogoT());
-								PopUp.infoBox(getActC(),Mb.getText() );
-								
+								PopUp.infoBox(getActC(),Mb.getText() );								
 								System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
-								//lblChangeEmailCheck.setIcon(iconLogoT);
+								clrParFS();	
+								break;
+								
+							//user UPDATE
+							case "SRV :> UP :> OK":
+								
+								PopUp.infoBox(getActC(),Mb.getText() );	
+								System.out.println("SRV :> USER UPDATE :> OK ");
+								clrParFS();	
+								break;
+							
+							case "SRV :> UP :> NG":	
+								
+								PopUp.errorBox(getActC(),Mb.getText() );	
+								System.out.println("SRV :> USER UPDATE :> NG");
 								clrParFS();	
 								break;
 								
 								
-	
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								
@@ -1125,6 +1133,29 @@ public class Client implements Serializable, Runnable  {
 			}	
 		}	
 	
+		private void UserUPDATE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserUPDATE;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email 
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}	
+		
+		
 	//------------------------------------------------------------------------		 
 	// get & set
 		
