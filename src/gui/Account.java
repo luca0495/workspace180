@@ -62,7 +62,7 @@ public class Account extends SL_JFrame{
     private JLabel lblSetNome;
     private JLabel lblSetCognome;
     private JLabel lblSetEmail;
-    private JLabel lblSetPass;
+ 
     private JLabel lblSetInq;
     private JLabel lblSetTipoUte;
     private JLabel lblSetTel;
@@ -134,61 +134,69 @@ public class Account extends SL_JFrame{
 // PANEL ACCOUNT // ***************************************************************************************************
 		
 		JLabel lblNome = new JLabel("Nome: ");
-		lblNome.setBounds(10, 14, 42, 30);
+		lblNome.setBounds(10, 31, 42, 30);
 		panelAccount.add(lblNome);
 		
 	    lblSetNome = new JLabel();
 	    //lblSetNome.setText(user[0]);
-		lblSetNome.setBounds(106, 19, 186, 20);
+		lblSetNome.setBounds(106, 31, 186, 20);
 		panelAccount.add(lblSetNome);
 		
 		JLabel lblCognome = new JLabel("Cognome: ");
-		lblCognome.setBounds(10, 64, 59, 14);
+		lblCognome.setBounds(10, 84, 59, 14);
 		panelAccount.add(lblCognome);
 		
 		lblSetCognome = new JLabel();
 		//lblSetCognome.setText(user[1]);
-		lblSetCognome.setBounds(106, 64, 186, 20);
+		lblSetCognome.setBounds(106, 78, 186, 20);
 		panelAccount.add(lblSetCognome);
 		
 		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setBounds(10, 115, 46, 14);
+		lblEmail.setBounds(10, 130, 46, 14);
 		panelAccount.add(lblEmail);
+		
+		JLabel lblPass = new JLabel("Pasword");
+		lblPass.setBounds(10, 173, 86, 14);
+		panelAccount.add(lblPass);
+		
+		JLabel lblSetPass = new JLabel("");
+		lblSetPass.setBounds(116, 173, 174, 20);
+		panelAccount.add(lblSetPass);
 		
 		lblSetEmail = new JLabel();
 		//lblSetEmail.setText(user[2]);
-		lblSetEmail.setBounds(106, 112, 186, 20);
+		lblSetEmail.setBounds(106, 124, 186, 20);
 		panelAccount.add(lblSetEmail);
 			
 		JLabel lblInq = new JLabel("Inquadramento: ");
-		lblInq.setBounds(10, 159, 86, 14);
+		lblInq.setBounds(10, 211, 86, 14);
 		panelAccount.add(lblInq);
 		
 		lblSetInq = new JLabel();
 		//lblSetInq.setText(user[4]);
-		lblSetInq.setBounds(106, 156, 186, 20);
+		lblSetInq.setBounds(106, 211, 186, 20);
 		panelAccount.add(lblSetInq);
 		
 		JLabel lblTipoUte = new JLabel("Tipo Utente:");
-		lblTipoUte.setBounds(10, 214, 74, 14);
+		lblTipoUte.setBounds(10, 248, 74, 14);
 		panelAccount.add(lblTipoUte);
 		
 		lblSetTipoUte = new JLabel();
 		//lblSetTipoUte.setText(user[6]);
-		lblSetTipoUte.setBounds(106, 211, 186, 20);
+		lblSetTipoUte.setBounds(116, 242, 186, 20);
 		panelAccount.add(lblSetTipoUte);
 		
 		JLabel lblTel = new JLabel("Telefono:");
-		lblTel.setBounds(10, 261, 59, 14);
+		lblTel.setBounds(10, 289, 59, 14);
 		panelAccount.add(lblTel);
 		
 		lblSetTel = new JLabel();
 		//lblSetTel.setText(user[5]);
-		lblSetTel.setBounds(106, 261, 186, 14);
+		lblSetTel.setBounds(106, 261, 186, 42);
 		panelAccount.add(lblSetTel);
 		
 		JLabel lblNumPrenPend = new JLabel("Numero Di Prenotazioni:");
-		lblNumPrenPend.setBounds(10, 307, 132, 14);
+		lblNumPrenPend.setBounds(10, 328, 132, 14);
 		panelAccount.add(lblNumPrenPend);
 		
 		lblSetNumPrenPend = new JLabel();
@@ -955,49 +963,4 @@ public class Account extends SL_JFrame{
 	public void setW(Account w) {
 		this.w = w;
 	}
-	
-	
-	
-	/*
-	public static void ReadUser1 ()throws SQLException{	
-		String query = "SELECT * FROM utente ORDER BY id DESC LIMIT 1;";  //  
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-		System.out.println(query);
-		System.out.println("ewrtet");
-
-		if(rs.next())
-			{
-				 System.out.println("tertret");
-				
-				 String s = rs.getString("nome");
-				 lblSetNome.setText(s);
-				
-				 String s1 = rs.getString("cognome");
-				 lblSetCognome.setText(s1);
-				
-				 String s2 = rs.getString("email");
-				 lblSetEmail.setText(s2);
-				
-				 String s3 = rs.getString("tipo_utente");
-				 lblSetTipoUte.setText(s3);
-				
-				 String s4 = rs.getString("inquadramento");
-				 lblSetInq.setText(s4);
-				
-				 String s5 = rs.getString("password_temp");
-				 lblSetPass.setText(s5);
-	
-				 String s6 = rs.getString("ntel");
-				 lblSetTel.setText(s6);
-				 
-				 // mettere anche num_pren_correnti
-				
-		rs.close();
-		DBmanager.closeConnection();
-	
-			}
-		
-	}
-*/
 }
