@@ -182,6 +182,29 @@ public class ServerReal extends ServerSkeleton {
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;				
 		
+		case UserREADcheckEmail:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read check email exist");					
+			try {
+				
+			Boolean Ex = Check.checkMailExist(M.getMsg().getSQLQuery());
+			
+				if (Ex){	//email esistente
+					x.setText(new String ("SRV :> URCE :> OK Exist"));
+				}else {		//email libera
+					x.setText(new String ("SRV :> URCE :> OK Not Exist"));
+				}
+
+			} catch (Exception e) {	
+				System.out.println("problemi con query select user ");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> URCE :> NG"));
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;			
+				
+				
 		case UserREADbyEmail:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
 				try {				

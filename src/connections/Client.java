@@ -199,7 +199,9 @@ public class Client implements Serializable, Runnable  {
 								case UserREADaccountMod: 								
 														UserGetDataAccountMod();//necessario setSql con email setSql2 con password					
 									break;									
-									
+								case UserREADcheckEmail: 								
+														UserREADcheckEmailExist();//necessario setSql con email 					
+									break;									
 									
 									
 						//	Loans
@@ -740,12 +742,39 @@ public class Client implements Serializable, Runnable  {
 								//clrParFS();	i campi verranno ripuliti da user read by email	
 								break;
 							// LOGIN FIRST ACCESS FINE	
-								
+							
 							case "SRV :> selected user login check FIRST:> PROCEDURA CANCELLAZIONE UTENTE":								
 								PopUp.errorBox(getActC(), Mb.getText());
 								clrParFS();	
 								break;	
 								
+							//check mail exist	
+							case"SRV :> URCE :> NG":
+								
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;
+							case"SRV :> URCE :> OK Exist":
+								
+								Account eX = (Account) ActW;
+								eX.getLblMAIL().setIcon(eX.getIconLogoC());
+								eX.getTxtMailMod().setText("email gia assegnata...");
+								
+								//.lblChangeEmailCheck.setIcon(iconLogoC);
+								//txtMailMod.setText(null);
+								
+								PopUp.errorBox(getActC(), Mb.getText());
+								clrParFS();	
+								break;
+							case"SRV :> URCE :> OK Not Exist":
+								Account neX = (Account) ActW;
+								neX.getLblMAIL().setIcon(neX.getIconLogoT());
+								PopUp.infoBox(getActC(),Mb.getText() );
+								
+								System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
+								//lblChangeEmailCheck.setIcon(iconLogoT);
+								clrParFS();	
+								break;
 								
 								
 	
@@ -955,6 +984,28 @@ public class Client implements Serializable, Runnable  {
 			}	
 		}	
 
+		private void UserREADcheckEmailExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADcheckEmail;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// email da verificare
+						
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}		
 		private void UserGetData() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREAD;
 			MessageBack Mb = new MessageBack();
@@ -976,7 +1027,8 @@ public class Client implements Serializable, Runnable  {
 						);
 				sendM(MsgSend, Mb);
 			}	
-		}		
+		}
+		
 		private void UserGetDatabyEmail() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmail;
 			MessageBack Mb = new MessageBack();

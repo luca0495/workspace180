@@ -67,7 +67,11 @@ public class Account extends SL_JFrame{
     private JLabel lblSetTipoUte;
     private JLabel lblSetTel;
     private JLabel lblSetNumPrenPend;
-	private String TypePerson = "Lettore";
+
+    private JLabel lblMAIL;
+    
+    
+    private String TypePerson = "Lettore";
 	private JTextField txtNameMod;
 	private JTextField txtSurnameMod;
 	private JTextField txtMailMod;
@@ -88,7 +92,9 @@ public class Account extends SL_JFrame{
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
 	private String [] 	userdata;
-	
+	private ImageIcon iconLogoT;
+	private ImageIcon iconLogoC;
+
 	public Account(Component c,Client x)
 	{
 		
@@ -111,10 +117,12 @@ public class Account extends SL_JFrame{
 		frmSchoolib.setLocationRelativeTo(c);
 		frmSchoolib.setVisible(true);
 		frmSchoolib.getContentPane().setLayout(new CardLayout(0, 0));
-		
-		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
-		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 	
+		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
+		setIconLogoT(iconLogoT);
+		
+		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
+		setIconLogoC(iconLogoC);
 		
 		JPanel panelAccount = new JPanel();
 		frmSchoolib.getContentPane().add(panelAccount, "name_353435345061838");
@@ -228,11 +236,8 @@ public class Account extends SL_JFrame{
 				
 				//************************************************************
 				String email = lblSetEmail.getText();
-				
-				System.out.println("passo email    :"+email);
-				
-				System.out.println(" settato finestra attiva : "+getW().toString());
-				
+				//System.out.println("passo email    :"+email);
+				//System.out.println(" settato finestra attiva : "+getW().toString());	
 				me.setSql(email);				
 				me.setActW(getW());
 				me.setActF(frmSchoolib);
@@ -282,7 +287,11 @@ public class Account extends SL_JFrame{
 		lblMailMod.setBounds(10, 172, 127, 23);
 		panelModify.add(lblMailMod);
 		
+		
+		
 		JLabel lblChangeEmailCheck = new JLabel();
+	setLblMAIL(lblChangeEmailCheck);
+	
 		lblChangeEmailCheck.setBounds(362, 176, 21, 19);
 		panelModify.add(lblChangeEmailCheck);
 		
@@ -323,11 +332,9 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblTypeUserMod);
 		
 
-		
+//TODO da girare al server...		
 /*		
 		try {
-			
-//TODO da girare al server...	
 				//user = MQ_Read.retrieveUserId();
 			setUserdata( MQ_Read.retrieveUserIdbyemail(getEmailuser()));
 			
@@ -335,9 +342,7 @@ public class Account extends SL_JFrame{
 				
 				e1.printStackTrace();
 			}
-*/
-		
-		
+*/	
 //		user=getUserdata();
 		
 		txtNameMod = new JTextField();
@@ -396,44 +401,79 @@ public class Account extends SL_JFrame{
 		panelModify.add(txtSurnameMod);
 		txtSurnameMod.setColumns(10);
 		
-		txtMailMod = new JTextField();
-		txtMailMod.setEditable(false);
+		setTxtMailMod(new JTextField());
+		getTxtMailMod().setEditable(false);
 		//txtMailMod.setText(user[3]);
-		txtMailMod.addMouseListener(new MouseAdapter() {
+		getTxtMailMod().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				txtMailMod.setEditable(true);
-				txtMailMod.getCaret().setVisible(true);
+				getTxtMailMod().setEditable(true);
+				getTxtMailMod().getCaret().setVisible(true);
 			}
 		});
-		txtMailMod.addFocusListener(new FocusAdapter() {
+		getTxtMailMod().addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
 				System.out.println(" ***** sto controllando la email ");
 				System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
-				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+txtMailMod.getText());
+				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
+
 				
+
 				//******************************************************************
-				if(Check.checkMail(txtMailMod.getText())){
+				if(Check.checkMail(getTxtMailMod().getText())){
 				System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
 				//sintatticamente corretta	
 				
-				
-								if (!txtMailMod.getText().equals(getEmailuser())) {
+								
+								if (!getTxtMailMod().getText().equals(getEmailuser())) {
 									// modifica alla email
 									System.out.println(" ***** sto controllando la email : email MODIFICATA");
 									
+									
+									
+									//TODO GIRARE AL SERVER
+									/*
 									if ( Check.checkMailExist(txtMailMod.getText())) {
-										// email inserita esiste gia... non va bene
+										// email inserita esiste gia... NG
 										System.out.println(" ***** sto controllando la email : email GIA ESISTENTE , NG ");
+										
 										lblChangeEmailCheck.setIcon(iconLogoC);
 										txtMailMod.setText(null);
 									}else {
 										// email non esiste gia
 										System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
+										
 										lblChangeEmailCheck.setIcon(iconLogoT);
 									}
+									*/
+									
+									
+									
+									//************************************************************
+									String email = getTxtMailMod().getText();
+
+									me.setSql(email);				
+									me.setActW(getW());
+									me.setActF(frmSchoolib);
+									me.setActC(c);
+									
+									try {
+										System.out.println("GUI account:> ottenuti dati user ");
+									me.setCliType(Clients.Reader);	
+										me.getCmdLIST().put(Commands.UserREADcheckEmail);
+									} catch (InterruptedException e2) {
+										System.out.println("GUI account:> NON ottenuti dati user ");	
+										e2.printStackTrace(); 
+									}
+									//*************************************************************
+									
+									
+									
+									
+									
+									
 								}else {	//non modificata
 									System.out.println(" ***** sto controllando la email : email non modificata");
 									lblChangeEmailCheck.setIcon(iconLogoT);
@@ -458,9 +498,9 @@ public class Account extends SL_JFrame{
 				
 			}
 		});
-		txtMailMod.setBounds(120, 173, 224, 20);
-		panelModify.add(txtMailMod);
-		txtMailMod.setColumns(10);
+		getTxtMailMod().setBounds(120, 173, 224, 20);
+		panelModify.add(getTxtMailMod());
+		getTxtMailMod().setColumns(10);
 		/*
 		passwordFieldMod1 = new JTextField();
 		passwordFieldMod1.setEditable(false);
@@ -670,7 +710,7 @@ public class Account extends SL_JFrame{
 				
 				String nome = txtNameMod.getText();
 				String cognome = txtSurnameMod.getText();
-				String mail = txtMailMod.getText();
+				String mail = getTxtMailMod().getText();
 				char[] pass = passwordFieldMod.getPassword();
 				char[] checkPassword = passwordFieldConfMod.getPassword();
 				String inq = txtInqMod.getText();
@@ -689,7 +729,7 @@ public class Account extends SL_JFrame{
 					{
 					System.out.println("3");
 					String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
-					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), txtMailMod.getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
+					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
 					
 					}
 					catch (SQLException e) 
@@ -721,7 +761,7 @@ public class Account extends SL_JFrame{
 					
 					txtNameMod.setEditable(false);
 					txtSurnameMod.setEditable(false);
-					txtMailMod.setEditable(false);
+					getTxtMailMod().setEditable(false);
 					passwordFieldMod.setEditable(false);
 					passwordFieldConfMod.setEditable(false);
 					txtInqMod.setEditable(false);
@@ -842,7 +882,7 @@ public class Account extends SL_JFrame{
 					
 					txtNameMod.setText(null);
 					txtSurnameMod.setText(null);
-					txtMailMod.setText(null);
+					getTxtMailMod().setText(null);
 					passwordFieldMod.setText(null);
 					passwordFieldConfMod.setText(null);
 					txtInqMod.setText(null);
@@ -852,7 +892,7 @@ public class Account extends SL_JFrame{
 					
 					txtNameMod.setEditable(false);
 					txtSurnameMod.setEditable(false);
-					txtMailMod.setEditable(false);
+					getTxtMailMod().setEditable(false);
 					passwordFieldMod.setEditable(false);
 					passwordFieldConfMod.setEditable(false);
 					txtInqMod.setEditable(false);
@@ -872,7 +912,7 @@ public class Account extends SL_JFrame{
 		btnBackData.setBounds(523, 391, 175, 67);
 		panelModify.add(btnBackData);
 		
-		System.out.println("leggo dal campo email... "+txtMailMod);
+		System.out.println("leggo dal campo email... "+getTxtMailMod());
 
 
 		
@@ -898,7 +938,7 @@ public class Account extends SL_JFrame{
 		
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
-		txtMailMod.setText(user[3]);
+		getTxtMailMod().setText(user[3]);
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
 		
@@ -955,7 +995,38 @@ public class Account extends SL_JFrame{
 	public void setW(Account w) {
 		this.w = w;
 	}
+
+	public JLabel getLblMAIL() {
+		return lblMAIL;
+	}
+
+	public void setLblMAIL(JLabel lblMAIL) {
+		this.lblMAIL = lblMAIL;
+	}
 	
+	public ImageIcon getIconLogoT() {
+		return iconLogoT;
+	}
+
+	public void setIconLogoT(ImageIcon iconLogoT) {
+		this.iconLogoT = iconLogoT;
+	}
+
+	public ImageIcon getIconLogoC() {
+		return iconLogoC;
+	}
+
+	public void setIconLogoC(ImageIcon iconLogoC) {
+		this.iconLogoC = iconLogoC;
+	}
+
+	public JTextField getTxtMailMod() {
+		return txtMailMod;
+	}
+
+	public void setTxtMailMod(JTextField txtMailMod) {
+		this.txtMailMod = txtMailMod;
+	}
 	
 	
 	/*
