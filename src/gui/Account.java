@@ -131,7 +131,8 @@ public class Account extends SL_JFrame{
 		 */
 		 //***
 		 
-		 
+// PANEL ACCOUNT // ***************************************************************************************************
+		
 		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 14, 42, 30);
 		panelAccount.add(lblNome);
@@ -205,7 +206,7 @@ public class Account extends SL_JFrame{
                 rowData = new ArrayList<String>();
 					
 				rowData.add(0, idUser);
-			
+//TODO DA PASSARE A CLIENT
 				try {
 					MQ_Delete.deleteRowPerson(rowData);
 				} catch (SQLException e1) {
@@ -232,8 +233,7 @@ public class Account extends SL_JFrame{
 				
 				System.out.println(" settato finestra attiva : "+getW().toString());
 				
-				me.setSql(email);
-				
+				me.setSql(email);				
 				me.setActW(getW());
 				me.setActF(frmSchoolib);
 				me.setActC(c);
@@ -260,7 +260,7 @@ public class Account extends SL_JFrame{
 		btnModify.setBounds(428, 381, 186, 54);
 		panelAccount.add(btnModify);
 		
-		// PANEL MODIFY
+// PANEL MODIFY // ****************************************************************************************************
 		
 		JLabel lblNameMod = new JLabel("Nome");
 		lblNameMod.setBounds(10, 29, 127, 23);
@@ -322,9 +322,12 @@ public class Account extends SL_JFrame{
 		lblTypeUserMod.setBounds(611, 176, 157, 19);
 		panelModify.add(lblTypeUserMod);
 		
+
+		
+/*		
 		try {
 			
-			//da girare al server...	
+//TODO da girare al server...	
 				//user = MQ_Read.retrieveUserId();
 			setUserdata( MQ_Read.retrieveUserIdbyemail(getEmailuser()));
 			
@@ -332,12 +335,14 @@ public class Account extends SL_JFrame{
 				
 				e1.printStackTrace();
 			}
+*/
 		
-		user=getUserdata();
+		
+//		user=getUserdata();
 		
 		txtNameMod = new JTextField();
 		txtNameMod.setEditable(false);
-		txtNameMod.setText(user[1]);
+		//txtNameMod.setText(user[1]);
 		txtNameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -365,7 +370,7 @@ public class Account extends SL_JFrame{
 		
 		txtSurnameMod = new JTextField();
 		txtSurnameMod.setEditable(false);
-		txtSurnameMod.setText(user[2]);
+		//txtSurnameMod.setText(user[2]);
 		txtSurnameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -393,7 +398,7 @@ public class Account extends SL_JFrame{
 		
 		txtMailMod = new JTextField();
 		txtMailMod.setEditable(false);
-		txtMailMod.setText(user[3]);
+		//txtMailMod.setText(user[3]);
 		txtMailMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -405,27 +410,37 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
+				System.out.println(" ***** sto controllando la email ");
+				System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
+				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+txtMailMod.getText());
+				
 				//******************************************************************
 				if(Check.checkMail(txtMailMod.getText())){
+				System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
 				//sintatticamente corretta	
 				
 				
-								if (txtMailMod.getText()!=getEmailuser()) {
+								if (!txtMailMod.getText().equals(getEmailuser())) {
 									// modifica alla email
+									System.out.println(" ***** sto controllando la email : email MODIFICATA");
 									
 									if ( Check.checkMailExist(txtMailMod.getText())) {
 										// email inserita esiste gia... non va bene
+										System.out.println(" ***** sto controllando la email : email GIA ESISTENTE , NG ");
 										lblChangeEmailCheck.setIcon(iconLogoC);
 										txtMailMod.setText(null);
 									}else {
 										// email non esiste gia
+										System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
 										lblChangeEmailCheck.setIcon(iconLogoT);
 									}
 								}else {	//non modificata
+									System.out.println(" ***** sto controllando la email : email non modificata");
 									lblChangeEmailCheck.setIcon(iconLogoT);
 								}	
 				}else {
 				//sintatticamente non corretta
+					System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
 				//******************************************************************	
@@ -507,7 +522,7 @@ public class Account extends SL_JFrame{
        
 		passwordFieldMod = new JPasswordField();
 		passwordFieldMod.setEditable(false);
-		passwordFieldMod.setText(user[4]);
+		//passwordFieldMod.setText(user[4]);
 		passwordFieldMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -534,7 +549,7 @@ public class Account extends SL_JFrame{
 		
 		passwordFieldConfMod = new JPasswordField();
 		passwordFieldConfMod.setEditable(false);
-		passwordFieldConfMod.setText(user[4]);
+		//passwordFieldConfMod.setText(user[4]);
 		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -563,7 +578,7 @@ public class Account extends SL_JFrame{
 		
 		txtInqMod = new JTextField();
 		txtInqMod.setEditable(false);
-		txtInqMod.setText(user[5]);
+		//txtInqMod.setText(user[5]);
 		txtInqMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -593,7 +608,7 @@ public class Account extends SL_JFrame{
 		
 		txtTelMod = new JTextField();
 		txtTelMod.setEditable(false);
-		txtTelMod.setText(user[6]);
+		//txtTelMod.setText(user[6]);
 		txtTelMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -662,6 +677,10 @@ public class Account extends SL_JFrame{
 				String tel = txtTelMod.getText();
 				String stato = TypePerson;
 				System.out.println("1");
+				
+				
+				//TODO PASSA AL SERVER
+				
 				
 				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))
 				{
@@ -868,18 +887,23 @@ public class Account extends SL_JFrame{
 		lblSetInq.setText(user[5]);
 		lblSetTel.setText(user[6]);
 		lblSetTipoUte.setText(user[7]);
+		//in test...
+		//lblSetPass.setText(user[4]);
 		
 	}
 	public void updateallModify(String[] user )
 	{
 		setIdUser(user[0]);
+		setEmailuser(user[3]);
+		
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
 		txtMailMod.setText(user[3]);
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
-		//txt.setText(user[7]);
 		
+		passwordFieldMod.setText(user[7]);
+		passwordFieldConfMod.setText(user[7]);
 	}	
 	
 	public void updatelblSetNome(String[] user )
