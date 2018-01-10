@@ -921,8 +921,15 @@ public class Account extends SL_JFrame{
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
 
+
 		getTxtMailMod().setText(user[3]);
 
+		txtMailMod.setText(user[3]);
+		passwordFieldMod.setText(user[4]);
+		passwordFieldConfMod.setText(user[4]);
+
+
+		getTxtMailMod().setText(user[3]);
 		txtMailMod.setText(user[3]);
 		passwordFieldMod.setText(user[4]);
 		passwordFieldConfMod.setText(user[4]);
