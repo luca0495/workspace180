@@ -324,7 +324,7 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass1(passwordField.getPassword()))
+				if(Check.checkPass(passwordField.getPassword()))
 				{
 					lblCheckPass.setIcon(iconLogoT);
 				}
@@ -349,7 +349,7 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkPass1(passwordFieldCh.getPassword()) && Check.checkPassEq(passwordField.getPassword(), passwordFieldCh.getPassword()))
+				if(Check.checkPass(passwordFieldCh.getPassword()) && Check.checkPassEq(passwordField.getPassword(), passwordFieldCh.getPassword()))
 				{
 					lblCheckVerifyPass.setIcon(iconLogoT);
 				}
