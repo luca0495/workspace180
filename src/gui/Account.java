@@ -223,7 +223,9 @@ public class Account extends SL_JFrame{
                 rowData = new ArrayList<String>();
 					
 				rowData.add(0, idUser);
+
 //TODO DA PASSARE A CLIENT
+				
 				try {
 					MQ_Delete.deleteRowPerson(rowData);
 				} catch (SQLException e1) {
@@ -241,8 +243,7 @@ public class Account extends SL_JFrame{
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelAccount.setVisible(false);
-				panelModify.setVisible(true);
-				
+				panelModify.setVisible(true);				
 				//************************************************************
 				String email = lblSetEmail.getText();
 				//System.out.println("passo email    :"+email);
@@ -250,8 +251,7 @@ public class Account extends SL_JFrame{
 				me.setSql(email);				
 				me.setActW(getW());
 				me.setActF(frmSchoolib);
-				me.setActC(c);
-				
+				me.setActC(c);				
 				try {
 					System.out.println("GUI account:> ottenuti dati user ");
 				me.setCliType(Clients.Librarian);	
@@ -261,14 +261,7 @@ public class Account extends SL_JFrame{
 					e2.printStackTrace(); 
 				}
 				//*************************************************************
-				
-				
-				
-				
-				
-				System.out.println(" gui account comando modifica  ");
-				
-				
+				System.out.println(" gui account comando modifica  ");	
 			}
 		});
 		btnModify.setBounds(428, 381, 186, 54);
@@ -339,9 +332,7 @@ public class Account extends SL_JFrame{
 		JLabel lblTypeUserMod = new JLabel("Tipo Utente");
 		lblTypeUserMod.setBounds(611, 176, 157, 19);
 		panelModify.add(lblTypeUserMod);
-		
-
-//TODO da girare al server...		
+	
 /*		
 		try {
 				//user = MQ_Read.retrieveUserId();
@@ -428,21 +419,13 @@ public class Account extends SL_JFrame{
 				System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
 				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
 
-				
-
 				//******************************************************************
 				if(Check.checkMail(getTxtMailMod().getText())){
 				System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
-				//sintatticamente corretta	
-				
-								
+				//sintatticamente corretta		
 								if (!getTxtMailMod().getText().equals(getEmailuser())) {
 									// modifica alla email
 									System.out.println(" ***** sto controllando la email : email MODIFICATA");
-									
-									
-									
-									//TODO GIRARE AL SERVER
 									/*
 									if ( Check.checkMailExist(txtMailMod.getText())) {
 										// email inserita esiste gia... NG
@@ -457,17 +440,12 @@ public class Account extends SL_JFrame{
 										lblChangeEmailCheck.setIcon(iconLogoT);
 									}
 									*/
-									
-									
-									
 									//************************************************************
 									String email = getTxtMailMod().getText();
-
 									me.setSql(email);				
 									me.setActW(getW());
 									me.setActF(frmSchoolib);
-									me.setActC(c);
-									
+									me.setActC(c);									
 									try {
 										System.out.println("GUI account:> ottenuti dati user ");
 									me.setCliType(Clients.Reader);	
@@ -476,13 +454,7 @@ public class Account extends SL_JFrame{
 										System.out.println("GUI account:> NON ottenuti dati user ");	
 										e2.printStackTrace(); 
 									}
-									//*************************************************************
-									
-									
-									
-									
-									
-									
+									//*************************************************************	
 								}else {	//non modificata
 									System.out.println(" ***** sto controllando la email : email non modificata");
 									lblChangeEmailCheck.setIcon(iconLogoT);
@@ -492,8 +464,7 @@ public class Account extends SL_JFrame{
 					System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
-				//******************************************************************	
-				
+				//******************************************************************					
 				/*
 				if(Check.checkMail(txtMailMod.getText()) && (!Check.checkMailExist(txtMailMod.getText())))
 				{
@@ -503,8 +474,7 @@ public class Account extends SL_JFrame{
 				{
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
-				*/
-				
+				*/	
 			}
 		});
 		getTxtMailMod().setBounds(120, 173, 224, 20);
@@ -583,7 +553,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
-				if(Check.checkPass(passwordFieldMod.getPassword()))
+				if(Check.checkPass(passwordFieldMod.getPassword()))		//Controllo sintattico
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
 				}
@@ -601,7 +571,7 @@ public class Account extends SL_JFrame{
 		//passwordFieldConfMod.setText(user[4]);
 		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
 			@Override
-			public void focusLost(FocusEvent e) {			
+			public void focusLost(FocusEvent e) {						//Controllo sintattico
 					if(Check.checkPass(passwordFieldConfMod.getPassword())  && Check.checkPassEq(passwordFieldMod.getPassword(), passwordFieldConfMod.getPassword()))
 					{
 						lblChangePassConfCheck.setIcon(iconLogoT);
@@ -631,7 +601,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkName(txtInqMod.getText()))
+				if(Check.checkName(txtInqMod.getText()))		//Controllo sintattico
 				{
 					lblChangeInqCheck.setIcon(iconLogoT);
 				}
@@ -661,7 +631,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkTel(txtTelMod.getText()))
+				if(Check.checkTel(txtTelMod.getText()))			//Controllo sintattico
 				{
 					lblChangePhoneCheck.setIcon(iconLogoT);
 				}
@@ -722,17 +692,24 @@ public class Account extends SL_JFrame{
 				
 				
 				
-				//TODO PASSA AL SERVER
 				
 				
-				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))
+				
+				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
 				{
 					System.out.println("2");
 					try
 					{
 					System.out.println("3");
 					String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
+					
+//TODO PASSA AL SERVER	
+					
+					
 					MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
+						
+					
+					
 					
 					}
 					catch (SQLException e) 
@@ -943,20 +920,21 @@ public class Account extends SL_JFrame{
 		
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
-<<<<<<< HEAD
+
 		getTxtMailMod().setText(user[3]);
-=======
+
 		txtMailMod.setText(user[3]);
 		passwordFieldMod.setText(user[4]);
 		passwordFieldConfMod.setText(user[4]);
->>>>>>> 34215c4ae98a6b35cac3a5670291869734f23a57
+
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
+		
 		if(user[7].equals("Lettore"))
 		    {
 			  rdbtnTypeUserLetMod.setSelected(true);
 		    }
-		    else
+		else
 		    {
 		      rdbtnTypeUserLibMod.setSelected(true);
 		    }
@@ -1012,7 +990,7 @@ public class Account extends SL_JFrame{
 	public void setW(Account w) {
 		this.w = w;
 	}
-<<<<<<< HEAD
+
 
 	public JLabel getLblMAIL() {
 		return lblMAIL;
@@ -1089,6 +1067,4 @@ public class Account extends SL_JFrame{
 		
 	}
 */
-=======
->>>>>>> 34215c4ae98a6b35cac3a5670291869734f23a57
 }
