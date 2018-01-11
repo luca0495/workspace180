@@ -697,12 +697,7 @@ public class Account extends SL_JFrame{
 
 				//TODO PASSA AL SERVER
 
-<<<<<<< HEAD
-				
-				
 
-=======
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
 				
 				
 				
@@ -715,11 +710,9 @@ public class Account extends SL_JFrame{
 
 					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
 
-<<<<<<< HEAD
+
 					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
-=======
-					
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
+
 					
 //TODO PASSA AL SERVER	
 					
@@ -727,12 +720,7 @@ public class Account extends SL_JFrame{
 					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
 						
 					
-					
-<<<<<<< HEAD
 
-					
-=======
->>>>>>> 815eb17764a0d323e60cc57cd33ea83064a0ce89
 					}
 					catch (SQLException e) 
 					{
