@@ -215,7 +215,39 @@ public class ServerReal extends ServerSkeleton {
 				}
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;				
+
+		case UserREADbyEmailAcc:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
+			try {				
+			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
+			x.setRowUser(UserData);
+			x.setText(new String ("SRV :> selected user by email panel Account:> OK"));					
+			} catch (SQLException e) {	
+				System.out.println("problemi con query select user by email panel Account");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> selected user by email panel Account:> NG"));
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;
 		
+		case UserREADbyEmailMod:
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
+			try {				
+			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
+			x.setRowUser(UserData);
+			x.setText(new String ("SRV :> selected user by email panel Modify:> OK"));					
+			} catch (SQLException e) {	
+				System.out.println("problemi con query select user by email ");
+				e.printStackTrace();				
+				
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> selected user by email panel Modify:> NG"));
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;
+			
 		case UserREADlogin:
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login");					
 			try {				
@@ -309,12 +341,16 @@ public class ServerReal extends ServerSkeleton {
 									// METODO CON QUERY				
 									// LA QUERY ARRIVA DA M.getMsg().getSQLQuery()
 									// LANCIO QUERY 
+									System.out.println("REAL SERVER :> Query passata dal client :"+M.getMsg().getSQLQuery().toString());
+									System.out.println("REAL SERVER :> email user passata dal client :"+M.getMsg().getSQLQuery2().toString());
+									
+									MQ_Update.updateModUserIdbyQuery(M.getMsg().getSQLQuery());		
 									
 									
 									
 									getMeS().addMsg(mSg);
 									x.setText(new String ("SRV :> UP :> OK"));
-									
+									x.setUserEmail(M.getMsg().getSQLQuery2());
 									
 								} catch (Exception e) {
 									getMeS().addMsg(mSg);
@@ -347,14 +383,10 @@ public class ServerReal extends ServerSkeleton {
 										return x;
 									}
 
-									
-									String[] user;
-									
-									
 									// RECUPERA VALORE NUMERO TENTATIVI
 									
 									//*****************************************
-									user = MQ_Read.UserLoginTryCounter(email);
+									 String[] user = MQ_Read.UserLoginTryCounter(email);
 									//*****************************************
 									
 									String tent = user[1];

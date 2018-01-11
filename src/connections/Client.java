@@ -37,6 +37,7 @@ import Table.TableBooks;
 import database.MQ_Delete;
 import database.MQ_Insert;
 import database.MQ_Read;
+import database.MQ_Update;
 
 import java.awt.Font;
 import java.awt.event.WindowEvent;
@@ -191,8 +192,15 @@ public class Client implements Serializable, Runnable  {
 														UserGetData();			//necessario setSql con query completa
 									break;
 								case UserREADbyEmail: 								
-														UserGetDatabyEmail();	//necessario setSql con email
+														UserGetDatabyEmail();		//necessario setSql con email
 									break;
+								case UserREADbyEmailAcc:																		
+														UserGetDatabyEmailAcc();	//necessario setSql con email
+									break;
+								case UserREADbyEmailMod: 																										
+														UserGetDatabyEmailMod();	//necessario setSql con email
+									break;
+
 								case UserREADlogin: 								
 														UserGetDataLogin();		//necessario setSql con email setSql2 con password					
 									break;
@@ -636,12 +644,41 @@ public class Client implements Serializable, Runnable  {
 								clrParFS();	
 								break;
 								
-							case "SRV :> selected user by email :> NG" :
+								// USER Read Data by email
+							case "SRV :> selected user by email panel Account:> OK":								
+								System.out.println("ritornato al client UserDATA by email OK : ");																							
+								Account accX = (Account) ActW;	
+
+								accX.getPanelAccount().setVisible(true);
+								accX.getPanelModify().setVisible(false);
+								
+								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
+								clrParFS();	
+								break;
+								
+								// USER Read Data by email
+							case "SRV :> selected user by email panel Modify:> OK":								
+								System.out.println("ritornato al client UserDATA by email OK : ");																							
+								Account modX = (Account) ActW;
+
+								modX.getPanelAccount().setVisible(false);
+								modX.getPanelModify().setVisible(true);
+								
+								modX.updateall(Mb.getRowUser());					// PER PANNELLO MODIFY								
+								clrParFS();	
+								break;								
+								
+								
+								
+							case "SRV :> selected user by email :> NG" 				:  
+							case "SRV :> selected user by email panel Modify:> NG"	:
+							case "SRV :> selected user by email panel Account:> NG" :{
+							
 								System.out.println("ritornato al client UserDATA  by email NG : ");
 								
 								clrParFS();	
 								break;								
-								
+							}	
 							
 								
 						// USER Read Data Login check
@@ -773,8 +810,26 @@ public class Client implements Serializable, Runnable  {
 							//user UPDATE
 							case "SRV :> UP :> OK":
 								
+								Account upX = (Account) ActW;
+								
+								try {
+									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									
+									this.getCmdLIST().put(Commands.UserREADbyEmailAcc);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI login :> problemi con tentativo di login ");	
+									e2.printStackTrace(); 
+								}
+
+								
+								
+								//***
+
+								//upX.updateallAfterModify(Mb.getRowUser());
+								
 								PopUp.infoBox(getActC(),Mb.getText() );	
 								System.out.println("SRV :> USER UPDATE :> OK ");
+								
 								clrParFS();	
 								break;
 							
@@ -1059,6 +1114,52 @@ public class Client implements Serializable, Runnable  {
 				sendM(MsgSend, Mb);
 			}	
 		}
+		private void UserGetDatabyEmailAcc() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADbyEmailAcc;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getSql());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email !!!!
+						
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}
+		private void UserGetDatabyEmailMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADbyEmailMod;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getSql());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// la finestra login passa la stringa email !!!!
+						
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}		
+		
+		
 		private void UserGetDataLogin() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADlogin;
 			MessageBack Mb = new MessageBack();
@@ -1108,9 +1209,7 @@ public class Client implements Serializable, Runnable  {
 				sendM(MsgSend, Mb);
 			}	
 		}		
-		
-		
-		
+				
 		private void UserGetDataAccountMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADaccountMod;
 			MessageBack Mb = new MessageBack();
@@ -1138,6 +1237,8 @@ public class Client implements Serializable, Runnable  {
 			MessageBack Mb = new MessageBack();
 			
 			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			System.out.println("CLI :> Prendo Query :> "+this.getSql().toString());
+			
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
 				System.out.println(mSg);			
@@ -1149,7 +1250,8 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()				// la finestra login passa la stringa email 
+						this.getSql(),				// Account --> MQ_Update.updateModUserIdGetQuery
+						this.getSql2()				// Account --> email
 						);
 				sendM(MsgSend, Mb);
 			}	

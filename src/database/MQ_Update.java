@@ -110,11 +110,41 @@ public class MQ_Update {
 		DBmanager.executeUpdate(query1);
 		DBmanager.closeConnection();
 	}
+
+	public static String updateModUserIdGetQuery(String idus, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+	{
+		String q=null;
+		int id = Integer.valueOf(idus);
+		q = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
+				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + id +"';";
+		return q;
+	}
 	
-	public static String[] updateModUserId(String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+
+	
+	public static void updateModUserIdbyQuery(String q)throws SQLException
 	{		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+		
+
+	}
+	
+	
+	
+	
+	
+	public static String[] updateModUserId(String id, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+	{		
+		
+		//String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
+		//		"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
+		
 		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
-				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
+				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + id +"';";
+		
+		
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query1);
 		

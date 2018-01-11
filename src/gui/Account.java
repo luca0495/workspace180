@@ -97,6 +97,9 @@ public class Account extends SL_JFrame{
 	private ImageIcon iconLogoT;
 	private ImageIcon iconLogoC;
 
+	private JPanel panelAccount;
+	private JPanel panelModify;
+	
 	public Account(Component c,Client x)
 	{
 		
@@ -126,11 +129,11 @@ public class Account extends SL_JFrame{
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		setIconLogoC(iconLogoC);
 		
-		JPanel panelAccount = new JPanel();
+		panelAccount = new JPanel();
 		frmSchoolib.getContentPane().add(panelAccount, "name_353435345061838");
 		panelAccount.setLayout(null);
 		
-		JPanel panelModify = new JPanel();
+		panelModify = new JPanel();
 		frmSchoolib.getContentPane().add(panelModify, "name_454607080642439");
 		panelModify.setLayout(null);
 		
@@ -680,57 +683,68 @@ public class Account extends SL_JFrame{
 				
 				//Assegna a delle variabili il contenuto dei text field
 				
-				String nome = txtNameMod.getText();
-				String cognome = txtSurnameMod.getText();
-				String mail = getTxtMailMod().getText();
-				char[] pass = passwordFieldMod.getPassword();
+				String nome 			= txtNameMod.getText();
+				String cognome 			= txtSurnameMod.getText();
+				String mail 			= getTxtMailMod().getText();
+				char[] pass 			= passwordFieldMod.getPassword();
 				
-				String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
+				String 	p 				= String.copyValueOf(passwordFieldMod.getPassword());
 				
-				char[] checkPassword = passwordFieldConfMod.getPassword();
-				String 	s 	= String.copyValueOf(passwordFieldConfMod.getPassword());
-				String inq = txtInqMod.getText();
-				String tel = txtTelMod.getText();
-				String stato = TypePerson;
+				char[] checkPassword 	= passwordFieldConfMod.getPassword();
+				String 	s 				= String.copyValueOf(passwordFieldConfMod.getPassword());
+				String inq 				= txtInqMod.getText();
+				String tel 				= txtTelMod.getText();
+				String stato 			= TypePerson;
 				System.out.println("1");
 				
 
-				//TODO PASSA AL SERVER
+//TODO PASSA AL SERVER
 
 
 				
 				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
 				{
+					
 					System.out.println("2");
 					try
 					{
 					System.out.println("3");
-
-
-					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
-
-
-					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());
-
 					
 //TODO PASSA AL SERVER	
+					// TEST DA LOCALE OK	
+					//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);
 					
+					//************************************************************
+					String passW = String.copyValueOf(pass);
 					
+					String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
+					
+					me.setSql(Q);
+					me.setSql2(mail);
+					
+					me.setActW(getW());
+					me.setActF(frmSchoolib);
+					me.setActC(c);				
+					try {
+						System.out.println("GUI account:> ottenuti dati user ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserUPDATE);
+					} catch (InterruptedException e2) {
+						System.out.println("GUI account:> NON ottenuti dati user ");	
+						e2.printStackTrace(); 
+					}
+					//*************************************************************
+
+					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());					
 					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
-						
-					
-
-
-//TODO PASSA AL SERVER	
-					MQ_Update.updateModUser(nome,cognome,mail,inq ,p,tel,stato);
-			
 
 					}
 					catch (SQLException e) 
 					{
 						e.printStackTrace();
 					}
-					
+
+					/*
 					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
 					 try 
 					{
@@ -741,7 +755,11 @@ public class Account extends SL_JFrame{
 					} catch (SQLException e) {
 							e.printStackTrace();
 					}
+				    */
 				    
+//TODO aggiorna campi da CLIENT
+					
+					/*
 					lblSetNome.setText(user[1]);
 					lblSetCognome.setText(user[2]);
 					lblSetEmail.setText(user[3]);
@@ -769,7 +787,7 @@ public class Account extends SL_JFrame{
 					lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
-					
+					*/
 			    }
 				else 
 				{
@@ -948,6 +966,35 @@ public class Account extends SL_JFrame{
 		
 	}	
 	
+	public void updateallAfterModify(String[] user )
+	{
+		
+		setIdUser(user[0]);
+		lblSetNome.setText(user[1]);
+		lblSetCognome.setText(user[2]);
+		lblSetEmail.setText(user[3]);
+		lblSetPass.setText(user[4]);
+		lblSetInq.setText(user[5]);
+		lblSetTel.setText(user[6]);
+		lblSetTipoUte.setText(user[7]);
+
+		txtNameMod.setEditable(false);
+		txtSurnameMod.setEditable(false);
+		getTxtMailMod().setEditable(false);
+		passwordFieldMod.setEditable(false);
+		passwordFieldConfMod.setEditable(false);
+		txtInqMod.setEditable(false);
+		txtTelMod.setEditable(false);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public void updatelblSetNome(String[] user )
 	{
 		lblSetNome.setText(user[0]);	
@@ -1031,6 +1078,21 @@ public class Account extends SL_JFrame{
 		this.txtMailMod = txtMailMod;
 	}
 	
+	public JPanel getPanelAccount() {
+		return panelAccount;
+	}
+
+	public void setPanelAccount(JPanel panelAccount) {
+		this.panelAccount = panelAccount;
+	}
+
+	public JPanel getPanelModify() {
+		return panelModify;
+	}
+
+	public void setPanelModify(JPanel panelModify) {
+		this.panelModify = panelModify;
+	}	
 	
 	/*
 	public static void ReadUser1 ()throws SQLException{	
