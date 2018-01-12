@@ -720,7 +720,7 @@ public class Account extends SL_JFrame{
 					String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
 					
 					me.setSql(Q);
-					me.setSql2(mail);
+					me.setSql2(getTxtMailMod().getText());
 					
 					me.setActW(getW());
 					me.setActF(frmSchoolib);

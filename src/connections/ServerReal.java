@@ -217,7 +217,7 @@ public class ServerReal extends ServerSkeleton {
 				return x;				
 
 		case UserREADbyEmailAcc:
-			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email acc");					
 			try {				
 			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
 			x.setRowUser(UserData);
@@ -233,7 +233,7 @@ public class ServerReal extends ServerSkeleton {
 			return x;
 		
 		case UserREADbyEmailMod:
-			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email mod");					
 			try {				
 			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
 			x.setRowUser(UserData);

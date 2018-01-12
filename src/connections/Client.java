@@ -830,7 +830,7 @@ public class Client implements Serializable, Runnable  {
 								PopUp.infoBox(getActC(),Mb.getText() );	
 								System.out.println("SRV :> USER UPDATE :> OK ");
 								
-								clrParFS();	
+								//clrParFS();	
 								break;
 							
 							case "SRV :> UP :> NG":	
