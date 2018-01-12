@@ -219,7 +219,7 @@ public class ServerReal extends ServerSkeleton {
 		case UserREADbyEmailAcc:
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email acc");					
 			try {				
-			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
+			String[] UserData = MQ_Read.retrieveUserIdbyid(M.getMsg().getIdut());//nel parametro SQL viene passata la email				
 			x.setRowUser(UserData);
 			x.setText(new String ("SRV :> selected user by email panel Account:> OK"));					
 			} catch (SQLException e) {	
@@ -227,6 +227,8 @@ public class ServerReal extends ServerSkeleton {
 				e.printStackTrace();				
 				
 				getMeS().addMsg(mSg);
+				x.setIdUser(M.getMsg().getIdut());
+				
 				x.setText(new String ("SRV :> selected user by email panel Account:> NG"));
 			}
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
@@ -235,7 +237,7 @@ public class ServerReal extends ServerSkeleton {
 		case UserREADbyEmailMod:
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email mod");					
 			try {				
-			String[] UserData = MQ_Read.retrieveUserIdbyemail(M.getMsg().getSQLQuery());//nel parametro SQL viene passata la email				
+			String[] UserData = MQ_Read.retrieveUserIdbyid(M.getMsg().getIdut());//nel parametro SQL viene passata la email				
 			x.setRowUser(UserData);
 			x.setText(new String ("SRV :> selected user by email panel Modify:> OK"));					
 			} catch (SQLException e) {	
@@ -243,6 +245,8 @@ public class ServerReal extends ServerSkeleton {
 				e.printStackTrace();				
 				
 				getMeS().addMsg(mSg);
+				x.setIdUser(M.getMsg().getIdut());
+				
 				x.setText(new String ("SRV :> selected user by email panel Modify:> NG"));
 			}
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
@@ -350,6 +354,7 @@ public class ServerReal extends ServerSkeleton {
 									
 									getMeS().addMsg(mSg);
 									x.setText(new String ("SRV :> UP :> OK"));
+									x.setIdUser(M.getMsg().getIdut());
 									x.setUserEmail(M.getMsg().getSQLQuery2());
 									
 								} catch (Exception e) {

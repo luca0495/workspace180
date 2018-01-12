@@ -406,7 +406,12 @@ public class MQ_Read {
 	
 	public static String[] retrieveUserIdbyemail(String email) throws SQLException
 	{		
+		
 		String query = "SELECT id,nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE email= '"+email+"';";
+		//String query = "SELECT id,nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE id= '"+idutente+"';";
+		
+		
+		
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
@@ -441,6 +446,54 @@ public class MQ_Read {
 		
 		return user;
 	}
+	
+	public static String[] retrieveUserIdbyid(int iduser) throws SQLException
+	{		
+		
+		String query = "SELECT id,nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE id= '"+iduser+"';";
+		//String query = "SELECT id,nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente WHERE id= '"+idutente+"';";
+		
+		
+		
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			//results.add("Nessun Dato");
+			results.add("");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("id")); //0 
+				results.add(rs.getString("nome")); // 1
+				results.add(rs.getString("cognome")); // 2
+				results.add(rs.getString("email")); // 3
+				results.add(rs.getString("password")); // 4
+				results.add(rs.getString("inquadramento")); // 5 
+				results.add(rs.getString("ntel")); // 6
+				results.add(rs.getString("tipo_utente")); //7
+			}
+		}
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
+	}
+	
+	
+	
+	
 	
 	}
 

@@ -244,7 +244,7 @@ public class Check {
 	    			String[] datiUtente= MQ_Read.selectAdminLogInFIRST(email, pass);
 	    			//**********************************************************
 	    			
-	    			if(datiUtente[0].equals("Nessun Dato"))	{
+	    			if(datiUtente[0].equals("Nessun Dato")||datiUtente[0].equals(""))	{
 	   	        			return new String("L'Email Non Esiste");
 	   	        	}else{        		
 	   	        			if(pass.equals(datiUtente[1])){
@@ -269,7 +269,7 @@ public class Check {
 	    	{
 	    		String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
 	   
-	        	if(datiUtente[0].equals("Nessun Dato"))
+	        	if(datiUtente[0].equals("Nessun Dato")||datiUtente[0].equals(""))
 	        	{
 	        		
 	        		return new String("L'Email Non Esiste");
@@ -301,6 +301,9 @@ public class Check {
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
 	    {
 	    
+		  
+		  
+		  
 			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass(pass) && checkPass(checkPassword) && 
 	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel);
 	    }

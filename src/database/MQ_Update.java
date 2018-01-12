@@ -111,12 +111,13 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 
-	public static String updateModUserIdGetQuery(String idus, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+	public static String updateModUserIdGetQuery(int idus, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
 	{
 		String q=null;
-		int id = Integer.valueOf(idus);
+		//int id = Integer.valueOf(idus);
+		
 		q = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
-				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + id +"';";
+				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + idus +"';";
 		return q;
 	}
 	

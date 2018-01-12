@@ -93,6 +93,7 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			String 				Sql;
 	private 			String 				Sql2;
+	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
 	
@@ -195,10 +196,10 @@ public class Client implements Serializable, Runnable  {
 														UserGetDatabyEmail();		//necessario setSql con email
 									break;
 								case UserREADbyEmailAcc:																		
-														UserGetDatabyEmailAcc();	//necessario setSql con email
+														UserGetDatabyEmailAcc();	//necessario setidut
 									break;
 								case UserREADbyEmailMod: 																										
-														UserGetDatabyEmailMod();	//necessario setSql con email
+														UserGetDatabyEmailMod();	//necessario setidut
 									break;
 
 								case UserREADlogin: 								
@@ -790,21 +791,21 @@ public class Client implements Serializable, Runnable  {
 								eNGX.getLblMAIL().setIcon(eNGX.getIconLogoC());
 								eNGX.getTxtMailMod().setText("Errore interrogazione DB");
 								PopUp.errorBox(getActC(), Mb.getText());
-								clrParFS();	
+								//clrParFS();	
 								break;
 							case"SRV :> URCE :> OK Exist":								
 								Account eX = (Account) ActW;
 								eX.getLblMAIL().setIcon(eX.getIconLogoC());
 								eX.getTxtMailMod().setText("email gia assegnata...");															
 								PopUp.errorBox(getActC(), Mb.getText());
-								clrParFS();	
+								//clrParFS();	
 								break;
 							case"SRV :> URCE :> OK Not Exist":
 								Account neX = (Account) ActW;
 								neX.getLblMAIL().setIcon(neX.getIconLogoT());
 								PopUp.infoBox(getActC(),Mb.getText() );								
 								System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
-								clrParFS();	
+								//clrParFS();	
 								break;
 								
 							//user UPDATE
@@ -814,6 +815,9 @@ public class Client implements Serializable, Runnable  {
 								
 								try {
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									this.setIdut(Mb.getIdUser());
+									
+									System.out.println("user ricevuto dal server"+getIdut());
 									
 									this.getCmdLIST().put(Commands.UserREADbyEmailAcc);
 								} catch (InterruptedException e2) {
@@ -1118,7 +1122,7 @@ public class Client implements Serializable, Runnable  {
 			Commands cmd = Commands.UserREADbyEmailAcc;
 			MessageBack Mb = new MessageBack();
 			
-			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getSql());
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getIdut());
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
 				System.out.println(mSg);			
@@ -1130,8 +1134,10 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()				// la finestra login passa la stringa email !!!!
-						
+						null,
+						null,
+						0,
+						this.getIdut()				// la finestra login passa ID UTENTE !!!!
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -1140,7 +1146,7 @@ public class Client implements Serializable, Runnable  {
 			Commands cmd = Commands.UserREADbyEmailMod;
 			MessageBack Mb = new MessageBack();
 			
-			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getSql());
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getIdut());
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
 				System.out.println(mSg);			
@@ -1152,8 +1158,10 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()				// la finestra login passa la stringa email !!!!
-						
+						null,
+						null,
+						0,
+						this.getIdut()				// la finestra login passa ID UTENTE !!!!
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -1235,9 +1243,11 @@ public class Client implements Serializable, Runnable  {
 		private void UserUPDATE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserUPDATE;
 			MessageBack Mb = new MessageBack();
-			
+		
 			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
-			System.out.println("CLI :> Prendo Query :> "+this.getSql().toString());
+			System.out.println("CLI :> Prendo Query sql2:> "+this.getSql2().toString());
+			System.out.println("CLI :> Prendo Query sql :> "+this.getSql().toString());
+			System.out.println("CLI :> Prendo id utente :> "+this.getIdut());
 			
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
@@ -1251,7 +1261,8 @@ public class Client implements Serializable, Runnable  {
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
 						this.getSql(),				// Account --> MQ_Update.updateModUserIdGetQuery
-						this.getSql2()				// Account --> email
+						this.getSql2(),				// Account --> email
+						this.getIdut()				// Account --> idutente
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -1416,6 +1427,12 @@ public class Client implements Serializable, Runnable  {
 			}
 			public void incLoginTry() {
 				LoginTry++;
+			}
+			public int getIdut() {
+				return idut;
+			}
+			public void setIdut(int idut) {
+				this.idut = idut;
 			}
 
 			

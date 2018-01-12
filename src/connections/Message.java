@@ -19,7 +19,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	String  	text;
 	private 	ResultSet 	rs;
 	private 	int			LoginTry;
-	
+	private		int			idut;
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -65,6 +65,17 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSQLQuery2(SQLQuery2);
 		setLoginTry(tentativi);
 		
+	}	
+	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2,int tentativi,int idut){
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setSQLQuery(SQLQuery);
+		setSQLQuery2(SQLQuery2);
+		setIdut(idut);
 	}	
 	
 	
@@ -139,6 +150,12 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setLoginTry(int loginTry) {
 		LoginTry = loginTry;
+	}
+	public int getIdut() {
+		return idut;
+	}
+	public void setIdut(int idut) {
+		this.idut = idut;
 	}
 	
 }

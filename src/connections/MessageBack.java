@@ -20,6 +20,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private Boolean		Response;
 	private String  	Text;
 	private String  	UserEmail;
+	private int			IdUser;
 	
 	private String[] 	RowUser;
 	private String[] 	RowBook;
@@ -27,6 +28,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	
 	private Record		Record;
 	private RecordSet	RecordSet;
+	
 	
 	//private ResultSet	rs;
 	private JTable	tab;
@@ -88,6 +90,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setUserEmail(String userEmail) {
 		UserEmail = userEmail;
+	}
+	public int getIdUser() {
+		return IdUser;
+	}
+	public void setIdUser(int idUser) {
+		IdUser = idUser;
 	}
 
 

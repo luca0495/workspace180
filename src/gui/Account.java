@@ -57,7 +57,7 @@ public class Account extends SL_JFrame{
     static int cols = 0; 
     String r = null;
     private static JTextField s1;
-    private String idUser= null;
+    private int idUser ;
 	static int userRow = 0;
     private JLabel lblSetNome;
     private JLabel lblSetCognome;
@@ -68,10 +68,21 @@ public class Account extends SL_JFrame{
     private JLabel lblSetTel;
     private JLabel lblSetNumPrenPend;
 
+	private	JLabel lblChangeNameCheck; 
+	private	JLabel lblChangeSurnameCheck; 
+    private JLabel lblChangeEmailCheck;
+	private	JLabel lblChangePassCheck;
+	private	JLabel lblChangePassConfCheck ;
+	private	JLabel lblChangeInqCheck ;
+	private	JLabel lblChangePhoneCheck ;
+	private	JLabel lblTypeUserMod ;
     private JLabel lblMAIL;
+
     
-    
-    private String TypePerson = "Lettore";
+ 
+
+
+	private String TypePerson = "Lettore";
 	private JTextField txtNameMod;
 	private JTextField txtSurnameMod;
 	private JTextField txtMailMod;
@@ -226,7 +237,7 @@ public class Account extends SL_JFrame{
 				{
                 rowData = new ArrayList<String>();
 					
-				rowData.add(0, idUser);
+				rowData.add(0, String.valueOf(idUser));
 
 //TODO DA PASSARE A CLIENT
 				
@@ -273,19 +284,26 @@ public class Account extends SL_JFrame{
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
+		
+		
+		
 		JLabel lblNameMod = new JLabel("Nome");
 		lblNameMod.setBounds(10, 29, 127, 23);
 		panelModify.add(lblNameMod);
 		
+		
 		JLabel lblChangeNameCheck = new JLabel();
+		setLblChangeNameCheck(lblChangeNameCheck);
 		lblChangeNameCheck.setBounds(362, 31, 21, 19);
 		panelModify.add(lblChangeNameCheck);
+		
 		
 		JLabel lblSurnameMod = new JLabel("Cognome");
 		lblSurnameMod.setBounds(10, 101, 127, 23);
 		panelModify.add(lblSurnameMod);
 		
 		JLabel lblChangeSurnameCheck = new JLabel();
+		setLblChangeSurnameCheck(lblChangeSurnameCheck);
 		lblChangeSurnameCheck.setBounds(362, 105, 21, 19);
 		panelModify.add(lblChangeSurnameCheck);
 		
@@ -296,8 +314,7 @@ public class Account extends SL_JFrame{
 		
 		
 		JLabel lblChangeEmailCheck = new JLabel();
-	setLblMAIL(lblChangeEmailCheck);
-	
+	setLblMAIL(lblChangeEmailCheck);	
 		lblChangeEmailCheck.setBounds(362, 176, 21, 19);
 		panelModify.add(lblChangeEmailCheck);
 		
@@ -306,6 +323,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblPassMod);
 		
 		JLabel lblChangePassCheck = new JLabel();
+		setLblChangePassCheck(lblChangePassCheck);
 		lblChangePassCheck.setBounds(362, 250, 21, 19);
 		panelModify.add(lblChangePassCheck);
 		
@@ -314,6 +332,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblPassConfMod);
 		
 		JLabel lblChangePassConfCheck = new JLabel();
+		setLblChangePassConfCheck(lblChangePassConfCheck);
 		lblChangePassConfCheck.setBounds(362, 329, 21, 19);
 		panelModify.add(lblChangePassConfCheck);
 		
@@ -322,6 +341,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblInqMod);
 		
 		JLabel lblChangeInqCheck = new JLabel();
+		setLblChangeInqCheck(lblChangeInqCheck);
 		lblChangeInqCheck.setBounds(807, 33, 21, 19);
 		panelModify.add(lblChangeInqCheck);
 		
@@ -330,6 +350,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblTelMod);
 		
 		JLabel lblChangePhoneCheck = new JLabel();
+		setLblChangePhoneCheck(lblChangePhoneCheck);
 		lblChangePhoneCheck.setBounds(807, 105, 21, 19);
 		panelModify.add(lblChangePhoneCheck);
 		
@@ -362,7 +383,10 @@ public class Account extends SL_JFrame{
 		txtNameMod.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				checkname();
 				
+				
+		/*		
 				if(Check.checkName(txtNameMod.getText()))
 				{
 					lblChangeNameCheck.setIcon(iconLogoT);
@@ -371,7 +395,10 @@ public class Account extends SL_JFrame{
 				{
 					lblChangeNameCheck.setIcon(iconLogoC);
 				}
+		*/
 			}
+		
+			
 		});
 		txtNameMod.setBounds(120, 30, 224, 20);
 		panelModify.add(txtNameMod);
@@ -418,7 +445,10 @@ public class Account extends SL_JFrame{
 		getTxtMailMod().addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+							
+				checkmail();
 				
+				/*
 				System.out.println(" ***** sto controllando la email ");
 				System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
 				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
@@ -430,20 +460,6 @@ public class Account extends SL_JFrame{
 								if (!getTxtMailMod().getText().equals(getEmailuser())) {
 									// modifica alla email
 									System.out.println(" ***** sto controllando la email : email MODIFICATA");
-									/*
-									if ( Check.checkMailExist(txtMailMod.getText())) {
-										// email inserita esiste gia... NG
-										System.out.println(" ***** sto controllando la email : email GIA ESISTENTE , NG ");
-										
-										lblChangeEmailCheck.setIcon(iconLogoC);
-										txtMailMod.setText(null);
-									}else {
-										// email non esiste gia
-										System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
-										
-										lblChangeEmailCheck.setIcon(iconLogoT);
-									}
-									*/
 									//************************************************************
 									String email = getTxtMailMod().getText();
 									me.setSql(email);				
@@ -468,17 +484,8 @@ public class Account extends SL_JFrame{
 					System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
-				//******************************************************************					
-				/*
-				if(Check.checkMail(txtMailMod.getText()) && (!Check.checkMailExist(txtMailMod.getText())))
-				{
-					lblChangeEmailCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangeEmailCheck.setIcon(iconLogoC);
-				}
-				*/	
+				//******************************************************************
+				*/
 			}
 		});
 		getTxtMailMod().setBounds(120, 173, 224, 20);
@@ -681,6 +688,8 @@ public class Account extends SL_JFrame{
 		btnModData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				lostfocusall();
+				
 				//Assegna a delle variabili il contenuto dei text field
 				
 				String nome 			= txtNameMod.getText();
@@ -700,7 +709,9 @@ public class Account extends SL_JFrame{
 
 //TODO PASSA AL SERVER
 
-
+				//procedura perdi tutti i focus
+				
+				
 				
 				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
 				{
@@ -715,10 +726,13 @@ public class Account extends SL_JFrame{
 					//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);
 					
 					//************************************************************
-					String passW = String.copyValueOf(pass);
-					
+					String passW = String.copyValueOf(pass);					
 					String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
 					
+					//System.out.println("passo al client sql :"+Q);
+					//System.out.println("passo al client sql2 :"+getTxtMailMod().getText());
+					
+					me.setIdut(getIdUser());
 					me.setSql(Q);
 					me.setSql2(getTxtMailMod().getText());
 					
@@ -930,7 +944,7 @@ public class Account extends SL_JFrame{
 	
 	public void updateall(String[] user )
 	{
-		setIdUser(user[0]);
+		setIdUser(Integer.valueOf(user[0]));
 		lblSetNome.setText(user[1]);
 		lblSetCognome.setText(user[2]);
 		lblSetEmail.setText(user[3]);
@@ -944,7 +958,13 @@ public class Account extends SL_JFrame{
 	}
 	public void updateallModify(String[] user )
 	{
-		setIdUser(user[0]);
+		String idutente = user[0];
+		if (idutente.equals("")||idutente.equals("Nessun Dato")) {
+			setIdUser(0);	
+		}else {
+			setIdUser(Integer.valueOf(idutente));
+		}
+		
 		setEmailuser(user[3]);
 		txtNameMod.setText(user[1]);
 		txtSurnameMod.setText(user[2]);
@@ -969,7 +989,16 @@ public class Account extends SL_JFrame{
 	public void updateallAfterModify(String[] user )
 	{
 		
-		setIdUser(user[0]);
+		String idutente = user[0];
+		if (idutente.equals("")||idutente.equals("Nessun Dato")) {
+			setIdUser(0);	
+		}else {
+			setIdUser(Integer.valueOf(idutente));
+		}
+		
+		
+		
+		
 		lblSetNome.setText(user[1]);
 		lblSetCognome.setText(user[2]);
 		lblSetEmail.setText(user[3]);
@@ -988,7 +1017,19 @@ public class Account extends SL_JFrame{
 		
 	}
 	
-	
+	public void lostfocusall() {
+
+		System.out.println("perdita focus su tutti i campi...");
+		
+		checkmail();
+		checkname();
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 	
@@ -1001,14 +1042,14 @@ public class Account extends SL_JFrame{
 	}
 	public void updatelblSetId(String[] user )
 	{
-		setIdUser(user[0]);	
+		setIdUser(Integer.valueOf(user[0]));	
 	}	
 	
-	public String getIdUser() {
+	public int getIdUser() {
 			return idUser;
 	}
 
-	public void setIdUser(String idUser) {
+	public void setIdUser(int idUser) {
 			this.idUser = idUser;
 	}
 	//TODO E SEGUENTI CAMPI...
@@ -1094,46 +1135,118 @@ public class Account extends SL_JFrame{
 		this.panelModify = panelModify;
 	}	
 	
-	/*
-	public static void ReadUser1 ()throws SQLException{	
-		String query = "SELECT * FROM utente ORDER BY id DESC LIMIT 1;";  //  
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-		System.out.println(query);
-		System.out.println("ewrtet");
-
-		if(rs.next())
-			{
-				 System.out.println("tertret");
-				
-				 String s = rs.getString("nome");
-				 lblSetNome.setText(s);
-				
-				 String s1 = rs.getString("cognome");
-				 lblSetCognome.setText(s1);
-				
-				 String s2 = rs.getString("email");
-				 lblSetEmail.setText(s2);
-				
-				 String s3 = rs.getString("tipo_utente");
-				 lblSetTipoUte.setText(s3);
-				
-				 String s4 = rs.getString("inquadramento");
-				 lblSetInq.setText(s4);
-				
-				 String s5 = rs.getString("password_temp");
-				 lblSetPass.setText(s5);
-	
-				 String s6 = rs.getString("ntel");
-				 lblSetTel.setText(s6);
-				 
-				 // mettere anche num_pren_correnti
-				
-		rs.close();
-		DBmanager.closeConnection();
-	
-			}
-		
+	public JLabel getLblChangeNameCheck() {
+		return lblChangeNameCheck;
 	}
-*/
+
+	public void setLblChangeNameCheck(JLabel lblChangeNameCheck) {
+		this.lblChangeNameCheck = lblChangeNameCheck;
+	}
+
+	public JLabel getLblChangeSurnameCheck() {
+		return lblChangeSurnameCheck;
+	}
+
+	public void setLblChangeSurnameCheck(JLabel lblChangeSurnameCheck) {
+		this.lblChangeSurnameCheck = lblChangeSurnameCheck;
+	}
+	   public JLabel getLblChangeEmailCheck() {
+			return lblChangeEmailCheck;
+		}
+
+		public void setLblChangeEmailCheck(JLabel lblChangeEmailCheck) {
+			this.lblChangeEmailCheck = lblChangeEmailCheck;
+		}
+
+
+
+		public JLabel getLblChangePassCheck() {
+			return lblChangePassCheck;
+		}
+
+		public void setLblChangePassCheck(JLabel lblChangePassCheck) {
+			this.lblChangePassCheck = lblChangePassCheck;
+		}
+
+
+
+		public JLabel getLblChangePassConfCheck() {
+			return lblChangePassConfCheck;
+		}
+
+		public void setLblChangePassConfCheck(JLabel lblChangePassConfCheck) {
+			this.lblChangePassConfCheck = lblChangePassConfCheck;
+		}
+
+		public JLabel getLblChangeInqCheck() {
+			return lblChangeInqCheck;
+		}
+
+		public void setLblChangeInqCheck(JLabel lblChangeInqCheck) {
+			this.lblChangeInqCheck = lblChangeInqCheck;
+		}
+
+		public JLabel getLblChangePhoneCheck() {
+			return lblChangePhoneCheck;
+		}
+
+		public void setLblChangePhoneCheck(JLabel lblChangePhoneCheck) {
+			this.lblChangePhoneCheck = lblChangePhoneCheck;
+		}	
+	
+	//testaggio campi 
+	public void checkname() {
+		//System.out.println("lost focus");
+			if(Check.checkName(txtNameMod.getText()))
+			{
+			getLblChangeNameCheck().setIcon(iconLogoT);
+			}
+			else
+			{
+			getLblChangeNameCheck().setIcon(iconLogoC);
+			}
+	}
+	
+	
+	public void checkmail(){
+		
+			System.out.println(" ***** sto controllando la email ");
+			System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
+			System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
+
+			//******************************************************************
+			if(Check.checkMail(getTxtMailMod().getText())){
+			System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
+			//sintatticamente corretta		
+							if (!getTxtMailMod().getText().equals(getEmailuser())) {
+								// modifica alla email
+								System.out.println(" ***** sto controllando la email : email MODIFICATA");
+								String email = getTxtMailMod().getText();
+								me.setSql(email);				
+								me.setActW(getW());
+								me.setActF(frmSchoolib);
+								//me.setActC(c);									
+								try {
+									System.out.println("GUI account:> ottenuti dati user ");
+								me.setCliType(Clients.Reader);	
+									me.getCmdLIST().put(Commands.UserREADcheckEmail);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI account:> NON ottenuti dati user ");	
+									e2.printStackTrace(); 
+								}
+								//*************************************************************	
+							}else {	//non modificata
+								System.out.println(" ***** sto controllando la email : email non modificata");
+								//getLblChangeEmailCheck().setIcon(getIconLogoT());
+								this.getLblMAIL().setIcon(getIconLogoT());
+							}	
+			}else {
+			//sintatticamente non corretta
+				System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
+				//getLblChangeEmailCheck().setIcon(getIconLogoC());
+				this.getLblMAIL().setIcon(getIconLogoC());
+			}
+			//******************************************************************					
+	}
+
 }
