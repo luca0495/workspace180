@@ -347,6 +347,7 @@ public class ServerReal extends ServerSkeleton {
 									// LANCIO QUERY 
 									System.out.println("REAL SERVER :> Query passata dal client :"+M.getMsg().getSQLQuery().toString());
 									System.out.println("REAL SERVER :> email user passata dal client :"+M.getMsg().getSQLQuery2().toString());
+									System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
 									
 									MQ_Update.updateModUserIdbyQuery(M.getMsg().getSQLQuery());		
 									

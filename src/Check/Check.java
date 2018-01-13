@@ -114,6 +114,7 @@ public class Check {
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+			System.out.println("errore check selectmail");
 		}
 		
 		if(results.equals("No Data"))

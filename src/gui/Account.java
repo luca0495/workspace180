@@ -713,7 +713,7 @@ public class Account extends SL_JFrame{
 				
 				
 				
-				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
+				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel)		&& 		lostfocusall())		//Controllo sintattico / riempimento campi
 				{
 					
 					System.out.println("2");
@@ -1017,19 +1017,96 @@ public class Account extends SL_JFrame{
 		
 	}
 	
-	public void lostfocusall() {
-
+	public boolean lostfocusall() {
+		boolean checkok=true;
+		
 		System.out.println("perdita focus su tutti i campi...");
 		
-		checkmail();
-		checkname();
-		
-		
-		
-		
-		
-		
+		if(		checkmail() &&
+				checkname()	&&	
+				checksurname()
+				
+				
+				
+								) 
+		{
+			
+		}else {
+			checkok=false;
+		}
+		return checkok;		
 	}
+	
+	//testaggio campi 
+	public boolean checkname() {
+		boolean checkok=true;
+			if(Check.checkName(txtNameMod.getText()))
+			{
+			getLblChangeNameCheck().setIcon(iconLogoT);
+			}
+			else
+			{
+			getLblChangeNameCheck().setIcon(iconLogoC);
+			}
+		return checkok;	
+	}
+	
+	public boolean checksurname() {
+		boolean checkok=true;
+			if(Check.checkName(txtSurnameMod.getText()))
+			{
+			getLblChangeSurnameCheck().setIcon(iconLogoT);
+			}
+			else
+			{
+			getLblChangeSurnameCheck().setIcon(iconLogoC);
+			}
+		return checkok;	
+	}	
+	
+	public boolean checkmail(){
+		boolean checkok=true;
+		
+			System.out.println(" ***** sto controllando la email ");
+			System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
+			System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
+
+			//******************************************************************
+			if(Check.checkMail(getTxtMailMod().getText())){
+			System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
+			//sintatticamente corretta		
+							if (!getTxtMailMod().getText().equals(getEmailuser())) {
+								// modifica alla email
+								System.out.println(" ***** sto controllando la email : email MODIFICATA");
+								String email = getTxtMailMod().getText();
+								me.setSql(email);				
+								me.setActW(getW());
+								me.setActF(frmSchoolib);
+								//me.setActC(c);									
+								try {
+									System.out.println("GUI account:> ottenuti dati user ");
+								me.setCliType(Clients.Reader);	
+									me.getCmdLIST().put(Commands.UserREADcheckEmail);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI account:> NON ottenuti dati user ");	
+									e2.printStackTrace(); 
+								}
+								//*************************************************************	
+							}else {	//non modificata
+								System.out.println(" ***** sto controllando la email : email non modificata");
+								//getLblChangeEmailCheck().setIcon(getIconLogoT());
+								this.getLblMAIL().setIcon(getIconLogoT());
+							}	
+			}else {
+			//sintatticamente non corretta
+				System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
+				//getLblChangeEmailCheck().setIcon(getIconLogoC());
+				this.getLblMAIL().setIcon(getIconLogoC());
+			}
+			//******************************************************************
+			return checkok;
+	}
+	
 	
 	
 	
@@ -1194,59 +1271,6 @@ public class Account extends SL_JFrame{
 			this.lblChangePhoneCheck = lblChangePhoneCheck;
 		}	
 	
-	//testaggio campi 
-	public void checkname() {
-		//System.out.println("lost focus");
-			if(Check.checkName(txtNameMod.getText()))
-			{
-			getLblChangeNameCheck().setIcon(iconLogoT);
-			}
-			else
-			{
-			getLblChangeNameCheck().setIcon(iconLogoC);
-			}
-	}
-	
-	
-	public void checkmail(){
-		
-			System.out.println(" ***** sto controllando la email ");
-			System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
-			System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
 
-			//******************************************************************
-			if(Check.checkMail(getTxtMailMod().getText())){
-			System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
-			//sintatticamente corretta		
-							if (!getTxtMailMod().getText().equals(getEmailuser())) {
-								// modifica alla email
-								System.out.println(" ***** sto controllando la email : email MODIFICATA");
-								String email = getTxtMailMod().getText();
-								me.setSql(email);				
-								me.setActW(getW());
-								me.setActF(frmSchoolib);
-								//me.setActC(c);									
-								try {
-									System.out.println("GUI account:> ottenuti dati user ");
-								me.setCliType(Clients.Reader);	
-									me.getCmdLIST().put(Commands.UserREADcheckEmail);
-								} catch (InterruptedException e2) {
-									System.out.println("GUI account:> NON ottenuti dati user ");	
-									e2.printStackTrace(); 
-								}
-								//*************************************************************	
-							}else {	//non modificata
-								System.out.println(" ***** sto controllando la email : email non modificata");
-								//getLblChangeEmailCheck().setIcon(getIconLogoT());
-								this.getLblMAIL().setIcon(getIconLogoT());
-							}	
-			}else {
-			//sintatticamente non corretta
-				System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
-				//getLblChangeEmailCheck().setIcon(getIconLogoC());
-				this.getLblMAIL().setIcon(getIconLogoC());
-			}
-			//******************************************************************					
-	}
 
 }

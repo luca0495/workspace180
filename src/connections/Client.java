@@ -817,9 +817,10 @@ public class Client implements Serializable, Runnable  {
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 									this.setIdut(Mb.getIdUser());
 									
-									System.out.println("user ricevuto dal server"+getIdut());
+									System.out.println("user ricevuto dal server "+this.getIdut());
 									
 									this.getCmdLIST().put(Commands.UserREADbyEmailAcc);
+									
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
 									e2.printStackTrace(); 
@@ -1122,7 +1123,7 @@ public class Client implements Serializable, Runnable  {
 			Commands cmd = Commands.UserREADbyEmailAcc;
 			MessageBack Mb = new MessageBack();
 			
-			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by email: "+this.getIdut());
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by id: "+this.getIdut());
 			if (!stubok){
 				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
 				System.out.println(mSg);			
@@ -1262,6 +1263,7 @@ public class Client implements Serializable, Runnable  {
 						this.toString(),			// id Client 
 						this.getSql(),				// Account --> MQ_Update.updateModUserIdGetQuery
 						this.getSql2(),				// Account --> email
+						0,
 						this.getIdut()				// Account --> idutente
 						);
 				sendM(MsgSend, Mb);
