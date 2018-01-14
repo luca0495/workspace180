@@ -1000,7 +1000,8 @@ public class Account extends SL_JFrame{
 					
 					lblChangeNameCheck.setIcon(null);
 					lblChangeSurnameCheck.setIcon(null);
-					lblChangeEmailCheck.setIcon(null);
+					//lblChangeEmailCheck.setIcon(null);
+					getLblMAIL().setIcon(null);
 					lblChangePassCheck.setIcon(null);
 					lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
@@ -1236,6 +1237,7 @@ public class Account extends SL_JFrame{
 								System.out.println(" ***** sto controllando la email : email MODIFICATA");
 								String email = getTxtMailMod().getText();
 								me.setSql(email);				
+								me.setSql2("Account");
 								me.setActW(getW());
 								me.setActF(frmSchoolib);
 								//me.setActC(c);									

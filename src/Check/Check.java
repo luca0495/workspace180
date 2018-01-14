@@ -216,11 +216,11 @@ public class Check {
 		
 		if(results.equals("No Data"))
 		{
-			return true;
+			return false;
 		}
 		else
 		{
-			return false;
+			return true;
 		}	
 	}
 	 public static boolean checkInq(String s)

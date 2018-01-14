@@ -184,6 +184,10 @@ public class ServerReal extends ServerSkeleton {
 		
 		case UserREADcheckEmail://CHECK OK
 			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read check email exist");					
+			
+			x.setWtype( M.getMsg().getSQLQuery2());//tipo finestra chiamante : { Account / AppReader }
+			
+			
 			try {			
 			Boolean Ex = Check.checkMailExist(M.getMsg().getSQLQuery());			
 				if (Ex){	//email esistente
@@ -200,6 +204,25 @@ public class ServerReal extends ServerSkeleton {
 			System.out.println("SYS AL :> srv ritorna "+x.getText());										
 			return x;							
 				
+		case UserREADcheckCF://CHECK OK
+			System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read check CF exist");					
+			try {			
+			Boolean Ex = Check.checkCodFisExist(M.getMsg().getSQLQuery());			
+				if (Ex){	//CF esistente
+					x.setText(new String ("SRV :> URCCF :> OK Exist"));
+				}else {		//CF libero
+					x.setText(new String ("SRV :> URCCF :> OK Not Exist"));
+				}
+			} catch (Exception e) {	
+				System.out.println("problemi con query select user ");
+				e.printStackTrace();								
+				getMeS().addMsg(mSg);
+				x.setText(new String ("SRV :> URCCF :> NG"));
+			}
+			System.out.println("SYS AL :> srv ritorna "+x.getText());										
+			return x;		
+			
+			
 		case UserREADbyEmail:
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read by email");					
 				try {				

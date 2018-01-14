@@ -54,6 +54,9 @@ public class MQ_Delete {
 		
 		String query = " DELETE FROM utente WHERE "
 				+ "  id = '" 				+ r.get(0) + "';";
+			
+		
+		
 			//	+ "' AND nome = '" 		    + r.get(1) 
 			//	+ "' AND cognome  = '" 	    + r.get(2) 
 			//	+ "' AND email = '" 	    + r.get(3) 

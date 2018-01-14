@@ -24,6 +24,9 @@ public enum Commands{
 			UserREADbyEmailMod	("UR panel Modify"				,		SearchFor.Account,		CommandsType.READ	,1,	0), 
 			UserREADlogin		("User Read login"				,		SearchFor.Account,		CommandsType.READ	,1,	0), 
 			UserREADcheckEmail	("User Read check email"		,		SearchFor.Account,		CommandsType.READ	,1,	0),
+			UserREADcheckCF		("User Read check cod fiscale"	,		SearchFor.Account,		CommandsType.READ	,1,	0),
+			
+			
 			UserREADloginFIRST	("User Read login FIRST time"	,		SearchFor.Account,		CommandsType.CHANGE	,1,	0),	//change per l'incremento del numero di tentativi di login
 			UserREADaccountMod	("User Read account mod		"	,		SearchFor.Account,		CommandsType.CHANGE	,1,	0),
 			UserUPDATE 			("User Update		"			,		SearchFor.Account,		CommandsType.CHANGE	,2,	0),

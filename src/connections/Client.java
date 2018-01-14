@@ -203,14 +203,18 @@ public class Client implements Serializable, Runnable  {
 									break;
 
 								case UserREADlogin: 								
-														UserGetDataLogin();		//necessario setSql con email setSql2 con password					
+														UserGetDataLogin();			//necessario setSql con email setSql2 con password					
 									break;
 								case UserREADaccountMod: 								
-														UserGetDataAccountMod();//necessario setSql con email setSql2 con password					
+														UserGetDataAccountMod();	//necessario setSql con email setSql2 con password					
 									break;									
 								case UserREADcheckEmail: 								
-														UserREADcheckEmailExist();//necessario setSql con email 					
+														UserREADcheckEmailExist();	//necessario setSql con email 					
 									break;									
+								case UserREADcheckCF:
+														UserREADcheckCfExist();		//necessario setSql con cf 		
+									break;
+									
 									
 									
 						//	Loans
@@ -788,33 +792,118 @@ public class Client implements Serializable, Runnable  {
 								break;	
 								
 							//check mail exist	
-							case"SRV :> URCE :> NG":			
-								Account eNGX = (Account) ActW;
-								eNGX.getLblMAIL().setIcon(eNGX.getIconLogoC());
-								eNGX.getTxtMailMod().setText("Errore interrogazione DB");
-								eNGX.setMailcheckResult("NG");
-								eNGX.setMailcheckinprogress(false);
+							case"SRV :> URCE :> NG":
+					
+								switch (Mb.getWtype()) {
+								
+								case "Account":
+									Account eNGX = (Account) ActW;
+									eNGX.getLblMAIL().setIcon(eNGX.getIconLogoC());
+									eNGX.getTxtMailMod().setText("Errore interrogazione DB");
+									eNGX.setMailcheckResult("NG");
+									eNGX.setMailcheckinprogress(false);									
+									break;
+								case "AppReader":
+									AppReader erNGX = (AppReader) ActW;
+									erNGX.getLblCheckMail().setIcon(erNGX.getIconLogoC());
+									erNGX.getTxtEmail().setText("Errore interrogazione DB");
+									erNGX.setMailcheckResult("NG");
+									erNGX.setMailcheckinprogress(false);										
+									break;
+								default:
+									break;
+								}
 								//PopUp.errorBox(getActC(), Mb.getText());
 								//clrParFS();	
 								break;
-							case"SRV :> URCE :> OK Exist":								
-								Account eX = (Account) ActW;
-								eX.getLblMAIL().setIcon(eX.getIconLogoC());
-								eX.getTxtMailMod().setText("email gia assegnata...");
-								//PopUp.errorBox(getActC(), Mb.getText());
-								eX.setMailcheckResult("OK E");
-								eX.setMailcheckinprogress(false);
-								//clrParFS();	
+								
+							case"SRV :> URCE :> OK Exist":		
+								
+								switch (Mb.getWtype()) {
+								
+								case "Account":
+									Account eX = (Account) ActW;
+									eX.getLblMAIL().setIcon(eX.getIconLogoC());
+									eX.getTxtMailMod().setText("email gia assegnata... account...");
+									//PopUp.errorBox(getActC(), Mb.getText());
+									eX.setMailcheckResult("OK E");
+									eX.setMailcheckinprogress(false);
+									//clrParFS();	
+									break;
+								case "AppReader":
+									AppReader erNGX = (AppReader) ActW;
+									
+									erNGX.getLblCheckMail().setIcon(erNGX.getIconLogoC());
+									
+									
+									
+									
+									erNGX.getTxtEmail().setText("email gia assegnata... app reader...");
+									erNGX.setMailcheckResult("OK E");
+									erNGX.setMailcheckinprogress(false);										
+									break;
+								default:
+									break;
+								}
 								break;
+	
 							case"SRV :> URCE :> OK Not Exist":
-								Account neX = (Account) ActW;
-								neX.getLblMAIL().setIcon(neX.getIconLogoT());
-								//PopUp.infoBox(getActC(),Mb.getText() );
-								System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
-								neX.setMailcheckResult("OK NE");
-								neX.setMailcheckinprogress(false);
-								//clrParFS();	
+								
+								switch (Mb.getWtype()) {
+								
+								case "Account":
+									Account neX = (Account) ActW;
+									neX.getLblMAIL().setIcon(neX.getIconLogoT());
+									//PopUp.infoBox(getActC(),Mb.getText() );
+									System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
+									neX.setMailcheckResult("OK NE");
+									neX.setMailcheckinprogress(false);
+									//clrParFS();	
+									break;
+								case "AppReader":
+									AppReader erNGX = (AppReader) ActW;
+									erNGX.getLblCheckMail().setIcon(erNGX.getIconLogoT());
+									System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
+									//erNGX.getTxtEmail().setText("");
+									erNGX.setMailcheckResult("OK NE");
+									erNGX.setMailcheckinprogress(false);										
+									break;
+								default:
+									break;
+								}								
+	
 								break;
+								
+							//check codice fiscale exist	
+							case"SRV :> URCCF :> NG":			
+								AppReader cNGX = (AppReader) ActW;
+								cNGX.getLblCheckCF().setIcon(cNGX.getIconLogoC());
+								cNGX.getTxtCF().setText("Errore interrogazione DB");
+								cNGX.setCfcheckResult("NG");
+								cNGX.setCfcheckinprogress(false);
+								//PopUp.errorBox(getActC(), Mb.getText());
+								//clrParFS();	
+									break;
+							case"SRV :> URCCF :> OK Exist":								
+								AppReader cX = (AppReader) ActW;
+								cX.getLblCheckCF().setIcon(cX.getIconLogoC());
+								cX.getTxtCF().setText("cf gia assegnato...");
+								//PopUp.errorBox(getActC(), Mb.getText());
+								cX.setCfcheckResult("OK E");
+								cX.setCfcheckinprogress(false);
+								//clrParFS();	
+									break;
+							case"SRV :> URCCF :> OK Not Exist":
+								AppReader ncX = (AppReader) ActW;
+								ncX.getLblCheckCF().setIcon(ncX.getIconLogoT());
+								//PopUp.infoBox(getActC(),Mb.getText() );
+								System.out.println(" ***** sto controllando codice fiscale : cf LIBERA , OK ");
+								ncX.setCfcheckResult("OK NE");
+								ncX.setCfcheckinprogress(false);
+								//clrParFS();	
+									break;								
+
+								
 								
 							//user UPDATE
 							case "SRV :> UP :> OK":
@@ -1060,6 +1149,30 @@ public class Client implements Serializable, Runnable  {
 			}	
 		}	
 
+		private void UserREADcheckCfExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserREADcheckCF;
+			MessageBack Mb = new MessageBack();
+			
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql()				// cf da verificare
+						
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}
+		
+		
 		private void UserREADcheckEmailExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADcheckEmail;
 			MessageBack Mb = new MessageBack();
@@ -1076,8 +1189,8 @@ public class Client implements Serializable, Runnable  {
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql()				// email da verificare
-						
+						this.getSql(),				// email da verificare
+						this.getSql2()
 						);
 				sendM(MsgSend, Mb);
 			}	

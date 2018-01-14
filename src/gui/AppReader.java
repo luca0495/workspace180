@@ -54,6 +54,7 @@ public class AppReader extends SL_JFrame {
 	private static final long serialVersionUID = 1L;
 	private JFrame frmSchoolib;	
 
+	private AppReader w;
 	
 	private JTextField txtCF;
 	private JTextField txtName;
@@ -70,11 +71,22 @@ public class AppReader extends SL_JFrame {
 	//private static final String[] Students =
 		// {"	A1" , "A2"};
 	
-
+	private JLabel 		lblCheckCF ;
+	private JLabel 		lblCheckMail ;
+	
+	
+	private ImageIcon 	iconLogoT;
+	private ImageIcon 	iconLogoC;
+	
+	private boolean 	cfcheckinprogress=false;
+	private String 		cfcheckResult;
+	private boolean 	mailcheckinprogress=false;
+	private String 		mailcheckResult;
 
 
 	public AppReader(Component c,Client x)
 	{
+		setW(this);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
@@ -101,6 +113,9 @@ public class AppReader extends SL_JFrame {
 		
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
+		setIconLogoT(iconLogoT);
+		setIconLogoC(iconLogoC);
+		
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -151,17 +166,19 @@ public class AppReader extends SL_JFrame {
 		panelSelection.add(lblCheckSurname);
 		
 		JLabel lblCheckEmail = new JLabel();
+	this.setLblCheckMail(lblCheckEmail);
 		lblCheckEmail.setBounds(345, 190, 16, 16);
 		panelSelection.add(lblCheckEmail);
+		
+		JLabel lblCheckCF = new JLabel();
+	this.setLblCheckCF(lblCheckCF);
+		lblCheckCF.setBounds(330, 342, 16, 16);
+		panelSelection.add(lblCheckCF);
 		
 		JLabel lblCheckInq = new JLabel();
 		lblCheckInq.setBounds(345, 266, 16, 16);
 		panelSelection.add(lblCheckInq);
-		
-		JLabel lblCheckCF = new JLabel();
-		lblCheckCF.setBounds(330, 342, 16, 16);
-		panelSelection.add(lblCheckCF);
-		
+				
 		JLabel lblCheckPass = new JLabel();
 		lblCheckPass.setBounds(829, 34, 16, 16);
 		panelSelection.add(lblCheckPass);
@@ -241,6 +258,9 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
+				checkmail();
+				
+				/*
 				if(Check.checkMail(txtEmail.getText()) && !Check.checkMailExist(txtEmail.getText())) 
 				{
 					lblCheckEmail.setIcon(iconLogoT);	
@@ -249,6 +269,7 @@ public class AppReader extends SL_JFrame {
 				{
 					lblCheckEmail.setIcon(iconLogoC);	
 				}
+				 */
 			
 			}
 		});
@@ -297,6 +318,10 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
+				checkcf();
+				
+				
+				/*
 				if(Check.checkCF(txtCF.getText()) && Check.checkCodFisExist(txtCF.getText()))
 				{
 					lblCheckCF.setIcon(iconLogoT);
@@ -305,6 +330,7 @@ public class AppReader extends SL_JFrame {
 				{
 					lblCheckCF.setIcon(iconLogoC);	
 				}
+				*/
 				
 			}
 		});
@@ -564,6 +590,105 @@ public class AppReader extends SL_JFrame {
 	*/	
     }
 
+	
+	public boolean checkcf(){
+		boolean checkok=true;
+		
+			System.out.println(" ***** sto controllando CODICE FISCALE ");
+			System.out.println(" ***** sto controllando CODICE FISCALE : "+getTxtCF().getText());
+
+
+			//******************************************************************
+			if(Check.checkCF(getTxtCF().getText())){
+			System.out.println(" ***** sto controllando CF : SINTATTICAMENTE Corretto");
+			//sintatticamente correttO		
+								String cf = getTxtCF().getText();
+								me.setSql(cf);				
+								me.setActW(getW());
+								me.setActF(frmSchoolib);
+								//me.setActC(c);									
+								try {
+									System.out.println("GUI account:> ottenuti dati user ");
+								me.setCliType(Clients.Reader);	
+									me.getCmdLIST().put(Commands.UserREADcheckCF);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI account:> NON ottenuti dati user ");	
+									e2.printStackTrace();
+									setCfcheckResult("problemi con user read check cf");
+									this.getLblCheckCF().setIcon(getIconLogoC());
+								}
+								//*************************************************************	
+			}else {
+			//sintatticamente non corretta
+				
+				//getLblChangeEmailCheck().setIcon(getIconLogoC());
+				this.getLblCheckCF().setIcon(getIconLogoC());
+				checkok=false;
+				setCfcheckResult("sintatticamente non corretto");
+				setCfcheckinprogress(false);
+				
+				System.out.println(" ***** sto controllando CF : sintatticamente non corretto "+getCfcheckResult());
+
+			}
+			//******************************************************************
+			return checkok;
+	}
+	
+	
+	
+	public boolean checkmail(){
+		boolean checkok=true;
+		
+			System.out.println(" ***** sto controllando la email ");
+			System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtEmail().getText());
+
+			//******************************************************************
+			if(Check.checkMail(getTxtEmail().getText())){
+			System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
+			//sintatticamente corretta		
+								System.out.println(" ***** sto controllando la email : email MODIFICATA");
+								String email = getTxtEmail().getText();
+								me.setSql(email);
+								me.setSql2("AppReader");
+								me.setActW(getW());
+								me.setActF(frmSchoolib);
+								//me.setActC(c);									
+								try {
+									System.out.println("GUI account:> ottenuti dati user ");
+								me.setCliType(Clients.Reader);	
+									
+									me.getCmdLIST().put(Commands.UserREADcheckEmail);
+									
+									
+								} catch (InterruptedException e2) {
+									System.out.println("GUI account:> NON ottenuti dati user ");	
+									e2.printStackTrace(); 
+									setMailcheckResult("problemi con user read check mail");
+									this.getLblCheckMail().setIcon(getIconLogoC());
+								}
+								//*************************************************************	
+	
+			}else {
+			//sintatticamente non corretta
+				System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
+				//getLblChangeEmailCheck().setIcon(getIconLogoC());
+				this.getLblCheckMail().setIcon(getIconLogoC());
+				checkok=false;
+				setMailcheckResult("sintatticamente non corretta");
+				setMailcheckinprogress(false);
+			}
+			//******************************************************************
+			return checkok;
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getTypePerson() {
 		return TypePerson;
 	}
@@ -647,10 +772,79 @@ public class AppReader extends SL_JFrame {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public AppReader  getW() {
+		return w;
+	}
+	public void setW(AppReader w) {
+		this.w = w;
+	}
 	
 	
 	@Override
 	public void addMsg(String msg){
 		text.setText(msg);	
 	}
+
+	public ImageIcon getIconLogoT() {
+		return iconLogoT;
+	}
+
+	public void setIconLogoT(ImageIcon iconLogoT) {
+		this.iconLogoT = iconLogoT;
+	}
+
+	public ImageIcon getIconLogoC() {
+		return this.iconLogoC;
+	}
+
+	public void setIconLogoC(ImageIcon iconLogoC) {
+		this.iconLogoC = iconLogoC;
+	}
+	public boolean isCfcheckinprogress() {
+		return cfcheckinprogress;
+	}
+
+	public void setCfcheckinprogress(boolean cfcheckinprogress) {
+		this.cfcheckinprogress = cfcheckinprogress;
+	}
+
+	public String getCfcheckResult() {
+		return cfcheckResult;
+	}
+
+	public void setCfcheckResult(String cfcheckResult) {
+		this.cfcheckResult = cfcheckResult;
+	}
+
+	public JLabel getLblCheckCF() {
+		return this.lblCheckCF;
+	}
+	public void setLblCheckCF(JLabel lblCheckCF) {
+		this.lblCheckCF = lblCheckCF;
+	}	
+	
+	public JLabel getLblCheckMail() {
+		return this.lblCheckMail;
+	}
+	public void setLblCheckMail(JLabel lblCheckMail) {
+		this.lblCheckMail = lblCheckMail;
+	}
+	
+	
+	public boolean isMailcheckinprogress() {
+		return mailcheckinprogress;
+	}
+
+	public void setMailcheckinprogress(boolean mailcheckinprogress) {
+		this.mailcheckinprogress = mailcheckinprogress;
+	}
+
+	public String getMailcheckResult() {
+		return mailcheckResult;
+	}
+
+	public void setMailcheckResult(String mailcheckResult) {
+		this.mailcheckResult = mailcheckResult;
+	}
+	
 }
