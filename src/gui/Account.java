@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
+
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
@@ -78,10 +80,6 @@ public class Account extends SL_JFrame{
 	private	JLabel lblTypeUserMod ;
     private JLabel lblMAIL;
 
-    
- 
-
-
 	private String TypePerson = "Lettore";
 	private JTextField txtNameMod;
 	private JTextField txtSurnameMod;
@@ -110,6 +108,9 @@ public class Account extends SL_JFrame{
 
 	private JPanel panelAccount;
 	private JPanel panelModify;
+	
+	private boolean mailcheckinprogress=false;
+	private String mailcheckResult;
 	
 	public Account(Component c,Client x)
 	{
@@ -417,7 +418,9 @@ public class Account extends SL_JFrame{
 		txtSurnameMod.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
+				checksurname();
 				
+				/*
 				if(Check.checkName(txtSurnameMod.getText()))
 				{
 					lblChangeSurnameCheck.setIcon(iconLogoT);
@@ -426,6 +429,7 @@ public class Account extends SL_JFrame{
 				{
 					lblChangeSurnameCheck.setIcon(iconLogoC);
 				}
+				*/
 			}
 		});
 		txtSurnameMod.setBounds(120, 102, 224, 20);
@@ -564,6 +568,9 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent e) {
 				
+				
+				
+				
 				if(Check.checkPass(passwordFieldMod.getPassword()))		//Controllo sintattico
 				{
 					lblChangePassCheck.setIcon(iconLogoT);
@@ -687,9 +694,7 @@ public class Account extends SL_JFrame{
 		JButton btnModData = new JButton("Modifica Dati");
 		btnModData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				lostfocusall();
-				
+
 				//Assegna a delle variabili il contenuto dei text field
 				
 				String nome 			= txtNameMod.getText();
@@ -704,61 +709,103 @@ public class Account extends SL_JFrame{
 				String inq 				= txtInqMod.getText();
 				String tel 				= txtTelMod.getText();
 				String stato 			= TypePerson;
-				System.out.println("1");
-				
+				System.out.println("1");				
 
-//TODO PASSA AL SERVER
+				//IN TEST 
+				setMailcheckinprogress(true);
+				//parte check mail...
+				checkmail();
 
-				//procedura perdi tutti i focus
-				
-				
-				
-				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel)		&& 		lostfocusall())		//Controllo sintattico / riempimento campi
-				{
-					
-					System.out.println("2");
-					try
-					{
-					System.out.println("3");
-					
-//TODO PASSA AL SERVER	
-					// TEST DA LOCALE OK	
-					//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);
-					
-					//************************************************************
-					String passW = String.copyValueOf(pass);					
-					String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
-					
-					//System.out.println("passo al client sql :"+Q);
-					//System.out.println("passo al client sql2 :"+getTxtMailMod().getText());
-					
-					me.setIdut(getIdUser());
-					me.setSql(Q);
-					me.setSql2(getTxtMailMod().getText());
-					
-					me.setActW(getW());
-					me.setActF(frmSchoolib);
-					me.setActC(c);				
+				while (isMailcheckinprogress()) {	//attendi... //System.out.println("attesa per check email exist");		
+					System.out.println("attendo check result"+getMailcheckResult());
 					try {
-						System.out.println("GUI account:> ottenuti dati user ");
-					me.setCliType(Clients.Librarian);	
-						me.getCmdLIST().put(Commands.UserUPDATE);
-					} catch (InterruptedException e2) {
-						System.out.println("GUI account:> NON ottenuti dati user ");	
-						e2.printStackTrace(); 
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
-					//*************************************************************
+				}
+				
+				
+				
+				System.out.println("ritornato mail check result"+getMailcheckResult());
+				
+				
+				switch (getMailcheckResult()) {
+				
+				case "problemi con user read check mail":
+					
+					System.out.println("problemi con user read check mail");
+					
+					
+					break;
+				
+				
+				case "OK NE":
+				case "non modificata":{
+					
+					
+					if (checkall()) {				//check su tutti i campi
+						
+						//************************************************************
+						try
+						{
+						// TEST DA LOCALE OK	
+						//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);						
+						String passW = String.copyValueOf(pass);					
+						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
+						me.setIdut(getIdUser());
+						me.setSql(Q);
+						me.setSql2(getTxtMailMod().getText());					
+						me.setActW(getW());
+						me.setActF(frmSchoolib);
+						me.setActC(c);				
+						try {
+							System.out.println("GUI account:> ottenuti dati user ");
+						me.setCliType(Clients.Librarian);	
+							me.getCmdLIST().put(Commands.UserUPDATE);
+						} catch (InterruptedException e2) {
+							System.out.println("GUI account:> NON ottenuti dati user ");	
+							e2.printStackTrace(); 
+						}
+						}
+						catch (SQLException e) 
+						{
+							e.printStackTrace();
+						}					
+						//*************************************************************						
+					
+					}else {						
+						PopUp.errorBox1(frmSchoolib,"Campi non corretti");							
+					}
+				}
+					break;
+					
+				case "OK E":
+					System.out.println("ritornato dal check mail EXIST");
+					break;
+
+				case "NG":
+					System.out.println("ritornato dal check mail NG");
+					break;
+
+				default:
+					break;
+				} 
+
+//PRIMO TEST
+/*				
+				
+				
+				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
+				{
+
 
 					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());					
 					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
 
-					}
-					catch (SQLException e) 
-					{
-						e.printStackTrace();
-					}
 
-					/*
+
+					
 					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
 					 try 
 					{
@@ -769,11 +816,11 @@ public class Account extends SL_JFrame{
 					} catch (SQLException e) {
 							e.printStackTrace();
 					}
-				    */
+				    
 				    
 //TODO aggiorna campi da CLIENT
 					
-					/*
+					
 					lblSetNome.setText(user[1]);
 					lblSetCognome.setText(user[2]);
 					lblSetEmail.setText(user[3]);
@@ -801,11 +848,13 @@ public class Account extends SL_JFrame{
 					lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
-					*/
+					
 			    }
 				else 
 				{
-				PopUp.errorBox1(frmSchoolib,"Campi non corretti");
+				PopUp.errorBox1(frmSchoolib,"Campi non corretti");				
+				
+				checkname();
 				
 				if(Check.checkName(nome))
 				{
@@ -818,6 +867,9 @@ public class Account extends SL_JFrame{
 					lblChangeNameCheck.setIcon(iconLogoC);
 				}
 				
+				
+				checksurname();
+				
 				System.out.println("9");
 				if(Check.checkName(cognome))
 				{
@@ -829,8 +881,11 @@ public class Account extends SL_JFrame{
 					System.out.println("11");					
 					lblChangeSurnameCheck.setIcon(iconLogoC);
 				}
+				 
 
-
+				
+				
+				
 				if(Check.checkMail(mail) && (!Check.checkMailExist(mail)))
 				{
 					lblChangeEmailCheck.setIcon(iconLogoT);
@@ -839,6 +894,8 @@ public class Account extends SL_JFrame{
 				{
 					lblChangeEmailCheck.setIcon(iconLogoC);
 				}
+				
+
 
 				if(Check.checkPass(pass))
 				{
@@ -858,6 +915,8 @@ public class Account extends SL_JFrame{
 					lblChangePassConfCheck.setIcon(iconLogoC);
 				}
 				
+				
+				
 				if(Check.checkPassEq(pass, checkPassword))
 				{
 					lblChangePassConfCheck.setIcon(iconLogoT);
@@ -867,6 +926,10 @@ public class Account extends SL_JFrame{
 					lblChangePassConfCheck.setIcon(iconLogoC);
 				}
 				System.out.println("12");	
+				
+				
+				checkinq();
+				
 				if(Check.checkName(inq))
 				{
 					System.out.println("13");	
@@ -876,7 +939,13 @@ public class Account extends SL_JFrame{
 				{
 					System.out.println("14");
 					lblChangeInqCheck.setIcon(iconLogoC);
-				}		
+				}
+				
+				
+
+				
+				checkTel();
+				
 				if(Check.checkTel(tel))
 				{
 					lblChangePhoneCheck.setIcon(iconLogoT);
@@ -884,11 +953,18 @@ public class Account extends SL_JFrame{
 				else
 				{
 					lblChangePhoneCheck.setIcon(iconLogoC);
-				}	
+				}
+				
+					
 				}
 			 
-				
+*/
+//PRIMO TEST	
 		}
+			
+		
+			
+			
 	});
 	
 		btnModData.setBounds(288, 391, 175, 67);
@@ -1017,18 +1093,19 @@ public class Account extends SL_JFrame{
 		
 	}
 	
-	public boolean lostfocusall() {
+	public boolean checkall() {
 		boolean checkok=true;
 		
-		System.out.println("perdita focus su tutti i campi...");
+		System.out.println("check tutti campi tranne email");
 		
-		if(		checkmail() &&
-				checkname()	&&	
-				checksurname()
-				
-				
-				
-								) 
+		if(		checkname()		&&	
+				checksurname()	&&
+				checkPass1()	&&
+				checkPass2()	&&
+				checkPassEq()	&&
+				checkinq()		&&
+				checkTel()
+										) 
 		{
 			
 		}else {
@@ -1037,7 +1114,8 @@ public class Account extends SL_JFrame{
 		return checkok;		
 	}
 	
-	//testaggio campi 
+// testaggio campi *************************************************************************************************************************** 
+
 	public boolean checkname() {
 		boolean checkok=true;
 			if(Check.checkName(txtNameMod.getText()))
@@ -1046,6 +1124,7 @@ public class Account extends SL_JFrame{
 			}
 			else
 			{
+			checkok=false;	
 			getLblChangeNameCheck().setIcon(iconLogoC);
 			}
 		return checkok;	
@@ -1059,10 +1138,95 @@ public class Account extends SL_JFrame{
 			}
 			else
 			{
+			checkok=false;	
 			getLblChangeSurnameCheck().setIcon(iconLogoC);
 			}
 		return checkok;	
 	}	
+	
+	public boolean checkTel() {
+		boolean checkok=true;
+			if(Check.checkTel(txtTelMod.getText()))
+			{
+			getLblChangePhoneCheck().setIcon(iconLogoT);
+			}
+			else
+			{
+			checkok=false;	
+			getLblChangePhoneCheck().setIcon(iconLogoC);
+			}
+		return checkok;	
+	}
+	
+	
+	public boolean checkinq() {
+		boolean checkok=true;
+		if(Check.checkName(txtInqMod.getText()))
+		{
+			System.out.println("13");	
+			lblChangeInqCheck.setIcon(iconLogoT);
+		}
+		else
+		{
+			System.out.println("14");
+			lblChangeInqCheck.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}
+	
+	public boolean checkPass1() {
+		boolean checkok=true;
+		if(Check.checkPass(passwordFieldMod.getPassword()))
+		{
+			lblChangePassCheck.setIcon(iconLogoT);
+		}
+		else
+		{
+			lblChangePassCheck.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+	
+	public boolean checkPass2() {
+		boolean checkok=true;
+		if(Check.checkPass(passwordFieldConfMod.getPassword()))
+		{
+			lblChangePassConfCheck.setIcon(iconLogoT);
+		}
+		else
+		{
+			lblChangePassConfCheck.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+
+	public boolean checkPassEq() {
+		boolean checkok=true;
+		if(Check.checkPassEq(passwordFieldMod.getPassword(),passwordFieldConfMod.getPassword()))
+		{
+			lblChangePassConfCheck.setIcon(iconLogoT);
+		}
+		else
+		{
+			lblChangePassConfCheck.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+
+	
+
+	
+
+	
+	
+	
+
+
+	
+	
+	
+	
+	
 	
 	public boolean checkmail(){
 		boolean checkok=true;
@@ -1090,18 +1254,25 @@ public class Account extends SL_JFrame{
 								} catch (InterruptedException e2) {
 									System.out.println("GUI account:> NON ottenuti dati user ");	
 									e2.printStackTrace(); 
+									setMailcheckResult("problemi con user read check mail");
+									this.getLblMAIL().setIcon(getIconLogoC());
 								}
 								//*************************************************************	
 							}else {	//non modificata
 								System.out.println(" ***** sto controllando la email : email non modificata");
 								//getLblChangeEmailCheck().setIcon(getIconLogoT());
 								this.getLblMAIL().setIcon(getIconLogoT());
+								setMailcheckResult("non modificata");
+								setMailcheckinprogress(false);
 							}	
 			}else {
 			//sintatticamente non corretta
 				System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
 				//getLblChangeEmailCheck().setIcon(getIconLogoC());
 				this.getLblMAIL().setIcon(getIconLogoC());
+				checkok=false;
+				setMailcheckResult("sintatticamente non corretta");
+				setMailcheckinprogress(false);
 			}
 			//******************************************************************
 			return checkok;
@@ -1269,6 +1440,22 @@ public class Account extends SL_JFrame{
 
 		public void setLblChangePhoneCheck(JLabel lblChangePhoneCheck) {
 			this.lblChangePhoneCheck = lblChangePhoneCheck;
+		}
+
+		public boolean isMailcheckinprogress() {
+			return this.mailcheckinprogress;
+		}
+
+		public void setMailcheckinprogress(boolean mailcheckinprogress) {
+			this.mailcheckinprogress = mailcheckinprogress;
+		}
+
+		public String getMailcheckResult() {
+			return mailcheckResult;
+		}
+
+		public void setMailcheckResult(String mailcheckResult) {
+			this.mailcheckResult = mailcheckResult;
 		}	
 	
 
