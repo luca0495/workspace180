@@ -34,7 +34,7 @@ public class MQ_Check {
 	
 	public static String selectMail(String mail) throws SQLException
 	{
-		String query = "SELECT codice_fiscale FROM utente WHERE email = '" + mail + "';";
+		String query = "SELECT id FROM utente WHERE email = '" + mail + "';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
@@ -47,7 +47,7 @@ public class MQ_Check {
 		else
 		{
 			rs.next();
-			datiCliente = rs.getString("codice_fiscale");
+			datiCliente = rs.getString("id");
 		}
 		
 		rs.close();

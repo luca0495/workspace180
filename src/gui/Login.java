@@ -62,7 +62,8 @@ public class Login extends SL_JFrame  {
 	private Client me;
 	private List<String> rowData;
 	private String deleteRow;
-	private String idUser= null;
+	private int idUser;
+
 	private JTextField txtEmailForgot;
 	private JPasswordField passwordFieldNewPass;
 	private JPasswordField passwordFieldNewPassC;
@@ -210,7 +211,7 @@ public class Login extends SL_JFrame  {
 	// APERTA FINESTRA		
 					   /*old passato a client
 						try {	
-						MQ_Delete.deletePassTemp(pass);						
+						MQ_Delete.deletePassTemp(getIdUser(),pass);						
 						} catch (SQLException e1) {							
 							e1.printStackTrace();
 						}
@@ -624,15 +625,15 @@ public class Login extends SL_JFrame  {
 		}
 		public void updatelblSetId(String[] user )
 		{
-			setIdUser(user[0]);	
+			setIdUser(Integer.valueOf(user[0]));
 		}	
 		
-		public String getIdUser() {
+		public int getIdUser() {
 				return idUser;
 		}
 
-		public void setIdUser(String idUser) {
-				this.idUser = idUser;
+		public void setIdUser(int idUser) {
+			this.idUser = idUser;
 		}
 		public JFrame getFrame() {
 			return frame;

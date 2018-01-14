@@ -241,7 +241,7 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkMail(txtEmail.getText()) && Check.checkMailExist(txtEmail.getText())) 
+				if(Check.checkMail(txtEmail.getText()) && !Check.checkMailExist(txtEmail.getText())) 
 				{
 					lblCheckEmail.setIcon(iconLogoT);	
 				}

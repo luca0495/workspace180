@@ -1002,7 +1002,6 @@ public class Account extends SL_JFrame{
 					lblChangeSurnameCheck.setIcon(null);
 					lblChangeEmailCheck.setIcon(null);
 					lblChangePassCheck.setIcon(null);
-					lblChangePassCheck.setIcon(null);
 					lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
@@ -1072,9 +1071,6 @@ public class Account extends SL_JFrame{
 			setIdUser(Integer.valueOf(idutente));
 		}
 		
-		
-		
-		
 		lblSetNome.setText(user[1]);
 		lblSetCognome.setText(user[2]);
 		lblSetEmail.setText(user[3]);
@@ -1090,7 +1086,15 @@ public class Account extends SL_JFrame{
 		passwordFieldConfMod.setEditable(false);
 		txtInqMod.setEditable(false);
 		txtTelMod.setEditable(false);
-		
+		/*
+		lblChangeNameCheck.setIcon(null);
+		lblChangeSurnameCheck.setIcon(null);
+		lblChangeEmailCheck.setIcon(null);
+		lblChangePassCheck.setIcon(null);
+		lblChangePassConfCheck.setIcon(null);
+		lblChangeInqCheck.setIcon(null);
+		lblChangePhoneCheck.setIcon(null);
+		*/
 	}
 	
 	public boolean checkall() {
@@ -1213,20 +1217,6 @@ public class Account extends SL_JFrame{
 		return checkok;	
 	}	
 
-	
-
-	
-
-	
-	
-	
-
-
-	
-	
-	
-	
-	
 	
 	public boolean checkmail(){
 		boolean checkok=true;
