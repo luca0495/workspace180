@@ -103,6 +103,7 @@ public class Account extends SL_JFrame{
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
 	private String [] 	userdata;
+	
 	private ImageIcon iconLogoT;
 	private ImageIcon iconLogoC;
 
@@ -1086,15 +1087,14 @@ public class Account extends SL_JFrame{
 		passwordFieldConfMod.setEditable(false);
 		txtInqMod.setEditable(false);
 		txtTelMod.setEditable(false);
-		/*
+		
 		lblChangeNameCheck.setIcon(null);
 		lblChangeSurnameCheck.setIcon(null);
-		lblChangeEmailCheck.setIcon(null);
+		//lblChangeEmailCheck.setIcon(null);
 		lblChangePassCheck.setIcon(null);
-		lblChangePassConfCheck.setIcon(null);
 		lblChangeInqCheck.setIcon(null);
 		lblChangePhoneCheck.setIcon(null);
-		*/
+		
 	}
 	
 	public boolean checkall() {
