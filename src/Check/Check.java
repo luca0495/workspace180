@@ -301,10 +301,6 @@ public class Check {
 	 
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
 	    {
-	    
-		  
-		  
-		  
 			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass(pass) && checkPass(checkPassword) && 
 	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel);
 	    }

@@ -790,21 +790,27 @@ public class Client implements Serializable, Runnable  {
 								Account eNGX = (Account) ActW;
 								eNGX.getLblMAIL().setIcon(eNGX.getIconLogoC());
 								eNGX.getTxtMailMod().setText("Errore interrogazione DB");
-								PopUp.errorBox(getActC(), Mb.getText());
+								eNGX.setMailcheckResult("NG");
+								eNGX.setMailcheckinprogress(false);
+								//PopUp.errorBox(getActC(), Mb.getText());
 								//clrParFS();	
 								break;
 							case"SRV :> URCE :> OK Exist":								
 								Account eX = (Account) ActW;
 								eX.getLblMAIL().setIcon(eX.getIconLogoC());
-								eX.getTxtMailMod().setText("email gia assegnata...");															
-								PopUp.errorBox(getActC(), Mb.getText());
+								eX.getTxtMailMod().setText("email gia assegnata...");
+								//PopUp.errorBox(getActC(), Mb.getText());
+								eX.setMailcheckResult("OK E");
+								eX.setMailcheckinprogress(false);
 								//clrParFS();	
 								break;
 							case"SRV :> URCE :> OK Not Exist":
 								Account neX = (Account) ActW;
 								neX.getLblMAIL().setIcon(neX.getIconLogoT());
-								PopUp.infoBox(getActC(),Mb.getText() );								
+								//PopUp.infoBox(getActC(),Mb.getText() );
 								System.out.println(" ***** sto controllando la email : email LIBERA , OK ");
+								neX.setMailcheckResult("OK NE");
+								neX.setMailcheckinprogress(false);
 								//clrParFS();	
 								break;
 								
