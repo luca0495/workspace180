@@ -64,7 +64,25 @@ public class AppReader extends SL_JFrame {
 	private JTextField txtPhone;
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldCh;
-	public static String SearchParam = "1A";
+	private int idUser ;
+
+
+
+	private	JLabel lblCheckName; 
+	private	JLabel lblCheckSurname; 
+    private JLabel lblCheckEmail;
+	private	JLabel lblCheckInq;
+	private	JLabel lblCheckCF ;
+	private	JLabel lblCheckPass ;
+	private	JLabel lblCheckVerifyPass ;
+	private	JLabel lblCheckPhone ;
+
+	private JRadioButton rdbtnReader;
+	private JRadioButton rdbtnLibrarian;
+	
+	private ImageIcon iconLogoT;
+	private ImageIcon iconLogoC;
+	
 	private JTextField text;
 	private String TypePerson;
 	//private static JComboBox<String> Inq;
@@ -112,10 +130,16 @@ public class AppReader extends SL_JFrame {
 
 		
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
+		setIconLogoT(iconLogoT);
+		
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
+<<<<<<< HEAD
 		setIconLogoT(iconLogoT);
 		setIconLogoC(iconLogoC);
 		
+=======
+		setIconLogoC(iconLogoC);
+>>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -157,14 +181,15 @@ public class AppReader extends SL_JFrame {
 		lblPhone.setBounds(470, 190, 147, 24);
 		panelSelection.add(lblPhone);
 		
-		JLabel lblCheckName = new JLabel();
+		lblCheckName = new JLabel();
 		lblCheckName.setBounds(345, 34, 16, 16);
 		panelSelection.add(lblCheckName);
 		
-		JLabel lblCheckSurname = new JLabel();
+		lblCheckSurname = new JLabel();
 		lblCheckSurname.setBounds(345, 115, 16, 16);
 		panelSelection.add(lblCheckSurname);
 		
+<<<<<<< HEAD
 		JLabel lblCheckEmail = new JLabel();
 	this.setLblCheckMail(lblCheckEmail);
 		lblCheckEmail.setBounds(345, 190, 16, 16);
@@ -180,14 +205,29 @@ public class AppReader extends SL_JFrame {
 		panelSelection.add(lblCheckInq);
 				
 		JLabel lblCheckPass = new JLabel();
+=======
+		lblCheckEmail = new JLabel();
+		lblCheckEmail.setBounds(345, 190, 16, 16);
+		panelSelection.add(lblCheckEmail);
+		
+		lblCheckInq = new JLabel();
+		lblCheckInq.setBounds(345, 266, 16, 16);
+		panelSelection.add(lblCheckInq);
+		
+		lblCheckCF = new JLabel();
+		lblCheckCF.setBounds(330, 342, 16, 16);
+		panelSelection.add(lblCheckCF);
+		
+		lblCheckPass = new JLabel();
+>>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
 		lblCheckPass.setBounds(829, 34, 16, 16);
 		panelSelection.add(lblCheckPass);
 		
-		JLabel lblCheckVerifyPass = new JLabel();
+		lblCheckVerifyPass = new JLabel();
 		lblCheckVerifyPass.setBounds(829, 113, 16, 16);
 		panelSelection.add(lblCheckVerifyPass);
 		
-		JLabel lblCheckPhone = new JLabel();
+		lblCheckPhone = new JLabel();
 		lblCheckPhone.setBounds(829, 200, 16, 16);
 		panelSelection.add(lblCheckPhone);
 		
@@ -419,7 +459,7 @@ public class AppReader extends SL_JFrame {
 		lblChoise.setBounds(582, 247, 147, 35);
 		panelSelection.add(lblChoise);
 		
-		JRadioButton rdbtnReader = new JRadioButton("Lettore");
+		rdbtnReader = new JRadioButton("Lettore");
 		rdbtnReader.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TypePerson="Lettore";
@@ -428,7 +468,7 @@ public class AppReader extends SL_JFrame {
 		rdbtnReader.setBounds(558, 300, 109, 23);
 		panelSelection.add(rdbtnReader);
 		
-		JRadioButton rdbtnLibrarian = new JRadioButton("Libraio");
+		rdbtnLibrarian = new JRadioButton("Libraio");
 		rdbtnLibrarian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TypePerson="Libraio";
@@ -437,7 +477,6 @@ public class AppReader extends SL_JFrame {
 		rdbtnLibrarian.setBounds(664, 300, 109, 23);
 		panelSelection.add(rdbtnLibrarian);
 		
-
 		ButtonGroup bgMod = new ButtonGroup();
 		bgMod.add(rdbtnReader);
 		bgMod.add(rdbtnLibrarian);	
@@ -460,6 +499,7 @@ public class AppReader extends SL_JFrame {
 					
 				String 	to 	= txtEmail.getText();	
 				String 	p 	= String.copyValueOf(passwordField.getPassword());
+				int 	tent	= 0;
 				
 				//*********************************************************************************
 				// in test 26 10 2017
@@ -469,6 +509,7 @@ public class AppReader extends SL_JFrame {
 					System.out.println("Destinatario:" + to +" Client:" + me);
 				// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
 					me.setSql(MQ_Insert.insertUtenteGetQuery(	
+						                                    	getIdUser(),
 																txtName.getText(), 
 																txtSurname.getText(),
 																txtInquadr.getText(),
@@ -477,6 +518,7 @@ public class AppReader extends SL_JFrame {
 																txtPhone.getText(),
 																p,
 																n,
+																tent,
 																TypePerson
 															)
 							);
@@ -504,6 +546,9 @@ public class AppReader extends SL_JFrame {
 					System.out.println("AppReader :> creazione query NG ERRORE:");	
 					e2.printStackTrace();
 				}
+				
+				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+				frmSchoolib.dispatchEvent(close);
 				//*********************************************************************************
 				/*
 				try 
@@ -539,12 +584,18 @@ public class AppReader extends SL_JFrame {
 				else
 				{
 					PopUp.warningBox(frmSchoolib, "Campi Errati");
+					checkname();
+					checksurname();
+					checkmail1();
+					checkPass1();
+					checkPass2();
+					checkPassEq();
+					checkCF1();
+					checkTel();
+					checkinq();
 				}
-				    // timer per panel nuovo RIVEDERE
-							WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-						    frmSchoolib.dispatchEvent(close);
-				}
-		});
+			}
+	});
 	   
 		btnReg.setBounds(470, 443, 147, 23);
 		panelSelection.add(btnReg);
@@ -565,6 +616,8 @@ public class AppReader extends SL_JFrame {
 			});
 		btnCancelReg.setBounds(288, 443, 147, 23);
 		panelSelection.add(btnCancelReg);
+		
+		
 		
 		
 		text = new JTextField();
@@ -590,6 +643,7 @@ public class AppReader extends SL_JFrame {
 	*/	
     }
 
+<<<<<<< HEAD
 	
 	public boolean checkcf(){
 		boolean checkok=true;
@@ -689,6 +743,133 @@ public class AppReader extends SL_JFrame {
 	
 	
 	
+=======
+	public boolean checkname() {
+		boolean checkok=true;
+			if(Check.checkName(txtName.getText()))
+			{
+				lblCheckName.setIcon(iconLogoT);
+			}
+			else
+			{
+			checkok=false;
+			lblCheckName.setIcon(iconLogoC);
+			}
+		return checkok;	
+	}
+	
+	public boolean checksurname() {
+		boolean checkok=true;
+			if(Check.checkName(txtSurname.getText()))
+			{
+				 lblCheckSurname.setIcon(iconLogoT);
+			}
+			else
+			{
+				checkok=false;
+				lblCheckSurname.setIcon(iconLogoC);
+			}
+		return checkok;	
+	}	
+	public boolean checkmail1() {
+		boolean checkok=true;
+			if(Check.checkMail(txtEmail.getText()) && (!Check.checkMailExist(txtEmail.getText())))
+			{
+				lblCheckEmail.setIcon(iconLogoT);
+			}
+			else
+			{
+				checkok=false;	
+				lblCheckEmail.setIcon(iconLogoC);
+			}
+		return checkok;	
+	}	
+	public boolean checkCF1() {
+		boolean checkok=true;
+	if(Check.checkCF(txtCF.getText()) && (Check.checkCodFisExist(txtCF.getText())))
+	{
+		lblCheckCF.setIcon(iconLogoT);
+	}
+	else
+	{
+		checkok=false;	
+		lblCheckCF.setIcon(iconLogoC);
+	}
+	return checkok;	
+    }
+	public boolean checkTel() {
+		boolean checkok=true;
+			if(Check.checkTel(txtPhone.getText()))
+			{
+				lblCheckPhone.setIcon(iconLogoT);
+			}
+			else
+			{
+			checkok=false;	
+			lblCheckPhone.setIcon(iconLogoC);
+			}
+		return checkok;	
+	}
+	
+	
+	public boolean checkinq() {
+		boolean checkok=true;
+		if(Check.checkName(txtInquadr.getText()))
+		{
+			System.out.println("13");	
+			lblCheckInq.setIcon(iconLogoT);
+		}
+		else
+		{
+			checkok=false;
+			lblCheckInq.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}
+	
+	public boolean checkPass1() {
+		boolean checkok=true;
+		if(Check.checkPass(passwordField.getPassword()))
+		{
+			lblCheckPass.setIcon(iconLogoT);
+		}
+		else
+		{
+			checkok=false;
+			lblCheckPass.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+	
+	public boolean checkPass2() {
+		boolean checkok=true;
+		if(Check.checkPass(passwordFieldCh.getPassword()))
+		{
+			lblCheckVerifyPass.setIcon(iconLogoT);
+		}
+		else
+		{
+			checkok=false;
+			lblCheckVerifyPass.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+
+	public boolean checkPassEq() {
+		boolean checkok=true;
+		if(Check.checkPassEq(passwordField.getPassword(),passwordFieldCh.getPassword()))
+		{
+			lblCheckVerifyPass.setIcon(iconLogoT);
+		}
+		else
+		{
+			checkok=false;
+			lblCheckVerifyPass.setIcon(iconLogoC);
+		}
+		return checkok;	
+	}	
+////////////////////////////////////////////////////////////////////////////////////7
+>>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
 	public String getTypePerson() {
 		return TypePerson;
 	}
@@ -772,13 +953,57 @@ public class AppReader extends SL_JFrame {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+<<<<<<< HEAD
 	public AppReader  getW() {
 		return w;
 	}
 	public void setW(AppReader w) {
 		this.w = w;
 	}
+=======
+	//////////////////////////////////////////////////////////////////////
+>>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
 	
+	public JRadioButton getRdbtnReader() {
+		return rdbtnReader;
+	}
+
+	public void setRdbtnReader(JRadioButton rdbtnReader) {
+		this.rdbtnReader = rdbtnReader;
+	}
+
+	public JRadioButton getRdbtnLibrarian() {
+		return rdbtnLibrarian;
+	}
+
+	public void setRdbtnLibrarian(JRadioButton rdbtnLibrarian) {
+		this.rdbtnLibrarian = rdbtnLibrarian;
+	}
+
+	public ImageIcon getIconLogoT() {
+		return iconLogoT;
+	}
+
+	public void setIconLogoT(ImageIcon iconLogoT) {
+		this.iconLogoT = iconLogoT;
+	}
+
+	public ImageIcon getIconLogoC() {
+		return iconLogoC;
+	}
+
+	public void setIconLogoC(ImageIcon iconLogoC) {
+		this.iconLogoC = iconLogoC;
+	}
+
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+
 	
 	@Override
 	public void addMsg(String msg){

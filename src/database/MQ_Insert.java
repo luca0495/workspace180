@@ -43,14 +43,16 @@ public class MQ_Insert {
 	
 		
 		public static String insertUtenteGetQuery(
+				int idus,
 				String name, 
 				String surname, 
 				String inq, 
 				String mail,  
 				String cf, 
 				String tel, 
-				String pass, 
+				String pass,	
 				int i, 
+				int tentativi,
 				String typePerson
 				) throws SQLException
 		{
@@ -58,17 +60,15 @@ public class MQ_Insert {
 		
 			String query = 		"INSERT INTO utente("
 					+ "nome,"
-
 					+ "cognome,"
 					+ "email,"
 					+ "codice_fiscale,"
 					+ "inquadramento,"
 					+ "password,"
 					+ "password_temp,"
-
+					+ "password_temp_tentativi,"
 					+ "ntel,"
-					+ "tipo_utente, "
-					+ "password_temp_tentativi) "
+					+ "tipo_utente ) "
 					+ "VALUES('" 	+ name 
 									+ "' , '" + surname 
 									+ "' , '" + mail + "' , '" 
@@ -76,9 +76,9 @@ public class MQ_Insert {
 									+ inq + "' , '" 
 									+ pass + "' , '" 
 									+ i + "' , '" 
+									+ tentativi + "','"
 									+ tel + "' , '"
-									+ typePerson + "','"
-									+ 0 +"')";
+									+ typePerson +"')";
 
 
 			return 	query;

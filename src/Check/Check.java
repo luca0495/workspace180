@@ -306,8 +306,8 @@ public class Check {
 	    }
 	 public static boolean checkAllReg(String nome, String cognome, String telefono, String email, String codicefiscale, char[] pass, char[] passC, String inq)
 	    {
-	    	return checkName(nome) && checkName(cognome) && checkTel(telefono) && checkMail(email) && checkMailExist(email) && checkCF(codicefiscale) && checkCodFisExist(codicefiscale) && checkPass(pass) 
-	    			&& checkPass(passC) && checkPassEq(pass, passC)&& checkInq(inq);
+	    	return checkName(nome) && checkName(cognome) && checkTel(telefono) && checkMail(email) && !checkMailExist(email) && checkCF(codicefiscale) && checkCodFisExist(codicefiscale) && checkPass(pass) 
+	    			&& checkPass(passC) && checkPassEq(pass, passC) && checkInq(inq);
 	    }
 	 
 	 public static boolean checkAllBooks(String nome, String cognome, String categoria, String titolo)
