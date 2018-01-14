@@ -1086,15 +1086,17 @@ public class Account extends SL_JFrame{
 		passwordFieldConfMod.setEditable(false);
 		txtInqMod.setEditable(false);
 		txtTelMod.setEditable(false);
-		/*
+		
+		
 		lblChangeNameCheck.setIcon(null);
 		lblChangeSurnameCheck.setIcon(null);
-		lblChangeEmailCheck.setIcon(null);
+		getLblMAIL().setIcon(null);
 		lblChangePassCheck.setIcon(null);
 		lblChangePassConfCheck.setIcon(null);
 		lblChangeInqCheck.setIcon(null);
 		lblChangePhoneCheck.setIcon(null);
-		*/
+		
+		
 	}
 	
 	public boolean checkall() {

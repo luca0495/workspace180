@@ -654,6 +654,8 @@ public class Client implements Serializable, Runnable  {
 								accX.getPanelModify().setVisible(false);
 								
 								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
+								
+								
 								clrParFS();	
 								break;
 								
