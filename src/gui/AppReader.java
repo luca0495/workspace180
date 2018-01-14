@@ -65,9 +65,6 @@ public class AppReader extends SL_JFrame {
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldCh;
 	private int idUser ;
-
-
-
 	private	JLabel lblCheckName; 
 	private	JLabel lblCheckSurname; 
     private JLabel lblCheckEmail;
@@ -80,8 +77,6 @@ public class AppReader extends SL_JFrame {
 	private JRadioButton rdbtnReader;
 	private JRadioButton rdbtnLibrarian;
 	
-	private ImageIcon iconLogoT;
-	private ImageIcon iconLogoC;
 	
 	private JTextField text;
 	private String TypePerson;
@@ -89,7 +84,6 @@ public class AppReader extends SL_JFrame {
 	//private static final String[] Students =
 		// {"	A1" , "A2"};
 	
-	private JLabel 		lblCheckCF ;
 	private JLabel 		lblCheckMail ;
 	
 	
@@ -130,16 +124,14 @@ public class AppReader extends SL_JFrame {
 
 		
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
-		setIconLogoT(iconLogoT);
 		
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
-<<<<<<< HEAD
+
 		setIconLogoT(iconLogoT);
 		setIconLogoC(iconLogoC);
 		
-=======
-		setIconLogoC(iconLogoC);
->>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
+
+		
 		
 		JLabel lblNome = new JLabel("Nome");
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -189,23 +181,16 @@ public class AppReader extends SL_JFrame {
 		lblCheckSurname.setBounds(345, 115, 16, 16);
 		panelSelection.add(lblCheckSurname);
 		
-<<<<<<< HEAD
-		JLabel lblCheckEmail = new JLabel();
-	this.setLblCheckMail(lblCheckEmail);
+		lblCheckEmail = new JLabel();
+	    this.setLblCheckMail(lblCheckEmail);
 		lblCheckEmail.setBounds(345, 190, 16, 16);
 		panelSelection.add(lblCheckEmail);
 		
-		JLabel lblCheckCF = new JLabel();
-	this.setLblCheckCF(lblCheckCF);
+		lblCheckCF = new JLabel();
+	    this.setLblCheckCF(lblCheckCF);
 		lblCheckCF.setBounds(330, 342, 16, 16);
 		panelSelection.add(lblCheckCF);
-		
-		JLabel lblCheckInq = new JLabel();
-		lblCheckInq.setBounds(345, 266, 16, 16);
-		panelSelection.add(lblCheckInq);
 				
-		JLabel lblCheckPass = new JLabel();
-=======
 		lblCheckEmail = new JLabel();
 		lblCheckEmail.setBounds(345, 190, 16, 16);
 		panelSelection.add(lblCheckEmail);
@@ -213,13 +198,8 @@ public class AppReader extends SL_JFrame {
 		lblCheckInq = new JLabel();
 		lblCheckInq.setBounds(345, 266, 16, 16);
 		panelSelection.add(lblCheckInq);
-		
-		lblCheckCF = new JLabel();
-		lblCheckCF.setBounds(330, 342, 16, 16);
-		panelSelection.add(lblCheckCF);
-		
+	
 		lblCheckPass = new JLabel();
->>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
 		lblCheckPass.setBounds(829, 34, 16, 16);
 		panelSelection.add(lblCheckPass);
 		
@@ -643,7 +623,6 @@ public class AppReader extends SL_JFrame {
 	*/	
     }
 
-<<<<<<< HEAD
 	
 	public boolean checkcf(){
 		boolean checkok=true;
@@ -735,15 +714,6 @@ public class AppReader extends SL_JFrame {
 			return checkok;
 	}	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-=======
 	public boolean checkname() {
 		boolean checkok=true;
 			if(Check.checkName(txtName.getText()))
@@ -868,8 +838,7 @@ public class AppReader extends SL_JFrame {
 		}
 		return checkok;	
 	}	
-////////////////////////////////////////////////////////////////////////////////////7
->>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
+////////////////////////////////////////////////////////////////////////////////////
 	public String getTypePerson() {
 		return TypePerson;
 	}
@@ -953,16 +922,15 @@ public class AppReader extends SL_JFrame {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-<<<<<<< HEAD
 	public AppReader  getW() {
 		return w;
 	}
 	public void setW(AppReader w) {
 		this.w = w;
 	}
-=======
+
 	//////////////////////////////////////////////////////////////////////
->>>>>>> d0faa67ca11f85b71e75312b79bba8d9fabde1df
+
 	
 	public JRadioButton getRdbtnReader() {
 		return rdbtnReader;
@@ -980,21 +948,6 @@ public class AppReader extends SL_JFrame {
 		this.rdbtnLibrarian = rdbtnLibrarian;
 	}
 
-	public ImageIcon getIconLogoT() {
-		return iconLogoT;
-	}
-
-	public void setIconLogoT(ImageIcon iconLogoT) {
-		this.iconLogoT = iconLogoT;
-	}
-
-	public ImageIcon getIconLogoC() {
-		return iconLogoC;
-	}
-
-	public void setIconLogoC(ImageIcon iconLogoC) {
-		this.iconLogoC = iconLogoC;
-	}
 
 	public int getIdUser() {
 		return idUser;

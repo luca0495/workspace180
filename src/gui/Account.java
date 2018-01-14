@@ -1089,24 +1089,17 @@ public class Account extends SL_JFrame{
 		txtInqMod.setEditable(false);
 		txtTelMod.setEditable(false);
 		
-<<<<<<< HEAD
 		lblChangeNameCheck.setIcon(null);
 		lblChangeSurnameCheck.setIcon(null);
 		//lblChangeEmailCheck.setIcon(null);
-=======
-		
 		lblChangeNameCheck.setIcon(null);
 		lblChangeSurnameCheck.setIcon(null);
 		getLblMAIL().setIcon(null);
->>>>>>> ba921775c75d5f23e9ca81e73fdd86b26a433daf
+
 		lblChangePassCheck.setIcon(null);
 		lblChangeInqCheck.setIcon(null);
 		lblChangePhoneCheck.setIcon(null);
-		
-<<<<<<< HEAD
-=======
-		
->>>>>>> ba921775c75d5f23e9ca81e73fdd86b26a433daf
+	
 	}
 	
 	public boolean checkall() {
