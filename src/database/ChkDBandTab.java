@@ -86,13 +86,13 @@ public class ChkDBandTab {
 	 
 		 statement.executeUpdate
                   ("CREATE TABLE  libro ( "
-                  +"codice serial not null, "
+                  +"codice serial primary key, "
                   +"nome_autore varchar(15) not null, "
                   +"cognome_autore varchar(15) not null, "
                   +"categoria varchar(15) not null,"
                   +"titolo varchar(35) not null,"
-                  +"disponibilità integer null,"
-                  +"primary key(codice,nome_autore,cognome_autore,categoria,titolo))")  ;
+                  +"disponibilità varchar(35) not null,"
+                  +"prenotazioni_in_coda integer not null)")  ;
 		 
 		 	      System.out.println("ChkDBandTable :> table Book CREATED !");		 
 	 }
@@ -148,17 +148,13 @@ public class ChkDBandTab {
 		 
 			 statement.executeUpdate
 	                  ("CREATE TABLE  prestiti ( "
-	                  +"codice varchar(10) not null,"
+	                  +"codice serial not null,"
 	                  +"id serial not null,"
-	                  +"titolo varchar(35) not null,"
-	                  +"nome_autore varchar(15) not null,"
-	                  +"cognome_autore varchar(15) not null,"
-	                  +"categoria varchar (15) not null,"
+	                  +"email varchar(40) not null,"
 	                  +"data_inizio date not null,"
 	                  +"data_fine date not null,"
-	                  +"lista_prenotazioni integer[] not null,"
-	                  +"foreign key (id) references UTENTE(id) ON UPDATE CASCADE ON DELETE CASCADE,"
-	                  +"foreign key ( codice, nome_autore, cognome_autore, categoria, titolo)references LIBRO ON UPDATE CASCADE ON DELETE CASCADE)")  ;
+	                  +"foreign key (id)   references utente (id) ON UPDATE CASCADE ON DELETE CASCADE,"
+	                  +"foreign key (codice) references libro (codice) ON UPDATE CASCADE ON DELETE CASCADE)")  ;
 			 
 			 System.out.println("ChkDBandTable :> table Prestiti CREATED !");
 		 

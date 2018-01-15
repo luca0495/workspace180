@@ -67,7 +67,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<5; i++)
+        			for(int i = 0; i<7; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
@@ -199,7 +199,8 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Cognome_Autore");
 		model.addColumn("Categoria");
 		model.addColumn("Titolo");
-		model.addColumn("Num_Pren");
+		model.addColumn("Disponibilità");
+		model.addColumn("Prenotazioni_in_coda");
 		
 		System.out.println("Valore ritornato:" + x);		
 		
@@ -207,7 +208,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		                                     + " OR cognome_autore LIKE '%"+x+"%'"
 		                                     + " OR categoria LIKE '%"+x+"%'"
 		                                     + " OR titolo LIKE '%"+x+"%')"
-		                                     + " AND codice <=25 ORDER BY codice ASC";
+		                                     + " ORDER BY codice ASC";
 		if(x=="" || x==null){			
 		query = "SELECT * FROM libro ";
 		}

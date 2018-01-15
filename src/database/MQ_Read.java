@@ -33,13 +33,14 @@ public class MQ_Read {
 			
 			if (!rs.isBeforeFirst()) 
 			{
-				dati = new String[1][6];
+				dati = new String[1][7];
 				dati[0][0] = null;
 				dati[0][1] = null;
 				dati[0][2] = null;
 				dati[0][3] = null;
 				dati[0][4] = null;
 				dati[0][5] = null;
+				dati[0][6] = null;
 				
 			}
 			else
@@ -51,9 +52,10 @@ public class MQ_Read {
 					results.add(rs.getString("cognome_autore"));
 					results.add(rs.getString("categoria"));
 					results.add(rs.getString("titolo"));
-					results.add(rs.getString("num_prenotazioni"));
+					results.add(rs.getString("disponibilità"));
+					results.add(rs.getString("prenotazioni_in_coda"));
 					
-					int cols = 6;
+					int cols = 7;
 			    	int rows = results.size() / cols;
 			    	
 			    	dati = new String[rows][cols];

@@ -10,12 +10,13 @@ public class MQ_Delete {
 	public static void deleteRowBooks(List<String> r) throws SQLException
 	{			
 		String query = "DELETE FROM libro WHERE "
-				+ "codice = '" 					+ r.get(0) 
-				+ "' AND nome_autore = '" 		+ r.get(1) 
-				+ "' AND cognome_autore = '" 	+ r.get(2) 
-				+ "' AND categoria = '" 		+ r.get(3) 
-				+ "' AND titolo = '" 			+ r.get(4) + "';";
-    	
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND nome_autore = '" 		   + r.get(1) 
+				+ "' AND cognome_autore = '" 	   + r.get(2) 
+				+ "' AND categoria = '" 		   + r.get(3) 
+				+ "' AND titolo = '" 			   + r.get(4) 
+				+ "' AND disponibilità = '"        + r.get(5) 
+		        + "' AND prenotazioni_in_coda = '" + r.get(6) + "';";
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
@@ -40,12 +41,13 @@ public class MQ_Delete {
 	public static String deleteRowBooksGetQuery(List<String> r) throws SQLException
 	{		
 		String query = "DELETE FROM libro WHERE "
-				+ "codice = '" 					+ r.get(0) 
-				+ "' AND nome_autore = '" 		+ r.get(1) 
-				+ "' AND cognome_autore = '" 	+ r.get(2) 
-				+ "' AND categoria = '" 		+ r.get(3) 
-				+ "' AND titolo = '" 			+ r.get(4) + "';";
-		
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND nome_autore = '" 		   + r.get(1) 
+				+ "' AND cognome_autore = '" 	   + r.get(2) 
+				+ "' AND categoria = '" 		   + r.get(3) 
+				+ "' AND titolo = '" 			   + r.get(4) 
+		        + "' AND disponibilità = '"        + r.get(5) 
+		        + "' AND prenotazioni_in_coda = '" + r.get(6) + "';";
 		return query;
 	}
 	

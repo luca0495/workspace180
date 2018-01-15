@@ -43,6 +43,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 import java.awt.Toolkit;
+import javax.swing.JComboBox;
 
 public class ResearchBooks extends SL_JFrame {
 
@@ -59,7 +60,6 @@ public class ResearchBooks extends SL_JFrame {
     private JTable tableBooks;
     
 	protected String ValToSearch;
-	private JTextField txtCod;
 	private JTextField txtName;
 	private JTextField txtSurname;
 	private JTextField txtCat;
@@ -69,7 +69,6 @@ public class ResearchBooks extends SL_JFrame {
 	private JLabel lblEr2;
 	private JLabel lblEr3;
 	private JLabel lblEr4;
-	private JTextField txtLoans;
 	private JButton btnPrenotazione;
 	/**
 	 * Create the application.
@@ -105,7 +104,7 @@ public class ResearchBooks extends SL_JFrame {
 	
 	public void initialize(Component c) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 600);
+		frame.setBounds(100, 100, 1033, 630);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(c);
@@ -171,40 +170,31 @@ public class ResearchBooks extends SL_JFrame {
 		btnPrenotazione.setBounds(791, 7, 183, 23);
 		frame.getContentPane().add(btnPrenotazione);
 		JPanel panelResearch = new JPanel();
-		panelResearch.setBounds(10, 36, 964, 470);
+		panelResearch.setBounds(10, 36, 997, 544);
 		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelResearch.setBackground(Color.WHITE);
 		frame.getContentPane().add(panelResearch);
 		panelResearch.setLayout(null);		
 		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
-		panelTableResearch.setBounds(10, 11, 944, 420);
+		panelTableResearch.setBounds(10, 11, 977, 420);
 		panelResearch.add(panelTableResearch);
 		
 		lblEr1 = new JLabel();
-		lblEr1.setBounds(234, 450, 19, 14);
+		lblEr1.setBounds(69, 519, 19, 14);
 		panelResearch.add(lblEr1);
 		
 		lblEr2 = new JLabel();
-		lblEr2.setBounds(389, 450, 19, 14);
+		lblEr2.setBounds(298, 519, 19, 14);
 		panelResearch.add(lblEr2);
 		
 		lblEr3 = new JLabel();
-		lblEr3.setBounds(554, 450, 19, 14);
+		lblEr3.setBounds(553, 519, 19, 14);
 		panelResearch.add(lblEr3);
 		
 		lblEr4 = new JLabel();
-		lblEr4.setBounds(726, 450, 19, 14);
+		lblEr4.setBounds(779, 519, 19, 14);
 		panelResearch.add(lblEr4);
-		
-		// codice ogni volta deve incrementarsi di uno quando c'è un aggiunta di un libro
-		txtCod = new JTextField();
-		txtCod.setEnabled(false);
-		txtCod.setEditable(false);
-		txtCod.setText("Codice");
-		txtCod.setBounds(10, 428, 156, 20);
-		panelResearch.add(txtCod);
-		txtCod.setColumns(10);
 		
 		txtName = new JTextField();
 		txtName.addFocusListener(new FocusAdapter() {
@@ -221,7 +211,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		txtName.setBounds(163, 428, 156, 20);
+		txtName.setBounds(10, 499, 156, 20);
 		panelResearch.add(txtName);
 		txtName.setColumns(10);
 		
@@ -240,7 +230,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		txtSurname.setBounds(318, 428, 156, 20);
+		txtSurname.setBounds(234, 499, 156, 20);
 		panelResearch.add(txtSurname);
 		txtSurname.setColumns(10);
 		
@@ -259,7 +249,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		txtCat.setBounds(472, 428, 156, 20);
+		txtCat.setBounds(478, 499, 156, 20);
 		panelResearch.add(txtCat);
 		txtCat.setColumns(10);
 		
@@ -281,18 +271,9 @@ public class ResearchBooks extends SL_JFrame {
 
 		
 		
-		txtTitle.setBounds(626, 428, 156, 20);
+		txtTitle.setBounds(708, 499, 156, 20);
 		panelResearch.add(txtTitle);
 		txtTitle.setColumns(10);
-		
-		// contatore per il numero di prenotazioni
-		txtLoans = new JTextField();
-		txtLoans.setEnabled(false);
-		txtLoans.setEditable(false);
-		txtLoans.setText("Numero prenotazioni");
-		txtLoans.setBounds(781, 428, 156, 20);
-		panelResearch.add(txtLoans);
-		txtLoans.setColumns(10);
 		
 		lblAdd = new JLabel();
 		System.out.println("1" );
@@ -310,11 +291,12 @@ public class ResearchBooks extends SL_JFrame {
 						System.out.println("5" );
 						
 
-//TODO INSERISCI **** PASSA A CLIENT												
-					
+//TODO INSERISCI **** PASSA A CLIENT	
+						String disp = "Libero";
+					    int pren_cod =0;
 						System.out.println("inserimento nuovo libro: Client:" + me);
 						// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
-							me.setSql(MQ_Insert.insertBooksGetQuery(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText()));
+							me.setSql(MQ_Insert.insertBooksGetQuery(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));
 						// accoda il comando alla lista comandi dalla quale legge il client
 
 							try {
@@ -402,9 +384,33 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		lblAdd.setBounds(935, 450, 19, 14);
+		lblAdd.setBounds(918, 505, 19, 14);
 		lblAdd.setIcon(iconLogoA);
 		panelResearch.add(lblAdd);
+		
+		JLabel lblInsertName = new JLabel("Nome_Autore");
+		lblInsertName.setBounds(10, 474, 156, 14);
+		panelResearch.add(lblInsertName);
+		
+		JLabel lblInsertSurname = new JLabel("Cognome_Autore");
+		lblInsertSurname.setBounds(233, 474, 157, 14);
+		panelResearch.add(lblInsertSurname);
+		
+		JLabel lblInsertCat = new JLabel("Categoria");
+		lblInsertCat.setBounds(488, 474, 146, 14);
+		panelResearch.add(lblInsertCat);
+		
+		JLabel lblInsertTitle = new JLabel("Titolo");
+		lblInsertTitle.setBounds(715, 475, 149, 14);
+		panelResearch.add(lblInsertTitle);
+		
+		JLabel lblInsertBooks = new JLabel("Inserimento Libro");
+		lblInsertBooks.setBounds(369, 442, 186, 14);
+		panelResearch.add(lblInsertBooks);
+		
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setBounds(10, 8, 180, 20);
+		frame.getContentPane().add(comboBox);
 	
 	}
 	

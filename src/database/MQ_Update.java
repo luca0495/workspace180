@@ -31,6 +31,14 @@ public class MQ_Update {
 		{
 			query += "SET titolo = '" + input + "'";
 		}
+		else if(col == 5)
+		{
+			query += "SET disponibilità = '" + input + "'";
+		}
+		else if(col == 6)
+		{
+			query += "SET prenotazioni_in_coda = '" + input + "'";
+		}
 		query += " WHERE codice = '" + cd + "';";
 		
 		DBmanager.openConnection();

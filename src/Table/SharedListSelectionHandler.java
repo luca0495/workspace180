@@ -30,7 +30,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		{
 			if(!isAdjusting)
 			{
-				for(int j = 0; j<5; j++)
+				for(int j = 0; j<7; j++)
 				{
 					rowData.add((String) tb.getValueAt(index, j));
 				}
@@ -42,7 +42,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		{
 			if(!isAdjusting)
 			{
-				for(int j = 0; j<6; j++)
+				for(int j = 0; j<8; j++)
 				{
 					rowData.add((String) tb.getValueAt(index, j));
 				}

@@ -92,10 +92,10 @@ public class MQ_Insert {
 			DBmanager.closeConnection();
 		}
 		
-		public static void insertBooks(String name, String surname, String cat,String title) throws SQLException
+		public static void insertBooks(String name, String surname, String cat,String title,String disp,int pren_cod) throws SQLException
 		{
-			String query = "INSERT INTO libro(nome_autore, cognome_autore, categoria, titolo) "
-					       + "VALUES('" + name + "' , '" + surname + "' , '" + cat + "' , '" + title + "')";
+			String query = "INSERT INTO libro(nome_autore, cognome_autore, categoria, titolo,disponibilità,prenotazioni_in_coda) "
+					       + "VALUES('" + name + "' , '" + surname + "' , '" + cat + "' , '" + title + "', '" + disp + "' , '" + pren_cod + "')";
 			DBmanager.openConnection();
 			DBmanager.executeUpdate(query);
 			DBmanager.closeConnection();
@@ -105,17 +105,23 @@ public class MQ_Insert {
 				String name, 
 				String surname, 
 				String cat, 
-				String title) throws SQLException
+				String title,
+				String disp,
+				int pren_cod) throws SQLException
 		{
 			String query = 		"INSERT INTO libro("
 					+ "nome_autore, "
 					+ "cognome_autore, "
 					+ "categoria, "
-					+ "titolo) "
+					+ "titolo, "
+					+ "disponibilità, "
+					+ "prenotazioni_in_coda) "
 					+ "VALUES('" 		+ name		+ "' , '" 
 										+ surname	+ "' , '" 
 										+ cat 		+ "' , '" 
-										+ title 	+ "')";
+										+ title 	+ "', '"
+									    + disp 	    + "', '"          
+									    + pren_cod 	+ "')";
 			return 	query;
 		}
 

@@ -126,7 +126,8 @@ public class ServerReal extends ServerSkeleton {
 				model.addColumn("Cognome_Autore");
 				model.addColumn("Categoria");
 				model.addColumn("Titolo");
-				model.addColumn("Num_Pren");					
+				model.addColumn("Disponibilità");
+				model.addColumn("Prenotazioni_in_coda");
 
 				DBmanager.openConnection();
 				ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
@@ -143,7 +144,8 @@ public class ServerReal extends ServerSkeleton {
 				model.setValueAt(rs.getString("cognome_autore"), row, 2);	System.out.println("Test6");								
 				model.setValueAt(rs.getString("categoria"), row, 3);		System.out.println("Test7");								
 				model.setValueAt(rs.getString("titolo"), row, 4);			System.out.println("Test8");
-				model.setValueAt(rs.getString("num_prenotazioni"), row, 5);
+				model.setValueAt(rs.getString("disponibilità"), row, 5);
+				model.setValueAt(rs.getString("prenotazioni_in_coda"), row, 6);
 				row++;						
 				}
 					System.out.println("Test9");
