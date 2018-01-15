@@ -256,7 +256,7 @@ public class Client implements Serializable, Runnable  {
 														UserUPDATE();	
 								break;
 							case UserDELETE: 
-											
+														UserDELETE();
 								break;	
 							
 							case UserREADloginFIRST: 								
@@ -824,21 +824,16 @@ public class Client implements Serializable, Runnable  {
 								case "Account":
 									Account eX = (Account) ActW;
 									eX.getLblMAIL().setIcon(eX.getIconLogoC());
-									eX.getTxtMailMod().setText("email gia assegnata... account...");
+									eX.getTxtMailMod().setText(getSql()+ " : email gia assegnata...");
 									//PopUp.errorBox(getActC(), Mb.getText());
 									eX.setMailcheckResult("OK E");
 									eX.setMailcheckinprogress(false);
 									//clrParFS();	
 									break;
 								case "AppReader":
-									AppReader erNGX = (AppReader) ActW;
-									
+									AppReader erNGX = (AppReader) ActW;								
 									erNGX.getLblCheckMail().setIcon(erNGX.getIconLogoC());
-									
-									
-									
-									
-									erNGX.getTxtEmail().setText("email gia assegnata... app reader...");
+									erNGX.getTxtEmail().setText(getSql()+ " : email gia assegnata...");
 									erNGX.setMailcheckResult("OK E");
 									erNGX.setMailcheckinprogress(false);										
 									break;
@@ -907,9 +902,7 @@ public class Client implements Serializable, Runnable  {
 								
 							//user UPDATE
 							case "SRV :> UP :> OK":
-								
 								Account upX = (Account) ActW;
-								
 								try {
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 									this.setIdut(Mb.getIdUser());
@@ -922,25 +915,29 @@ public class Client implements Serializable, Runnable  {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
 									e2.printStackTrace(); 
 								}
-
-								
-								
-								//***
-
-								//upX.updateallAfterModify(Mb.getRowUser());
-								
 								PopUp.infoBox(getActC(),Mb.getText() );	
-								System.out.println("SRV :> USER UPDATE :> OK ");
-								
+								System.out.println("SRV :> USER UPDATE :> OK ");								
 								//clrParFS();	
 								break;
 							
 							case "SRV :> UP :> NG":	
-								
 								PopUp.errorBox(getActC(),Mb.getText() );	
 								System.out.println("SRV :> USER UPDATE :> NG");
 								clrParFS();	
 								break;
+							
+							//user DELETE	
+							case "SRV :> USER del :> OK":	
+								
+								WindowEvent closeD = new WindowEvent(ActF, WindowEvent.WINDOW_CLOSING);
+								ActF.dispatchEvent(closeD);
+								
+								PopUp.infoBox(ActW,"Dati cancellati con successo");	
+								break;	
+							case "SRV :> USER del :> NG":	
+								
+								PopUp.errorBox(getActC(),Mb.getText() );
+								break;									
 								
 								
 							default:							
@@ -1390,6 +1387,34 @@ public class Client implements Serializable, Runnable  {
 				sendM(MsgSend, Mb);
 			}	
 		}	
+		
+		private void UserDELETE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+			Commands cmd = Commands.UserDELETE;
+			MessageBack Mb = new MessageBack();
+		
+			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+			System.out.println("CLI :> Prendo id utente :> "+this.getIdut());
+			
+			if (!stubok){
+				Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+				System.out.println(mSg);			
+				getActW().addMsg(new String ("Connection Test result"+mSg));
+			}else{	
+				System.out.println("CLI :> Stub OK");
+				// **** Client crea Message							
+				Message MsgSend = new Message(	
+						cmd,						// Comando richiesto
+						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+						this.toString(),			// id Client 
+						this.getSql(),				// Account --> MQ_Update.updateModUserIdGetQuery
+						this.getSql2(),				// Account --> email
+						0,
+						this.getIdut()				// Account --> idutente
+						);
+				sendM(MsgSend, Mb);
+			}	
+		}	
+		
 		
 		
 	//------------------------------------------------------------------------		 

@@ -462,119 +462,128 @@ public class AppReader extends SL_JFrame {
 		bgMod.add(rdbtnLibrarian);	
 		
 		btnReg.addActionListener(new ActionListener() {
+			//check email
+			
+			// se ok, check.checkallareg
+			
 			public void actionPerformed(ActionEvent e) {
-				if	(	Check.checkAllReg	(
-																txtName.getText(), 
-																txtSurname.getText(),
-																txtPhone.getText(),
-																txtEmail.getText(),
-																txtCF.getText(),
-																passwordField.getPassword(), 
-																passwordFieldCh.getPassword(), 
-																txtInquadr.getText()
-																
-											)
-					)
-				{
-					
-				String 	to 	= txtEmail.getText();	
-				String 	p 	= String.copyValueOf(passwordField.getPassword());
-				int 	tent	= 0;
 				
-				//*********************************************************************************
-				// in test 26 10 2017
-				int 	n	=EmailSender.randomGenerator1();
-				System.out.println("Destinatario:" + to +" Client:" + me);
-				try {
-					System.out.println("Destinatario:" + to +" Client:" + me);
-				// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
-					me.setSql(MQ_Insert.insertUtenteGetQuery(	
-						                                    	getIdUser(),
-																txtName.getText(), 
-																txtSurname.getText(),
-																txtInquadr.getText(),
-																to,
-																txtCF.getText(),
-																txtPhone.getText(),
-																p,
-																n,
-																tent,
-																TypePerson
-															)
-							);
-					System.out.println("Destinatario:" + to +" Client:" + me);
-					me.setTo(to);
-
-				// accoda il comando alla lista comandi dalla quale legge il client
-
-
-					System.out.println("setto nel client destinatario :"+me.getTo());
-					
-					// accoda il comando alla lista comandi dalla quale legge il client
-
-					System.out.println("GUI AppReader:> creazione query ok:");	
+				//TEST OK 
+				setMailcheckinprogress(true);
+				setCfcheckinprogress(true);
+				
+				//parte check mail e check cf...
+				checkmail();
+				checkcf();
+				
+				while (isMailcheckinprogress()||(isCfcheckinprogress())) {	//attendi... //System.out.println("attesa per check email exist");		
+					System.out.println("APPA READER attendo check MAIL result"+getMailcheckResult());
+					System.out.println("APPA READER attendo check CF   result"+getCfcheckResult());
 					try {
-						System.out.println("GUI AppReader:> cmd inserisci utente ");
-					me.setCliType(Clients.Librarian);	
-						me.getCmdLIST().put(Commands.UserRegistration);
-					} catch (InterruptedException e2) {
-						System.out.println("AppReader :> problemi con accodamento comando user registration");	
-						e2.printStackTrace();
-					}				
+						Thread.sleep(10);
+					} catch (InterruptedException ee) {
+						ee.printStackTrace();
+					}
+				}				
+					System.out.println("ritornato cf	check result"+getCfcheckResult());
+					System.out.println("ritornato mail 	check result"+getMailcheckResult());
+					
+				if ( getMailcheckResult().equals("OK NE") && getCfcheckResult().equals("OK NE") ){
+					
+					System.out.println("procedo con il controllo sintattico altri campi");
+					
+					if	(	Check.checkAllReg				//controllo sintattico campi rimanenti OK
+							(		txtName.getText(), 
+									txtSurname.getText(),
+									txtPhone.getText(),
+									//txtEmail.getText(),
+									//txtCF.getText(),
+									passwordField.getPassword(), 
+									passwordFieldCh.getPassword(), 
+									txtInquadr.getText()													
+															)
+																	)
+					{
+							String 	to 	= txtEmail.getText();	
+							String 	p 	= String.copyValueOf(passwordField.getPassword());
+							int 	tent	= 0;
+							//*********************************************************************************
+							// TEST OK 26 10 2017
+							int 	n	=EmailSender.randomGenerator1();
+							System.out.println("Destinatario:" + to +" Client:" + me);
+							try {
+								System.out.println("Destinatario:" + to +" Client:" + me);
+								// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
+								me.setSql(MQ_Insert.insertUtenteGetQuery(	
+								                        	getIdUser(),
+															txtName.getText(), 
+															txtSurname.getText(),
+															txtInquadr.getText(),
+															to,
+															txtCF.getText(),
+															txtPhone.getText(),
+															p,
+															n,
+															tent,
+															TypePerson
+														)
+								);
+								System.out.println("Destinatario:" + to +" Client:" + me);
+								me.setTo(to);														
+								System.out.println("setto nel client destinatario :"+me.getTo());	// accoda il comando alla lista comandi dalla quale legge il client
+								System.out.println("GUI AppReader:> creazione query ok:");	
+								try {
+									System.out.println("GUI AppReader:> cmd inserisci utente ");
+									me.setCliType(Clients.Librarian);	
+									me.getCmdLIST().put(Commands.UserRegistration);
+								} catch (InterruptedException e2) {
+									System.out.println("AppReader :> problemi con accodamento comando user registration");	
+									e2.printStackTrace();
+								}				
+							} catch (SQLException e2) {
+								System.out.println("AppReader :> creazione query NG ERRORE:");	
+								e2.printStackTrace();
+							}
+							WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+							frmSchoolib.dispatchEvent(close);
+							//*********************************************************************************
+							
+					}
+					else//controllo sintattico campi rimanenti NG
+					{
+							PopUp.warningBox(frmSchoolib, "Campi Errati");
+							
+							checkname();
+							checksurname();
+							//checkmail1();
+							checkPass1();
+							checkPass2();
+							checkPassEq();
+							//checkCF1();
+							checkTel();
+							checkinq();
+					}
 
-				} catch (SQLException e2) {
-					System.out.println("AppReader :> creazione query NG ERRORE:");	
-					e2.printStackTrace();
+					
+					
+					
+					
+					
+					
+				}else {
+					
+					//checkmail  OR  checkcf FAIL
+					
+					PopUp.warningBox(frmSchoolib, " Riverificare inserimento email O cf ");
+					
+					
 				}
 				
-				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-				frmSchoolib.dispatchEvent(close);
-				//*********************************************************************************
-				/*
-				try 
-					{	
-						System.out.println("Controllo errore:" + me.toString());																		
-						MQ_Insert.insertUtente	(
-													txtName.getText(), 
-													txtSurname.getText(), 
-													txtInquadr.getText(), 
-													txtEmail.getText(), 
-													txtCF.getText(), 
-													txtPhone.getText(), 
-													p,
-													EmailSender.randomGenerator1()
-												);
-						System.out.println("Controllo errore:" + 
-								me.toString() + 
-								me.getUSERNAME() + 
-								me.getPASSWORD() );
-						EmailSender.send_uninsubria_email(to,me);				
-					}										
-					catch (SQLException e1)			{e1.printStackTrace();} 
-					catch (SendFailedException e1) 	{e1.printStackTrace();} 
-					catch (MessagingException e1) 	{e1.printStackTrace();}
 				
 				
-				*/
-					//*********************************************************************************
-				//TODO SPOSTARE ANCHE QUESTO SU CLIENT
-					// PopUp.infoBox(c, "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");
-					// timer per panel nuovo RIVEDERE Ciao!!!
-				}
-				else
-				{
-					PopUp.warningBox(frmSchoolib, "Campi Errati");
-					checkname();
-					checksurname();
-					checkmail1();
-					checkPass1();
-					checkPass2();
-					checkPassEq();
-					checkCF1();
-					checkTel();
-					checkinq();
-				}
-			}
+
+				
+							}
 	});
 	   
 		btnReg.setBounds(470, 443, 147, 23);

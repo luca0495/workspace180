@@ -237,12 +237,10 @@ public class Account extends SL_JFrame{
              PopUp.warningBox(frmSchoolib,"Questa azione cancellerà in modo completo e definitivo il profilo utenete attualmente in uso !!!");
 				if(PopUp.confirmBox(frmSchoolib))
 				{
-                rowData = new ArrayList<String>();
-					
-				rowData.add(0, String.valueOf(idUser));
-
-//TODO DA PASSARE A CLIENT
-				
+				//TODO DA PASSARE A CLIENT
+/*				//test OK da locale	
+				rowData = new ArrayList<String>();	
+				rowData.add(0, String.valueOf(idUser));				
 				try {
 					MQ_Delete.deleteRowPerson(rowData);
 				} catch (SQLException e1) {
@@ -250,6 +248,24 @@ public class Account extends SL_JFrame{
 				}
 				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
 			    frmSchoolib.dispatchEvent(close);
+*/
+					//************************************************************
+					int idUs = getIdUser();
+					
+					me.setIdut(idUs);				
+					me.setActW(getW());
+					me.setActF(frmSchoolib);
+					me.setActC(c);				
+					try {
+						System.out.println("GUI account:> ottenuti dati user ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserDELETE);
+					} catch (InterruptedException e2) {
+						System.out.println("GUI account:> NON ottenuti dati user ");	
+						e2.printStackTrace(); 
+					}
+					//*************************************************************	
+					
 			}
 			}
 		});
@@ -283,6 +299,21 @@ public class Account extends SL_JFrame{
 		});
 		btnModify.setBounds(428, 381, 186, 54);
 		panelAccount.add(btnModify);
+		
+		JButton btnAnnulla = new JButton("Annulla");
+		btnAnnulla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+					 WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+					 frmSchoolib.dispatchEvent(close);
+					
+
+				}
+			});
+		
+		
+		btnAnnulla.setBounds(662, 381, 127, 54);
+		panelAccount.add(btnAnnulla);
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
@@ -712,7 +743,7 @@ public class Account extends SL_JFrame{
 				String stato 			= TypePerson;
 				System.out.println("1");				
 
-				//IN TEST 
+				//TEST OK 
 				setMailcheckinprogress(true);
 				//parte check mail...
 				checkmail();
@@ -1453,7 +1484,4 @@ public class Account extends SL_JFrame{
 		public void setMailcheckResult(String mailcheckResult) {
 			this.mailcheckResult = mailcheckResult;
 		}	
-	
-
-
 }

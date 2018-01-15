@@ -390,6 +390,27 @@ public class ServerReal extends ServerSkeleton {
 								System.out.println("SYS AL :> srv ritorna "+x.getText());										
 								return x;								
 								//break;	
+							
+							case UserDELETE:	
+								
+								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> USER DELETE ");					
+								System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
+								try {				
+									
+									MQ_Delete.deleteRowPerson(M.getMsg().getIdut());
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> USER del :> OK"));										
+								} catch (SQLException e) {	
+									System.out.println("problemi con query USER del");
+									e.printStackTrace();														
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> USER del :> NG"));
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;	
+								//break;		
+							
+								
 								
 								
 							case UserREADloginFIRST:

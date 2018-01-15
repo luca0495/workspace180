@@ -84,6 +84,20 @@ public class ResearchBooks extends SL_JFrame {
 		me.setActC(c);
 		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
 		
+		
+		
+		//TODO		
+		// me.getCliType()
+		
+		
+
+		//IF LIBRAIO VEDI BOTTONE
+		//ELSE NON LO VEDI
+		
+		
+		
+		
+		
 		initialize(c);
 		super.SL_Type = AppType.AppReader;
 	}
