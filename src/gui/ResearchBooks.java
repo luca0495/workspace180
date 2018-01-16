@@ -70,6 +70,10 @@ public class ResearchBooks extends SL_JFrame {
 	private JLabel lblEr3;
 	private JLabel lblEr4;
 	private JButton btnPrenotazione;
+	
+	private boolean LastIDbookcheckinprogress=false;
+	private int 	LastIDbookcheckResult;
+
 	/**
 	 * Create the application.
 	 * @param me2 
@@ -282,66 +286,71 @@ public class ResearchBooks extends SL_JFrame {
 	
 	
 			
-			public void mousePressed(MouseEvent arg0) {
-				
-				if(Check.checkAllBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText()))
+			public void mousePressed(MouseEvent arg0) {				
+				if(Check.checkAllBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText()))//controllo sintattico
 				{
 					try 
 					{
-						System.out.println("5" );
-						
-
-//TODO INSERISCI **** PASSA A CLIENT	
+						System.out.println("5" );	
 						String disp = "Libero";
 					    int pren_cod =0;
-						System.out.println("inserimento nuovo libro: Client:" + me);
-						// crea la query da girare insieme al messaggio per il server [ cmd insert + query gia pronta ]
-							me.setSql(MQ_Insert.insertBooksGetQuery(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));
-						// accoda il comando alla lista comandi dalla quale legge il client
+						System.out.println("inserimento nuovo libro: Client:" + me);						
+						System.out.println("ricerca ultimo id assegnato");
+						//in TEST 
+						setLastIDbookcheckinprogress(true);
+						//parte check last id user...
+						checkLastIDbook();
 
+						while (isLastIDbookcheckinprogress()) {	//attendi... //System.out.println("attesa per check LAST ID");		
+							System.out.println("attendo check result"+getLastIDbookcheckResult());
 							try {
-								System.out.println("GUI AppReader:> cmd inserisci LIBRO ");
-							me.setCliType(Clients.Librarian);	
-								me.getCmdLIST().put(Commands.BookADD);
-							} catch (InterruptedException e2) {
-								System.out.println("AppReader :> problemi con inserimento nuovo libro");	
-								e2.printStackTrace();
-							}				
-
-//TODO INSERISCI **** PASSA A CLIENT						
-						
-					/*	OLD TEST OK
-						MQ_Insert.insertBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText());						
-					*/	
-						
-						
-						System.out.println("6" );
-						
-						txtName.setText(null);
-						txtSurname.setText(null);
-						txtCat.setText(null);
-						txtTitle.setText(null);
-						System.out.println("7" );
-						lblEr1.setIcon(null);
-						lblEr2.setIcon(null);
-						lblEr3.setIcon(null);
-						lblEr4.setIcon(null);
-						System.out.println("8");
-						panelTableResearch.update();
-						System.out.println("9");
-						PopUp.infoBox(frame, "Inserimento Corretto");
-						
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+						//---------------------------------------------------------------------------------------------------
+						System.out.println("ritornato last id check result"+getLastIDbookcheckResult());
+						int li = (int)getLastIDbookcheckResult();
+						int newli;						
+						if (li==0) {//id non ottenuto...
+									newli = 0;
+									PopUp.errorBox(frame, "last book id non ottenuto...");							
+						}else {
+									newli = li++;	
+									me.setSql(MQ_Insert.insertBooksGetQuery(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));													
+									try {// accoda il comando alla lista comandi dalla quale legge il client
+												System.out.println("GUI AppReader:> cmd inserisci LIBRO ");
+										me.setCliType(Clients.Librarian);	
+										me.getCmdLIST().put(Commands.BookADD);
+									} catch (InterruptedException e2) {
+												System.out.println("AppReader :> problemi con inserimento nuovo libro");	
+										e2.printStackTrace();
+									}				
+									//pulizia campi di inserimento dati libro	
+										System.out.println("6" );
+										txtName.setText(null);
+										txtSurname.setText(null);
+										txtCat.setText(null);
+										txtTitle.setText(null);
+										System.out.println("7" );
+										lblEr1.setIcon(null);
+										lblEr2.setIcon(null);
+										lblEr3.setIcon(null);
+										lblEr4.setIcon(null);
+										System.out.println("8");
+										panelTableResearch.update();
+										System.out.println("9");
+										PopUp.infoBox(frame, "Inserimento Corretto");													
+						}	
 					} 
-
 				 catch (SQLException e2) {
 					System.out.println("AppReader :> creazione query NG ERRORE:");	
 					e2.printStackTrace();
 				}
-					
-
 				}
 				
-				else
+				else//controllo sintattico non corretto... 
 				{
 					PopUp.errorBox(frame, "Campi Errati");
 					System.out.println("9");
@@ -384,6 +393,9 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
+		
+		
+		
 		lblAdd.setBounds(918, 505, 19, 14);
 		lblAdd.setIcon(iconLogoA);
 		panelResearch.add(lblAdd);
@@ -413,6 +425,24 @@ public class ResearchBooks extends SL_JFrame {
 		frame.getContentPane().add(comboBox);
 	
 	}
+	
+	public boolean checkLastIDbook(){
+		boolean checkok=true;
+		
+			System.out.println(" ***** sto controllando elenco libri per ottenere ultimo id libro ");
+			//******************************************************************									
+								try {
+								me.setCliType(Clients.Librarian);
+								me.getCmdLIST().put(Commands.BookLast);
+								} catch (InterruptedException e2) {
+									System.out.println("GUI account:> NON ottenuti dati last book id  ");	
+									e2.printStackTrace(); 
+									setLastIDbookcheckResult(0);//0==id non ottenuto
+								}
+			//******************************************************************
+			return checkok;
+	}
+	
 	
 	public JTextField getTxtName() {
 		return txtName;
@@ -452,6 +482,27 @@ public class ResearchBooks extends SL_JFrame {
 	public void setTxtTitle(JTextField txtTitle) {
 		this.txtTitle = txtTitle;
 	}
+	
+	
+	public boolean isLastIDbookcheckinprogress() {
+		return LastIDbookcheckinprogress;
+	}
+
+
+	public void setLastIDbookcheckinprogress(boolean lastIDbookcheckinprogress) {
+		LastIDbookcheckinprogress = lastIDbookcheckinprogress;
+	}
+
+
+	public int getLastIDbookcheckResult() {
+		return LastIDbookcheckResult;
+	}
+
+
+	public void setLastIDbookcheckResult(int lastIDbookcheckResult) {
+		LastIDbookcheckResult = lastIDbookcheckResult;
+	}
+
 public void findBooks(String query){
 	TableRowSorter<DefaultTableModel> tr=new TableRowSorter<DefaultTableModel>();
 	tableBooks.setRowSorter(tr);
