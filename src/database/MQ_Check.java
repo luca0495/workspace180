@@ -56,5 +56,28 @@ public class MQ_Check {
 		return datiCliente;
 	}
 	
-	
+	public static String checkCFLastInsert() throws SQLException
+	{
+		String query1 = "SELECT codice FROM libro ORDER by codice DESC LIMIT 1";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query1);
+		
+		String codCF = new String();
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			codCF = "No Data";
+		}
+		else
+		{
+			rs.next();
+			codCF = rs.getString("codice");
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return codCF;
+	}
+
 }
