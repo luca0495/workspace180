@@ -188,6 +188,9 @@ public class Client implements Serializable, Runnable  {
 								case BookExecuteQuery:	//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
 														BookPopulate();
 									break;
+								case BookLast:			//arriva DA GUI TABLEBOOKS //
+														BookLast();
+									break;
 						//	Person
 								case UserREAD: 						
 														UserGetData();			//necessario setSql con query completa
@@ -1079,6 +1082,27 @@ public class Client implements Serializable, Runnable  {
 		}	
 	}
 	
+//TODO ADATTA	
+private void BookLast () throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		
+		Commands cmd = Commands.BookLast;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");					
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString()				// id Client 
+					);
+			sendM(MsgSend, Mb);	
+		}		
+	}
 	
 	private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
@@ -1226,6 +1250,8 @@ public class Client implements Serializable, Runnable  {
 				sendM(MsgSend, Mb);
 			}	
 		}
+		
+		//BookLast();
 		
 		private void UserGetDatabyEmail() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmail;

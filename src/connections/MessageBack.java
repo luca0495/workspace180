@@ -22,6 +22,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private String  	UserEmail;
 	private String  	Wtype;
 	private int			IdUser;
+	private int			IdBook;
 	
 	private String[] 	RowUser;
 	private String[] 	RowBook;
@@ -103,6 +104,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setWtype(String wtype) {
 		Wtype = wtype;
+	}
+	public int getIdBook() {
+		return IdBook;
+	}
+	public void setIdBook(int idBook) {
+		IdBook = idBook;
 	}
 
 
