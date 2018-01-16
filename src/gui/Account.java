@@ -756,8 +756,7 @@ public class Account extends SL_JFrame{
 						e.printStackTrace();
 					}
 				}
-				
-				
+				//-------------------------------------------------------------------------------------------------------	
 				
 				System.out.println("ritornato mail check result"+getMailcheckResult());
 				

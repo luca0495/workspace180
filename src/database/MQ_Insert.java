@@ -102,6 +102,7 @@ public class MQ_Insert {
 		}
 		
 		public static String insertBooksGetQuery(
+				int codice,
 				String name, 
 				String surname, 
 				String cat, 
@@ -110,13 +111,15 @@ public class MQ_Insert {
 				int pren_cod) throws SQLException
 		{
 			String query = 		"INSERT INTO libro("
+					+ "codice, "
 					+ "nome_autore, "
 					+ "cognome_autore, "
 					+ "categoria, "
 					+ "titolo, "
 					+ "disponibilità, "
 					+ "prenotazioni_in_coda) "
-					+ "VALUES('" 		+ name		+ "' , '" 
+					+ "VALUES('" 		+ codice	+ "' , '"
+										+ name		+ "' , '" 
 										+ surname	+ "' , '" 
 										+ cat 		+ "' , '" 
 										+ title 	+ "', '"

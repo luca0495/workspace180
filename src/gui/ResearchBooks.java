@@ -49,6 +49,8 @@ public class ResearchBooks extends SL_JFrame {
 
 	private Client  		me ;
 	
+	private ResearchBooks w;
+	
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField2;
@@ -82,6 +84,7 @@ public class ResearchBooks extends SL_JFrame {
     
 	public ResearchBooks(Component c, Client x) {
 		
+		setW(this);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
@@ -317,8 +320,8 @@ public class ResearchBooks extends SL_JFrame {
 									newli = 0;
 									PopUp.errorBox(frame, "last book id non ottenuto...");							
 						}else {
-									newli = li++;	
-									me.setSql(MQ_Insert.insertBooksGetQuery(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));													
+									newli = ++li;	
+									me.setSql(MQ_Insert.insertBooksGetQuery(newli,txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));													
 									try {// accoda il comando alla lista comandi dalla quale legge il client
 												System.out.println("GUI AppReader:> cmd inserisci LIBRO ");
 										me.setCliType(Clients.Librarian);	
@@ -432,8 +435,11 @@ public class ResearchBooks extends SL_JFrame {
 			System.out.println(" ***** sto controllando elenco libri per ottenere ultimo id libro ");
 			//******************************************************************									
 								try {
-								me.setCliType(Clients.Librarian);
-								me.getCmdLIST().put(Commands.BookLast);
+									me.setActW(getW());
+									me.setActF(frame);
+									me.setCliType(Clients.Librarian);
+									me.getCmdLIST().put(Commands.BookLast);
+									
 								} catch (InterruptedException e2) {
 									System.out.println("GUI account:> NON ottenuti dati last book id  ");	
 									e2.printStackTrace(); 
@@ -508,5 +514,15 @@ public void findBooks(String query){
 	tableBooks.setRowSorter(tr);
 	
 	tr.setRowFilter(RowFilter.regexFilter(query));
+}
+
+
+public ResearchBooks getW() {
+	return w;
+}
+
+
+public void setW(ResearchBooks w) {
+	this.w = w;
 }
 }

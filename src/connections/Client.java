@@ -54,6 +54,7 @@ import gui.AppLibrarian;
 import gui.AppReader;
 import gui.AppType;
 import gui.Login;
+import gui.ResearchBooks;
 import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
@@ -955,6 +956,19 @@ public class Client implements Serializable, Runnable  {
 								break;	
 								
 								
+//BOOK
+							case	"SRV :> BookLastId :> OK":
+								ResearchBooks resB = (ResearchBooks) ActW;						
+								resB.setLastIDbookcheckResult(Mb.getIdBook());
+								resB.setLastIDbookcheckinprogress(false);
+								break;
+							
+							case	"SRV :> BookLastId :> NG":
+								ResearchBooks resBk = (ResearchBooks) ActW;						
+								resBk.setLastIDbookcheckResult(Mb.getIdBook());
+								resBk.setLastIDbookcheckinprogress(false);
+								break;								
+
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								
