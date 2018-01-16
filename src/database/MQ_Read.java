@@ -76,6 +76,57 @@ public class MQ_Read {
 			return dati;
 		}
 	
+	public static String [][] ResearchLoans ()throws SQLException{			
+		String query = "SELECT * FROM prestiti;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[][] dati = null;
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			dati = new String[1][5];
+			dati[0][0] = null;
+			dati[0][1] = null;
+			dati[0][2] = null;
+			dati[0][3] = null;
+			dati[0][4] = null;
+		
+			
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("codice"));
+				results.add(rs.getString("id"));
+				results.add(rs.getString("email"));
+				results.add(rs.getString("data_inizio"));
+				results.add(rs.getString("data_fine"));
+	
+				
+				int cols = 5;
+		    	int rows = results.size() / cols;
+		    	
+		    	dati = new String[rows][cols];
+		    	
+				for(int i = 0, d = 0; i < rows; i++)
+				{
+		    		for(int j = 0; j < cols; j++, d++)
+		    		{
+		    			dati[i][j] = results.get(d);
+				    }
+				}
+			}
+		}
+ 
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return dati;
+	}
+	
 	public static LoadUser getUserById(int UserId) {
 		LoadUser loaduser = new LoadUser();
         try {
@@ -159,22 +210,37 @@ public class MQ_Read {
 		
 		return dati;
 	}
-	public static String ReadPassTemp() throws SQLException
+	
+	public static String ReadPassTemp1(String email) throws SQLException
 	{
-	String query = "SELECT password_temp FROM utente;";
+	String query = "SELECT password_temp FROM utente WHERE email ='" + email +"';";
 	DBmanager.openConnection();
 	ResultSet rs = DBmanager.executeQuery(query);
 	String value = null;
-		while(rs.next()) 
-		{
-		   System.out.println(rs);
-		  value =rs.getString("password_temp");
-		}
-		
-	rs.close();
-	DBmanager.closeConnection();
-	return value;
+	while(rs.next())
+	{	
+		value = rs.getString("password_temp");
 	}
+	DBmanager.closeConnection();
+	
+	
+	return value;
+}
+	
+	public static String ReadPassTemp() throws SQLException
+	{
+	String query = "SELECT password_temp FROM utente ;";
+	DBmanager.openConnection();
+	ResultSet rs = DBmanager.executeQuery(query);
+	String value = null;
+	while(rs.next())
+	{	
+		value = rs.getString("password_temp");
+	}
+	DBmanager.closeConnection();
+	
+	return value;
+}
 
 	public static String[] UserLoginTryCounter(String email) throws SQLException
 	{

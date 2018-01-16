@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -23,6 +24,7 @@ import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
 import Table.TableBooks;
+import Table.TableLoans;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
 import connections.Client;
@@ -60,6 +62,7 @@ public class ResearchBooks extends SL_JFrame {
     private JTable table4;
     
     private JTable tableBooks;
+   
     
 	protected String ValToSearch;
 	private JTextField txtName;
@@ -71,7 +74,9 @@ public class ResearchBooks extends SL_JFrame {
 	private JLabel lblEr2;
 	private JLabel lblEr3;
 	private JLabel lblEr4;
+    private JLabel  lblPopUpCat;
 	private JButton btnPrenotazione;
+	private ImageIcon iconLogoQ;
 	
 	private boolean LastIDbookcheckinprogress=false;
 	private int 	LastIDbookcheckResult;
@@ -112,9 +117,39 @@ public class ResearchBooks extends SL_JFrame {
 		frame.setLocationRelativeTo(c);
 		frame.setVisible(true);
 		
+		JPanel panelModify = new JPanel();
+		panelModify.setBounds(0, 0, 10, 10);
+		panelModify.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelModify.setBounds(10, 36, 997, 544);
+		frame.getContentPane().add(panelModify);
+		panelModify.setLayout(new CardLayout(0, 0));
+		
+		JPanel panelResearch = new JPanel();
+		panelModify.add(panelResearch);
+		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelResearch.setBackground(Color.WHITE);
+		panelResearch.setLayout(null);		
+		
+		JPanel panelLoans = new JPanel();
+		panelModify.add(panelLoans);
+		panelLoans.setVisible(false);
+		panelLoans.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelLoans.setBackground(Color.WHITE);
+		panelLoans.setLayout(null);
+		
+		TableBooks panelTableResearch = new TableBooks(frame,me);
+		panelTableResearch.setBounds(10, 11, 977, 420);
+		panelResearch.add(panelTableResearch);
+		
+		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
+		panelTableLoansResearch.setBounds(10, 11, 977, 420);
+		panelLoans.add(panelTableLoansResearch);
+		
 		ImageIcon iconLogoA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Add.png")));
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
+		ImageIcon iconLogoQ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/question.png")));
+		setIconLogoQ(iconLogoQ);
 		
 		JLabel lblResearch = new JLabel("Ricerca");
 		lblResearch.setBounds(285, 11, 91, 14);
@@ -129,27 +164,29 @@ public class ResearchBooks extends SL_JFrame {
 		btnResearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			String s=textField.getText();
-		    if(s.length()!=0){			 
-//TODO PASSA A CLIENT da TableBooks		 				 
-//me.getCmdLIST().put(Commands.tableBookPopulate);
-			try {	 	 
-				TableBooks.PopulateData(s,me);
-			 } catch (SQLException e1) {
-				e1.printStackTrace();	
-			} catch (InterruptedException e1) {				
-				e1.printStackTrace();
-			}			
-		    }else{
-//TODO PASSA A CLIENT da TableBooks	
-//me.getCmdLIST().put(Commands.tableBookPopulate);	
-		      try {
-				 TableBooks.PopulateData("",me);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} catch (InterruptedException e1) {				
-				e1.printStackTrace();
-			}    
-		 }
+			    if(s.length()!=0){			 
+			    	//TODO PASSA A CLIENT da TableBooks		 				 
+			    	//me.getCmdLIST().put(Commands.tableBookPopulate);
+			    				try {	 	 
+			    					TableBooks.PopulateData(s,me);
+			    				 } catch (SQLException e1) {
+			    					e1.printStackTrace();	
+			    				} catch (InterruptedException e1) {				
+			    					e1.printStackTrace();
+			    				}			
+			    			    }else{
+			    	//TODO PASSA A CLIENT da TableBooks	
+			    	//me.getCmdLIST().put(Commands.tableBookPopulate);	
+			    			      try {
+			    					 TableBooks.PopulateData("",me);
+			    				} catch (SQLException e1) {
+			    					e1.printStackTrace();
+			    				} catch (InterruptedException e1) {				
+			    					e1.printStackTrace();
+			    				}
+			    			     
+			    			 }
+	    
 	   }
    });
 		btnResearch.setBounds(679, 7, 89, 23);
@@ -171,16 +208,72 @@ public class ResearchBooks extends SL_JFrame {
 		btnPrenotazione = new JButton("Prenotazione Libro");
 		btnPrenotazione.setBounds(791, 7, 183, 23);
 		frame.getContentPane().add(btnPrenotazione);
-		JPanel panelResearch = new JPanel();
-		panelResearch.setBounds(10, 36, 997, 544);
-		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelResearch.setBackground(Color.WHITE);
-		frame.getContentPane().add(panelResearch);
-		panelResearch.setLayout(null);		
 		
-		TableBooks panelTableResearch = new TableBooks(frame,me);
-		panelTableResearch.setBounds(10, 11, 977, 420);
-		panelResearch.add(panelTableResearch);
+		JComboBox<String> comboBoxB = new JComboBox<String>();
+		comboBoxB.addItem("Ricerca_Libro");
+		comboBoxB.addItem("Prestiti");
+		comboBoxB.setSelectedItem("Ricerca_Libro");
+		comboBoxB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBoxB.getSelectedItem().equals("Ricerca_Libro"))
+				{
+					panelTableResearch.update();
+					panelResearch.setVisible(true);
+					panelLoans.setVisible(false);
+					
+					lblEr1.setIcon(null);
+					lblEr2.setIcon(null);
+					lblEr3.setIcon(null);
+					lblEr4.setIcon(null);
+				}
+				else if(comboBoxB.getSelectedItem().equals("Prestiti"))
+				{
+					panelTableLoansResearch.update();
+					panelResearch.setVisible(false);
+					panelLoans.setVisible(true);
+					comboBoxB.setSelectedItem("Ricerca_Libro");
+					
+
+				//	icon a null
+				}
+			}
+		});
+		comboBoxB.setBounds(10, 440, 180, 20);
+		panelResearch.add(comboBoxB);
+		
+		
+		JComboBox<String> comboBoxL = new JComboBox<String>();
+		comboBoxL.addItem("Ricerca_Libro");
+		comboBoxL.addItem("Prestiti");
+		comboBoxL.setSelectedItem("Prestiti");
+		comboBoxL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBoxL.getSelectedItem().equals("Ricerca_Libro"))
+				{
+					panelTableResearch.update();
+					panelResearch.setVisible(true);
+					panelLoans.setVisible(false);
+					comboBoxL.setSelectedItem("Prestiti");
+					
+					lblEr1.setIcon(null);
+					lblEr2.setIcon(null);
+					lblEr3.setIcon(null);
+					lblEr4.setIcon(null);
+				}
+				else if(comboBoxL.getSelectedItem().equals("Prestiti"))
+				{
+					panelTableLoansResearch.update();
+					panelResearch.setVisible(false);
+					panelLoans.setVisible(true);
+					
+
+				//	icon a null
+				}
+			}
+		});
+		comboBoxL.setBounds(10, 440, 180, 20);
+		panelLoans.add(comboBoxL);
+		
 		
 		lblEr1 = new JLabel();
 		lblEr1.setBounds(69, 519, 19, 14);
@@ -198,6 +291,20 @@ public class ResearchBooks extends SL_JFrame {
 		lblEr4.setBounds(779, 519, 19, 14);
 		panelResearch.add(lblEr4);
 		
+		lblPopUpCat = new JLabel();
+		lblPopUpCat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frame,"Inserire uno tra: Romanzo,Storico,Giallo,Commedia,Fiaba,Fumetto,Narrativo,Poesia,Racconto,"
+						     + "Fantasy,Azione,Avventura,Drammatico,Favola,Fantascienza,Western,Novella,Thriller,Umoristico,"
+						     + "Psicologico"  );
+			}
+		});
+		lblPopUpCat.setIcon(iconLogoQ);
+		lblPopUpCat.setBounds(638, 502, 16, 16);
+		panelResearch.add(lblPopUpCat);
+		
 		txtName = new JTextField();
 		txtName.addFocusListener(new FocusAdapter() {
 			@Override
@@ -212,7 +319,7 @@ public class ResearchBooks extends SL_JFrame {
 					lblEr1.setIcon(iconLogoC);
 				}
 			}
-		});
+		});	
 		txtName.setBounds(10, 499, 156, 20);
 		panelResearch.add(txtName);
 		txtName.setColumns(10);
@@ -260,7 +367,7 @@ public class ResearchBooks extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent e) {
 				// mettere check sia con lettere che numeri(check name solo lettere)
-				if(Check.checkName(txtTitle.getText()))
+				if(Check.checkTitle(txtTitle.getText()))
 				{
 					lblEr4.setIcon(iconLogoT);
 				}
@@ -419,15 +526,9 @@ public class ResearchBooks extends SL_JFrame {
 		panelResearch.add(lblInsertBooks);
 		
 		
-		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setBounds(10, 8, 180, 20);
-		
-		
-		
 		if (	me.getCliType()==Clients.Admin||
 				me.getCliType()==Clients.Librarian) {
-		frame.getContentPane().add(comboBox);
+		 // mettere qui frame
 		}else {
 			
 			PopUp.infoBox(frame, "Reader non abilitato a visualizzare lista prestiti...");
@@ -534,5 +635,15 @@ public ResearchBooks getW() {
 
 public void setW(ResearchBooks w) {
 	this.w = w;
+}
+
+
+public ImageIcon getIconLogoQ() {
+	return iconLogoQ;
+}
+
+
+public void setIconLogoQ(ImageIcon iconLogoQ) {
+	this.iconLogoQ = iconLogoQ;
 }
 }

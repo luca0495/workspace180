@@ -32,6 +32,7 @@ import ProvaEmail.EmailSender;
 import connections.Client;
 import database.MQ_Delete;
 import database.MQ_Insert;
+import database.MQ_Read;
 import database.MQ_Update;
 
 import java.awt.FlowLayout;
@@ -63,6 +64,7 @@ public class Login extends SL_JFrame  {
 	private List<String> rowData;
 	private String deleteRow;
 	private int idUser;
+	private String [] user;
 
 	private JTextField txtEmailForgot;
 	private JPasswordField passwordFieldNewPass;
@@ -165,27 +167,42 @@ public class Login extends SL_JFrame  {
 				String pass = String.copyValueOf(passwordFieldUser.getPassword());
 				String r = null;
 			
-				System.out.println("passo email    :"+email);
-				System.out.println("passo password :"+pass);
+				try 
+				{
+					if(MQ_Read.ReadPassTemp1(email) == null)
+					{
+						System.out.println("passo email    :"+email);
+						System.out.println("passo password :"+pass);
+							
+						me.setSql(email);
+						me.setSql2(pass);
+						me.setActW(getW());
+						me.setActF(frmSchoolib);
+						me.setActC(c);
+						
+						//da client se login ok:
+						//Account lo = new Account(getActF,this);				
+						//me.setActW(lo);
+						
+						try {
+							System.out.println("GUI login:> controllo user corretto ");
+						me.setCliType(Clients.Librarian);	
+							me.getCmdLIST().put(Commands.UserREADlogin);
+						} catch (InterruptedException e2) {
+							System.out.println("GUI login :> problemi con controllo user corretto ");	
+							e2.printStackTrace(); 
+						}	
+					}
+					else
+					{
+						PopUp.errorBox(frmSchoolib, "Confermare account su bottone PRIMO ACCESSO");
+					}
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
+			
 				
-				me.setSql(email);
-				me.setSql2(pass);
-				me.setActW(getW());
-				me.setActF(frmSchoolib);
-				me.setActC(c);
-				
-				//da client se login ok:
-				//Account lo = new Account(getActF,this);				
-				//me.setActW(lo);
-				
-				try {
-					System.out.println("GUI login:> controllo user corretto ");
-				me.setCliType(Clients.Librarian);	
-					me.getCmdLIST().put(Commands.UserREADlogin);
-				} catch (InterruptedException e2) {
-					System.out.println("GUI login :> problemi con controllo user corretto ");	
-					e2.printStackTrace(); 
-				}	
 				
 				//OLD
 				/*

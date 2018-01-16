@@ -22,7 +22,7 @@ public class Check {
     {
 	    s = s.trim();
 	    
-	    String nomePattern = new String("[a-zA-Z]*");
+	    String nomePattern = new String("[a-zA-Z\\s]*");
 
 	    if(s == null || s.equals(""))
 	    {
@@ -37,11 +37,44 @@ public class Check {
 	    return true;
     }
 	
+	public static boolean checkInqu(String c)
+    {
+	    c = c.trim();
+	    
+	    String[] catPattern = new String[] {"Studente-1A",      "studente-1a",
+	    		                            "Studente-2A",      "studente-2a",
+	    		                            "Studente-3A",      "studente-3a",
+	    		                            "Studente-4A",      "studente-4a", 
+	    		                            "Studente-5A",      "studente-5a",
+	    		                            "Insegnante",       "insegnante",
+	    		                            "Tecnico",          "tecnico",                          
+	    		                            "Amministrativo",   "amministrativo"  };
+
+	    if(c == null || c.equals(""))
+	    {
+	    	return false;
+	    }
+	    
+	    for(int i = 0; i < catPattern.length; i++)
+    	{
+    		if(catPattern[i].equals(c))
+    		{
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
 	public static boolean checkCat(String c)
     {
 	    c = c.trim();
 	    
-	    String[] catPattern = new String[] {"romanzo","giallo"};
+	    String[] catPattern = new String[] {"romanzo","Romanzo","Giallo","giallo","Commedia","commedia","Fiaba","fiaba",
+	    		                             "Fumetto","fumetto","Narrativo","narrativo","Poesia","poesia","Racconto","racconto",
+	    		                             "Fantasy","fantasy","Azione","azione","Drammatico","drammatico","Favola","favola",
+	    		                             "Fantascienza","fantascienza","Novella","novella","Thriller","thriller","Umoristico",
+	    		                             "umoristico","Avventura","avventura","Western","western","Psicologico","psicologico",
+	    		                             "Storico","storico"};
 
 	    if(c == null || c.equals(""))
 	    {
@@ -223,10 +256,24 @@ public class Check {
 			return true;
 		}	
 	}
-	 public static boolean checkInq(String s)
-	    {	
-	    	return (s.length() <= 50);
+	public static boolean checkTitle(String s)
+    {
+	    s = s.trim();
+	    
+	    String nomePattern = new String("[a-zA-Z0-9\\s]*");
+
+	    if(s == null || s.equals(""))
+	    {
+	    	return false;
 	    }
+
+	    if(!s.matches(nomePattern))
+	    {
+	    	return false;
+	    }
+
+	    return true;
+    }
 	 
 
 	 
@@ -302,7 +349,7 @@ public class Check {
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )
 	    {
 			return checkName(nome) && checkName(cognome) && checkMail(mail) && checkPass(pass) && checkPass(checkPassword) && 
-	    			checkPassEq(pass, checkPassword) && checkInq(inq) && checkTel(tel);
+	    			checkPassEq(pass, checkPassword) && checkInqu(inq) && checkTel(tel);
 	    }
 	 public static boolean checkAllReg(
 				 String nome, 
@@ -325,7 +372,7 @@ public class Check {
 	    			checkPass(pass)	    				&& 
 	    			checkPass(passC) 					&& 
 	    			checkPassEq(pass, passC) 			&&
-	    			checkInq(inq);
+	    			checkInqu(inq);
 	    
 		 
 	    }
@@ -333,7 +380,7 @@ public class Check {
 	 
 	 public static boolean checkAllBooks(String nome, String cognome, String categoria, String titolo)
 	    {
-	    	return checkName(nome) && checkName(cognome) && checkCat(categoria) && checkName(titolo);
+	    	return checkName(nome) && checkName(cognome) && checkCat(categoria) && checkTitle(titolo);
 	    }
 	
 	 

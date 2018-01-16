@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
@@ -89,11 +91,16 @@ public class AppReader extends SL_JFrame {
 	
 	private ImageIcon 	iconLogoT;
 	private ImageIcon 	iconLogoC;
+	private ImageIcon iconLogoQ;
 	
 	private boolean 	cfcheckinprogress=false;
 	private String 		cfcheckResult;
 	private boolean 	mailcheckinprogress=false;
 	private String 		mailcheckResult;
+	private JLabel lblPopUpInq;
+	private JLabel lblPopUpCF;
+	private JLabel lblPopUpPass;
+	private JLabel lblPopUpTel;
 
 
 	public AppReader(Component c,Client x)
@@ -124,12 +131,12 @@ public class AppReader extends SL_JFrame {
 
 		
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
-		
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
+		ImageIcon iconLogoQ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/question.png")));
 
 		setIconLogoT(iconLogoT);
 		setIconLogoC(iconLogoC);
-		
+		setIconLogoQ(iconLogoQ);
 
 		
 		
@@ -210,6 +217,56 @@ public class AppReader extends SL_JFrame {
 		lblCheckPhone = new JLabel();
 		lblCheckPhone.setBounds(829, 200, 16, 16);
 		panelSelection.add(lblCheckPhone);
+		
+		lblPopUpInq = new JLabel();
+		lblPopUpInq.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi:"
+						       +          "Studente-1A,studente-1a,Studente-2A,studente-2a,Studente-3A,studente-3a,Studente-4A,studente-4a,"
+						       +          "Studente-5A,studente-5a,Insegnante,insegnante,Tecnico,tecnico,Amministrativo,amministrativo");
+			}
+		});
+		lblPopUpInq.setIcon(iconLogoQ);
+		lblPopUpInq.setBounds(219, 246, 16, 16);
+		panelSelection.add(lblPopUpInq);
+		
+		lblPopUpCF = new JLabel();
+		lblPopUpCF.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"Immettere 16 caratteri tra numeri e lettere maiuscole");
+			}
+		});
+		lblPopUpCF.setIcon(iconLogoQ);
+		lblPopUpCF.setBounds(219, 322, 16, 16);
+		panelSelection.add(lblPopUpCF);
+		
+		lblPopUpPass = new JLabel();
+		lblPopUpPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"La password deve contere un carattere maiuscolo, uno minuscolo, un numero e un carattere speciale");
+			}
+		});
+		lblPopUpPass.setIcon(iconLogoQ);
+		lblPopUpPass.setBounds(745, 11, 16, 16);
+		panelSelection.add(lblPopUpPass);
+		
+		lblPopUpTel = new JLabel();
+		lblPopUpTel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"Immettere 10 numeri");
+			}
+		});
+		lblPopUpTel.setIcon(iconLogoQ);
+		lblPopUpTel.setBounds(725, 176, 16, 16);
+		panelSelection.add(lblPopUpTel);
 		
 		JButton btnReg = new JButton("Registrazione");
 		
@@ -311,7 +368,7 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-			    if(Check.checkInq(txtInquadr.getText())) 
+			    if(Check.checkInqu(txtInquadr.getText())) 
 				{
 			    	lblCheckInq.setIcon(iconLogoT);	
 				}
@@ -431,7 +488,7 @@ public class AppReader extends SL_JFrame {
 				}
 			}
 		});
-		txtPhone.setBounds(636, 195, 183, 20);
+		txtPhone.setBounds(637, 195, 183, 20);
 		panelSelection.add(txtPhone);
 		txtPhone.setColumns(10);
 		
@@ -1032,6 +1089,14 @@ public class AppReader extends SL_JFrame {
 
 	public void setMailcheckResult(String mailcheckResult) {
 		this.mailcheckResult = mailcheckResult;
+	}
+
+	public ImageIcon getIconLogoQ() {
+		return iconLogoQ;
+	}
+
+	public void setIconLogoQ(ImageIcon iconLogoQ) {
+		this.iconLogoQ = iconLogoQ;
 	}
 	
 }

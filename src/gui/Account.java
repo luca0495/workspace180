@@ -69,6 +69,7 @@ public class Account extends SL_JFrame{
     private JLabel lblSetTipoUte;
     private JLabel lblSetTel;
     private JLabel lblSetNumPrenPend;
+    private JLabel lblReturnBack;
 
 	private	JLabel lblChangeNameCheck; 
 	private	JLabel lblChangeSurnameCheck; 
@@ -106,6 +107,7 @@ public class Account extends SL_JFrame{
 	
 	private ImageIcon iconLogoT;
 	private ImageIcon iconLogoC;
+	private ImageIcon iconLogoRA;
 
 	private JPanel panelAccount;
 	private JPanel panelModify;
@@ -142,6 +144,9 @@ public class Account extends SL_JFrame{
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		setIconLogoC(iconLogoC);
 		
+		ImageIcon iconLogoRA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/RedArrow.png")));
+		setIconLogoRA(iconLogoRA);
+		
 		panelAccount = new JPanel();
 		frmSchoolib.getContentPane().add(panelAccount, "name_353435345061838");
 		panelAccount.setLayout(null);
@@ -158,6 +163,20 @@ public class Account extends SL_JFrame{
 		 //***
 		 
 // PANEL ACCOUNT // ***************************************************************************************************
+		
+		lblReturnBack = new JLabel();
+		lblReturnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				 WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+				 frmSchoolib.dispatchEvent(close);
+			}
+		});
+		lblReturnBack.setBounds(835, 11, 30, 30);
+		lblReturnBack.setIcon(getIconLogoRA());
+		lblReturnBack.setBorder(null);
+		panelAccount.add(lblReturnBack);
 		
 		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 31, 42, 30);
@@ -269,6 +288,7 @@ public class Account extends SL_JFrame{
 			}
 			}
 		});
+	
 		btnDelete.setBounds(192, 381, 193, 54);
 		panelAccount.add(btnDelete);
 		
@@ -300,25 +320,7 @@ public class Account extends SL_JFrame{
 		btnModify.setBounds(428, 381, 186, 54);
 		panelAccount.add(btnModify);
 		
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-					 WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-					 frmSchoolib.dispatchEvent(close);
-					
-
-				}
-			});
-		
-		
-		btnAnnulla.setBounds(662, 381, 127, 54);
-		panelAccount.add(btnAnnulla);
-		
 // PANEL MODIFY // ****************************************************************************************************
-		
-		
-		
 		
 		JLabel lblNameMod = new JLabel("Nome");
 		lblNameMod.setBounds(10, 29, 127, 23);
@@ -1482,5 +1484,13 @@ public class Account extends SL_JFrame{
 
 		public void setMailcheckResult(String mailcheckResult) {
 			this.mailcheckResult = mailcheckResult;
+		}
+
+		public ImageIcon getIconLogoRA() {
+			return iconLogoRA;
+		}
+
+		public void setIconLogoRA(ImageIcon iconLogoRA) {
+			this.iconLogoRA = iconLogoRA;
 		}	
 }

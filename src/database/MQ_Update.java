@@ -46,6 +46,38 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	public static void updateTableLoans(String cd,String input, int col) throws SQLException
+	{	
+		
+		String query = "UPDATE prestiti ";
+		
+		if(col == 0)
+		{
+			query += "SET codice = '" + input + "'";
+		}
+		else if(col == 1)
+		{
+			query += "SET id = '" + input + "'";
+		}
+		else if(col == 2)
+		{
+			query += "SET email = '" + input + "'";
+		}
+		else if(col == 3)
+		{
+			query += "SET data_inizio = '" + input + "'";
+		}
+		else if(col == 4)
+		{
+			query += "SET data_fine = '" + input + "'";
+		}
+		query += " WHERE codice = '" + cd + "';";
+		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
+	
 	public static void updateModUser1(List<String> r,String input, int col) throws SQLException
 	{	
 		
