@@ -92,16 +92,11 @@ public class ResearchBooks extends SL_JFrame {
 		
 		
 		
-		//TODO		
+		//TODO LUCA per abilitazione bottone VISUALIZZA ELENCO PRESTITI		
 		// me.getCliType()
-		
-		
 
 		//IF LIBRAIO VEDI BOTTONE
 		//ELSE NON LO VEDI
-		
-		
-		
 		
 		
 		initialize(c);
@@ -423,10 +418,25 @@ public class ResearchBooks extends SL_JFrame {
 		lblInsertBooks.setBounds(369, 442, 186, 14);
 		panelResearch.add(lblInsertBooks);
 		
+		
+		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBounds(10, 8, 180, 20);
+		
+		
+		
+		if (	me.getCliType()==Clients.Admin||
+				me.getCliType()==Clients.Librarian) {
 		frame.getContentPane().add(comboBox);
-	
+		}else {
+			
+			PopUp.infoBox(frame, "Reader non abilitato a visualizzare lista prestiti...");
+			
+			System.out.println("non inserisco combo box visualizzazione prestiti per client.type <> Librarian ");
+		}
+			
+		
+		
 	}
 	
 	public boolean checkLastIDbook(){

@@ -647,7 +647,35 @@ public class Client implements Serializable, Runnable  {
 						// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
 								
-								System.out.println("ritornato al client UserDATA by email OK : ");																							
+								System.out.println("ritornato al client UserDATA by email OK : ");
+								
+								//devo riottenere id utente e modificare typeuser QUI
+								String [] UserData= Mb.getRowUser();
+								String UserType = UserData[7];
+								
+								switch (UserType) {
+								case "Administrator":
+									System.out.println("riconosco "+ getCliType());
+									setCliType(Clients.Admin);
+									break;
+								case "Lettore":
+									setCliType(Clients.Reader);
+									System.out.println("riconosco "+ getCliType());
+									break;
+								case "Libraio":
+									setCliType(Clients.Librarian);
+									System.out.println("riconosco "+ getCliType());
+									break;
+								case "Guest":
+									setCliType(Clients.Guest);
+									System.out.println("riconosco "+ getCliType());
+									break;
+								default:
+									setCliType(Clients.Guest);
+									System.out.println("riconosco ");
+									break;
+								}
+								
 								Account X = (Account) ActW;
 								System.out.println(" settato finestra attiva : "+ActW.toString());		
 								
@@ -656,6 +684,7 @@ public class Client implements Serializable, Runnable  {
 								
 								//System.out.println(" updatato finestra account ");		
 
+								
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[1]);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[2]);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
@@ -738,7 +767,11 @@ public class Client implements Serializable, Runnable  {
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
-									this.setCliType(Clients.Librarian);
+									
+									
+									//this.setCliType(Clients.Librarian);
+									
+									
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 									this.getCmdLIST().put(Commands.UserREADbyEmail);

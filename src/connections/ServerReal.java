@@ -355,6 +355,7 @@ public class ServerReal extends ServerSkeleton {
 					try {				
 						String email 	= M.getMsg().getSQLQuery();
 						String pass 	= M.getMsg().getSQLQuery2();	
+						
 						String r 		= Check.checkAdminLogIn(email, pass);
 						
 						x.setUserEmail(email);

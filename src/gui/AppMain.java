@@ -37,6 +37,8 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class AppMain extends SL_JFrame  {
 	
@@ -102,12 +104,30 @@ public class AppMain extends SL_JFrame  {
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().getContentPane().setLayout(new CardLayout(0, 0));
 		
+		System.out.println("testo client pre... "+me.getCliType());
+		
 		//PANNELLI
 		
 		JPanel panelLog = new JPanel();
+		panelLog.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				System.err.println("testo client click... "+me.getCliType());
+				
+			}
+			
+		});
+		panelLog.addFocusListener(new FocusAdapter() {
+
+			
+			
+		});
+		
 		getFrame().getContentPane().add(panelLog);
 		panelLog.setLayout(null);
 		
+		System.out.println("testo client dopo... "+me.getCliType());
 		
 		
 		ImageIcon backgroundImage0 = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Background0.jpg")));
@@ -441,6 +461,14 @@ public class AppMain extends SL_JFrame  {
 	
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+		frame.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+				System.out.println("tipo di client attivo ... "+me.getCliType());
+				
+			}
+		});
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
