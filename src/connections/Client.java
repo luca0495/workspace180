@@ -596,6 +596,15 @@ public class Client implements Serializable, Runnable  {
 								
 								EmailSender.send_uninsubria_recoverypassword(getSql2(), this, getPw());
 								
+								Login X = (Login)ActW;
+								
+								//X.PanelRegi.setVisible(false);
+								X.getPr().setVisible(false);
+								//X.PanelFirstAcc.setVisible(true);
+								X.getPfa().setVisible(true);
+								//X.PanelForgPass.setVisible(false);
+								
+								
 								break;
 								
 							case "SRV :> UPRecovery :> NG":
@@ -705,11 +714,11 @@ public class Client implements Serializable, Runnable  {
 									break;
 								}
 								
-								Account X = (Account) ActW;
+								Account aX = (Account) ActW;
 								System.out.println(" settato finestra attiva : "+ActW.toString());		
 								
-								X.updateall(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
-								X.updateallModify(Mb.getRowUser());		// PER PANNELLO MODIFY
+								aX.updateall(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
+								aX.updateallModify(Mb.getRowUser());		// PER PANNELLO MODIFY
 								
 								//System.out.println(" updatato finestra account ");		
 

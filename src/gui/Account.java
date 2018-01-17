@@ -52,7 +52,7 @@ import java.awt.Font;
 
 public class Account extends SL_JFrame{
 	
-<<<<<<< HEAD
+
 	private static final long 	serialVersionUID = 1L;
 	private static String[] 	UserData = null;
     private static JTextField 	s1;
@@ -66,12 +66,13 @@ public class Account extends SL_JFrame{
 	private LoadUser 			l = new LoadUser();
 	private Client 				me;
 	private JPanel 				panelAccount;
-	private JPanel 				panelModify;
+	private JPanel 				panelModify;	
 
 	private ImageIcon 			iconLogoT;
 	private ImageIcon 			iconLogoC;
 	private ImageIcon 			iconLogoRA;
-
+	private ImageIcon 			iconLogoQ;
+	
     private JLabel		 		lblSetNome;
     private JLabel 				lblSetCognome;
     private JLabel 				lblSetEmail;
@@ -106,57 +107,18 @@ public class Account extends SL_JFrame{
 	private JTextField 			passwordFieldConfMod1;
 	private JTextField 			s = null;
 
-			String 				r = null;
-	private String[] 			user = null;
-	private String[] 			user1 = null;	
-	private String[] 			userdata;    
-	private List<String> 		rowData = new ArrayList<String>();	
+			String 				r = null;	
 	public 	String 				p1,p2,p3,p4,p5,p6,p7 = null; 	
-	private String 				input;
-	private String 				TypePerson = "Lettore";
-	private String 				emailuser;
+
 	
 	private String 				mailcheckResult;
 	private boolean 			mailcheckinprogress=false;	
 	
-	private boolean 			User = true;
-	private boolean 			cambioemail=false;	
-=======
-	private JFrame frmSchoolib;	
-	private AppReader a;
-	private LoadUser l = new LoadUser();
-	private Client me;
-	private static final long serialVersionUID = 1L;
-	private static String[] UserData = null;
-	private JTextField s = null;
-	public String p1,p2,p3,p4,p5,p6,p7 = null; 
-    static int rows = 0;
-    static int cols = 0; 
-    String r = null;
-    private static JTextField s1;
-    private int idUser ;
-	static int userRow = 0;
-    private JLabel lblSetNome;
-    private JLabel lblSetCognome;
-    private JLabel lblSetEmail;
-    private JLabel lblSetPass;
-    private JLabel lblSetInq;
-    private JLabel lblSetTipoUte;
-    private JLabel lblSetTel;
-    private JLabel lblSetNumPrenPend;
-    private JLabel lblReturnBack;
 
-	private	JLabel lblChangeNameCheck; 
-	private	JLabel lblChangeSurnameCheck; 
-    private JLabel lblChangeEmailCheck;
-	private	JLabel lblChangePassCheck;
 	private JLabel lblCheckChangePass;
-	private	JLabel lblChangePassConfCheck ;
+
 	private JLabel lblCheckChangePassC;
-	private	JLabel lblChangeInqCheck ;
-	private	JLabel lblChangePhoneCheck ;
-	private	JLabel lblTypeUserMod ;
-    private JLabel lblMAIL;
+
 
     
 	private JLabel lblPopUpInq;
@@ -164,49 +126,39 @@ public class Account extends SL_JFrame{
 	private JLabel lblPopUpPass;
 	
 	private String TypePerson = "Lettore";
-	private JTextField txtNameMod;
-	private JTextField txtSurnameMod;
-	private JTextField txtMailMod;
-	private JTextField txtInqMod;
-	private JTextField txtTelMod;
-	
 	private String input;
 	private List<String> rowData = new ArrayList<String>();
-	private int column;
-	private int deleteRow;
+
 	private String[] user = null;
 	private String[] user1 = null;
 	private boolean User = true;
-	private JTextField passwordFieldMod1;
-	private JTextField passwordFieldConfMod1;
-	private JRadioButton rdbtnTypeUserLibMod;
-	private JRadioButton rdbtnTypeUserLetMod;
 	
 	// in test 
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
 	private String [] 	userdata;
 	
-	private ImageIcon iconLogoT;
-	private ImageIcon iconLogoC;
-	private ImageIcon iconLogoRA;
-	private ImageIcon iconLogoQ;
 
-	private JPanel panelAccount;
-	private JPanel panelModify;
+
+
+	
+	//private JPanel panelAccount;
+	//private JPanel panelModify;
 	private JPanel panelChangePass;
 	
-	private boolean mailcheckinprogress=false;
+	//private boolean mailcheckinprogress=false;
 	public static boolean ModPass = false;
-	private String mailcheckResult;
+	//private String mailcheckResult;
 	private JPasswordField passwordField;
-	private JPasswordField passwordFieldConfMod;
->>>>>>> dbba4e830d4f5d933c8e378ffa7e7baa27aef1c5
+	//private JPasswordField passwordFieldConfMod;
+
 	
 	private int 				column;
 	private int 				deleteRow;
     private int 				idUser ;
 
+	
+	
 	public Account(Component c,Client x)
 	{
 		

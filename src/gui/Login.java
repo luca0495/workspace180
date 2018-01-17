@@ -194,16 +194,9 @@ public class Login extends SL_JFrame  {
 				//dopo test mail --> db		
 				case "OK E":
 					System.out.println("ritornato dal check mail EXIST");
-					PopUp.infoBox(frmSchoolib, "INSERIRE PROCEDURA INVIO EMAIL CON PW TEMP");
-	
-					PanelRegi.setVisible(false);
-					PanelFirstAcc.setVisible(false);
-					PanelForgPass.setVisible(true);	
-
-					//METODO PASS CASUALE... setta newpass
-					
-					
-					String newpass="32413132";
+					PopUp.infoBox(frmSchoolib, "Inizio PROCEDURA INVIO EMAIL CON PW TEMP");
+					//random password check ok
+					String newpass= Check.s();
 					String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
 					
 					try
