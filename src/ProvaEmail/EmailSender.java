@@ -1,5 +1,6 @@
 package ProvaEmail;
 
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
@@ -32,8 +33,23 @@ public class EmailSender{
 	//String hash;
 	static Client me;
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
+<<<<<<< HEAD
 	 //public static void send_uninsubria_email(String USER,String PASS,String to,Client Me) throws SendFailedException, MessagingException{
 	 
+=======
+	
+	
+	
+	//test ok -------------------------------------------------------
+
+		 
+		
+
+	//test ok -------------------------------------------------------	
+		
+	
+	
+>>>>>>> dbba4e830d4f5d933c8e378ffa7e7baa27aef1c5
 	
 	
 	public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
@@ -102,8 +118,11 @@ public class EmailSender{
 		      return randomInt;
 	   }
 	 
+<<<<<<< HEAD
 	 public static void send_uninsubria_recoverypassword(String to,Client Me,String newpassword) throws SendFailedException, MessagingException, SQLException{
 		    // String hasher = hash;	  
+=======
+>>>>>>> dbba4e830d4f5d933c8e378ffa7e7baa27aef1c5
 
 			 me=Me;
 			 System.out.println("Controllo errore:" + me.toString());

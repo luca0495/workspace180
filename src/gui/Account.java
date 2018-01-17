@@ -11,6 +11,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -26,9 +27,11 @@ import javax.swing.JTextField;
 import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import Check.Check;
+import Check.PasswordBox;
 import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
+import ProvaEmail.EmailSender;
 import connections.Client;
 import database.DBmanager;
 import database.LoadUser;
@@ -37,14 +40,19 @@ import database.MQ_Read;
 import database.MQ_Update;
 
 import javax.swing.JLabel;
+import javax.mail.MessagingException;
+import javax.mail.SendFailedException;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
+import java.awt.Font;
 
 public class Account extends SL_JFrame{
 	
+<<<<<<< HEAD
 	private static final long 	serialVersionUID = 1L;
 	private static String[] 	UserData = null;
     private static JTextField 	s1;
@@ -113,6 +121,87 @@ public class Account extends SL_JFrame{
 	
 	private boolean 			User = true;
 	private boolean 			cambioemail=false;	
+=======
+	private JFrame frmSchoolib;	
+	private AppReader a;
+	private LoadUser l = new LoadUser();
+	private Client me;
+	private static final long serialVersionUID = 1L;
+	private static String[] UserData = null;
+	private JTextField s = null;
+	public String p1,p2,p3,p4,p5,p6,p7 = null; 
+    static int rows = 0;
+    static int cols = 0; 
+    String r = null;
+    private static JTextField s1;
+    private int idUser ;
+	static int userRow = 0;
+    private JLabel lblSetNome;
+    private JLabel lblSetCognome;
+    private JLabel lblSetEmail;
+    private JLabel lblSetPass;
+    private JLabel lblSetInq;
+    private JLabel lblSetTipoUte;
+    private JLabel lblSetTel;
+    private JLabel lblSetNumPrenPend;
+    private JLabel lblReturnBack;
+
+	private	JLabel lblChangeNameCheck; 
+	private	JLabel lblChangeSurnameCheck; 
+    private JLabel lblChangeEmailCheck;
+	private	JLabel lblChangePassCheck;
+	private JLabel lblCheckChangePass;
+	private	JLabel lblChangePassConfCheck ;
+	private JLabel lblCheckChangePassC;
+	private	JLabel lblChangeInqCheck ;
+	private	JLabel lblChangePhoneCheck ;
+	private	JLabel lblTypeUserMod ;
+    private JLabel lblMAIL;
+
+    
+	private JLabel lblPopUpInq;
+	private JLabel lblPopUpTel;
+	private JLabel lblPopUpPass;
+	
+	private String TypePerson = "Lettore";
+	private JTextField txtNameMod;
+	private JTextField txtSurnameMod;
+	private JTextField txtMailMod;
+	private JTextField txtInqMod;
+	private JTextField txtTelMod;
+	
+	private String input;
+	private List<String> rowData = new ArrayList<String>();
+	private int column;
+	private int deleteRow;
+	private String[] user = null;
+	private String[] user1 = null;
+	private boolean User = true;
+	private JTextField passwordFieldMod1;
+	private JTextField passwordFieldConfMod1;
+	private JRadioButton rdbtnTypeUserLibMod;
+	private JRadioButton rdbtnTypeUserLetMod;
+	
+	// in test 
+	private String 		emailuser;
+	private boolean 	cambioemail=false;
+	private String [] 	userdata;
+	
+	private ImageIcon iconLogoT;
+	private ImageIcon iconLogoC;
+	private ImageIcon iconLogoRA;
+	private ImageIcon iconLogoQ;
+
+	private JPanel panelAccount;
+	private JPanel panelModify;
+	private JPanel panelChangePass;
+	
+	private boolean mailcheckinprogress=false;
+	public static boolean ModPass = false;
+	private String mailcheckResult;
+	private JPasswordField passwordField;
+	private JPasswordField passwordFieldConfMod;
+>>>>>>> dbba4e830d4f5d933c8e378ffa7e7baa27aef1c5
 	
 	private int 				column;
 	private int 				deleteRow;
@@ -150,6 +239,9 @@ public class Account extends SL_JFrame{
 		ImageIcon iconLogoRA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/RedArrow.png")));
 		setIconLogoRA(iconLogoRA);
 		
+		ImageIcon iconLogoQ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/question.png")));
+		setIconLogoQ(iconLogoQ);
+		
 		panelAccount = new JPanel();
 		frmSchoolib.getContentPane().add(panelAccount, "name_353435345061838");
 		panelAccount.setLayout(null);
@@ -157,6 +249,10 @@ public class Account extends SL_JFrame{
 		panelModify = new JPanel();
 		frmSchoolib.getContentPane().add(panelModify, "name_454607080642439");
 		panelModify.setLayout(null);
+		
+		panelChangePass = new JPanel();
+		frmSchoolib.getContentPane().add(panelChangePass, "name_443629321471336");
+		panelChangePass.setLayout(null);
 		
 		//old ora comando passato da finestra login a client
 		//***
@@ -242,16 +338,7 @@ public class Account extends SL_JFrame{
 		//lblSetTel.setText(user[5]);
 		lblSetTel.setBounds(118, 294, 184, 20);
 		panelAccount.add(lblSetTel);
-		
-		JLabel lblNumPrenPend = new JLabel("Numero Di Prenotazioni:");
-		lblNumPrenPend.setBounds(10, 347, 174, 14);
-		panelAccount.add(lblNumPrenPend);
-		
-		lblSetNumPrenPend = new JLabel();
-		// mettere anche questa nel metodo
-		lblSetNumPrenPend.setBounds(172, 347, 186, 14);
-		panelAccount.add(lblSetNumPrenPend);
-		
+			
 		JButton btnDelete = new JButton("Cancella Profilo");
 		btnDelete.setBackground(Color.RED);
 		btnDelete.addActionListener(new ActionListener() {
@@ -325,10 +412,37 @@ public class Account extends SL_JFrame{
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
+		lblPopUpInq = new JLabel();
+		lblPopUpInq.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi:"
+						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C,"
+						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C,"
+						       +          "Studente-5A,Studente-5B,Studente-5C,Insegnante,Tecnico,Amministrativo");
+			}
+		});
+		lblPopUpInq.setIcon(iconLogoQ);
+		lblPopUpInq.setBounds(682, 11, 16, 16);
+		panelModify.add(lblPopUpInq);
+		
+		lblPopUpTel = new JLabel();
+		lblPopUpTel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"Immettere 10 numeri");
+			}
+		});
+		lblPopUpTel.setIcon(iconLogoQ);
+		lblPopUpTel.setBounds(682, 85, 16, 16);
+		panelModify.add(lblPopUpTel);
+		
+		
 		JLabel lblNameMod = new JLabel("Nome");
 		lblNameMod.setBounds(10, 29, 127, 23);
 		panelModify.add(lblNameMod);
-		
 		
 		JLabel lblChangeNameCheck = new JLabel();
 		setLblChangeNameCheck(lblChangeNameCheck);
@@ -349,30 +463,10 @@ public class Account extends SL_JFrame{
 		lblMailMod.setBounds(10, 172, 127, 23);
 		panelModify.add(lblMailMod);
 		
-		
-		
 		JLabel lblChangeEmailCheck = new JLabel();
-	setLblMAIL(lblChangeEmailCheck);	
+	    setLblMAIL(lblChangeEmailCheck);	
 		lblChangeEmailCheck.setBounds(362, 176, 21, 19);
 		panelModify.add(lblChangeEmailCheck);
-		
-		JLabel lblPassMod = new JLabel("Password");
-		lblPassMod.setBounds(10, 246, 100, 23);
-		panelModify.add(lblPassMod);
-		
-		JLabel lblChangePassCheck = new JLabel();
-		setLblChangePassCheck(lblChangePassCheck);
-		lblChangePassCheck.setBounds(362, 250, 21, 19);
-		panelModify.add(lblChangePassCheck);
-		
-		JLabel lblPassConfMod = new JLabel("Conferma Password");
-		lblPassConfMod.setBounds(10, 325, 100, 23);
-		panelModify.add(lblPassConfMod);
-		
-		JLabel lblChangePassConfCheck = new JLabel();
-		setLblChangePassConfCheck(lblChangePassConfCheck);
-		lblChangePassConfCheck.setBounds(362, 329, 21, 19);
-		panelModify.add(lblChangePassConfCheck);
 		
 		JLabel lblInqMod = new JLabel("Inquadramento");
 		lblInqMod.setBounds(431, 33, 132, 14);
@@ -393,7 +487,7 @@ public class Account extends SL_JFrame{
 		panelModify.add(lblChangePhoneCheck);
 		
 		JLabel lblTypeUserMod = new JLabel("Tipo Utente");
-		lblTypeUserMod.setBounds(611, 176, 157, 19);
+		lblTypeUserMod.setBounds(379, 226, 157, 19);
 		panelModify.add(lblTypeUserMod);
 	
 /*		
@@ -532,114 +626,6 @@ public class Account extends SL_JFrame{
 		getTxtMailMod().setBounds(120, 173, 224, 20);
 		panelModify.add(getTxtMailMod());
 		getTxtMailMod().setColumns(10);
-		/*
-		passwordFieldMod1 = new JTextField();
-		passwordFieldMod1.setEditable(false);
-		passwordFieldMod1.setText(user[3]);
-		passwordFieldMod1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				passwordFieldMod1.setEditable(true);
-				passwordFieldConfMod.setEditable(true);
-			}
-		});
-		passwordFieldMod1.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				
-				if(Check.checkPass(passwordFieldMod1.getText()))
-				{
-					lblChangePassCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePassCheck.setIcon(iconLogoC);
-				}
-			}
-		});
-		passwordFieldMod1.setBounds(120, 247, 224, 20);
-		panelModify.add(passwordFieldMod1);
-		passwordFieldMod1.setColumns(10);
-		
-		passwordFieldConfMod1 = new JTextField();
-		passwordFieldConfMod1.setEditable(false);
-		passwordFieldConfMod1.setText(user[3]);
-		passwordFieldConfMod1.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				
-				if(Check.checkPass(passwordFieldConfMod1.getText()))
-				{					
-					if(Check.checkPassEq1(passwordFieldMod1.getText(), passwordFieldConfMod1.getText()))
-					{
-						lblChangePassConfCheck.setIcon(iconLogoT);
-					}
-					else
-					{
-						lblChangePassConfCheck.setIcon(iconLogoC);
-					}
-				}
-				else
-				{
-					lblChangePassConfCheck.setIcon(iconLogoC);
-				}
-				
-			}
-		});
-		passwordFieldConfMod1.setBounds(120, 326, 224, 20);
-		panelModify.add(passwordFieldConfMod1);
-		passwordFieldConfMod1.setColumns(10);
-		*/
-       
-		passwordFieldMod = new JPasswordField();
-		passwordFieldMod.setEditable(false);
-		//passwordFieldMod.setText(user[4]);
-		passwordFieldMod.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				passwordFieldMod.setEditable(true);
-				passwordFieldConfMod.setEditable(true);
-			}
-		});
-		passwordFieldMod.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				
-				
-				
-				
-				if(Check.checkPass(passwordFieldMod.getPassword()))		//Controllo sintattico
-				{
-					lblChangePassCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePassCheck.setIcon(iconLogoC);
-				}
-			}
-		});
-		passwordFieldMod.setBounds(120, 247, 224, 20);
-		panelModify.add(passwordFieldMod);
-		
-		passwordFieldConfMod = new JPasswordField();
-		passwordFieldConfMod.setEditable(false);
-		//passwordFieldConfMod.setText(user[4]);
-		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {						//Controllo sintattico
-					if(Check.checkPass(passwordFieldConfMod.getPassword())  && Check.checkPassEq(passwordFieldMod.getPassword(), passwordFieldConfMod.getPassword()))
-					{
-						lblChangePassConfCheck.setIcon(iconLogoT);
-					}
-					else
-					{
-						lblChangePassConfCheck.setIcon(iconLogoC);
-					}
-				
-			}
-		});
-		passwordFieldConfMod.setBounds(120, 326, 224, 20);
-		panelModify.add(passwordFieldConfMod);
 	   
 		
 		txtInqMod = new JTextField();
@@ -656,7 +642,7 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				
-				if(Check.checkName(txtInqMod.getText()))		//Controllo sintattico
+				if(Check.checkInqu(txtInqMod.getText()))		//Controllo sintattico
 				{
 					lblChangeInqCheck.setIcon(iconLogoT);
 				}
@@ -709,7 +695,7 @@ public class Account extends SL_JFrame{
 				}
 			}
 		});
-		rdbtnTypeUserLibMod.setBounds(519, 246, 109, 23);
+		rdbtnTypeUserLibMod.setBounds(284, 277, 109, 23);
 		panelModify.add(rdbtnTypeUserLibMod);
 		
 		rdbtnTypeUserLetMod = new JRadioButton("Lettore");
@@ -721,7 +707,7 @@ public class Account extends SL_JFrame{
 				}
 			}
 		});
-		rdbtnTypeUserLetMod.setBounds(668, 246, 109, 23);
+		rdbtnTypeUserLetMod.setBounds(448, 277, 109, 23);
 		panelModify.add(rdbtnTypeUserLetMod);
 		
 		ButtonGroup bgMod = new ButtonGroup();
@@ -737,12 +723,6 @@ public class Account extends SL_JFrame{
 				String nome 			= txtNameMod.getText();
 				String cognome 			= txtSurnameMod.getText();
 				String mail 			= getTxtMailMod().getText();
-				char[] pass 			= passwordFieldMod.getPassword();
-				
-				String 	p 				= String.copyValueOf(passwordFieldMod.getPassword());
-				
-				char[] checkPassword 	= passwordFieldConfMod.getPassword();
-				String 	s 				= String.copyValueOf(passwordFieldConfMod.getPassword());
 				String inq 				= txtInqMod.getText();
 				String tel 				= txtTelMod.getText();
 				String stato 			= TypePerson;
@@ -789,8 +769,8 @@ public class Account extends SL_JFrame{
 						{
 						// TEST DA LOCALE OK	
 						//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);						
-						String passW = String.copyValueOf(pass);					
-						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, passW, tel, stato);
+											
+						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, tel, stato);
 						me.setIdut(getIdUser());
 						me.setSql(Q);
 						me.setSql2(getTxtMailMod().getText());					
@@ -1005,7 +985,7 @@ public class Account extends SL_JFrame{
 			
 	});
 	
-		btnModData.setBounds(288, 391, 175, 67);
+		btnModData.setBounds(301, 391, 175, 67);
 		panelModify.add(btnModData);
 		
 		JButton btnBackData = new JButton("Annulla");
@@ -1023,16 +1003,16 @@ public class Account extends SL_JFrame{
 					txtNameMod.setText(null);
 					txtSurnameMod.setText(null);
 					getTxtMailMod().setText(null);
-					passwordFieldMod.setText(null);
-					passwordFieldConfMod.setText(null);
+					//passwordFieldMod.setText(null);
+					//passwordFieldConfMod.setText(null);
 					txtInqMod.setText(null);
 					txtTelMod.setText(null);	
 		
 					txtNameMod.setEditable(false);
 					txtSurnameMod.setEditable(false);
 					getTxtMailMod().setEditable(false);
-					passwordFieldMod.setEditable(false);
-					passwordFieldConfMod.setEditable(false);
+					//passwordFieldMod.setEditable(false);
+					//passwordFieldConfMod.setEditable(false);
 					txtInqMod.setEditable(false);
 					txtTelMod.setEditable(false);
 					
@@ -1051,10 +1031,200 @@ public class Account extends SL_JFrame{
 		panelModify.add(btnBackData);
 		
 		System.out.println("leggo dal campo email... "+getTxtMailMod());
-
-
 		
+		JButton btnChangePassword = new JButton("Cambia Password");
+		btnChangePassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try
+				{
+			    PasswordBox p = new PasswordBox();
+				p.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				p.setLocationRelativeTo(panelModify);
+				
+				p.addWindowListener(new WindowAdapter() {
+
+					  public void windowClosed(WindowEvent e)
+					  {
+							if(ModPass)
+							{
+				panelModify.setVisible(false);
+				panelAccount.setVisible(false);
+				panelChangePass.setVisible(true);
+				ModPass = false;
+			}			
+		}
+	});;
+	p.setSize(300,150);
+	p.setVisible(true);
+  }
+		catch (Exception e1) 
+		{
+			e1.printStackTrace();
+		}
+			}
+});
+		btnChangePassword.setBounds(82, 391, 175, 67);
+		panelModify.add(btnChangePassword);
+		
+// PANEL CHANGE PASS***********************************************************************************************************
+		
+		lblPopUpPass = new JLabel();
+		lblPopUpPass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//Per informazioni cercare la classe PopUp
+				PopUp.infoBox(frmSchoolib,"La password deve contere un carattere maiuscolo, uno minuscolo, un numero e un carattere speciale");
+			}
+		});
+		lblPopUpPass.setIcon(iconLogoQ);
+		lblPopUpPass.setBounds(301, 64, 16, 16);
+		panelChangePass.add(lblPopUpPass);
+		
+		
+		JLabel lblChange = new JLabel("Cambia Password");
+		lblChange.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblChange.setBounds(172, 11, 348, 34);
+		panelChangePass.add(lblChange);
+		
+		JLabel lblPassChange = new JLabel("Password");
+		lblPassChange.setBounds(59, 79, 100, 23);
+		panelChangePass.add(lblPassChange);
+		
+		JLabel lblPassChangeC = new JLabel("Conferma Password");
+		lblPassChangeC.setBounds(59, 187, 140, 23);
+		panelChangePass.add(lblPassChangeC);
+		
+		lblCheckChangePass = new JLabel();
+		lblCheckChangePass.setBounds(446, 83, 21, 19);
+		panelChangePass.add(lblCheckChangePass);
+		
+		lblCheckChangePassC = new JLabel();
+		lblCheckChangePassC.setBounds(446, 187, 21, 19);
+		panelChangePass.add(lblCheckChangePassC);
+		
+		passwordField = new JPasswordField();
+		passwordField.setEditable(false);
+		//txtSurnameMod.setText(user[2]);
+		passwordField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				passwordField.setEditable(true);
+				passwordFieldConfMod.setEditable(true);
+			}
+		});
+		passwordField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				checkPass1();
+			}
+		});
+		passwordField.setBounds(209, 80, 224, 20);
+		panelChangePass.add(passwordField);
+		
+		passwordFieldConfMod = new JPasswordField();
+		
+		passwordFieldConfMod.setEditable(false);
+		passwordFieldConfMod.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {						//Controllo sintattico
+				checkPass2();
+				checkPassEq();
+			}
+		});
+		passwordFieldConfMod.setBounds(209, 188, 224, 20);
+		panelChangePass.add(passwordFieldConfMod);
+		
+		JButton btnChangePass = new JButton("Conferma");
+		btnChangePass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if	(	Check.checkAllPassMod	(
+						passwordField.getPassword(),
+						passwordFieldConfMod.getPassword()
+						)
+)
+{
+					
+					String 	p 	= String.copyValueOf(passwordField.getPassword());
+					
+					
+					try {
+						
+						MQ_Update.updatePassMod(getIdUser(), p);	
+						PopUp.infoBox(frmSchoolib, "Modifiche password effetuata con successo");
+						
+						//lblSetPass.setText(user[4]);  // aggiornare label client server sentire Mauro
+							
+						panelModify.setVisible(false);
+						panelAccount.setVisible(true);
+						panelChangePass.setVisible(false);
+						
+						passwordField.setEditable(false);
+						passwordFieldConfMod.setEditable(false);
+							
+						lblCheckChangePass.setIcon(null);
+						lblCheckChangePassC.setIcon(null);
+									
+
+					} catch (SQLException e2) {
+						e2.printStackTrace();
+					}
+					
+                 }
+				else
+				{
+					PopUp.errorBox(frmSchoolib, "Campi Errati");
+					
+
+					checkPass1();
+					checkPass2();
+					checkPassEq();
+				}
+			}
+		});
+		btnChangePass.setBounds(92, 295, 158, 82);
+		panelChangePass.add(btnChangePass);
+		
+		JButton btnReturnBack = new JButton("Annulla");
+		btnBackData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				PopUp.warningBox(frmSchoolib, "Le modifiche effettuate verranno annullate");
+				
+				if(PopUp.confirmBox(frmSchoolib))
+				{
+					
+					panelAccount.setVisible(true);
+					panelModify.setVisible(false);
+					panelChangePass.setVisible(false);
+		
+					passwordField.setEditable(false);
+					passwordFieldConfMod.setEditable(false);
+
+					lblCheckChangePass.setIcon(null);
+					lblCheckChangePassC.setIcon(null);
+				}
+			}
+		});
+		btnReturnBack.setBounds(330, 295, 158, 82);
+		panelChangePass.add(btnReturnBack);
 	}
+		/*
+
+		char[] pass 			= passwordFieldMod.getPassword();
+		
+		String 	p 				= String.copyValueOf(passwordFieldMod.getPassword());
+		
+		char[] checkPassword 	= passwordFieldConfMod.getPassword();
+		String 	s 				= String.copyValueOf(passwordFieldConfMod.getPassword());
+		String passW = String.copyValueOf(pass);
+		
+		checkPass1()	&&
+		checkPass2()	&&
+		checkPassEq()	&&
+		*/
+		
+	//Fine**********************************************************************************************************	
+	
 	
 	public void updateall(String[] user )
 	{
@@ -1084,7 +1254,7 @@ public class Account extends SL_JFrame{
 		txtSurnameMod.setText(user[2]);
 		txtMailMod.setText(user[3]);
 		getTxtMailMod().setText(user[3]);
-		passwordFieldMod.setText(user[4]);
+		passwordField.setText(user[4]);
 		passwordFieldConfMod.setText(user[4]);
 		txtInqMod.setText(user[5]);
 		txtTelMod.setText(user[6]);
@@ -1121,7 +1291,7 @@ public class Account extends SL_JFrame{
 		txtNameMod.setEditable(false);
 		txtSurnameMod.setEditable(false);
 		getTxtMailMod().setEditable(false);
-		passwordFieldMod.setEditable(false);
+		passwordField.setEditable(false);
 		passwordFieldConfMod.setEditable(false);
 		txtInqMod.setEditable(false);
 		txtTelMod.setEditable(false);
@@ -1133,12 +1303,12 @@ public class Account extends SL_JFrame{
 		lblChangeSurnameCheck.setIcon(null);
 		getLblMAIL().setIcon(null);
 
-		lblChangePassCheck.setIcon(null);
+		//lblChangePassCheck.setIcon(null);
 		lblChangeInqCheck.setIcon(null);
 		lblChangePhoneCheck.setIcon(null);
 	
 	}
-	
+	// verifcare checkall
 	public boolean checkall() {
 		boolean checkok=true;
 		
@@ -1146,9 +1316,6 @@ public class Account extends SL_JFrame{
 		
 		if(		checkname()		&&	
 				checksurname()	&&
-				checkPass1()	&&
-				checkPass2()	&&
-				checkPassEq()	&&
 				checkinq()		&&
 				checkTel()
 										) 
@@ -1207,7 +1374,7 @@ public class Account extends SL_JFrame{
 	
 	public boolean checkinq() {
 		boolean checkok=true;
-		if(Check.checkName(txtInqMod.getText()))
+		if(Check.checkInqu(txtInqMod.getText()))
 		{
 			System.out.println("13");	
 			lblChangeInqCheck.setIcon(iconLogoT);
@@ -1222,39 +1389,39 @@ public class Account extends SL_JFrame{
 	
 	public boolean checkPass1() {
 		boolean checkok=true;
-		if(Check.checkPass(passwordFieldMod.getPassword()))
+		if(Check.checkPass(passwordField.getPassword()))
 		{
-			lblChangePassCheck.setIcon(iconLogoT);
+			lblCheckChangePass.setIcon(iconLogoT);
 		}
 		else
 		{
-			lblChangePassCheck.setIcon(iconLogoC);
+			lblCheckChangePass.setIcon(iconLogoC);
 		}
 		return checkok;	
 	}	
-	
+
 	public boolean checkPass2() {
 		boolean checkok=true;
 		if(Check.checkPass(passwordFieldConfMod.getPassword()))
 		{
-			lblChangePassConfCheck.setIcon(iconLogoT);
+			lblCheckChangePassC.setIcon(iconLogoT);
 		}
 		else
 		{
-			lblChangePassConfCheck.setIcon(iconLogoC);
+			lblCheckChangePassC.setIcon(iconLogoC);
 		}
 		return checkok;	
 	}	
 
 	public boolean checkPassEq() {
 		boolean checkok=true;
-		if(Check.checkPassEq(passwordFieldMod.getPassword(),passwordFieldConfMod.getPassword()))
+		if(Check.checkPassEq(passwordField.getPassword(),passwordFieldConfMod.getPassword()))
 		{
-			lblChangePassConfCheck.setIcon(iconLogoT);
+			lblCheckChangePassC.setIcon(iconLogoT);
 		}
 		else
 		{
-			lblChangePassConfCheck.setIcon(iconLogoC);
+			lblCheckChangePassC.setIcon(iconLogoC);
 		}
 		return checkok;	
 	}	
@@ -1446,7 +1613,6 @@ public class Account extends SL_JFrame{
 		}
 
 		public void setLblChangePassCheck(JLabel lblChangePassCheck) {
-			this.lblChangePassCheck = lblChangePassCheck;
 		}
 
 
@@ -1456,7 +1622,6 @@ public class Account extends SL_JFrame{
 		}
 
 		public void setLblChangePassConfCheck(JLabel lblChangePassConfCheck) {
-			this.lblChangePassConfCheck = lblChangePassConfCheck;
 		}
 
 		public JLabel getLblChangeInqCheck() {
@@ -1497,5 +1662,13 @@ public class Account extends SL_JFrame{
 
 		public void setIconLogoRA(ImageIcon iconLogoRA) {
 			this.iconLogoRA = iconLogoRA;
+		}
+
+		public ImageIcon getIconLogoQ() {
+			return iconLogoQ;
+		}
+
+		public void setIconLogoQ(ImageIcon iconLogoQ) {
+			this.iconLogoQ = iconLogoQ;
 		}	
 }

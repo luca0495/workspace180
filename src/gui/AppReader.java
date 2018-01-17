@@ -224,8 +224,9 @@ public class AppReader extends SL_JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//Per informazioni cercare la classe PopUp
 				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi:"
-						       +          "Studente-1A,studente-1a,Studente-2A,studente-2a,Studente-3A,studente-3a,Studente-4A,studente-4a,"
-						       +          "Studente-5A,studente-5a,Insegnante,insegnante,Tecnico,tecnico,Amministrativo,amministrativo");
+						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C,"
+						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C,"
+						       +          "Studente-5A,Studente-5B,Studente-5C,Insegnante,Tecnico,Amministrativo");
 			}
 		});
 		lblPopUpInq.setIcon(iconLogoQ);
