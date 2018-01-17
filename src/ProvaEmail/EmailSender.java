@@ -1,5 +1,6 @@
 package ProvaEmail;
 
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
@@ -32,38 +33,17 @@ public class EmailSender{
 	//String hash;
 	static Client me;
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
-
+	
 	
 	
 	//test ok -------------------------------------------------------
-	public static void main(String[] args) {
-		
-		Client me;
-		try {
-			me = new Client();
-			me.setPASSWORD("ACmilan1994$");
-			me.setUSERNAME("llazzati@studenti.uninsubria.it");				
 
-			String to="dexa@hotmail.it";
+		 
 		
-			send_uninsubria_email (to,me);
-			System.out.println("classe test");
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
 	//test ok -------------------------------------------------------	
 		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+	
 	
 	
 	
@@ -137,6 +117,7 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
+	 
 
 /*
 >>>>>>> origin/master

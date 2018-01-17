@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import database.MQ_Check;
 import database.MQ_Insert;
@@ -309,7 +310,19 @@ public class Check {
 	    return true;
     }
 	 
+	public static String s(){
 
+		String SALTCHARS = "abcdefghilmnopqrstuvz";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 6) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append("P" + SALTCHARS.charAt(index) + "20$");
+        }
+        String saltStr = salt.toString();
+        System.out.println(saltStr);
+        return saltStr;
+		}
 	 
 	 
 	 
