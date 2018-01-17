@@ -46,6 +46,16 @@ public class Check {
 	    		                            "Studente-3A",      "studente-3a",
 	    		                            "Studente-4A",      "studente-4a", 
 	    		                            "Studente-5A",      "studente-5a",
+	    		                            "Studente-1B",      "studente-1b",
+	    		                            "Studente-2B",      "studente-2b",
+	    		                            "Studente-3B",      "studente-3b",
+	    		                            "Studente-4B",      "studente-4b", 
+	    		                            "Studente-5B",      "studente-5b",
+	    		                            "Studente-1C",      "studente-1c",
+	    		                            "Studente-2C",      "studente-2c",
+	    		                            "Studente-3C",      "studente-3c",
+	    		                            "Studente-4C",      "studente-4c", 
+	    		                            "Studente-5C",      "studente-5c",
 	    		                            "Insegnante",       "insegnante",
 	    		                            "Tecnico",          "tecnico",                          
 	    		                            "Amministrativo",   "amministrativo"  };
@@ -148,6 +158,30 @@ public class Check {
 		{
 			e.printStackTrace();
 			System.out.println("errore check selectmail");
+		}
+		
+		if(results.equals("No Data"))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}	
+    }
+    
+    public static boolean checkPassExist(String m)
+    {
+		String results = null;
+		
+		try 
+		{
+			results = MQ_Check.selectPass(m);
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			System.out.println("errore check selectPass");
 		}
 		
 		if(results.equals("No Data"))
@@ -344,6 +378,12 @@ public class Check {
 	    {
 	    
 			return checkMail(mail) && checkMailExist(mail) && checkPass(pass) &&  checkPass(checkPassword) && checkPassEq(pass, checkPassword);
+	    }
+	  
+	  public static boolean checkAllPassMod(char[] pass,char[] checkPassword )
+	    {
+	    
+			return checkPass(pass) &&  checkPass(checkPassword) && checkPassEq(pass, checkPassword);
 	    }
 	 
 	  public static boolean checkAllRegMod(String nome, String cognome,String mail, char[] pass,char[] checkPassword,String inq,String tel )

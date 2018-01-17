@@ -56,6 +56,30 @@ public class MQ_Check {
 		return datiCliente;
 	}
 	
+	public static String selectPass(String pass) throws SQLException
+	{
+		String query = "SELECT id FROM utente WHERE password = '" + pass + "';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		String datiCliente = new String();
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			datiCliente = "No Data";
+		}
+		else
+		{
+			rs.next();
+			datiCliente = rs.getString("id");
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return datiCliente;
+	}
+	
 	public static String checkCFLastInsert() throws SQLException
 	{
 		String query1 = "SELECT codice FROM libro ORDER by codice DESC LIMIT 1";

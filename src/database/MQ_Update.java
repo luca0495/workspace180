@@ -65,13 +65,21 @@ public class MQ_Update {
 		}
 		else if(col == 3)
 		{
-			query += "SET data_inizio = '" + input + "'";
+			query += "SET numero_prenotazioni = '" + input + "'";
 		}
 		else if(col == 4)
 		{
+			query += "SET numero_prestiti = '" + input + "'";
+		}
+		else if(col == 5)
+		{
+			query += "SET data_inizio = '" + input + "'";
+		}
+		else if(col == 6)
+		{
 			query += "SET data_fine = '" + input + "'";
 		}
-		query += " WHERE codice = '" + cd + "';";
+		query += " WHERE id = '" + cd + "';";
 		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
@@ -129,6 +137,15 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	public static void updatePassMod(int idus,String pass) throws SQLException
+	{	
+
+		String query1 = "UPDATE utente SET password = '" + pass + "' WHERE id  = '" + idus + "';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query1);
+		DBmanager.closeConnection();
+	}
 	public static void updatePassForgot(String email,String pass, int i) throws SQLException
 	{	
 
@@ -151,13 +168,13 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 
-	public static String updateModUserIdGetQuery(int idus, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
+	public static String updateModUserIdGetQuery(int idus, String nome,  String cognome, String email,  String inq, String ntel,String tipo_utente) throws SQLException
 	{
 		String q=null;
 		//int id = Integer.valueOf(idus);
 		
-		q = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
-				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + idus +"';";
+		q = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "'"
+				+ ", inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + idus +"';";
 		return q;
 	}
 	

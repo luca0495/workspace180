@@ -67,7 +67,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<6; i++)
+        			for(int i = 0; i<8; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
@@ -200,6 +200,8 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Codice");
 		model.addColumn("Id");
 		model.addColumn("Email");
+		model.addColumn("Numero_Prenotazioni");
+		model.addColumn("Numero_Prestiti");
 		model.addColumn("Data_Inizio");
 		model.addColumn("Data_Fine");
 		
@@ -210,7 +212,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		                                     + " OR email LIKE '%"+x+"%'"
 		                                     + " OR data_inizio LIKE '%"+x+"%'"
 		                                     + " OR data_fine LIKE '%"+x+"%')"
-		                                     + " ORDER BY codice ASC";
+		                                     + " ORDER BY id ASC";
 		if(x=="" || x==null){			
 		query = "SELECT * FROM prestiti ";
 		}
