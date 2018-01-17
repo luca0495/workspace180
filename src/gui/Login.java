@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import Check.Check;
+import Check.CheckMail;
 import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
@@ -44,32 +45,36 @@ import java.awt.Color;
 
 public class Login extends SL_JFrame  {
 	
-	private Login w;
-	private JFrame frmSchoolib;
-	private JPanel pr;
-	private JPanel pfa;
-	private JPasswordField passwordFieldUser;
-	private JPasswordField passwordField_1;
-	private JTextField txtUser;
-	private JTextField textField_2;
-	private JTextField textField;
-	private JPasswordField passwordField_4;
-	private JPasswordField passwordField_5;
-	private JPasswordField passwordField_6;
-	private boolean result = false;	
 	private static final long serialVersionUID = 1L;
-	private int clicked = 0;
-	private JFrame 			frame;
-	private Client me;
-	private List<String> rowData;
-	private String deleteRow;
-	private int idUser;
-	private String [] user;
+	private Login 				w;
+	private JFrame 				frmSchoolib;
+	private JPanel 				pr;
+	private JPanel 				pfa;
+	private JPasswordField 		passwordFieldUser;
+	private JPasswordField 		passwordField_1;
+	private JTextField 			txtUser;
+	private JTextField 			textField_2;
+	private JTextField 			textField;
+	private boolean 			result = false;	
+	private int 				clicked = 0;
+	private JFrame 				frame;
+	private Client 				me;
+	private List<String> 		rowData;
+	private String 				deleteRow;
+	private int 				idUser;
+	private String [] 			user;
 
-	private JTextField txtEmailForgot;
-	private JPasswordField passwordFieldNewPass;
-	private JPasswordField passwordFieldNewPassC;
-
+	private JTextField 			txtEmail;
+	private JTextField 			txtEmailForgot;
+	
+	private JPasswordField 		passwordFieldNewPass;
+	private JPasswordField 		passwordFieldNewPassC;
+	private JPasswordField 		passwordField_4;
+	private JPasswordField 		passwordField_5;
+	private JPasswordField 		passwordField_6;
+	
+	private boolean 			mailcheckinprogress=false;
+	private String 				mailcheckResult;
 	
 	public Login(Component c,Client x)
 	{
@@ -131,9 +136,107 @@ public class Login extends SL_JFrame  {
 		lblClickHere.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				PanelRegi.setVisible(false);
-				PanelFirstAcc.setVisible(false);
-				PanelForgPass.setVisible(true);
+				//***
+				
+		//Assegna a delle variabili il contenuto dei text field
+				
+				String mail 			= getTxtEmail().getText();
+				setMailcheckinprogress(true);
+				
+				me.setSql2("LoginPWRecovery");
+				//parte check mail...
+				CheckMail mc = new CheckMail();
+				
+				mc.checkmailLoginForgotPassword(me,mail,mail, frmSchoolib, getW(), null);
+
+				while (isMailcheckinprogress()) {	//attendi... //System.out.println("attesa per check email exist");		
+					System.out.println("attendo check result"+getMailcheckResult());
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException ex) {
+						ex.printStackTrace();
+					}
+				}
+				//-------------------------------------------------------------------------------------------------------		
+				System.out.println("GUI Login :> ritornato mail check result"+getMailcheckResult());
+
+				switch (getMailcheckResult()) {
+				
+				case "problemi con user read check mail":					
+					System.out.println("GUI Login :> problemi con user read check mail");
+					PopUp.errorBox(frmSchoolib, "GUI Login :> problemi con user read check mail");
+					break;
+				
+				case "sintatticamente non corretta":
+					System.out.println("GUI Login :> sintatticamente non corretta");
+					PopUp.errorBox(frmSchoolib, "GUI Login :> sintatticamente non corretta");
+					break;
+					
+				case "nulla":
+					System.out.println("GUI Login :> nulla");
+					PopUp.errorBox(frmSchoolib, "GUI Login :> nulla");
+					break;	
+			
+				//dopo test mail --> db	
+				case "NG":
+					String msgE1 = "la mail inserita ( "+mail+" ) ha causato un problema di interrogazione al database , la preghiamo di riprovare";
+					System.out.println(msgE1);
+					PopUp.errorBox(frmSchoolib, msgE1);
+					break;
+					
+				//dopo test mail --> db	
+				case "OK NE":
+					String msgE = "la mail inserita ( "+mail+" ) non risulta essere di nessun utente registrato, inserire email valida";
+					System.out.println(msgE);
+					PopUp.errorBox(frmSchoolib, msgE);
+					break;
+				
+				//dopo test mail --> db		
+				case "OK E":
+					System.out.println("ritornato dal check mail EXIST");
+					PopUp.infoBox(frmSchoolib, "INSERIRE PROCEDURA INVIO EMAIL CON PW TEMP");
+	
+					PanelRegi.setVisible(false);
+					PanelFirstAcc.setVisible(false);
+					PanelForgPass.setVisible(true);	
+
+					//METODO PASS CASUALE... setta newpass
+					
+					
+					String newpass="32413132";
+					String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
+					
+					try
+					{
+					
+					me.setPw(newpass);	
+					me.setSql2(mail);
+					me.setSql(q);
+					
+					me.setActW(getW());
+					me.setActF(frmSchoolib);
+					me.setActC(c);				
+					try {
+						System.out.println("GUI account:> ottenuti dati user ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserPasswordRecovery);
+					} catch (InterruptedException e2) {
+						System.out.println("GUI account:> NON ottenuti dati user ");	
+						e2.printStackTrace(); 
+					}
+					}
+					catch (Exception exq) 
+					{
+						exq.printStackTrace();
+					}					
+					//*************************************************************						
+					break;			
+
+				default:
+					break;
+				} 	
+//***
+
 			}
 		});
 		lblClickHere.setForeground(Color.BLUE);
@@ -145,6 +248,9 @@ public class Login extends SL_JFrame  {
 		PanelRegi.add(passwordFieldUser);
 		
 		txtUser = new JTextField();
+		
+		setTxtEmail(txtUser);
+		
 		txtUser.setBounds(287, 75, 282, 20);
 		PanelRegi.add(txtUser);
 		txtUser.setColumns(10);
@@ -679,5 +785,23 @@ public class Login extends SL_JFrame  {
 		}
 		public void setW(Login w) {
 			this.w = w;
+		}
+		public JTextField getTxtEmail() {
+			return txtEmail;
+		}
+		public void setTxtEmail(JTextField txtEmail) {
+			this.txtEmail = txtEmail;
+		}
+		public boolean isMailcheckinprogress() {
+			return mailcheckinprogress;
+		}
+		public void setMailcheckinprogress(boolean mailcheckinprogress) {
+			this.mailcheckinprogress = mailcheckinprogress;
+		}
+		public String getMailcheckResult() {
+			return mailcheckResult;
+		}
+		public void setMailcheckResult(String mailcheckResult) {
+			this.mailcheckResult = mailcheckResult;
 		}
 	}

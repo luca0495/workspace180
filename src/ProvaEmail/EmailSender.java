@@ -32,47 +32,13 @@ public class EmailSender{
 	//String hash;
 	static Client me;
 	 //public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:8085/workspace103/workspace103/ConfirmEmail";
-
-	
-	
-	//test ok -------------------------------------------------------
-	public static void main(String[] args) {
-		
-		Client me;
-		try {
-			me = new Client();
-			me.setPASSWORD("ACmilan1994$");
-			me.setUSERNAME("llazzati@studenti.uninsubria.it");				
-
-			String to="dexa@hotmail.it";
-		
-			send_uninsubria_email (to,me);
-			System.out.println("classe test");
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	//test ok -------------------------------------------------------	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	
 	 //public static void send_uninsubria_email(String USER,String PASS,String to,Client Me) throws SendFailedException, MessagingException{
-	 public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
-	    // String hasher = hash;	  
+	 
 	
-		 
-		 
+	
+	public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
+	    // String hasher = hash;	  
+
 		 me=Me;
 		 System.out.println("Controllo errore:" + me.toString());
 	     String host = "smtp.office365.com";
@@ -90,8 +56,6 @@ public class EmailSender{
 		 /*
 		 props.put( "mail.smtp.host" , "smtp.live.com");
 		 props.put( "mail.smtp.user" , USERNAME );
-		 
-		
 		 props.put( "mail.smtp.starttls.enable" , "true" );
 		 props.put( "mail.smtp.password" , PASSWORD);
         */
@@ -137,7 +101,68 @@ public class EmailSender{
 		      int randomInt = randomGenerator.nextInt(100);
 		      return randomInt;
 	   }
+	 
+	 public static void send_uninsubria_recoverypassword(String to,Client Me,String newpassword) throws SendFailedException, MessagingException, SQLException{
+		    // String hasher = hash;	  
 
+			 me=Me;
+			 System.out.println("Controllo errore:" + me.toString());
+		     String host = "smtp.office365.com";
+		     String from= me.getUSERNAME();
+		     
+		     Authenticator authenticator = new Authenticator()
+		      {         @Override
+		    	          protected PasswordAuthentication getPasswordAuthentication() {
+		    	             return new PasswordAuthentication(me.getUSERNAME(), me.getPASSWORD());
+		    	          }
+		      };
+		     
+		     //SMTPAuthenticator authenticator = new SMTPAuthenticator(me.getUSERNAME(), me.getPASSWORD());
+			 Properties props = new Properties();
+			 /*
+			 props.put( "mail.smtp.host" , "smtp.live.com");
+			 props.put( "mail.smtp.user" , USERNAME );
+			 props.put( "mail.smtp.starttls.enable" , "true" );
+			 props.put( "mail.smtp.password" , PASSWORD);
+	        */
+			 //props.setProperty("mail.smtp.submitter", authenticator.getPasswordAuthentication().getUserName());
+			 props.setProperty("mail.smtp.auth" , "true" );
+			 props.setProperty("mail.smtp.host",host);
+		     props.setProperty("mail.smtp.port","587");
+		     props.setProperty("mail.smtp.starttls.enable", "true");
+		     
+		    // props.put("mail.debug", "true");
+		     System.out.println("Controllo props:" + props + "Controllo authenticator:" + authenticator );
+		     Session session = Session.getInstance( props, authenticator );
+			 // problema username e password perchè devi averle!!   
+		   
+		        
+		     //String link = MAIL_REGISTRATION_SITE_LINK+"?scope=activation&userId="+to+"&hash="+hash;
+			 StringBuilder bodyText = new StringBuilder(); 
+				 bodyText.append("<div>").append("Caro Utente<br/><br/>").append(", <br/>")
+				  .append("la tua password temporanea è").append("  <br/>").append(newpassword)
+			      .append("  <br/>").append("  Grazie <br/>").append("</div>");
+			try{	
+				
+			 Message msg = new MimeMessage(session);
+			 msg.setFrom(new InternetAddress(from));
+			 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
+			 msg.setSubject("Recovery Password");
+			 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
+		      
+			 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
+			 Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());	     
+			 
+			 //Transport.send(msg);
+			 
+		     System.out.println("\nMail was sent successfully.");   
+			}catch(MessagingException exception)
+	        {
+	            exception.printStackTrace();
+	        }      
+		 }
+
+	 
 /*
 >>>>>>> origin/master
 	public static void main(String[] argv) {
@@ -189,5 +214,27 @@ public class EmailSender{
 		}
 	}
 */
+		//test ok -------------------------------------------------------
+		public static void main(String[] args) {
+			
+			Client me;
+			try {
+				me = new Client();
+				me.setPASSWORD("ACmilan1994$");
+				me.setUSERNAME("llazzati@studenti.uninsubria.it");				
+
+				String to="dexa@hotmail.it";
+			
+				send_uninsubria_email (to,me);
+				System.out.println("classe test");
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		//test ok -------------------------------------------------------		
+		}
+	 
+	 
 	
 }

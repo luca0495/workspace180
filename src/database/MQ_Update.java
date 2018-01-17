@@ -131,7 +131,6 @@ public class MQ_Update {
 	
 	public static void updatePassForgot(String email,String pass, int i) throws SQLException
 	{	
-
 		String query1 = "UPDATE utente SET email = '" + email + "', password = '" + pass + "' , password_temp = '" + i + "';";
     	
 		DBmanager.openConnection();
@@ -139,6 +138,20 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 
+	public static String updateNewPassForgotGETQUERY (String email,String pass) {
+		String q = "UPDATE utente SET password = '" + pass +"' WHERE email = '" + email +"';";
+		return q;
+	}
+	
+	public static void updateNewPassForgot(String q) throws SQLException
+	{	
+		//String query1 = "UPDATE utente SET password = '" + pass +"' WHERE email = '" + email +"';";
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	
+	
 	public static void updateLoginTry(String email, int tentativi) throws SQLException
 	{	
 

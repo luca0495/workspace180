@@ -22,9 +22,11 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.bcel.internal.generic.POP2;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import Check.PopUp;
+import Core.ClientCMDuser;
 import Core.Clients;
 import Core.Commands;
 import Core.CommandsList;
@@ -94,6 +96,8 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			String 				Sql;
 	private 			String 				Sql2;
+	private				String				pw;
+	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
@@ -270,6 +274,11 @@ public class Client implements Serializable, Runnable  {
 							case UserRegistration: 
 														ClientCHANGEuserRegistration();
 								break;
+							case UserPasswordRecovery: 
+														ClientCMDuser.UserPasswordRecovery(this);
+								break;
+							
+							
 							case UserActivation: 
 											
 								break;				
@@ -555,12 +564,15 @@ public class Client implements Serializable, Runnable  {
 	
 	
 	
-	private void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
+	public void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
 								
 						// Reazioni di Client ai messaggi ritornati dal Server
+						
+						
+						
 						switch (Mb.getText()) {
 							case "OK":							
 								break;
@@ -576,6 +588,23 @@ public class Client implements Serializable, Runnable  {
 								this.setTo(null);
 								this.setSql(null);							
 								break;
+							
+							case "SRV :> UPRecovery :> OK":
+								System.out.println("TORNATO AL CLIENT UPRECOVERY OK");
+								// mail     == getsql2
+								// password == getpw
+								
+								EmailSender.send_uninsubria_recoverypassword(getSql2(), this, getPw());
+								
+								break;
+								
+							case "SRV :> UPRecovery :> NG":
+								
+								System.out.println("TORNATO AL CLIENT UPRECOVERY NG");
+								
+								break;
+								
+								
 								
 							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");									
 								//System.out.println(Mb.getTab().toString());
@@ -855,6 +884,13 @@ public class Client implements Serializable, Runnable  {
 										erNGX.setMailcheckResult("NG");
 										erNGX.setMailcheckinprogress(false);										
 										break;
+									case "LoginPWRecovery":
+										Login lX = (Login) ActW;
+										lX.getTxtEmail().setText("Errore interrogazione DB");
+										lX.setMailcheckResult("NG");
+										lX.setMailcheckinprogress(false);										
+										break;
+									
 									default:
 										break;
 								}
@@ -880,6 +916,16 @@ public class Client implements Serializable, Runnable  {
 										erNGX.setMailcheckResult("OK E");
 										erNGX.setMailcheckinprogress(false);										
 										break;
+									case "LoginPWRecovery":
+										Login lX = (Login) ActW;
+//TODO INSERIRE PROCEDURA											
+										//PopUp.infoBox(lX, "INSERIRE PROCEDURA INVIO EMAIL CON PW TEMP");
+										//PanelRegi.setVisible(false);
+										//PanelFirstAcc.setVisible(false);
+										
+										lX.setMailcheckResult("OK E");
+										lX.setMailcheckinprogress(false);		
+										break;										
 									default:
 										break;
 								}
@@ -903,6 +949,11 @@ public class Client implements Serializable, Runnable  {
 										//erNGX.getTxtEmail().setText("");
 										erNGX.setMailcheckResult("OK NE");
 										erNGX.setMailcheckinprogress(false);										
+										break;
+									case "LoginPWRecovery":
+										Login lX = (Login) ActW;
+										lX.setMailcheckResult("OK NE");
+										lX.setMailcheckinprogress(false);	
 										break;
 									default:
 										break;
@@ -1270,7 +1321,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
 						this.getSql(),				// email da verificare
-						this.getSql2()
+						this.getSql2()				// finestra chiamante {Account,AppReader,LoginPWRecovery}
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -1536,7 +1587,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			public void setCliType(Clients cliType) {
 				ClientType = cliType;
 			}		
-			boolean isStubok() {
+			public boolean isStubok() {
 			return stubok;
 		}
 			public void setStubok(boolean stubok) {
@@ -1691,6 +1742,12 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			}
 			public void setIdut(int idut) {
 				this.idut = idut;
+			}
+			public String getPw() {
+				return pw;
+			}
+			public void setPw(String pw) {
+				this.pw = pw;
 			}
 
 			

@@ -44,77 +44,80 @@ import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
 
 public class Account extends SL_JFrame{
-
-	private Account w;
 	
-	private JFrame frmSchoolib;	
-	private AppReader a;
-	private LoadUser l = new LoadUser();
-	private Client me;
-	private static final long serialVersionUID = 1L;
-	private static String[] UserData = null;
-	private JTextField s = null;
-	public String p1,p2,p3,p4,p5,p6,p7 = null; 
-    static int rows = 0;
-    static int cols = 0; 
-    String r = null;
-    private static JTextField s1;
-    private int idUser ;
-	static int userRow = 0;
-    private JLabel lblSetNome;
-    private JLabel lblSetCognome;
-    private JLabel lblSetEmail;
-    private JLabel lblSetPass;
-    private JLabel lblSetInq;
-    private JLabel lblSetTipoUte;
-    private JLabel lblSetTel;
-    private JLabel lblSetNumPrenPend;
-    private JLabel lblReturnBack;
+	private static final long 	serialVersionUID = 1L;
+	private static String[] 	UserData = null;
+    private static JTextField 	s1;
+			static int 			userRow = 0;
+		    static int			rows = 0;
+		    static int			cols = 0; 		    
+		    
+	private Account 			w;	
+	private JFrame 				frmSchoolib;
+	private AppReader 			a;
+	private LoadUser 			l = new LoadUser();
+	private Client 				me;
+	private JPanel 				panelAccount;
+	private JPanel 				panelModify;
 
-	private	JLabel lblChangeNameCheck; 
-	private	JLabel lblChangeSurnameCheck; 
-    private JLabel lblChangeEmailCheck;
-	private	JLabel lblChangePassCheck;
-	private	JLabel lblChangePassConfCheck ;
-	private	JLabel lblChangeInqCheck ;
-	private	JLabel lblChangePhoneCheck ;
-	private	JLabel lblTypeUserMod ;
-    private JLabel lblMAIL;
+	private ImageIcon 			iconLogoT;
+	private ImageIcon 			iconLogoC;
+	private ImageIcon 			iconLogoRA;
 
-	private String TypePerson = "Lettore";
-	private JTextField txtNameMod;
-	private JTextField txtSurnameMod;
-	private JTextField txtMailMod;
-	private JTextField txtInqMod;
-	private JTextField txtTelMod;
-	private JPasswordField passwordFieldMod;
-	private JPasswordField passwordFieldConfMod;
-	private String input;
-	private List<String> rowData = new ArrayList<String>();
-	private int column;
-	private int deleteRow;
-	private String[] user = null;
-	private String[] user1 = null;
-	private boolean User = true;
-	private JTextField passwordFieldMod1;
-	private JTextField passwordFieldConfMod1;
-	private JRadioButton rdbtnTypeUserLibMod;
-	private JRadioButton rdbtnTypeUserLetMod;
-	// in test 
-	private String 		emailuser;
-	private boolean 	cambioemail=false;
-	private String [] 	userdata;
-	
-	private ImageIcon iconLogoT;
-	private ImageIcon iconLogoC;
-	private ImageIcon iconLogoRA;
+    private JLabel		 		lblSetNome;
+    private JLabel 				lblSetCognome;
+    private JLabel 				lblSetEmail;
+    private JLabel 				lblSetPass;
+    private JLabel 				lblSetInq;
+    private JLabel 				lblSetTipoUte;
+    private JLabel 				lblSetTel;
+    private JLabel 				lblSetNumPrenPend;
+    private JLabel 				lblReturnBack;
 
-	private JPanel panelAccount;
-	private JPanel panelModify;
+	private	JLabel 				lblChangeNameCheck; 
+	private	JLabel 				lblChangeSurnameCheck; 
+    private JLabel 				lblChangeEmailCheck;
+	private	JLabel 				lblChangePassCheck;
+	private	JLabel 				lblChangePassConfCheck ;
+	private	JLabel 				lblChangeInqCheck ;
+	private	JLabel 				lblChangePhoneCheck ;
+	private	JLabel 				lblTypeUserMod ;
+    private JLabel 				lblMAIL;
+
+	private JRadioButton 		rdbtnTypeUserLibMod;
+	private JRadioButton 		rdbtnTypeUserLetMod;
 	
-	private boolean mailcheckinprogress=false;
-	private String mailcheckResult;
+	private JPasswordField 		passwordFieldMod;
+	private JPasswordField 		passwordFieldConfMod;
+	private JTextField 			txtNameMod;
+	private JTextField 			txtSurnameMod;
+	private JTextField 			txtMailMod;
+	private JTextField 			txtInqMod;
+	private JTextField 			txtTelMod;
+	private JTextField 			passwordFieldMod1;
+	private JTextField 			passwordFieldConfMod1;
+	private JTextField 			s = null;
+
+			String 				r = null;
+	private String[] 			user = null;
+	private String[] 			user1 = null;	
+	private String[] 			userdata;    
+	private List<String> 		rowData = new ArrayList<String>();	
+	public 	String 				p1,p2,p3,p4,p5,p6,p7 = null; 	
+	private String 				input;
+	private String 				TypePerson = "Lettore";
+	private String 				emailuser;
 	
+	private String 				mailcheckResult;
+	private boolean 			mailcheckinprogress=false;	
+	
+	private boolean 			User = true;
+	private boolean 			cambioemail=false;	
+	
+	private int 				column;
+	private int 				deleteRow;
+    private int 				idUser ;
+
 	public Account(Component c,Client x)
 	{
 		
@@ -748,6 +751,8 @@ public class Account extends SL_JFrame{
 				//TEST OK 
 				setMailcheckinprogress(true);
 				//parte check mail...
+				
+				me.setSql2("Account");
 				checkmail();
 
 				while (isMailcheckinprogress()) {	//attendi... //System.out.println("attesa per check email exist");		
@@ -1271,7 +1276,7 @@ public class Account extends SL_JFrame{
 								System.out.println(" ***** sto controllando la email : email MODIFICATA");
 								String email = getTxtMailMod().getText();
 								me.setSql(email);				
-								me.setSql2("Account");
+								//me.setSql2("Account");
 								me.setActW(getW());
 								me.setActF(frmSchoolib);
 								//me.setActC(c);									

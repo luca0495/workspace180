@@ -525,6 +525,8 @@ public class AppReader extends SL_JFrame {
 			
 			public void actionPerformed(ActionEvent e) {
 				
+				me.setSql2("AppReader");
+				
 				//TEST OK 
 				setMailcheckinprogress(true);
 				setCfcheckinprogress(true);
@@ -748,7 +750,7 @@ public class AppReader extends SL_JFrame {
 								System.out.println(" ***** sto controllando la email : email MODIFICATA");
 								String email = getTxtEmail().getText();
 								me.setSql(email);
-								me.setSql2("AppReader");
+								//me.setSql2("AppReader");
 								me.setActW(getW());
 								me.setActF(frmSchoolib);
 								//me.setActC(c);									

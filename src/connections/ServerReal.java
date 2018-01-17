@@ -440,7 +440,27 @@ public class ServerReal extends ServerSkeleton {
 									System.out.println("SYS AL :> srv ritorna "+x.getText());										
 									return x;								
 									//break;
-	
+								
+								case UserPasswordRecovery:
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> UserPasswordRecovery ");					
+									try {
+										
+										//cambia query
+										MQ_Update.updateNewPassForgot(M.getMsg().getSQLQuery());				
+										
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> UPRecovery :> OK"));	
+										
+									} catch (Exception e) {
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> UPRecovery :> NG"));
+										System.out.println("problemi con password recovery");
+										e.printStackTrace();
+									}
+									System.out.println("SYS AL :> srv ritorna "+x.getText());										
+									return x;								
+									//break;
+									
 								case UserUPDATE:	//SRV UP
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
 									try {
