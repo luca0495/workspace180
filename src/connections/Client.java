@@ -67,6 +67,9 @@ public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	
+	private 			AppMain				meMain=null;
+	private 			Account				meAcc=null;
+	
 	private 			JFrame 				ActF			=null;	//Active Frame
 	private 			SL_JFrame			ActW			=null;	//Active Window
 	private 			Component			ActC			=null;	//Active Component	
@@ -97,6 +100,7 @@ public class Client implements Serializable, Runnable  {
 	private 			String 				Sql;
 	private 			String 				Sql2;
 	private				String				pw;
+	private				String[] 			datiUtente;
 	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
@@ -117,6 +121,8 @@ public class Client implements Serializable, Runnable  {
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
 
 					AppMain StartWindow = new AppMain(x);
+					x.setMeMain(StartWindow);
+					
 					StartWindow.getFrame().setVisible(true);							
 					System.out.println("creato start windows");
 					StartWindow.addMsg("test");	
@@ -586,7 +592,12 @@ public class Client implements Serializable, Runnable  {
 								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());									
 								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
-								this.setSql(null);							
+								this.setSql(null);		
+								
+								//TODO RIVEDI E CONTROLLA
+								this.getMeMain().getFrame().setVisible(true);
+								this.getMeMain().getBtnAccount().setVisible(true);
+								
 								break;
 							
 							case "SRV :> UPRecovery :> OK":
@@ -714,11 +725,17 @@ public class Client implements Serializable, Runnable  {
 									break;
 								}
 								
+								
+								
+								//OLD APRE FINESTRA ACCOUNT
+								/*
 								Account aX = (Account) ActW;
 								System.out.println(" settato finestra attiva : "+ActW.toString());		
 								
-								aX.updateall(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
+								aX.updateall(Mb.getRowUser());				// PER PANNELLO ACCOUNT 
 								aX.updateallModify(Mb.getRowUser());		// PER PANNELLO MODIFY
+								*/
+								
 								
 								//System.out.println(" updatato finestra account ");		
 
@@ -728,6 +745,12 @@ public class Client implements Serializable, Runnable  {
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[4]);
 								
+								//RITORNA AD APP MAIN
+								
+								setIdut(Integer.valueOf(Mb.getRowUser()[0]));
+								
+								this.getMeMain().getFrame().setVisible(true);
+								this.getMeMain().getBtnAccount().setVisible(true);
 								
 								
 								clrParFS();	
@@ -736,14 +759,16 @@ public class Client implements Serializable, Runnable  {
 								// USER Read Data by email
 							case "SRV :> selected user by email panel Account:> OK":								
 								System.out.println("ritornato al client UserDATA by email OK : ");																							
-								Account accX = (Account) ActW;	
-
+								
+//INSERISCI ACTW NUOVA ACCOUNT								
+								
+								Account accX = new Account(getMeMain().getFrame(),this);				
+								setActW(accX);
+								accX.setAlwaysOnTop(true);	
 								accX.getPanelAccount().setVisible(true);
 								accX.getPanelModify().setVisible(false);
-								
 								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
-								
-								
+		
 								clrParFS();	
 								break;
 								
@@ -794,14 +819,24 @@ public class Client implements Serializable, Runnable  {
 								break;	
 	
 							case "SRV :> selected user login check:> Login Corretto":
-								Login l = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
+								
+								setIdut(Mb.getIdUser());
+								setDatiUtente(Mb.getRowUser());
+								
+								System.out.println("settato id utente..."+getIdut());
+								
+								Login l = (Login)getActW();								
+								//System.out.println("login attiva: "+l.toString());								
+								/*
 								Account lo = new Account(getActF(),this);				
 								setActW(lo);
+								*/								
 								//chiusura finesta login
 								l.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
-								l.getPr().setVisible(false);				//PanelRegi.setVisible(false);
+								l.getPr().setVisible(false);				//PanelRegi.setVisible(false);	
 								WindowEvent close = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
 								getActF().dispatchEvent(close);
+								
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
@@ -811,11 +846,26 @@ public class Client implements Serializable, Runnable  {
 									
 									
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
+									
+									/*
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 									this.getCmdLIST().put(Commands.UserREADbyEmail);
-								} catch (InterruptedException e2) {
+									*/
+									
+									
+									this.getMeMain().getFrame().setVisible(true);
+									this.getMeMain().getBtnAccount().setVisible(true);
+									this.getMeMain().getText().setText(" benvenuto ["+getDatiUtente()[6]+"] "+getDatiUtente()[4]+" "+getDatiUtente()[5]+" ");
+									
+									
+									
+								} /*catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
 									e2.printStackTrace(); 
+								
+								}*/
+								finally {
+									
 								}
 								//clrParFS();	i campi verranno ripuliti da user read by email	
 								break;
@@ -851,18 +901,19 @@ public class Client implements Serializable, Runnable  {
 								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
 								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
 								getActF().dispatchEvent(closeF);
+								
+				
+								
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
 									this.setCliType(Clients.Librarian);
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
-			
-									
 //TODO ELIMINA PASSWORD TEMPORANEA
 //MQ_Delete.deletePassTemp(pass);
-
 									this.getCmdLIST().put(Commands.UserREADbyEmail);
+
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
 									e2.printStackTrace(); 
@@ -1757,6 +1808,18 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			}
 			public void setPw(String pw) {
 				this.pw = pw;
+			}
+			public AppMain getMeMain() {
+				return meMain;
+			}
+			public void setMeMain(AppMain meMain) {
+				this.meMain = meMain;
+			}
+			public String[] getDatiUtente() {
+				return datiUtente;
+			}
+			public void setDatiUtente(String[] datiUtente) {
+				this.datiUtente = datiUtente;
 			}
 
 			

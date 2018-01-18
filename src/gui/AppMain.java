@@ -66,6 +66,7 @@ public class AppMain extends SL_JFrame  {
     private JPasswordField passwordField_2;
     private JPasswordField passwordField_3;
 	
+    private JButton btnAccount;
 	/**
 	 * Create the application.
 	 */
@@ -118,11 +119,7 @@ public class AppMain extends SL_JFrame  {
 			}
 			
 		});
-		panelLog.addFocusListener(new FocusAdapter() {
 
-			
-			
-		});
 		
 		getFrame().getContentPane().add(panelLog);
 		panelLog.setLayout(null);
@@ -231,58 +228,38 @@ public class AppMain extends SL_JFrame  {
 				 });    
 			}
 	 });
-		btnNewButton_2.setBounds(124, 147, 154, 23);
-		panelLog.add(btnNewButton_2);
-		
-		JButton btnNewButton_1 = new JButton("Attiva Account");
-		
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				//me.testconn();
-				
-			}
-		});
-		btnNewButton_1.setBounds(581, 181, 154, 23);
-		panelLog.add(btnNewButton_1);
-		btnNewButton.setBounds(31, 63, 167, 23);
-		panelLog.add(btnNewButton);
 		
 		setText(new JTextField());
-		getText().setBounds(208, 54, 628, 41);
+		getText().setBounds(128, 0, 629, 23);
 		panelLog.add(getText());
 		getText().setColumns(10);
+		btnNewButton_2.setBounds(134, 181, 154, 23);
+		panelLog.add(btnNewButton_2);
+		btnNewButton.setBounds(597, 433, 154, 23);
+		panelLog.add(btnNewButton);
 		
 		
 		
-		JButton btnAdmin = new JButton("Admin");
 		
-		btnAdmin.addMouseListener(new MouseAdapter() {
-			 @Override
-				public void mousePressed(MouseEvent arg0) {
-					
-				 
-				 		EventQueue.invokeLater(new Runnable() {
-							public void run() 
-							{
-								
-							 try 
-							{
-							 AppLibrarian ak = new AppLibrarian(getFrame());
-						    } 
-							catch (Exception e) 
-							{
-							e.printStackTrace();
-							}
-								
-						}	
-			
-					 });    
+		
+		btnAccount = new JButton("Account");
+		btnAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//APRO FINESTRA ACCOUNT			
+				//************************************************************		
+				try {
+					System.out.println("GUI AppMain:> apro account ");	
+					me.getCmdLIST().put(Commands.UserREADbyEmailAcc);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI AppMain:> apro account NG ");	
+					e2.printStackTrace(); 
 				}
-		
-		 });
-		btnAdmin.setBounds(581, 227, 107, 23);
-		panelLog.add(btnAdmin);
+				//***********************************************************
+			}
+		});
+		btnAccount.setBounds(135, 227, 154, 23);
+		panelLog.add(btnAccount);
+		btnAccount.setVisible(false);
 		
 		
 		JButton btnRegistrazione = new JButton("Registrazione");
@@ -311,7 +288,7 @@ public class AppMain extends SL_JFrame  {
 			}
 	 });
 		
-		btnRegistrazione.setBounds(124, 113, 154, 23);
+		btnRegistrazione.setBounds(134, 135, 154, 23);
 		panelLog.add(btnRegistrazione);
 								
 		JButton btnEsci = new JButton("Esci");
@@ -320,7 +297,7 @@ public class AppMain extends SL_JFrame  {
 				System.exit(0);
 			}
 		});
-		btnEsci.setBounds(212, 400, 129, 23);
+		btnEsci.setBounds(134, 433, 154, 23);
 		panelLog.add(btnEsci);
 		
 		JButton btnRicerca = new JButton("Ricerca");
@@ -423,7 +400,7 @@ public class AppMain extends SL_JFrame  {
 			 });    
 		}
  });
-		btnRicerca.setBounds(279, 11, 89, 23);
+		btnRicerca.setBounds(134, 88, 154, 23);
 		panelLog.add(btnRicerca);
 		
 		
@@ -443,6 +420,8 @@ public class AppMain extends SL_JFrame  {
 	}
 	public void setText(JTextField text) {
 		this.text = text;
+		text.setBackground(new Color(102, 51, 0));
+		text.setForeground(Color.YELLOW);
 	}
 	
 	
@@ -501,5 +480,13 @@ public class AppMain extends SL_JFrame  {
 				}
 			}
 		});
+	}
+
+	public JButton getBtnAccount() {
+		return btnAccount;
+	}
+
+	public void setBtnAccount(JButton btnAccount) {
+		this.btnAccount = btnAccount;
 	}
 }

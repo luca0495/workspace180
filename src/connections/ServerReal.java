@@ -356,10 +356,20 @@ public class ServerReal extends ServerSkeleton {
 						String email 	= M.getMsg().getSQLQuery();
 						String pass 	= M.getMsg().getSQLQuery2();	
 						
-						String r 		= Check.checkAdminLogIn(email, pass);
+						String []r 		= Check.checkAdminLogIn(email, pass);
 						
+						System.out.println("ottenuto dalla query id utente"+r[1]);
+						
+						
+						if (r[1]==null) {
+							x.setIdUser(0);
+						}else {
+							x.setIdUser(Integer.valueOf(r[1]));
+						}
+						
+						x.setRowUser(r);
 						x.setUserEmail(email);
-						x.setText(new String ("SRV :> selected user login check:> "+r));
+						x.setText(new String ("SRV :> selected user login check:> "+r[0]));
 						
 					} catch (SQLException e) {	
 						System.out.println("problemi con \"SRV :> selected user login check ");

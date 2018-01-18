@@ -62,7 +62,7 @@ public class SystemServer {
 		lblSchoollibFinestraControllo.setBounds(10, 11, 459, 51);
 		getFrame().getContentPane().add(lblSchoollibFinestraControllo);	
 		
-		JButton btnNewButton = new JButton("metodo 1");
+		JButton btnNewButton = new JButton("LOGIN Administrator");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -70,14 +70,22 @@ public class SystemServer {
 			
 			}
 		});
-		btnNewButton.setBounds(27, 334, 89, 23);
+		btnNewButton.setBounds(27, 334, 442, 23);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("metodo 2");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton_1.setBounds(27, 368, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("metodo 3");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton_2.setBounds(27, 402, 89, 23);
 		frame.getContentPane().add(btnNewButton_2);
 	}
