@@ -224,6 +224,77 @@ public class Account extends SL_JFrame{
 				 frmSchoolib.dispatchEvent(close);
 			}
 		});
+		
+		JButton btnDelete = new JButton("Cancella Profilo");
+		btnDelete.setBackground(Color.RED);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+             PopUp.warningBox(frmSchoolib,"Questa azione cancellerà in modo completo e definitivo il profilo utenete attualmente in uso !!!");
+				if(PopUp.confirmBox(frmSchoolib))
+				{
+				//TODO DA PASSARE A CLIENT
+/*				//test OK da locale	
+				rowData = new ArrayList<String>();	
+				rowData.add(0, String.valueOf(idUser));				
+				try {
+					MQ_Delete.deleteRowPerson(rowData);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+			    frmSchoolib.dispatchEvent(close);
+*/
+					//************************************************************
+					int idUs = getIdUser();
+					
+					me.setIdut(idUs);				
+					me.setActW(getW());
+					me.setActF(frmSchoolib);
+					me.setActC(c);				
+					try {
+						System.out.println("GUI account:> ottenuti dati user ");
+					me.setCliType(Clients.Librarian);	
+						me.getCmdLIST().put(Commands.UserDELETE);
+					} catch (InterruptedException e2) {
+						System.out.println("GUI account:> NON ottenuti dati user ");	
+						e2.printStackTrace(); 
+					}
+					//*************************************************************	
+					
+			}
+			}
+		});
+		
+			btnDelete.setBounds(192, 381, 193, 54);
+			panelAccount.add(btnDelete);
+		
+		JButton btnModify = new JButton("Modifica Profilo");
+		btnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelAccount.setVisible(false);
+				panelModify.setVisible(true);				
+				//************************************************************
+				String email = lblSetEmail.getText();
+				//System.out.println("passo email    :"+email);
+				//System.out.println(" settato finestra attiva : "+getW().toString());	
+				me.setSql(email);				
+				me.setActW(getW());
+				me.setActF(frmSchoolib);
+				me.setActC(c);				
+				try {
+					System.out.println("GUI account:> ottenuti dati user ");
+				me.setCliType(Clients.Librarian);	
+					me.getCmdLIST().put(Commands.UserREADbyEmail);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI account:> NON ottenuti dati user ");	
+					e2.printStackTrace(); 
+				}
+				//*************************************************************
+				System.out.println(" gui account comando modifica  ");	
+			}
+		});
+		btnModify.setBounds(428, 381, 186, 54);
+		panelAccount.add(btnModify);
 		lblReturnBack.setBounds(835, 11, 30, 30);
 		lblReturnBack.setIcon(getIconLogoRA());
 		lblReturnBack.setBorder(null);
@@ -290,77 +361,6 @@ public class Account extends SL_JFrame{
 		//lblSetTel.setText(user[5]);
 		lblSetTel.setBounds(118, 294, 184, 20);
 		panelAccount.add(lblSetTel);
-			
-		JButton btnDelete = new JButton("Cancella Profilo");
-		btnDelete.setBackground(Color.RED);
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-             PopUp.warningBox(frmSchoolib,"Questa azione cancellerà in modo completo e definitivo il profilo utenete attualmente in uso !!!");
-				if(PopUp.confirmBox(frmSchoolib))
-				{
-				//TODO DA PASSARE A CLIENT
-/*				//test OK da locale	
-				rowData = new ArrayList<String>();	
-				rowData.add(0, String.valueOf(idUser));				
-				try {
-					MQ_Delete.deleteRowPerson(rowData);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-			    frmSchoolib.dispatchEvent(close);
-*/
-					//************************************************************
-					int idUs = getIdUser();
-					
-					me.setIdut(idUs);				
-					me.setActW(getW());
-					me.setActF(frmSchoolib);
-					me.setActC(c);				
-					try {
-						System.out.println("GUI account:> ottenuti dati user ");
-					me.setCliType(Clients.Librarian);	
-						me.getCmdLIST().put(Commands.UserDELETE);
-					} catch (InterruptedException e2) {
-						System.out.println("GUI account:> NON ottenuti dati user ");	
-						e2.printStackTrace(); 
-					}
-					//*************************************************************	
-					
-			}
-			}
-		});
-	
-		btnDelete.setBounds(192, 381, 193, 54);
-		panelAccount.add(btnDelete);
-		
-		JButton btnModify = new JButton("Modifica Profilo");
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelAccount.setVisible(false);
-				panelModify.setVisible(true);				
-				//************************************************************
-				String email = lblSetEmail.getText();
-				//System.out.println("passo email    :"+email);
-				//System.out.println(" settato finestra attiva : "+getW().toString());	
-				me.setSql(email);				
-				me.setActW(getW());
-				me.setActF(frmSchoolib);
-				me.setActC(c);				
-				try {
-					System.out.println("GUI account:> ottenuti dati user ");
-				me.setCliType(Clients.Librarian);	
-					me.getCmdLIST().put(Commands.UserREADbyEmail);
-				} catch (InterruptedException e2) {
-					System.out.println("GUI account:> NON ottenuti dati user ");	
-					e2.printStackTrace(); 
-				}
-				//*************************************************************
-				System.out.println(" gui account comando modifica  ");	
-			}
-		});
-		btnModify.setBounds(428, 381, 186, 54);
-		panelAccount.add(btnModify);
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
