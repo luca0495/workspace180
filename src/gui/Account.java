@@ -972,8 +972,8 @@ public class Account extends SL_JFrame{
 					lblChangeSurnameCheck.setIcon(null);
 					//lblChangeEmailCheck.setIcon(null);
 					getLblMAIL().setIcon(null);
-					lblChangePassCheck.setIcon(null);
-					lblChangePassConfCheck.setIcon(null);
+					//lblChangePassCheck.setIcon(null);
+					//lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
 				}

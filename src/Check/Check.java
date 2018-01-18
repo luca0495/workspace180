@@ -324,9 +324,6 @@ public class Check {
         return saltStr;
 		}
 	 
-	 
-	 
-	 
 	 // esamina password TEMPORANEA
 	 public static String checkAdminLogInFIRST(String email, String pass) throws SQLException {
 	    	
@@ -353,48 +350,54 @@ public class Check {
 	    }
 	 
 	 // esamina password 
-	  public static String[] checkAdminLogIn(String email, String pass) throws SQLException
-	    {
-		  String [] res= new String[7];
-		  
-	    	if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals(""))
-	    	{
-	    		res[0]=new String("I Campi Non Possono Essere Vuoti");
-	    		return res; 
-	    	}
-	    	else
-	    	{
-	    		String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
-	   
-	        	if(datiUtente[1].equals("Nessun Dato")||datiUtente[1].equals(""))
-	        	{
-		    		res[0]=new String("L'Email Non Esiste");
-		    		return res; 	        		
-	        	}
-	        	else
-	        	{        		
-	    			if(pass.equals(datiUtente[2]))
-	    			{
-			    		res[0]=new String("Login Corretto");
-			    		res[1]=datiUtente[0];//id
-			    		res[2]=datiUtente[1];//mail
-			    		res[3]=datiUtente[2];//pw
-			    		res[4]=datiUtente[3];//nome
-			    		res[5]=datiUtente[4];//cognome
-			    		res[6]=datiUtente[5];//tipo
+     public static String[] checkAdminLogIn(String email, String pass) throws SQLException
+       {
+         String [] res= new String[7];
+         
+           
+           if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals(""))
+           {
+               res[0]=new String("I Campi Non Possono Essere Vuoti");
+               return res; 
+           }
+           else
+           {
+               String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
+      
+               if(datiUtente[1].equals("Nessun Dato")||datiUtente[1].equals(""))
+               {
+                   res[0]=new String("L'Email Non Esiste");
+                   return res;                     
+                   
+               }
+               else
+               {                
+                  
+                   if(pass.equals(datiUtente[2]))
+                   {
+                       res[0]=new String("Login Corretto");
+                       res[1]=datiUtente[0];//id
+                       res[2]=datiUtente[1];//mail
+                       res[3]=datiUtente[2];//pw
+                       res[4]=datiUtente[3];//nome
+                       res[5]=datiUtente[4];//cognome
+                       res[6]=datiUtente[5];//tipo
 
-			    		return res; 	
-	    			}
-	    			else
-	    			{
-			    		res[0]=new String("Password Errata");
-			    		return res; 
-	    			}
-	        	}
-
-	    	}
-			
-	    }
+                       return res;     
+                       
+                       
+                       
+                   }
+                   else
+                   {
+                       res[0]=new String("Password Errata");
+                       return res; 
+                       
+                       
+                   }
+               }
+           }
+       }
 	  public static boolean checkAllPassForg(String mail, char[] pass,char[] checkPassword )
 	    {
 	    
