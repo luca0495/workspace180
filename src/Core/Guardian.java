@@ -1,4 +1,10 @@
 package Core;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import Core.Clients;
 import Core.Requests.RS;
 import connections.Message;
@@ -24,18 +30,45 @@ public class Guardian implements Runnable {
 	//-----------------------------------------------------------
 	
 	public void run() {
+
 		int xx=0;
+		Calendar calendar = new GregorianCalendar();
+		Date datacorrente = calendar.getTime();  
+		Date dataultimocontrollo=calendar.getTime();  
+
 		
 		while(!Stop){
+			Calendar c = new GregorianCalendar();
+			datacorrente = c.getTime();  
+			  
+			System.out.println("datacorrente "	+datacorrente.getTime());
+			System.out.println("datacorrente "	+datacorrente.toString());
+			System.out.println("dataultimo "	+dataultimocontrollo.getTime());
+			System.out.println("dataultimo "	+dataultimocontrollo.toString());
 			
 			xx++;
 			//System.out.println("GPG :> Guardian Busy - Query in esecuzione");	
 			while (isBusy()){}	//attesa query in esecuzione...
 			
-			//TODO RIMETTI println
-			//System.out.println("GPG :> Guardian Valuta no "+xx);
 			
-			if (xx==1000)xx=0;
+			//valuta ora del controllo scadenze...
+			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST	
+			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {			//controllo ogni 5 minuti				
+				System.err.println("passati 5 secondi, controllo scadenze prestiti");				
+				dataultimocontrollo = c.getTime();
+				//PROCEDURE CONTROLLO SCADENZE
+				try {
+					CheckLoans();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}	
+			
+			//TODO RIMETTI println
+			System.out.println("GPG :> Guardian Valuta no "+xx);
+			
+			if (xx==1000)
+				xx=0;
 			
 			try {
 				/*
@@ -46,15 +79,10 @@ public class Guardian implements Runnable {
 				System.out.println("GPG :> RICHIESTE in attesa per PL : " + R.getPL().getWr()  );
 				System.out.println("GPG :> RICHIESTE in attesa per PR : " + R.getPR().getWr()  );
 				 */
-				
 				//System.out.println("GPG :> Guardian dorme");
 				Thread.sleep(10);
-				//System.out.println("GPG :> Guardian Valuta");	
-				
+				//System.out.println("GPG :> Guardian Valuta");					
 			Val_BL();	// prima valutazione, le altre vengono richiamate se necessario
-	
-			
-			
 			} 	catch (Exception e) {
 				System.out.println("guardian problemi");
 				}
@@ -393,7 +421,30 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
-
+	
+	// PROCEDURA CONTROLLO SCADENZE PRESTITI
+	
+	public void CheckLoans() throws InterruptedException{
+		System.out.println("GPG :> Guardian SERVE CHECK LOANS");		
+		//SERVE
+		
+		Busy			=true;
+		
+		
+		
+		System.out.println("GPG :> STO CONTROLLANDO CON 1000 QUERY...");	
+		System.out.println("GPG :> HO CONTROLLATO...");
+		
+		
+		
+		Busy			=false;
+	}
+	
+	
+	
+	
+	
+	
 	//TODO INSERISCI SERVIRE PRENOTAZIONI
 	
 	
