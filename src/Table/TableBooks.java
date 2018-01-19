@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import Check.PopUp;
+import Core.Clients;
 import Core.Commands;
 import connections.Client;
 import database.DBmanager;
@@ -201,22 +202,104 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Titolo");
 		model.addColumn("Disponibilità");
 		model.addColumn("Prenotazioni_in_coda");
+		String query=null;
 		
+		System.out.println("Client me " + me.toString());		
+		System.out.println("Client me type " + me.getCliType().toString());		
 		System.out.println("Valore ritornato:" + x);		
+
+//IN TEST		
 		
-		String query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
-		                                     + " OR cognome_autore LIKE '%"+x+"%'"
-		                                     + " OR categoria LIKE '%"+x+"%'"
-		                                     + " OR titolo LIKE '%"+x+"%')"
-		                                     + " ORDER BY codice ASC";
-		if(x=="" || x==null){			
-		query = "SELECT * FROM libro ";
+		switch (me.getCliType()) {
+
+		case Librarian:
+			
+			query = "SELECT * FROM libro" + " WHERE ("
+					+ "    nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%')"
+                    //+ " ORDER BY codice ASC"
+                    ;			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			
+			
+			break;
+			
+		case Reader:
+			
+			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%')" 
+                    //+ " ORDER BY codice ASC"
+                    ;			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			
+			break;
+			
+		case Guest:
+			
+			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%')" 
+                    //+ " ORDER BY codice ASC"
+                    ;			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			
+			
+			
+			break;
+		case Default:
+			
+			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%')" 
+                    //+ " ORDER BY codice ASC"
+                    ;			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			
+			
+			
+			break;			
+			
+			
+			
+		default:
+			break;
 		}
+		
+
+
 		
 		// TEST OK 27.12.2017
 				
-		me.setSql(query);
-		me.getCmdLIST().put(Commands.BookExecuteQuery);
+		//me.setSql(query);
+		//me.getCmdLIST().put(Commands.BookExecuteQuery);
 		
 		// in test
 		

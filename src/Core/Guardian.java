@@ -432,9 +432,13 @@ public class Guardian implements Runnable {
 		
 		
 		
-		System.out.println("GPG :> STO CONTROLLANDO CON 1000 QUERY...");	
-		System.out.println("GPG :> HO CONTROLLATO...");
+		System.out.println("GPG :> STO CONTROLLANDO PRENOTAZIONI , SCADENZA > 1 SETTIMANA");	
+
+//TODO PROCEDURA q
 		
+		System.out.println("GPG :> STO CONTROLLANDO PRESTITI , SCADENZA > 30 GIORNI");
+		
+//TODO PROCEDURA q
 		
 		
 		Busy			=false;

@@ -204,23 +204,90 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Numero_Prestiti");
 		model.addColumn("Data_Inizio");
 		model.addColumn("Data_Fine");
+		String query=null;
 		
 		System.out.println("Valore ritornato:" + x);		
-		
-		String query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
-		                                     + " OR id LIKE '%"+x+"%'"
-		                                     + " OR email LIKE '%"+x+"%'"
-		                                     + " OR data_inizio LIKE '%"+x+"%'"
-		                                     + " OR data_fine LIKE '%"+x+"%')"
-		                                     + " ORDER BY id ASC";
-		if(x=="" || x==null){			
-		query = "SELECT * FROM prestiti ";
+//IN TEST
+		switch (me.getCliType()) {
+
+		case Librarian:
+			
+			query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+                    + " OR id LIKE '%"+x+"%'"
+                    + " OR email LIKE '%"+x+"%'"
+                    + " OR data_inizio LIKE '%"+x+"%'"
+                    + " OR data_fine LIKE '%"+x+"%')"
+                    + " ORDER BY id ASC";
+			if(x=="" || x==null){			
+			query = "SELECT * FROM prestiti ";
+			}			
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			break;
+			
+		case Reader:
+			//modifica idut==id DA TESTARE CON DATI...
+			query = "SELECT * FROM libro" + " WHERE ("
+					+ "		nome_autore LIKE '%"+x+"%'"
+                    + " OR 	cognome_autore LIKE '%"+x+"%'"
+                    + " OR 	categoria LIKE '%"+x+"%'"
+                    + " OR 	titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
+                    + " ORDER BY codice ASC";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			break;
+			
+		case Guest:
+			
+			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
+                    + " ORDER BY codice ASC";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			break;
+			
+		case Default:
+			
+			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
+                    + " OR cognome_autore LIKE '%"+x+"%'"
+                    + " OR categoria LIKE '%"+x+"%'"
+                    + " OR titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
+                    + " ORDER BY codice ASC";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM libro ";
+			}
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);
+			break;			
+			
+			
+		default:
+			break;
 		}
+		
+		
+		
+		
+		
+		
+		
+
 		
 		// TEST OK 27.12.2017
 		///////////////////////////////////// da rivedere		
-		me.setSql(query);
-		me.getCmdLIST().put(Commands.BookExecuteQuery);
+//		me.setSql(query);
+//		me.getCmdLIST().put(Commands.BookExecuteQuery);
 		
 		// in test
 		
