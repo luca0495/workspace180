@@ -456,7 +456,7 @@ public class AppMain extends SL_JFrame  {
 				
 				// chiusura attuale connessione
 				try {
-					me.getCmdLIST().put(Commands.ConnTEST);
+					me.getCmdLIST().put(Commands.ConnSTOP);
 				} catch (InterruptedException e2) {
 					System.out.println("  ");	
 					e2.printStackTrace(); 
@@ -467,16 +467,35 @@ public class AppMain extends SL_JFrame  {
 						me.setSRVaddress("172.0.0.1");
 						getTextField_3().setText("127.0.0.1");
 						//System.out.println("selezionato srv: local");
+						try {
+							me.getCmdLIST().put(Commands.ConnTEST);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 						break;
 					case "lan":
 						me.setSRVaddress("192.168.0.2");
 						getTextField_3().setText("192.168.0.2");
 						//System.out.println("selezionato srv: lan");
+						try {
+							me.getCmdLIST().put(Commands.ConnTEST);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;
 					case "www":
 						me.setSRVaddress("dexa215.homepc.it");
 						getTextField_3().setText("dexa215.homepc.it");
 						//System.out.println("selezionato srv: www");
+						try {
+							me.getCmdLIST().put(Commands.ConnTEST);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						break;	
 						
 						
