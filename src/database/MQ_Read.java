@@ -564,7 +564,45 @@ public class MQ_Read {
 		return user;
 	}
 	
+//***********************SETTING****************************************************
 	
+	public static String[] readSettingTable() throws SQLException
+	{
+		
+		String query = "SELECT local_host,lan,www,srvType,email,password FROM setting;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			results.add("Nessun Dato");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("local_host")); //0 
+				results.add(rs.getString("lan")); // 1
+				results.add(rs.getString("www")); // 2
+				results.add(rs.getString("srvType")); // 3
+				results.add(rs.getString("email")); // 4
+				results.add(rs.getString("password")); // 5 
+			}
+		}
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
+	}
+
 	
 	
 	
