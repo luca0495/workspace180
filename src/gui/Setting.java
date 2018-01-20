@@ -24,6 +24,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.sun.org.apache.bcel.internal.generic.POP;
+import com.sun.org.apache.bcel.internal.generic.POP2;
 import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import Check.Check;
@@ -229,15 +231,17 @@ public class Setting extends SL_JFrame{
 												getTextField_5().getText(),
 												getTextField_6().getText(),
 												getPasswordField().getText()
-												
+
 																);
+					PopUp.infoBox(frmSchoolib, "dati modificati con successo ");
+					frmSchoolib.setVisible(false);
+					
+				
 				} catch (SQLException e) {
-					// 
+					
+					PopUp.infoBox(frmSchoolib, "dati non modificati ");
 					e.printStackTrace();
-				}
-				
-				
-				
+					}
 			}
 		});
 		button.setBounds(271, 378, 158, 82);
@@ -248,6 +252,8 @@ public class Setting extends SL_JFrame{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				PopUp.infoBox(frmSchoolib, "dati non modificati ");
+				frmSchoolib.setVisible(false);
 				
 			}
 		});
