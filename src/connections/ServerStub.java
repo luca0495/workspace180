@@ -15,17 +15,24 @@ public class ServerStub implements Serializable, IServer {
 	private Socket _socket;
 	private String mSg;
 	private int conntentativi;
-	
 	private MessageBack msg;
 	private Client Rifclient;
+	
+	private InetAddress addr;
+	
 	
 	public ServerStub(Client client) throws Exception{
 		Rifclient = client;
 		conntentativi=0;		
 	//	InetAddress addr= InetAddress.getByName(null);
 	//	InetAddress addr= InetAddress.getByName("192.168.1.3");		//test con Dexo note 
-		InetAddress addr= InetAddress.getByName("127.0.0.1");		//test con Local host		
+		
+		//default su local host
+		addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
 	
+		
+		
+		
 	System.out.println("addr = " + addr );
 	try {
 		_socket = new Socket(addr, IServer.PORT );
@@ -245,6 +252,14 @@ public class ServerStub implements Serializable, IServer {
 		public MessageBack test(Message M) throws RemoteException {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		public InetAddress getAddr() {
+			return addr;
+		}
+
+		public void setAddr(InetAddress addr) {
+			this.addr = addr;
 		}
 
 	

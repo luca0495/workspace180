@@ -60,12 +60,15 @@ import gui.ResearchBooks;
 import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
+import sun.security.x509.IPAddressName;
 
 import java.awt.Component;
 
 public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
+	
+	private 			IPAddressName		SRVaddress;
 	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
@@ -119,11 +122,20 @@ public class Client implements Serializable, Runnable  {
 				try {
 					Client x  = new Client();
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
-
+					
 					AppMain StartWindow = new AppMain(x);
 					x.setMeMain(StartWindow);
-					
 					StartWindow.getFrame().setVisible(true);							
+
+					//se in STUB non settato ip server...richiedi inserimento
+					
+					if (x.getSRVaddress()==null) {
+						
+						PopUp.infoBox(StartWindow, "specificare indirizzo IP server");
+						
+					}
+					
+					
 					System.out.println("creato start windows");
 					StartWindow.addMsg("test");	
 					new Thread(x).start();	  // Logica di controllo comandi ricevuti
@@ -573,6 +585,8 @@ public class Client implements Serializable, Runnable  {
 	public void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
+						
+						
 						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
 								
 						// Reazioni di Client ai messaggi ritornati dal Server
@@ -1820,6 +1834,12 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			}
 			public void setDatiUtente(String[] datiUtente) {
 				this.datiUtente = datiUtente;
+			}
+			public IPAddressName getSRVaddress() {
+				return SRVaddress;
+			}
+			public void setSRVaddress(IPAddressName sRVaddress) {
+				SRVaddress = sRVaddress;
 			}
 
 			
