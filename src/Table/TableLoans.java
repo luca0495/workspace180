@@ -199,9 +199,6 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		DefaultTableModel model = (DefaultTableModel)getTable().getModel();		
 		model.addColumn("Codice");
 		model.addColumn("Id");
-		model.addColumn("Email");
-		model.addColumn("Numero_Prenotazioni");
-		model.addColumn("Numero_Prestiti");
 		model.addColumn("Data_Inizio");
 		model.addColumn("Data_Fine");
 		String query=null;
@@ -214,7 +211,6 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 			
 			query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
                     + " OR id LIKE '%"+x+"%'"
-                    + " OR email LIKE '%"+x+"%'"
                     + " OR data_inizio LIKE '%"+x+"%'"
                     + " OR data_fine LIKE '%"+x+"%')"
                     + " ORDER BY id ASC";

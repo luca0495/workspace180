@@ -80,6 +80,11 @@ public class ResearchBooks extends SL_JFrame {
 	
 	private boolean LastIDbookcheckinprogress=false;
 	private int 	LastIDbookcheckResult;
+	private JTextField txtInsertCDBook;
+	private JTextField txtInsertNameBook;
+	private JTextField txtInsertSurnameBook;
+	private JTextField txtInsertCatBook;
+	private JTextField txtInsertTitleBook;
 
 	/**
 	 * Create the application.
@@ -111,16 +116,15 @@ public class ResearchBooks extends SL_JFrame {
 	
 	public void initialize(Component c) {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1033, 630);
+		frame.setBounds(100, 100, 1033, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(c);
 		frame.setVisible(true);
 		
 		JPanel panelModify = new JPanel();
-		panelModify.setBounds(0, 0, 10, 10);
+		panelModify.setBounds(10, 36, 997, 614);
 		panelModify.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelModify.setBounds(10, 36, 997, 544);
 		frame.getContentPane().add(panelModify);
 		panelModify.setLayout(new CardLayout(0, 0));
 		
@@ -138,11 +142,11 @@ public class ResearchBooks extends SL_JFrame {
 		panelLoans.setLayout(null);
 		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
-		panelTableResearch.setBounds(10, 11, 977, 420);
+		panelTableResearch.setBounds(0, 0, 995, 439);
 		panelResearch.add(panelTableResearch);
 		
 		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
-		panelTableLoansResearch.setBounds(10, 11, 977, 420);
+		panelTableLoansResearch.setBounds(0, 11, 995, 416);
 		panelLoans.add(panelTableLoansResearch);
 		
 		ImageIcon iconLogoA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Add.png")));
@@ -226,8 +230,9 @@ public class ResearchBooks extends SL_JFrame {
 					lblEr3.setIcon(null);
 					lblEr4.setIcon(null);
 				}
-				else if(comboBoxB.getSelectedItem().equals("Prestiti"))
+				else if(comboBoxB.getSelectedItem().equals("Prestiti"))// mettere qui la di verifica lettore o libraio + query su check
 				{
+					
 					panelTableLoansResearch.update();
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
@@ -238,7 +243,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		comboBoxB.setBounds(10, 440, 180, 20);
+		comboBoxB.setBounds(10, 443, 200, 20);
 		panelResearch.add(comboBoxB);
 		
 		
@@ -271,7 +276,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		comboBoxL.setBounds(10, 440, 180, 20);
+		comboBoxL.setBounds(10, 443, 200, 20);
 		panelLoans.add(comboBoxL);
 		
 		
@@ -501,9 +506,13 @@ public class ResearchBooks extends SL_JFrame {
 		
 		
 		
-		lblAdd.setBounds(918, 505, 19, 14);
+		lblAdd.setBounds(927, 504, 19, 14);
 		lblAdd.setIcon(iconLogoA);
 		panelResearch.add(lblAdd);
+		
+		JLabel lblInsertBooks = new JLabel("Inserimento Libro");
+		lblInsertBooks.setBounds(369, 442, 186, 14);
+		panelResearch.add(lblInsertBooks);
 		
 		JLabel lblInsertName = new JLabel("Nome_Autore");
 		lblInsertName.setBounds(10, 474, 156, 14);
@@ -520,10 +529,70 @@ public class ResearchBooks extends SL_JFrame {
 		JLabel lblInsertTitle = new JLabel("Titolo");
 		lblInsertTitle.setBounds(715, 475, 149, 14);
 		panelResearch.add(lblInsertTitle);
+				
+				
+// In selezione*****************************************************************************************************
+		JLabel lblLine = new JLabel();
+		lblLine.setBorder(new LineBorder(new Color(0, 0, 0), 5));
+		lblLine.setBounds(0, 529, 995, 1);
+		panelResearch.add(lblLine);
+				
+		JLabel lblInsertText = new JLabel("In Selezione");
+		lblInsertText.setBounds(369, 535, 160, 14);
+		panelResearch.add(lblInsertText);
 		
-		JLabel lblInsertBooks = new JLabel("Inserimento Libro");
-		lblInsertBooks.setBounds(369, 442, 186, 14);
-		panelResearch.add(lblInsertBooks);
+		JLabel lblCDInsert = new JLabel("Codice");
+		lblCDInsert.setBounds(10, 556, 156, 14);
+		panelResearch.add(lblCDInsert);
+		
+		JLabel lblNameInsert = new JLabel("Nome_Autore");
+		lblNameInsert.setBounds(207, 560, 156, 14);
+		panelResearch.add(lblNameInsert);
+		
+		JLabel lblSurnameInsert = new JLabel("Cognome_Autore");
+		lblSurnameInsert.setBounds(379, 560, 156, 14);
+		panelResearch.add(lblSurnameInsert);
+		
+		JLabel lblCatInsert = new JLabel("Categoria");
+		lblCatInsert.setBounds(553, 560, 156, 14);
+		panelResearch.add(lblCatInsert);
+		
+		JLabel lblTitleInsert = new JLabel("Titolo");
+		lblTitleInsert.setBounds(719, 560, 156, 14);
+		panelResearch.add(lblTitleInsert);
+		
+		txtInsertCDBook = new JTextField();
+		txtInsertCDBook.setColumns(10);
+		txtInsertCDBook.setBounds(10, 581, 156, 20);
+		panelResearch.add(txtInsertCDBook);
+		
+		txtInsertNameBook = new JTextField();
+		txtInsertNameBook.setColumns(10);
+		txtInsertNameBook.setBounds(193, 581, 156, 20);
+		panelResearch.add(txtInsertNameBook);
+		
+		txtInsertSurnameBook = new JTextField();
+		txtInsertSurnameBook.setColumns(10);
+		txtInsertSurnameBook.setBounds(369, 581, 156, 20);
+		panelResearch.add(txtInsertSurnameBook);
+		
+		txtInsertCatBook = new JTextField();
+		txtInsertCatBook.setColumns(10);
+		txtInsertCatBook.setBounds(541, 581, 156, 20);
+		panelResearch.add(txtInsertCatBook);
+		
+		txtInsertTitleBook = new JTextField();
+		txtInsertTitleBook.setColumns(10);
+		txtInsertTitleBook.setBounds(715, 581, 156, 20);
+		panelResearch.add(txtInsertTitleBook);
+		
+		JButton btnReturned = new JButton("Rientrato");
+		btnReturned.setBounds(896, 580, 89, 23);
+		panelResearch.add(btnReturned);
+		
+		JButton btnDeleteBookReturned = new JButton("Cancella");
+		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
+		panelResearch.add(btnDeleteBookReturned);
 		
 		
 		if (	me.getCliType()==Clients.Admin||

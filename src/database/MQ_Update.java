@@ -61,21 +61,9 @@ public class MQ_Update {
 		}
 		else if(col == 2)
 		{
-			query += "SET email = '" + input + "'";
-		}
-		else if(col == 3)
-		{
-			query += "SET numero_prenotazioni = '" + input + "'";
-		}
-		else if(col == 4)
-		{
-			query += "SET numero_prestiti = '" + input + "'";
-		}
-		else if(col == 5)
-		{
 			query += "SET data_inizio = '" + input + "'";
 		}
-		else if(col == 6)
+		else if(col == 3)
 		{
 			query += "SET data_fine = '" + input + "'";
 		}

@@ -92,7 +92,7 @@ public class ChkDBandTab {
                   +"categoria varchar(15) not null,"
                   +"titolo varchar(35) not null,"
                   +"disponibilità varchar(35) not null,"
-                  +"prenotazioni_in_coda integer not null)")  ;  //7
+                  +"prenotazioni_in_coda integer not null)")  ; //7
 		 
 		 	      System.out.println("ChkDBandTable :> table Book CREATED !");		 
 	 }
@@ -150,11 +150,36 @@ public class ChkDBandTab {
 	                  ("CREATE TABLE  prestiti ( "
 	                  +"codice serial not null,"
 	                  +"id serial not null,"
-	                  +"email varchar(40) not null,"
-	                  +"numero_prenotazioni integer not null,"
-	                  +"numero_prestiti integer not null,"
 	                  +"data_inizio date not null,"
 	                  +"data_fine date not null," //7
+	                  +"foreign key (id)   references utente (id) ON UPDATE CASCADE ON DELETE CASCADE,"
+	                  +"foreign key (codice) references libro (codice) ON UPDATE CASCADE ON DELETE CASCADE)")  ;
+			 
+			 System.out.println("ChkDBandTable :> table Prestiti CREATED !");
+		 
+		 }
+		 else
+		 {
+			 System.out.println("ChkDBandTable :> exists table Prestiti !");
+			    
+			}
+		    resultSet.close();
+			DBmanager.closeConnection();
+
+		}
+	public static void tableExistBooking()throws SQLException{
+		Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
+		 DatabaseMetaData metadata = connection.getMetaData();
+		 ResultSet resultSet;
+		 Statement statement = connection.createStatement();
+		 resultSet = metadata.getTables(null, null, "prenotazioni", null);
+		 if(!resultSet.next()){
+		 
+			 statement.executeUpdate
+	                  ("CREATE TABLE  prenotazioni ( "
+	                  +"codice serial not null,"
+	                  +"id serial not null,"
+	                  +"priorità integer not null,"
 	                  +"foreign key (id)   references utente (id) ON UPDATE CASCADE ON DELETE CASCADE,"
 	                  +"foreign key (codice) references libro (codice) ON UPDATE CASCADE ON DELETE CASCADE)")  ;
 			 

@@ -76,7 +76,7 @@ public class MQ_Read {
 			return dati;
 		}
 	
-	public static String [][] ResearchLoans ()throws SQLException{			
+ public static String [][] ResearchLoans ()throws SQLException{			
 		String query = "SELECT * FROM prestiti;";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
@@ -86,14 +86,12 @@ public class MQ_Read {
 		
 		if (!rs.isBeforeFirst()) 
 		{
-			dati = new String[1][7];
+			dati = new String[1][5];
 			dati[0][0] = null;
 			dati[0][1] = null;
 			dati[0][2] = null;
 			dati[0][3] = null;
-			dati[0][4] = null;
-			dati[0][5] = null;
-			dati[0][6] = null;
+
 		
 			
 		}
@@ -103,14 +101,11 @@ public class MQ_Read {
 			{
 				results.add(rs.getString("codice"));
 				results.add(rs.getString("id"));
-				results.add(rs.getString("email"));
-				results.add(rs.getString("numero_prenotazioni"));
-				results.add(rs.getString("numero_prestiti"));
 				results.add(rs.getString("data_inizio"));
 				results.add(rs.getString("data_fine"));
 	
 				
-				int cols = 7;
+				int cols = 4;
 		    	int rows = results.size() / cols;
 		    	
 		    	dati = new String[rows][cols];
@@ -130,6 +125,8 @@ public class MQ_Read {
 		
 		return dati;
 	}
+	
+	
 	
 	public static LoadUser getUserById(int UserId) {
 		LoadUser loaduser = new LoadUser();
