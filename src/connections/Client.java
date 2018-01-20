@@ -132,16 +132,18 @@ public class Client implements Serializable, Runnable  {
 					
 					
 					String [] datasetting = MQ_Read.readSettingTable();
-
+					System.out.println("ottengo campo 0 :"+datasetting[0]);
+					System.out.println("ottengo campo 1 :"+datasetting[1]);
+					System.out.println("ottengo campo 2 :"+datasetting[2]);
+					System.out.println("ottengo campo 3 :"+datasetting[3]);
+					System.out.println("ottengo campo 4 :"+datasetting[4]);
+					
 					
 					x.USERNAME=	datasetting[4];
 					x.PASSWORD= datasetting[5];
 					
 					System.out.println("indirizzo email utilizzato dal srv: "+x.USERNAME);
 					System.out.println("tipo di 	server : "+ datasetting[3]);
-					System.out.println("indirizzo 	server : "+ x.getSRVaddress());
-					
-					
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
 					
 					AppMain StartWindow = new AppMain(x);
@@ -160,22 +162,27 @@ public class Client implements Serializable, Runnable  {
 								
 								break;
 							case "www":
-								x.SRVaddress=datasetting[2];
-								StartWindow.getComboBox().setSelectedIndex(2);			
+								x.setSRVaddress(datasetting[2]);
+								//StartWindow.getComboBox().setSelectedIndex(2);			
 								break;
 							case "lan":
+								x.setSRVaddress(datasetting[1]);
 								x.SRVaddress=datasetting[1];
-								StartWindow.getComboBox().setSelectedIndex(1);
+								//StartWindow.getComboBox().setSelectedIndex(1);
 								break;
 							case "local":
+								x.setSRVaddress(datasetting[0]);
 								x.SRVaddress=datasetting[0];
-								StartWindow.getComboBox().setSelectedIndex(0);
+								//StartWindow.getComboBox().setSelectedIndex(0);
 								break;	
 							default:
 												x.SRVaddress="127.0.0.1";
 								break;
 							}
 					}
+					
+
+					System.out.println("indirizzo 	server : "+ x.getSRVaddress());
 					
 					
 					
@@ -658,21 +665,28 @@ public class Client implements Serializable, Runnable  {
 												System.out.println("invo comando allo STUB...");
 													
 													this.mSgBack = 	Request(Commands.ConnSTOP);																																							
-													this.mSg 	= 	mSgBack.getText();															
+													this.mSg 	= 	mSgBack.getText();
+													
 												} catch (Exception e) {				
 													e.printStackTrace();
 													System.out.println("CLI:> Logica > messaggio non letto");
+													
+												
+												
 												}	
 												
 												
 												if (mSgBack.getText().equals(new String ("SRV - chiudo socket tra 5 secondi..."))){
 													
 													if ( ActW.getSL_Type()==AppType.AppMain) {
-														getActW().addMsg(new String ("CLI:> Connection Close in Progress... "+ctc+" result"+mSg));	
+														getActW().addMsg(new String ("CLI:> Connection Close in Progress... "+ctc+" result"+mSg));
+														
+														
 													}
 													else {
 														if ( ActW.getSL_Type()==AppType.AppLoginReader) {
 															System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
+														
 														}
 													}
 												}else{

@@ -249,7 +249,7 @@ public class AppMain extends SL_JFrame  {
 	 });
 		
 		setText(new JTextField());
-		getText().setBounds(293, 0, 462, 23);
+		getText().setBounds(293, 30, 462, 23);
 		panelLog.add(getText());
 		getText().setColumns(10);
 		btnNewButton_2.setBounds(134, 181, 154, 23);
@@ -501,7 +501,7 @@ public class AppMain extends SL_JFrame  {
 		getComboBox().addItem("lan");
 		getComboBox().addItem("www");
 
-		getComboBox().setSelectedItem("local	:localhost		172.0.0.1			");
+		//getComboBox().setSelectedItem("local	:localhost		172.0.0.1			");
 		
 		getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -510,16 +510,30 @@ public class AppMain extends SL_JFrame  {
 				// chiusura attuale connessione
 				try {
 					me.getCmdLIST().put(Commands.ConnSTOP);
+					Thread.sleep(2000);
+					
 				} catch (InterruptedException e2) {
 					System.out.println("  ");	
 					e2.printStackTrace(); 
 				}	
 				
 					switch (x.toString()) {
-					case "localhost":
+					case "localhost":						
 						me.setSRVaddress("172.0.0.1");
+						getComboBox().setSelectedIndex(0);
 						getTextField_3().setText("127.0.0.1");
-						//System.out.println("selezionato srv: local");
+						System.out.println("selezionato srv: local");
+						try {
+							me.getCmdLIST().put(Commands.ConnTEST);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						
+						break;
+					case "lan":
+						me.setSRVaddress("192.168.0.2");
+						getTextField_3().setText("192.168.0.2");
+						System.out.println("selezionato srv: lan");
 						try {
 							me.getCmdLIST().put(Commands.ConnTEST);
 						} catch (InterruptedException e) {
@@ -528,27 +542,16 @@ public class AppMain extends SL_JFrame  {
 						}
 						
 						break;
-					case "lan":
-						me.setSRVaddress("192.168.0.2");
-						getTextField_3().setText("192.168.0.2");
-						//System.out.println("selezionato srv: lan");
-						try {
-							me.getCmdLIST().put(Commands.ConnTEST);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						break;
 					case "www":
 						me.setSRVaddress("dexa215.homepc.it");
 						getTextField_3().setText("dexa215.homepc.it");
-						//System.out.println("selezionato srv: www");
+						System.out.println("selezionato srv: www");
 						try {
 							me.getCmdLIST().put(Commands.ConnTEST);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+
 						break;	
 						
 						
@@ -562,14 +565,14 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		
-		getComboBox().setBounds(134, -1, 154, 24);
+		getComboBox().setBounds(135, 5, 153, 24);
 		panelLog.add(getComboBox());
 		
 		setTextField_3(new JTextField());
-		getTextField_3().setBounds(134, 33, 154, 19);
+		getTextField_3().setBounds(134, 31, 154, 22);
 		panelLog.add(getTextField_3());
 		getTextField_3().setColumns(10);
-		getTextField_3().setText("127.0.0.1");	
+		//getTextField_3().setText("127.0.0.1");	
 		
 		
 		
@@ -578,6 +581,12 @@ public class AppMain extends SL_JFrame  {
 		lblBackgound1.setIcon(backgroundImage1);
 		lblBackgound1.setBorder(null);
 		panelLog.add(lblBackgound1);
+		
+		JLabel lblServer = new JLabel("Server:");
+		lblServer.setBackground(new Color(102, 51, 0));
+		lblServer.setForeground(new Color(255, 255, 0));
+		lblServer.setBounds(135, 6, 153, 23);
+		panelLog.add(lblServer);
 		
 
 	
@@ -663,6 +672,8 @@ public class AppMain extends SL_JFrame  {
 
 	public void setTextField_3(JTextField textField_3) {
 		this.textField_3 = textField_3;
+		textField_3.setForeground(new Color(255, 255, 0));
+		textField_3.setBackground(new Color(102, 51, 0));
 		textField_3.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_3.setEditable(false);
 	}
