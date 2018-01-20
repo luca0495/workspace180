@@ -221,6 +221,21 @@ public class Setting extends SL_JFrame{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				try {
+					MQ_Update.updateSetting(
+												getTextField_2().getText(),
+												getTextField_3().getText(),
+												getTextField_4().getText(),
+												getTextField_5().getText(),
+												getTextField_6().getText(),
+												getPasswordField().getText()
+												
+																);
+				} catch (SQLException e) {
+					// 
+					e.printStackTrace();
+				}
+				
 				
 				
 			}

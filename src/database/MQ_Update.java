@@ -238,7 +238,26 @@ public class MQ_Update {
 		
 		return user;
 	}
-	
+	public static void updateSetting(	String localhost,  
+										String lan, 
+										String www,  
+										String srvtype, 
+										String emailUSER, 
+										String emailPW) 	throws SQLException
+	{	
+
+		String query1 = "UPDATE setting SET "
+						+ "local_host 		= '" + localhost + "', "
+						+ "lan 				= '" + lan + "' , "
+						+ "www 				= '" + www + "' , "
+						+ "srvtype 			= '" + srvtype + "' , "
+						+ "email 			= '" + emailUSER + "' , "
+						+ "password 		= '" + emailPW +"'";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query1);
+		DBmanager.closeConnection();
+	}
 	
 	
 	
