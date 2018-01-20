@@ -449,7 +449,9 @@ public class ResearchBooks extends SL_JFrame {
 										lblEr3.setIcon(null);
 										lblEr4.setIcon(null);
 										System.out.println("8");
-										panelTableResearch.update();
+										
+										//panelTableResearch.update();
+										
 										System.out.println("9");
 										PopUp.infoBox(frame, "Inserimento Corretto");													
 						}	

@@ -218,7 +218,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			if(x=="" || x==null){			
 				query = "SELECT * FROM libro ";
 			}
-			
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookExecuteQuery);			
 			
 			break;
 			

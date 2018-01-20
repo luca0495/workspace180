@@ -752,7 +752,7 @@ setBusy(false);
 							
 							// BOOK Add	
 							case "SRV :> book add :> OK":			System.out.println("ritornato al client BOOK Add OK : ");
-								clrParFS();	
+								//clrParFS();	
 								TableBooks.PopulateData( null, this);//AGGIORNA TABLE me.ActTable
 								break;
 							case "SRV :> book add :> NG":
@@ -1455,8 +1455,10 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 					this.toString(),			// id Client 
 					this.getSql()
 					);
-			MsgSend.setUType(Clients.Librarian);
+			
+			// MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
+			
 			sendM(MsgSend, Mb);
 			
 			
