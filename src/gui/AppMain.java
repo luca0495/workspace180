@@ -39,6 +39,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JComboBox;
 
 public class AppMain extends SL_JFrame  {
 	
@@ -67,6 +68,7 @@ public class AppMain extends SL_JFrame  {
     private JPasswordField passwordField_3;
 	
     private JButton btnAccount;
+    private JTextField textField_3;
 	/**
 	 * Create the application.
 	 */
@@ -168,6 +170,22 @@ public class AppMain extends SL_JFrame  {
 							System.out.println("appMain :> problemi con accodamento comando check table exist LOANS");					
 						}
 						
+					// Booking				
+						try {
+							// ChkDBandTab.tableExistPerson();
+							me.getCmdLIST().put(Commands.tableExistBooking );							
+						} catch (Exception e) {
+							System.out.println("appMain :> problemi con accodamento comando check table exist BOOKING");					
+						}		
+					// Setting				
+						try {
+							// ChkDBandTab.tableExistPerson();
+							me.getCmdLIST().put(Commands.tableExistSetting);							
+						} catch (Exception e) {
+							System.out.println("appMain :> problemi con accodamento comando check table exist SETTING");					
+						}	
+						
+						
 						
 					
 					
@@ -230,7 +248,7 @@ public class AppMain extends SL_JFrame  {
 	 });
 		
 		setText(new JTextField());
-		getText().setBounds(128, 0, 629, 23);
+		getText().setBounds(136, 0, 621, 23);
 		panelLog.add(getText());
 		getText().setColumns(10);
 		btnNewButton_2.setBounds(134, 181, 154, 23);
@@ -423,6 +441,63 @@ public class AppMain extends SL_JFrame  {
 		btnNewButton_1.setBounds(134, 298, 391, 23);
 		panelLog.add(btnNewButton_1);
 		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setForeground(new Color(255, 255, 51));
+		comboBox.setBackground(new Color(102, 51, 0));
+		comboBox.addItem("localhost");
+		comboBox.addItem("lan");
+		comboBox.addItem("www");
+
+		comboBox.setSelectedItem("local	:localhost		172.0.0.1			");
+		
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Object x = comboBox.getSelectedItem();
+				
+				// chiusura attuale connessione
+				try {
+					me.getCmdLIST().put(Commands.ConnTEST);
+				} catch (InterruptedException e2) {
+					System.out.println("  ");	
+					e2.printStackTrace(); 
+				}	
+				
+					switch (x.toString()) {
+					case "localhost":
+						me.setSRVaddress("172.0.0.1");
+						getTextField_3().setText("127.0.0.1");
+						//System.out.println("selezionato srv: local");
+						break;
+					case "lan":
+						me.setSRVaddress("192.168.0.2");
+						getTextField_3().setText("192.168.0.2");
+						//System.out.println("selezionato srv: lan");
+						break;
+					case "www":
+						me.setSRVaddress("dexa215.homepc.it");
+						getTextField_3().setText("dexa215.homepc.it");
+						//System.out.println("selezionato srv: www");
+						break;	
+						
+						
+						
+						
+					default:
+						break;
+					}
+			}
+		});
+		
+		
+		
+		comboBox.setBounds(136, 40, 152, 20);
+		panelLog.add(comboBox);
+		
+		setTextField_3(new JTextField());
+		getTextField_3().setBounds(298, 40, 303, 20);
+		panelLog.add(getTextField_3());
+		getTextField_3().setColumns(10);
+		getTextField_3().setText("127.0.0.1");	
 		
 		
 		
@@ -508,5 +583,13 @@ public class AppMain extends SL_JFrame  {
 
 	public void setBtnAccount(JButton btnAccount) {
 		this.btnAccount = btnAccount;
+	}
+
+	public JTextField getTextField_3() {
+		return textField_3;
+	}
+
+	public void setTextField_3(JTextField textField_3) {
+		this.textField_3 = textField_3;
 	}
 }

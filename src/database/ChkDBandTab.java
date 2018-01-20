@@ -183,12 +183,12 @@ public class ChkDBandTab {
 	                  +"foreign key (id)   references utente (id) ON UPDATE CASCADE ON DELETE CASCADE,"
 	                  +"foreign key (codice) references libro (codice) ON UPDATE CASCADE ON DELETE CASCADE)")  ;
 			 
-			 System.out.println("ChkDBandTable :> table Prestiti CREATED !");
+			 System.out.println("ChkDBandTable :> table Prenotazioni CREATED !");
 		 
 		 }
 		 else
 		 {
-			 System.out.println("ChkDBandTable :> exists table Prestiti !");
+			 System.out.println("ChkDBandTable :> exists table Prenotazioni !");
 			    
 			}
 		    resultSet.close();

@@ -126,18 +126,11 @@ public class ServerSkeleton implements IServer, Runnable {
 					System.out.println("Skeleton SWITCH Type:> rx cmd :>  richiesta CONNECTIONs");
 					ostream.writeObject(connection(myOper));
  					ostream.flush();
-		 					if (myOper.getCommand()==Commands.ConnSTOP){
-		 						
-		 						WindowEvent close = new WindowEvent(_meServer.getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
-		 						_meServer.getMeS().getFrame().dispatchEvent(close);
-		 						
-		 						
-		 						Thread.sleep(5000);					
+		 					
+ 							if (myOper.getCommand()==Commands.ConnSTOP){
 		 						_socket.close();
-		 						
-		 						
-		 						
 		 						System.out.println("attuale numero connessioni : "+ Server.getSrvconn() +"\n");
+		 						connstop();
 		 					}			
 					break;		
 					
@@ -318,7 +311,9 @@ public class ServerSkeleton implements IServer, Runnable {
 		System.out.println("procede SKELETON");
 		return null;
 	}
-
+	
+	public void connstop() {
+	}
 
 
 	}

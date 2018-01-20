@@ -202,11 +202,66 @@ public class Guardian implements Runnable {
 						}		
 				}		
 		}else{								//nessuna richiesta in attesa per BR
-				Val_AL();
+				//Val_AL();
+				Val_BKL();
 		}		
 	}
 	//------------------------------------------------------------
+// INS BOOKING
+	public void Val_BKL() throws InterruptedException{	
+		
+		//System.out.println("GPG :> Guardian valuta BKL");
+		
+		int x;
+		if (R.getBKL().getWr()>0){		//richieste in attesa per BKL
+			
+				if(R.getLastserved()!=Requests.RS.BKL){	//ultima richiesta servita diversa da 	BKL
+						ServePR(0);				//SERVITA mod PRIMA RICHIESTA BR					
+				}else{
+						x = R.getBKLcs();		//						
+						if (x < 5){				//servite continuativamente MENO di 5 BR
+								ServeBKL(x);		//SERVITA mod CONTINUA...					
+						}else{					//servite continuativamente GIA 5 BR ( provo altro )
+								
+								R.setBKLcs(4);	//decremento conteggio BR
+												//al prossimo turno verra servita
+								
+								Val_BKR();		//altre valutazioni a partire da AL
+						}		
+				}		
+		}else{								//nessuna richiesta in attesa per BR
+				Val_BKR();
+		}		
+	}
 	
+	public void Val_BKR() throws InterruptedException{	
+		
+		//System.out.println("GPG :> Guardian valuta BKR");
+		
+		int x;
+		if (R.getBKR().getWr()>0){		//richieste in attesa per BR
+			
+				if(R.getLastserved()!=Requests.RS.BKR){	//ultima richiesta servita diversa da 	BR
+						ServePR(0);				//SERVITA mod PRIMA RICHIESTA BR					
+				}else{
+						x = R.getBKRcs();		//						
+						if (x < 5){				//servite continuativamente MENO di 5 BR
+								ServeBKR(x);		//SERVITA mod CONTINUA...					
+						}else{					//servite continuativamente GIA 5 BR ( provo altro )
+								
+								R.setBKRcs(4);	//decremento conteggio BR
+												//al prossimo turno verra servita
+								
+								Val_AL();		//altre valutazioni a partire da AL
+						}		
+				}		
+		}else{								//nessuna richiesta in attesa per BR
+				Val_AL();
+		}		
+	}
+	
+// INS BOOKING 	
+	//------------------------------------------------------------
 	public void Val_AL() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta AL");
@@ -270,6 +325,10 @@ public class Guardian implements Runnable {
 			R.setALcs(0);
 			R.setPLcs(0);
 			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
 			R.setLastserved(Requests.RS.BL);
 		}	else {			//continua richiesta per cs == 1 2 3 4
 			}
@@ -301,7 +360,11 @@ public class Guardian implements Runnable {
 			R.setARcs(0);
 			R.setALcs(0);
 			R.setPLcs(0);
-			R.setPRcs(0);			
+			R.setPRcs(0);	
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
 			R.setLastserved(Requests.RS.BR);
 		}	else {			//continua richiesta per cs == 1 2 3 4
 			}
@@ -329,6 +392,10 @@ public class Guardian implements Runnable {
 			R.setALcs(0);
 			R.setARcs(0);
 			R.setPLcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
 			//R.setPRcs(0);
 			R.setLastserved(Requests.RS.PR);
 		}	else {			//continua richiesta per cs == 1 2 3 4
@@ -355,6 +422,10 @@ public class Guardian implements Runnable {
 			R.setALcs(0);
 			R.setARcs(0);			
 			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
 			R.setLastserved(Requests.RS.PL);
 		}	else {			//continua richiesta per cs == 1 2 3 4
 			}
@@ -381,6 +452,10 @@ public class Guardian implements Runnable {
 			R.setALcs(0);
 			R.setPLcs(0);
 			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
 			R.setLastserved(Requests.RS.AR);
 		}	else {			//continua richiesta per cs == 1 2 3 4
 			}
@@ -406,6 +481,11 @@ public class Guardian implements Runnable {
 			R.setARcs(0);
 			R.setPLcs(0);
 			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
+			
 			R.setLastserved(Requests.RS.AL);
 		}	else {			//continua richiesta per cs == 1 2 3 4
 			}
@@ -421,6 +501,130 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
+	public void ServeBKL(int cs) throws InterruptedException{
+		System.out.println("GPG :> Guardian SERVE BKL");		
+		R.incBKLcs();		//incrementa contatore in ogni caso
+		
+		if (cs==0){			//richiesta diversa dall'ultima servita			
+			R.setBLcs(0);
+			R.setBRcs(0);
+			R.setARcs(0);
+			R.setPLcs(0);
+			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			
+			R.setBKRcs(0);
+			R.setLastserved(Requests.RS.BKL);
+		}	else {			//continua richiesta per cs == 1 2 3 4
+			}
+		
+		MessageRealServer r = R.getBKL().take();//decrementato BRw
+		
+		//SERVE
+		
+		Busy			=true;
+		r.getSrv().Go	=true;
+		Busy			=false;
+		
+		// Thread di controllo
+		new Thread(new GuardianTimeOut(this,r,10)).start();	
+	}
+	
+	public void ServeBKR(int cs) throws InterruptedException{
+		System.out.println("GPG :> Guardian SERVE BKR");		
+		R.incBKRcs();		//incrementa contatore in ogni caso
+		
+		if (cs==0){			//richiesta diversa dall'ultima servita			
+			R.setBLcs(0);
+			R.setBRcs(0);
+			R.setARcs(0);
+			R.setPLcs(0);
+			R.setPRcs(0);
+			R.setSLcs(0);
+			R.setSRcs(0);
+			R.setBKLcs(0);
+	
+			R.setLastserved(Requests.RS.BKR);
+		}	else {			//continua richiesta per cs == 1 2 3 4
+			}
+		
+		MessageRealServer r = R.getBKR().take();//decrementato BRw
+		
+		//SERVE
+		
+		Busy			=true;
+		r.getSrv().Go	=true;
+		Busy			=false;
+		
+		// Thread di controllo
+		new Thread(new GuardianTimeOut(this,r,10)).start();	
+	}	
+	
+	public void ServeSL(int cs) throws InterruptedException{
+		System.out.println("GPG :> Guardian SERVE SL");		
+		R.incSLcs();		//incrementa contatore in ogni caso
+		
+		if (cs==0){			//richiesta diversa dall'ultima servita			
+			R.setBLcs(0);
+			R.setBRcs(0);
+			R.setARcs(0);
+			R.setPLcs(0);
+			R.setPRcs(0);
+	
+
+			R.setSRcs(0);
+			R.setBKLcs(0);
+			R.setBKRcs(0);
+			R.setLastserved(Requests.RS.BKL);
+		}	else {			//continua richiesta per cs == 1 2 3 4
+			}
+		
+		MessageRealServer r = R.getSL().take();//decrementato BRw
+		
+		//SERVE
+		
+		Busy			=true;
+		r.getSrv().Go	=true;
+		Busy			=false;
+		
+		// Thread di controllo
+		new Thread(new GuardianTimeOut(this,r,10)).start();	
+	}
+	
+	public void ServeSR(int cs) throws InterruptedException{
+		System.out.println("GPG :> Guardian SERVE SR");		
+		R.incSRcs();		//incrementa contatore in ogni caso
+		
+		if (cs==0){			//richiesta diversa dall'ultima servita			
+			R.setBLcs(0);
+			R.setBRcs(0);
+			R.setARcs(0);
+			R.setPLcs(0);
+			R.setPRcs(0);
+			R.setSLcs(0);
+
+			R.setBKLcs(0);
+			R.setBKRcs(0);			
+			R.setLastserved(Requests.RS.SR);
+		}	else {			//continua richiesta per cs == 1 2 3 4
+			}
+		
+		MessageRealServer r = R.getSR().take();//decrementato BRw
+		
+		//SERVE
+		
+		Busy			=true;
+		r.getSrv().Go	=true;
+		Busy			=false;
+		
+		// Thread di controllo
+		new Thread(new GuardianTimeOut(this,r,10)).start();	
+	}
+	
+	
+	
+	
 	
 	// PROCEDURA CONTROLLO SCADENZE PRESTITI
 	

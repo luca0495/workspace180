@@ -68,7 +68,11 @@ public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	
-	private 			String				SRVaddress="127.0.0.1";	//localhost
+	//private 			String				SRVaddress="127.0.0.1";	//localhost
+	//private 			String				SRVaddress="192.168.0.6";	//localhost
+	private 			String				SRVaddress;
+	
+	
 	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
@@ -240,14 +244,18 @@ public class Client implements Serializable, Runnable  {
 									break;									
 								case UserREADcheckCF:
 														UserREADcheckCfExist();		//necessario setSql con cf 		
-									break;
-									
-									
-									
+									break;		
 						//	Loans
 								case LoanREAD: 
 									
 									break;
+						//	Booking			
+								case BookingREAD: 
+									
+									break;	
+									
+									
+									
 								default:
 									
 									break;
@@ -269,6 +277,14 @@ public class Client implements Serializable, Runnable  {
 							case tableExistPerson: 
 														ClientCheckExistTablePerson();
 								break;
+							case tableExistBooking: 
+														ClientCheckExistTableBooking();
+								break;
+							case tableExistSetting: 
+														ClientCheckExistTableSetting();
+								break;
+								
+								
 								
 						//	book			
 							case BookADD:				// arriva DA GUI 		TABLEBOOKS									
@@ -325,6 +341,12 @@ public class Client implements Serializable, Runnable  {
 								
 								break;								
 
+								
+								
+								
+								
+								
+								
 							default:				
 								break;
 								}
@@ -571,7 +593,9 @@ public class Client implements Serializable, Runnable  {
 															}	
 														}
 													//conteggio...
-													incRepeatconnCount();	
+													incRepeatconnCount();
+													
+													
 													srv  = new ServerStub(this,SRVaddress);
 													setBusy(false);
 												}
@@ -1208,6 +1232,57 @@ setBusy(false);
 	
 	
 	// check
+	private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		Commands cmd = Commands.tableExistSetting;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");
+			
+			System.out.println(mSg);
+			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message	
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString()				// id Client 
+									);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			sendM(MsgSend, Mb);
+		}	
+	}	
+	private void ClientCheckExistTableBooking() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		Commands cmd = Commands.tableExistBooking;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");
+			
+			System.out.println(mSg);
+			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message	
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString()				// id Client 
+									);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			sendM(MsgSend, Mb);
+		}	
+	}	
+	
+	
+	
 	
 	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;

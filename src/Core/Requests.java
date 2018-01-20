@@ -12,7 +12,12 @@ public class Requests {
 	//Prenotations
 	private RequestsList PL;
 	private RequestsList PR;
-	
+	//Booking
+	private RequestsList BKL;
+	private RequestsList BKR;
+	//SETTING
+	private RequestsList SL;
+	private RequestsList SR;
 	
 	// conteggio richieste servite consecutivamente  
 	// cs = Countinuosly Served	
@@ -22,6 +27,12 @@ public class Requests {
 	private int ARcs=0;
 	private int PLcs=0;
 	private int PRcs=0;
+	private int SLcs=0;
+	private int SRcs=0;
+	private int BKLcs=0;
+	private int BKRcs=0;
+	
+	
 	
 	private	Requests.RS lastserved;
 	
@@ -33,7 +44,14 @@ public class Requests {
 		BL		("modify Book 	 		by Librarian"	,	1,	0),
 		BR		("modify Book 	 		by Reader"		,	2,	0),
 		AL		("modify Account 		by Librarian"	,	3,	0),
-		AR 		("modify Account 		by Reader" 		,	4,	0) 
+		AR 		("modify Account 		by Reader" 		,	4,	0), 
+		SL		("modify Setting 		by Librarian"	,	7,	0),
+		SR 		("modify Setting 		by Reader" 		,	8,	0), 
+		BKL		("modify Setting 		by Librarian"	,	9,	0),
+		BKR		("modify Setting 		by Reader" 		,	10,	0) 
+		
+		
+		
 		;
 		//campi
 				public String Den;
@@ -55,7 +73,11 @@ public class Requests {
 		setAL(new RequestsList(100));
 		setAR(new RequestsList(100));
 		setPL(new RequestsList(100));
-		setPR(new RequestsList(100));		
+		setPR(new RequestsList(100));
+		setSL(new RequestsList(100));
+		setSR(new RequestsList(100));
+		setBKL(new RequestsList(100));
+		setBKR(new RequestsList(100));
 	}
 
 	
@@ -138,7 +160,20 @@ public Requests.RS getLastserved() {
 	public void incPRcs() {
 		PRcs++;
 	}
-
+	public void incSLcs() {
+		PLcs++;
+	}
+	public void incSRcs() {
+		PRcs++;
+	}
+	public void incBKLcs() {
+		PLcs++;
+	}
+	public void incBKRcs() {
+		PRcs++;
+	}
+	
+	
 
 	public RequestsList getPL() {
 		return PL;
@@ -177,5 +212,85 @@ public Requests.RS getLastserved() {
 
 	public void setPLcs(int pLcs) {
 		PLcs = pLcs;
-	}	
+	}
+	
+	public RequestsList getBKL() {
+		return BKL;
+	}
+
+
+	public void setBKL(RequestsList bKL) {
+		BKL = bKL;
+	}
+
+
+	public RequestsList getBKR() {
+		return BKR;
+	}
+
+
+	public void setBKR(RequestsList bKR) {
+		BKR = bKR;
+	}
+
+
+	public RequestsList getSL() {
+		return SL;
+	}
+
+
+	public void setSL(RequestsList sL) {
+		SL = sL;
+	}
+
+
+	public RequestsList getSR() {
+		return SR;
+	}
+
+
+	public void setSR(RequestsList sR) {
+		SR = sR;
+	}
+
+
+	public int getSLcs() {
+		return SLcs;
+	}
+
+
+	public void setSLcs(int sLcs) {
+		SLcs = sLcs;
+	}
+
+
+	public int getSRcs() {
+		return SRcs;
+	}
+
+
+	public void setSRcs(int sRcs) {
+		SRcs = sRcs;
+	}
+
+
+	public int getBKLcs() {
+		return BKLcs;
+	}
+
+
+	public void setBKLcs(int bKLcs) {
+		BKLcs = bKLcs;
+	}
+
+
+	public int getBKRcs() {
+		return BKRcs;
+	}
+
+
+	public void setBKRcs(int bKRcs) {
+		BKRcs = bKRcs;
+	}
+
 }

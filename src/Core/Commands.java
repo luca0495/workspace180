@@ -14,9 +14,12 @@ public enum Commands{
 			//Test2				("Test 2"						,		SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
 			//Test3				("Test 3"						,		SearchFor.SystemPar,	CommandsType.TEST,			1,	0),	
 // Initialize
+			tableExistSetting	("Check Tb Exist"				,		SearchFor.Setting,		CommandsType.CHANGE,		1,	0),
 			tableExistBook		("Check Tb Exist"				,		SearchFor.Book,			CommandsType.CHANGE,		1,	0),
 			tableExistLoans		("Check Tb Exist"				,		SearchFor.Prenotation,	CommandsType.CHANGE,		1,	0),
 			tableExistPerson	("Check Tb Exist"				,		SearchFor.Account,		CommandsType.CHANGE,		1,	0),
+			tableExistBooking	("Check Tb Exist"				,		SearchFor.Booking,		CommandsType.CHANGE,		1,	0),
+			
 // Book
 			BookUPDATE 			("Book Update		"			,		SearchFor.Book,			CommandsType.CHANGE,		2,	0),
 			BookADD	        	("Book Add		    "			,		SearchFor.Book,			CommandsType.CHANGE,		3,	0),
@@ -33,6 +36,15 @@ public enum Commands{
 			LoanBookGet			("Loan Get			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanBookGiveback	("Loan Give back	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),			
 			LoanREAD			("Loan read			"			,		SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
+// Booking			
+			BookingListADD			("Booking add 			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingListREMOVE		("Booking del 			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingNoticeAvaiable	("Booking notice av	"		,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingNoticeExpiration	("Booking notice ex	"		,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingNew				("Booking New			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingBookGet			("Booking Get			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingBookGiveback		("Booking Give back	"		,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),			
+			BookingREAD				("Booking read			"	,		SearchFor.Booking,		CommandsType.READ	,		4,	0),
 // User
 			UserRegistration	("User registration"			,		SearchFor.Account,		CommandsType.CHANGE,		1,	0),
 			UserActivation		("User activation"  			,		SearchFor.Account,		CommandsType.CHANGE,		1,	0),

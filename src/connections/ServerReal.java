@@ -2,6 +2,7 @@ package connections;
 
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
@@ -63,7 +64,6 @@ public class ServerReal extends ServerSkeleton {
 
 		setMeS(new SystemServerSkeleton(this));
 		getMeS().getFrame().setVisible(true);	
-		
 		
 		
 		Srv.setSrvconnINC();		//	INCrease Server Connections counter
@@ -423,7 +423,108 @@ public class ServerReal extends ServerSkeleton {
 							System.out.println("RealServer :> Rx Librarian");			
 							
 				switch ( M.getMsg().getCommand().getTarget()){
+
+				
+				case Setting:		//SL	//-->[GpG [SL]] ---->[DB]	
+					//System.out.println("RealServer :> Rx Account");
+					try {					
+							System.out.println("RealServer :> Accodo M [ SL ]");
+							System.out.println("RealServer :> AL in attesa prima... "+Req.getSL().getWr());
+		
+							Req.getSL().put(M);
+							//******************************************************************************
+							while (!Go){
+								try {
+									System.out.println("REAL SERVER L-S:> in attesa GO da Guardian");
+									Thread.sleep(10);
+								} catch (Exception e) 
+								{}
+									System.out.println("REAL SERVER L-S:> go "+Go);						
+							}	//Attesa del turno...									
+							//******************************************************************************							
+							switch (M.getMsg().getCommand()) {
+							
+							case tableExistSetting:
 								
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistSetting ");					
+							try {
+								CheckDBSetting.TableExistSetting();
+								getMeS().addMsg(mSg);
+								x.setText(new String ("SRV :> CHECK TABLE Setting Exist :> OK"));	
+							} catch (SQLException e) {
+								getMeS().addMsg(mSg);
+								x.setText(new String ("SRV :> CHECK TABLE Setting Exist :> NG..."));
+								System.out.println("problemi con controllo tabella Setting");
+								e.printStackTrace();
+							}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+							return x;								
+							//break;
+								
+								
+								
+							default:
+								break;
+							
+							}
+							
+							
+							
+							
+							
+					}catch (Exception e) {
+						
+					}
+				break;
+				
+				
+				
+				case Booking:		//BKL	//-->[GpG [BKL]] ---->[DB]	
+					//System.out.println("RealServer :> Rx Account");
+					try {					
+							System.out.println("RealServer :> Accodo M [ BKL ]");
+							System.out.println("RealServer :> AL in attesa prima... "+Req.getBKL().getWr());
+		
+							Req.getBKL().put(M);
+							//******************************************************************************
+							while (!Go){
+								try {
+									System.out.println("REAL SERVER L-BK:> in attesa GO da Guardian");
+									Thread.sleep(10);
+								} catch (Exception e) 
+								{}
+									System.out.println("REAL SERVER L-BK:> go "+Go);						
+							}	//Attesa del turno...									
+							//******************************************************************************							
+							switch (M.getMsg().getCommand()) {
+							
+							case tableExistBooking:
+								
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBooking ");					
+							try {
+								ChkDBandTab.tableExistBooking();
+								getMeS().addMsg(mSg);
+								x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> OK"));	
+							} catch (SQLException e) {
+								getMeS().addMsg(mSg);
+								x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> NG..."));
+								System.out.println("problemi con controllo tabella Booking");
+								e.printStackTrace();
+							}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+							return x;								
+							//break;	
+
+							default:
+								break;
+							
+							}
+		
+					}catch (Exception e) {
+						
+					}
+				break;
+			
 					case Account:		//AL	//-->[GpG [AL]] ---->[DB]	
 										//System.out.println("RealServer :> Rx Account");
 						try {					
@@ -1006,6 +1107,12 @@ public class ServerReal extends ServerSkeleton {
 		return mrs;
 	}
 	// *************************************************************
-
+	@Override
+	public void connstop() {
+			
+			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
+			getMeS().getFrame().dispatchEvent(close);
+			
+	}
 
 }
