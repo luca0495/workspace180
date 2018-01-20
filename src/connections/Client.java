@@ -68,10 +68,10 @@ public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	
-	//private 			String				SRVaddress="127.0.0.1";	//localhost
+	//private 			String				SRVaddress="127.0.0.1";		//localhost
 	//private 			String				SRVaddress="192.168.0.6";	//localhost
-	private 			String				SRVaddress;
-	
+	//private 			String				SRVaddress;
+	private 			String				SRVaddress="127.0.0.1";	
 	
 	
 	private 			AppMain				meMain=null;

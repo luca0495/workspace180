@@ -574,7 +574,7 @@ public class MQ_Read {
 		ResultSet rs = DBmanager.executeQuery(query);
 		
 		List<String> results = new ArrayList<String>();
-		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
 		
 		if (!rs.isBeforeFirst()) 
 		{

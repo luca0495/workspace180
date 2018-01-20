@@ -44,7 +44,7 @@ import javax.swing.JComboBox;
 public class AppMain extends SL_JFrame  {
 	
 	private Client  		me ;
-	
+	private Setting 		s;
 	private AppReader 		c;
 	private AppLibrarian 	a;
 	
@@ -288,7 +288,9 @@ public class AppMain extends SL_JFrame  {
 		btnRegistrazione.addMouseListener(new MouseAdapter() {
 		 @Override
 			public void mousePressed(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
+			
+			 
+			 EventQueue.invokeLater(new Runnable() {
 						public void run() 
 						{
 						 try 
@@ -300,8 +302,10 @@ public class AppMain extends SL_JFrame  {
 						e.printStackTrace();
 						}
 					
-					}	
+			}	
 		
+						
+						
 				 });    
 			}
 	 });
@@ -421,11 +425,13 @@ public class AppMain extends SL_JFrame  {
 		btnRicerca.setBounds(134, 88, 154, 23);
 		panelLog.add(btnRicerca);
 		
-		JButton btnNewButton_1 = new JButton("TEST RIAVVIO STUB DOPO CAMBIO SERVER IN SETTING");
+		JButton btnNewButton_1 = new JButton("SETTING");
 		btnNewButton_1.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				// 
+				//vecchia prassi per interrompere connessione
+				/*
 				try {
 					System.out.println(" CLICK ");
 				me.setCliType(Clients.Reader);	
@@ -435,10 +441,56 @@ public class AppMain extends SL_JFrame  {
 					System.out.println("  ");	
 					e2.printStackTrace(); 
 				}	
+				 */
 				
-			}
+				EventQueue.invokeLater(new Runnable() {
+					public void run() 
+					{
+					 try 
+					{
+						 System.out.println("lancio la q");
+						 
+						 Setting s = new Setting(getFrame(), me);
+						 						 
+						 
+						 String [] datasetting = MQ_Read.readSettingTable();
+						 
+						 System.out.println("campo0 : "+datasetting[0]);
+						 s.getTextField_2().setText(datasetting[0]);
+						 s.getTextField_3().setText(datasetting[1]);
+						 s.getTextField_4().setText(datasetting[2]);
+						 s.getTextField_5().setText(datasetting[3]);
+						 
+						 s.getTextField_6().setText(datasetting[4]);
+						 s.getPasswordField().setText(datasetting[5]);
+
+						 /*
+						 
+						 s.getTextFieldsrvIPlan().setText(datasetting[1]);
+						 getS().getTextFieldsrvIPwww().setText(datasetting[2]);
+						 getS().getTextFieldsrvIPdefault().setText(datasetting[3]);
+						 getS().getTextFieldsrvMailAddress().setText(datasetting[4]);
+						 getS().getTextFieldsrvMailPW().setText(datasetting[5]);
+						 */
+						 
+				    } 
+					catch (Exception e) 
+					{
+					e.printStackTrace();
+					}
+				}		
+				
+				//lancia comando per inserire dati nei campi finestra setting	
+
+				});			
+				
+				}
+				
 		});
-		btnNewButton_1.setBounds(134, 298, 391, 23);
+		
+				
+				
+		btnNewButton_1.setBounds(134, 374, 154, 23);
 		panelLog.add(btnNewButton_1);
 		
 		JComboBox comboBox = new JComboBox();
@@ -610,5 +662,13 @@ public class AppMain extends SL_JFrame  {
 
 	public void setTextField_3(JTextField textField_3) {
 		this.textField_3 = textField_3;
+	}
+
+	public Setting getS() {
+		return s;
+	}
+
+	public void setS(Setting s) {
+		this.s = s;
 	}
 }
