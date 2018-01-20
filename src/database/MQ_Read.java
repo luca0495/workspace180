@@ -587,7 +587,9 @@ public class MQ_Read {
 				results.add(rs.getString("local_host")); //0 
 				results.add(rs.getString("lan")); // 1
 				results.add(rs.getString("www")); // 2
+				
 				results.add(rs.getString("srvType")); // 3
+				
 				results.add(rs.getString("email")); // 4
 				results.add(rs.getString("password")); // 5 
 			}

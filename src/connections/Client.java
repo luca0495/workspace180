@@ -124,6 +124,11 @@ public class Client implements Serializable, Runnable  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					String [] datasetting = MQ_Read.readSettingTable();
+					//analisi server type
+					switch (datasetting[3])
+					
+					
 					Client x  = new Client();
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
 					
