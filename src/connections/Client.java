@@ -71,8 +71,8 @@ public class Client implements Serializable, Runnable  {
 	//private 			String				SRVaddress="127.0.0.1";		//localhost
 	//private 			String				SRVaddress="192.168.0.6";	//localhost
 	//private 			String				SRVaddress;
-	private 			String				SRVaddress="127.0.0.1";	
-	
+	private 			String				SRVaddress;	
+	private 			String				SRVtype;
 	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
@@ -101,8 +101,11 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 
 //		
-	private 			String				PASSWORD="ACmilan1994$";
-	private 			String				USERNAME="llazzati@studenti.uninsubria.it";
+	//private 			String				PASSWORD="ACmilan1994$";
+	//private 			String				USERNAME="llazzati@studenti.uninsubria.it";
+	
+	private 			String				PASSWORD;
+	private 			String				USERNAME;
 	
 	private 			String 				Sql;
 	private 			String 				Sql2;
@@ -124,26 +127,60 @@ public class Client implements Serializable, Runnable  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					String [] datasetting = MQ_Read.readSettingTable();
-					//analisi server type
-					switch (datasetting[3])
-					
 					
 					Client x  = new Client();
+					
+					
+					String [] datasetting = MQ_Read.readSettingTable();
+
+					
+					x.USERNAME=	datasetting[4];
+					x.PASSWORD= datasetting[5];
+					
+					System.out.println("indirizzo email utilizzato dal srv: "+x.USERNAME);
+					System.out.println("tipo di 	server : "+ datasetting[3]);
+					System.out.println("indirizzo 	server : "+ x.getSRVaddress());
+					
+					
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
 					
 					AppMain StartWindow = new AppMain(x);
 					x.setMeMain(StartWindow);
 					StartWindow.getFrame().setVisible(true);							
+					StartWindow.getTextField_3().setText(x.getSRVaddress());
 
-					//se in STUB non settato ip server...richiedi inserimento
-					
-					if (x.getSRVaddress()==null) {
+					//analisi server type
+					if (datasetting[3]==null){
+												x.SRVaddress="127.0.0.1";
+					}else {
+						x.SRVtype=datasetting[3];
 						
-						PopUp.infoBox(StartWindow, "specificare indirizzo IP server");
-						
+							switch (datasetting[3]) {//tipo di server
+							case "":
+								
+								break;
+							case "www":
+								x.SRVaddress=datasetting[2];
+								StartWindow.getComboBox().setSelectedIndex(2);			
+								break;
+							case "lan":
+								x.SRVaddress=datasetting[1];
+								StartWindow.getComboBox().setSelectedIndex(1);
+								break;
+							case "local":
+								x.SRVaddress=datasetting[0];
+								StartWindow.getComboBox().setSelectedIndex(0);
+								break;	
+							default:
+												x.SRVaddress="127.0.0.1";
+								break;
+							}
 					}
 					
+					
+					
+										
+					//se in STUB non settato ip server...richiedi inserimento
 					
 					System.out.println("creato start windows");
 					StartWindow.addMsg("test");	
@@ -1979,6 +2016,12 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			}
 			public void setSRVaddress(String sRVaddress) {
 				SRVaddress = sRVaddress;
+			}
+			public String getSRVtype() {
+				return SRVtype;
+			}
+			public void setSRVtype(String sRVtype) {
+				SRVtype = sRVtype;
 			}
 
 			

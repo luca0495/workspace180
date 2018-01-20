@@ -165,56 +165,56 @@ public class Setting extends SL_JFrame{
 		panelChangePass.add(lblChange);
 		
 		lblLocalhost = new JLabel("localhost");
-		lblLocalhost.setBounds(27, 119, 46, 14);
+		lblLocalhost.setBounds(27, 119, 120, 14);
 		panelChangePass.add(lblLocalhost);
 		
 		lblLanIp = new JLabel("lan IP");
-		lblLanIp.setBounds(24, 157, 46, 14);
+		lblLanIp.setBounds(24, 157, 123, 14);
 		panelChangePass.add(lblLanIp);
 		
 		lblWwwIp = new JLabel("www IP");
-		lblWwwIp.setBounds(27, 182, 46, 14);
+		lblWwwIp.setBounds(27, 182, 120, 14);
 		panelChangePass.add(lblWwwIp);
 		
 		lblEmailPw = new JLabel("email PW");
-		lblEmailPw.setBounds(27, 299, 46, 14);
+		lblEmailPw.setBounds(27, 299, 120, 14);
 		panelChangePass.add(lblEmailPw);
 		
 		lblDefault = new JLabel("Default");
-		lblDefault.setBounds(27, 228, 46, 14);
+		lblDefault.setBounds(27, 228, 120, 14);
 		panelChangePass.add(lblDefault);
 		
 		lblEmailAddress = new JLabel("email Address");
-		lblEmailAddress.setBounds(27, 268, 46, 14);
+		lblEmailAddress.setBounds(27, 268, 120, 14);
 		panelChangePass.add(lblEmailAddress);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(109, 116, 119, 20);
+		textField_2.setBounds(157, 116, 272, 20);
 		panelChangePass.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(109, 154, 119, 20);
+		textField_3.setBounds(157, 154, 272, 20);
 		panelChangePass.add(textField_3);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(109, 185, 119, 20);
+		textField_4.setBounds(157, 185, 272, 20);
 		panelChangePass.add(textField_4);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(109, 225, 119, 20);
+		textField_5.setBounds(157, 225, 272, 20);
 		panelChangePass.add(textField_5);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(109, 265, 119, 20);
+		textField_6.setBounds(157, 265, 272, 20);
 		panelChangePass.add(textField_6);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(109, 296, 119, 20);
+		passwordField.setBounds(157, 296, 272, 20);
 		panelChangePass.add(passwordField);
 		
 		button = new JButton("Conferma");

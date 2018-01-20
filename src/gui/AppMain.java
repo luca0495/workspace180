@@ -66,6 +66,7 @@ public class AppMain extends SL_JFrame  {
     private JTextField textField_2;
     private JPasswordField passwordField_2;
     private JPasswordField passwordField_3;
+	private JComboBox comboBox;
 	
     private JButton btnAccount;
     private JTextField textField_3;
@@ -493,18 +494,18 @@ public class AppMain extends SL_JFrame  {
 		btnNewButton_1.setBounds(134, 374, 154, 23);
 		panelLog.add(btnNewButton_1);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setForeground(new Color(255, 255, 51));
-		comboBox.setBackground(new Color(102, 51, 0));
-		comboBox.addItem("localhost");
-		comboBox.addItem("lan");
-		comboBox.addItem("www");
+		setComboBox(new JComboBox());
+		getComboBox().setForeground(new Color(255, 255, 51));
+		getComboBox().setBackground(new Color(102, 51, 0));
+		getComboBox().addItem("localhost");
+		getComboBox().addItem("lan");
+		getComboBox().addItem("www");
 
-		comboBox.setSelectedItem("local	:localhost		172.0.0.1			");
+		getComboBox().setSelectedItem("local	:localhost		172.0.0.1			");
 		
-		comboBox.addActionListener(new ActionListener() {
+		getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Object x = comboBox.getSelectedItem();
+				Object x = getComboBox().getSelectedItem();
 				
 				// chiusura attuale connessione
 				try {
@@ -561,8 +562,8 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		
-		comboBox.setBounds(136, 40, 152, 20);
-		panelLog.add(comboBox);
+		getComboBox().setBounds(136, 40, 152, 20);
+		panelLog.add(getComboBox());
 		
 		setTextField_3(new JTextField());
 		getTextField_3().setBounds(298, 40, 303, 20);
@@ -662,6 +663,8 @@ public class AppMain extends SL_JFrame  {
 
 	public void setTextField_3(JTextField textField_3) {
 		this.textField_3 = textField_3;
+		textField_3.setEnabled(false);
+		textField_3.setEditable(false);
 	}
 
 	public Setting getS() {
@@ -670,5 +673,13 @@ public class AppMain extends SL_JFrame  {
 
 	public void setS(Setting s) {
 		this.s = s;
+	}
+
+	public JComboBox getComboBox() {
+		return comboBox;
+	}
+
+	public void setComboBox(JComboBox comboBox) {
+		this.comboBox = comboBox;
 	}
 }
