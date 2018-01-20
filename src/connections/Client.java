@@ -68,7 +68,7 @@ public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	
-	private 			IPAddressName		SRVaddress;
+	private 			String				SRVaddress="127.0.0.1";	//localhost
 	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
@@ -153,10 +153,10 @@ public class Client implements Serializable, Runnable  {
 			while (isClientON()){
 					//Attesa comandi...					
 					while ( getCmdLIST().getCmdList().size() < 1){								
-							System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
-							System.out.println("CLI :> IN ATTESA di COMANDI... ");
+							//System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
+							//System.out.println("CLI :> IN ATTESA di COMANDI... ");
 						try {
-							System.out.println("CLI :> IN ATTESA di COMANDI... dormo100");
+							//System.out.println("CLI :> IN ATTESA di COMANDI... dormo100");
 							Thread.sleep(100);
 						} catch (Exception e) { e.printStackTrace();
 						}
@@ -185,7 +185,8 @@ public class Client implements Serializable, Runnable  {
 					case CONNECTION:										
 								switch (com) {							
 								case ConnSTOP: 					//   		Core\Commands		***
-								
+												ClientConnectionClose();
+												setBusy(false);
 									break;
 								case ConnTEST: 
 												ClientConnectionTest();
@@ -412,7 +413,7 @@ public class Client implements Serializable, Runnable  {
 																}	
 															}
 															incRepeatconnCount();	
-															srv  = new ServerStub(this);	
+															srv  = new ServerStub(this,SRVaddress);	
 															}
 										}catch (Exception e) {e.printStackTrace();} finally {}//server.closeConnection();}	
 		 								setBusyControl(false);
@@ -571,7 +572,7 @@ public class Client implements Serializable, Runnable  {
 														}
 													//conteggio...
 													incRepeatconnCount();	
-													srv  = new ServerStub(this);
+													srv  = new ServerStub(this,SRVaddress);
 													setBusy(false);
 												}
 								}catch (Exception e) {e.printStackTrace();} finally {}//server.closeConnection();}	 								
@@ -579,6 +580,62 @@ public class Client implements Serializable, Runnable  {
  		setBusy(false);
 // !!!! --------------------------										
 	}//ClientConnectionTest
+	
+	void ClientConnectionClose() throws Exception {	
+			try{									
+		System.out.println(mSg = "CLI :> CType:"	+ getCliType());										
+						if (isStubok())  {	
+							try {	
+								ctc++;																					
+								System.out.println("CLIENT :> ciclo di controllo "+ctc);																																							
+												try {											
+												System.out.println("invo comando allo STUB...");
+													
+													this.mSgBack = 	Request(Commands.ConnSTOP);																																							
+													this.mSg 	= 	mSgBack.getText();															
+												} catch (Exception e) {				
+													e.printStackTrace();
+													System.out.println("CLI:> Logica > messaggio non letto");
+												}	
+												
+												
+												if (mSgBack.getText().equals(new String ("SRV - chiudo socket tra 5 secondi..."))){
+													
+													if ( ActW.getSL_Type()==AppType.AppMain) {
+														getActW().addMsg(new String ("CLI:> Connection Close in Progress... "+ctc+" result"+mSg));	
+													}
+													else {
+														if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+															System.out.println(" finestra attiva READER...  CLI:> Connection Test "+ctc+" result"+mSg);																							
+														}
+													}
+												}else{
+													setStubok(false);
+												
+													if ( ActW.getSL_Type()==AppType.AppMain) {
+														getActW().addMsg(new String ("CLI:> Connection Test result : NG"));	
+													}
+													else {
+														if ( ActW.getSL_Type()==AppType.AppLoginReader) {
+															System.out.println("  finestra attiva READER...  CLI:> Connection Test result : NG\\  ");																							
+														}
+													}
+												}																		
+							} catch (Exception e) {							
+								e.printStackTrace();
+								System.out.println(mSg = "CLI :> srv stub ERROR ");	
+								getActW().addMsg(mSg);		
+								setStubok(false);
+							}				
+							//Thread.sleep(1000);// test conn every 0.1 sec
+						}
+
+		}catch (Exception e) {e.printStackTrace();} finally {}//server.closeConnection();}	 								
+//!!!! --------------------------
+setBusy(false);
+//!!!! --------------------------										
+}//ClientConnectionTest
+	
 	
 	
 	
@@ -1835,10 +1892,10 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			public void setDatiUtente(String[] datiUtente) {
 				this.datiUtente = datiUtente;
 			}
-			public IPAddressName getSRVaddress() {
+			public String getSRVaddress() {
 				return SRVaddress;
 			}
-			public void setSRVaddress(IPAddressName sRVaddress) {
+			public void setSRVaddress(String sRVaddress) {
 				SRVaddress = sRVaddress;
 			}
 

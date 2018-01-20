@@ -33,7 +33,7 @@ public interface IServer extends Remote {
     
     public MessageBack			visualizza				(Message M)throws RemoteException;
     public MessageBack			modifica				(Message M)throws RemoteException;	
-    public MessageBack			connection				(Message M)throws RemoteException, InterruptedException;	
+    public MessageBack			connection				(Message M)throws RemoteException, InterruptedException, IOException;	
     public MessageBack			test					(Message M)throws RemoteException;	
     
     

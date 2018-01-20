@@ -41,6 +41,7 @@ import database.*;
 //ver 2017 03 29 v1
 public class ServerReal extends ServerSkeleton {
 		private 	SystemServerSkeleton 	meS;
+		
 		private 	Server					Srv;
 		private 	Guardian				GpG;
 		private 	Requests				Req;		
@@ -63,13 +64,15 @@ public class ServerReal extends ServerSkeleton {
 		setMeS(new SystemServerSkeleton(this));
 		getMeS().getFrame().setVisible(true);	
 		
+		
+		
 		Srv.setSrvconnINC();		//	INCrease Server Connections counter
 		Srv.getMeG().addMsg(mSg="numero connessioni attive :"+ Srv.getSrvconn());	
 	}	
 //**------------------------------------------------------------------------------------------------------------- Connection
 	//Connections
 	@Override
-	public MessageBack connection(Message msg) throws RemoteException, InterruptedException {	
+	public MessageBack connection(Message msg) throws InterruptedException, IOException {	
 				System.out.println("REAL SERVER :> GESTISCO RICHIESTA CONNNECTION");
 		MessageBack x = new MessageBack();
 		switch (msg.getCommand()) {		
@@ -79,11 +82,18 @@ public class ServerReal extends ServerSkeleton {
 				x.setText(new String ("SRV - Connessione OK"));					
 				break;												
 			case ConnSTOP:			
-				//System.out.println(mSg = "REALServer:> CHIUSURA connessione richiesta ");
+				System.out.println(mSg = "REALServer:> CHIUSURA connessione richiesta ");
 				getMeS().addMsg(mSg);
 				x.setText(new String ("SRV - chiudo socket tra 5 secondi..."));			
-				//super._socket.close();
-				//Server.setSrvconn(Server.getSrvconn() - 1);	
+				
+				
+				Thread.sleep(5000);
+				super._socket.close();
+				
+				
+				
+				Server.setSrvconn(Server.getSrvconn() - 1);	
+				
 				System.out.println("REALServer:> attuale numero connessioni : "+ Server.getSrvconn() +"\n"); 	
 				System.out.println("REALServer:> chiusura socket...");
 				break;		
@@ -996,5 +1006,6 @@ public class ServerReal extends ServerSkeleton {
 		return mrs;
 	}
 	// *************************************************************
+
 
 }

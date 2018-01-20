@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JComboBox;
 
-public class SystemServerSkeleton {
+public class SystemServerSkeleton extends SL_JFrame {
 	private boolean 	stubok			=false;
 	private boolean 	repeatconn		=true;
 	private int 		repeatconnCount = 1;

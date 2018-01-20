@@ -403,6 +403,26 @@ public class AppMain extends SL_JFrame  {
 		btnRicerca.setBounds(134, 88, 154, 23);
 		panelLog.add(btnRicerca);
 		
+		JButton btnNewButton_1 = new JButton("TEST RIAVVIO STUB DOPO CAMBIO SERVER IN SETTING");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				// 
+				try {
+					System.out.println(" CLICK ");
+				me.setCliType(Clients.Reader);	
+					me.getCmdLIST().put(Commands.ConnSTOP);
+					
+				} catch (InterruptedException e2) {
+					System.out.println("  ");	
+					e2.printStackTrace(); 
+				}	
+				
+			}
+		});
+		btnNewButton_1.setBounds(134, 298, 391, 23);
+		panelLog.add(btnNewButton_1);
+		
 		
 		
 		

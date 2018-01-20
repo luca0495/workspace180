@@ -1,4 +1,5 @@
 package connections;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,7 +14,10 @@ import database.ChkDBandTab;
 
 public class ServerSkeleton implements IServer, Runnable {
 			Socket 		_socket;
-			ServerReal 	_meServer;	
+			ServerReal 	_meServer;
+			
+			
+			
 			boolean STOP=false;
 			String mSg;
 	private ObjectInputStream istream ;
@@ -123,8 +127,16 @@ public class ServerSkeleton implements IServer, Runnable {
 					ostream.writeObject(connection(myOper));
  					ostream.flush();
 		 					if (myOper.getCommand()==Commands.ConnSTOP){
+		 						
+		 						WindowEvent close = new WindowEvent(_meServer.getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
+		 						_meServer.getMeS().getFrame().dispatchEvent(close);
+		 						
+		 						
 		 						Thread.sleep(5000);					
 		 						_socket.close();
+		 						
+		 						
+		 						
 		 						System.out.println("attuale numero connessioni : "+ Server.getSrvconn() +"\n");
 		 					}			
 					break;		
@@ -297,7 +309,7 @@ public class ServerSkeleton implements IServer, Runnable {
 	
 	// implementati in server real
 	@Override
-	public MessageBack connection(Message M) throws RemoteException, InterruptedException {
+	public MessageBack connection(Message M) throws RemoteException, InterruptedException, IOException {
 		System.out.println("procede SKELETON");
 		return null;
 	}

@@ -40,11 +40,11 @@ public class Guardian implements Runnable {
 		while(!Stop){
 			Calendar c = new GregorianCalendar();
 			datacorrente = c.getTime();  
-			  
-			System.out.println("datacorrente "	+datacorrente.getTime());
-			System.out.println("datacorrente "	+datacorrente.toString());
-			System.out.println("dataultimo "	+dataultimocontrollo.getTime());
-			System.out.println("dataultimo "	+dataultimocontrollo.toString());
+			//TEST OK  
+			//System.out.println("datacorrente "	+datacorrente.getTime());
+			//System.out.println("datacorrente "	+datacorrente.toString());
+			//System.out.println("dataultimo "	+dataultimocontrollo.getTime());
+			//System.out.println("dataultimo "	+dataultimocontrollo.toString());
 			
 			xx++;
 			//System.out.println("GPG :> Guardian Busy - Query in esecuzione");	
@@ -52,8 +52,8 @@ public class Guardian implements Runnable {
 			
 			
 			//valuta ora del controllo scadenze...
-			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST	
-			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {			//controllo ogni 5 minuti				
+			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST	
+			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {			//controllo ogni 5 minuti				
 				System.err.println("passati 5 secondi, controllo scadenze prestiti");				
 				dataultimocontrollo = c.getTime();
 				//PROCEDURE CONTROLLO SCADENZE
@@ -65,7 +65,7 @@ public class Guardian implements Runnable {
 			}	
 			
 			//TODO RIMETTI println
-			System.out.println("GPG :> Guardian Valuta no "+xx);
+			//System.out.println("GPG :> Guardian Valuta no "+xx);
 			
 			if (xx==1000)
 				xx=0;

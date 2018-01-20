@@ -21,14 +21,16 @@ public class ServerStub implements Serializable, IServer {
 	private InetAddress addr;
 	
 	
-	public ServerStub(Client client) throws Exception{
+	public ServerStub(Client client, String ADD) throws Exception{
 		Rifclient = client;
 		conntentativi=0;		
 	//	InetAddress addr= InetAddress.getByName(null);
 	//	InetAddress addr= InetAddress.getByName("192.168.1.3");		//test con Dexo note 
 		
 		//default su local host
-		addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
+		
+		//addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
+		addr= InetAddress.getByName(ADD);							//test con Local host PASSATO dal client		
 	
 		
 		
