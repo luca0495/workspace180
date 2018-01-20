@@ -249,7 +249,7 @@ public class AppMain extends SL_JFrame  {
 	 });
 		
 		setText(new JTextField());
-		getText().setBounds(136, 0, 621, 23);
+		getText().setBounds(293, 0, 462, 23);
 		panelLog.add(getText());
 		getText().setColumns(10);
 		btnNewButton_2.setBounds(134, 181, 154, 23);
@@ -562,11 +562,11 @@ public class AppMain extends SL_JFrame  {
 		
 		
 		
-		getComboBox().setBounds(136, 40, 152, 20);
+		getComboBox().setBounds(134, -1, 154, 24);
 		panelLog.add(getComboBox());
 		
 		setTextField_3(new JTextField());
-		getTextField_3().setBounds(298, 40, 303, 20);
+		getTextField_3().setBounds(134, 33, 154, 19);
 		panelLog.add(getTextField_3());
 		getTextField_3().setColumns(10);
 		getTextField_3().setText("127.0.0.1");	
@@ -663,7 +663,7 @@ public class AppMain extends SL_JFrame  {
 
 	public void setTextField_3(JTextField textField_3) {
 		this.textField_3 = textField_3;
-		textField_3.setEnabled(false);
+		textField_3.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_3.setEditable(false);
 	}
 
