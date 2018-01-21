@@ -5,6 +5,7 @@ public class ClientConnectionController implements Runnable {
 	private 			MessageBack			mSgBack;
 	private 			String				mSg;	
 	private 			int 				FCC=500;	//FrequenzaControlloConnessione [millisecondi]
+	private 			int 				turniBusy=10;
 //------------------------------------------------------------------------	
 	public ClientConnectionController(Client Me){
 		me=Me;
@@ -36,7 +37,7 @@ public class ClientConnectionController implements Runnable {
 			}
  			
  			System.out.println("CCC :> lancio richiesta controllo connessione no. "+ctc);	
-			int TurniBusy=100;
+			int TurniBusy=turniBusy;
 			ctc++;
  				try {
 					while (me.isBusy()&&TurniBusy>0){	//se busy attende fino a 10 tentativi poi lascia in coda comando					

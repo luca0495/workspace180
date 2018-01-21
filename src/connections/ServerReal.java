@@ -91,6 +91,8 @@ public class ServerReal extends ServerSkeleton {
 				getSrv().removeOp(this);
 				getMeS().getFrame().setVisible(false);
 				
+				
+				
 				Thread.sleep(10);
 				
 				System.out.println("REALServer:> attuale numero connessioni : "+ Server.getSrvconn() +"\n"); 	

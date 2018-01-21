@@ -26,10 +26,9 @@ public class ServerStub implements Serializable, IServer {
 		conntentativi=0;		
 	//	InetAddress addr= InetAddress.getByName(null);
 	//	InetAddress addr= InetAddress.getByName("192.168.1.3");		//test con Dexo note 
+	//	default su local host
+	//  addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
 		
-		//default su local host
-		
-		//addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
 		addr= InetAddress.getByName(ADD);							//test con Local host PASSATO dal client		
 	
 		
@@ -51,7 +50,13 @@ public class ServerStub implements Serializable, IServer {
 	} catch (Exception e) {
 			
 			System.out.print(mSg = "STUB:> Server Assente \n")				;// leggi testo nel messaggio);
-			Rifclient.getActW().addMsg(mSg);	
+			
+			if (Rifclient.getActW()!=null) {
+			//Rifclient.getActW().addMsg(mSg);	
+			}else {
+				System.out.println("intercetto null pointer per actW su stub");
+			}
+			
 			Rifclient.setStubok(false);
 			Rifclient.setRepeatconn(true);	
 	} 

@@ -445,35 +445,24 @@ public class AppMain extends SL_JFrame  {
 				 */
 				
 				EventQueue.invokeLater(new Runnable() {
+					@SuppressWarnings("unchecked")
 					public void run() 
 					{
 					 try 
 					{
 						 System.out.println("lancio la q");
-						 
-						 Setting s = new Setting(getFrame(), me);
-						 						 
-						 
 						 String [] datasetting = MQ_Read.readSettingTable();
+						 Setting s = new Setting(getFrame(), me,datasetting);
 						 
-						 System.out.println("campo0 : "+datasetting[0]);
-						 s.getTextField_2().setText(datasetting[0]);
-						 s.getTextField_3().setText(datasetting[1]);
-						 s.getTextField_4().setText(datasetting[2]);
-						 s.getTextField_5().setText(datasetting[3]);
-						 s.getComboBox().addItem(datasetting[3]); 
-						 s.getTextField_6().setText(datasetting[4]);
-						 s.getPasswordField().setText(datasetting[5]);
-
+						 
+						 
 						 /*
-						 
 						 s.getTextFieldsrvIPlan().setText(datasetting[1]);
 						 getS().getTextFieldsrvIPwww().setText(datasetting[2]);
 						 getS().getTextFieldsrvIPdefault().setText(datasetting[3]);
 						 getS().getTextFieldsrvMailAddress().setText(datasetting[4]);
 						 getS().getTextFieldsrvMailPW().setText(datasetting[5]);
 						 */
-						 
 				    } 
 					catch (Exception e) 
 					{
@@ -497,7 +486,7 @@ public class AppMain extends SL_JFrame  {
 		setComboBox(new JComboBox());
 		getComboBox().setForeground(new Color(255, 255, 51));
 		getComboBox().setBackground(new Color(102, 51, 0));
-		getComboBox().addItem("localhost");
+		getComboBox().addItem("local");
 		getComboBox().addItem("lan");
 		getComboBox().addItem("www");
 
@@ -506,63 +495,50 @@ public class AppMain extends SL_JFrame  {
 		getComboBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Object x = getComboBox().getSelectedItem();
-				
+				aggiornaSrvType(x);	
+				/*
+				// gestisci cambio srvtype
 				// chiusura attuale connessione
 				try {
 					me.getCmdLIST().put(Commands.ConnSTOP);
-					Thread.sleep(20);
-					
+					Thread.sleep(20);					
 				} catch (InterruptedException e2) {
 					System.out.println("  ");	
 					e2.printStackTrace(); 
-				}	
-				
-					switch (x.toString()) {
-					case "localhost":						
-						me.setSRVaddress("127.0.0.1");
+				}					
+				try {
+					String [] datasetting = MQ_Read.readSettingTable();
+					switch (getComboBox().getSelectedItem().toString()) {
+					
+					case "local":					
 						getComboBox().setSelectedIndex(0);
-						getTextField_3().setText("127.0.0.1");
+						me.setSRVaddress(datasetting[0]);
+						
+						getTextField_3().setText(datasetting[0]);				
 						System.out.println("selezionato srv: local");
-						/*
-						try {
-							me.getCmdLIST().put(Commands.ConnTEST);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						*/
 						break;
 					case "lan":
-						me.setSRVaddress("192.168.0.2");
-						getTextField_3().setText("192.168.0.2");
+						getComboBox().setSelectedIndex(1);
+						getTextField_3().setText(datasetting[1]);
+						me.setSRVaddress(datasetting[1]);				//me.setSRVaddress("192.168.0.2");
 						System.out.println("selezionato srv: lan");
-						/*
-						try {
-							me.getCmdLIST().put(Commands.ConnTEST);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						*/
 						break;
 					case "www":
-						me.setSRVaddress("dexa215.homepc.it");
-						getTextField_3().setText("dexa215.homepc.it");
+						getComboBox().setSelectedIndex(2);
+						getTextField_3().setText(datasetting[2]);
+						me.setSRVaddress(datasetting[2]);				//me.setSRVaddress("dexa215.homepc.it");
 						System.out.println("selezionato srv: www");
-						/*
-						try {
-							me.getCmdLIST().put(Commands.ConnTEST);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						*/
 						break;	
-						
-						
-						
-						
+
 					default:
 						break;
-					}
+					}						
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				*/	
+			
+			
 			}
 		});
 		
@@ -661,6 +637,55 @@ public class AppMain extends SL_JFrame  {
 		});
 	}
 
+	
+	public void aggiornaSrvType(Object x) {	
+		// gestisci cambio srvtype
+		// chiusura attuale connessione
+		//Object x = getComboBox().getSelectedItem();
+
+		try {
+			me.getCmdLIST().put(Commands.ConnSTOP);
+			Thread.sleep(20);
+			
+		} catch (InterruptedException e2) {
+			System.out.println("  ");	
+			e2.printStackTrace(); 
+		}	
+		
+		try {
+			String [] datasetting = MQ_Read.readSettingTable();
+			switch (getComboBox().getSelectedItem().toString()) {
+			
+			case "local":					
+				getComboBox().setSelectedIndex(0);
+				me.setSRVaddress(datasetting[0]);
+				
+				getTextField_3().setText(datasetting[0]);				
+				System.out.println("selezionato srv: local");
+				break;
+			case "lan":
+				getComboBox().setSelectedIndex(1);
+				getTextField_3().setText(datasetting[1]);
+				me.setSRVaddress(datasetting[1]);				//me.setSRVaddress("192.168.0.2");
+				System.out.println("selezionato srv: lan");
+				break;
+			case "www":
+				getComboBox().setSelectedIndex(2);
+				getTextField_3().setText(datasetting[2]);
+				me.setSRVaddress(datasetting[2]);				//me.setSRVaddress("dexa215.homepc.it");
+				System.out.println("selezionato srv: www");
+				break;	
+
+			default:
+				break;
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	
 	public JButton getBtnAccount() {
 		return btnAccount;
 	}

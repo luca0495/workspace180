@@ -52,7 +52,6 @@ public class Server {
 	    			
 	    			ServerReal x = new ServerReal(socket,me);
 	    			me.getOperatori().add(x);
-	    			
 	    			new Thread(x).start();
 	    			
 			} catch (Exception e) {

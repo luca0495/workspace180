@@ -35,8 +35,13 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 	}
 	
 	public void addMsg(String msg){
+
+		
+		
 		
 		if (msg!=null) {
+		System.out.println("ERRORE... "+msg);
+			
 			text.setText(msg);
 		}else {
 			text.setText(null);

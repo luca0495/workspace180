@@ -10,6 +10,7 @@ import connections.Message;
 import connections.MessageBack;
 import database.MQ_Read;
 import gui.AppMain;
+import gui.Setting;
 
 public class ClientCMDuser {
 	
@@ -91,7 +92,8 @@ public class ClientCMDuser {
 	
 	
 	}
-
+	
+	
 	public static void ClientGetDataFromSettingTestResult(String[]datasetting) {
 		//test
 		System.out.println("ottengo campo 0 :"+datasetting[0]);

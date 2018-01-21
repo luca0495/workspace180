@@ -31,6 +31,7 @@ import com.sun.org.apache.bcel.internal.generic.SWITCH;
 import Check.Check;
 import Check.PasswordBox;
 import Check.PopUp;
+import Core.ClientCMDuser;
 import Core.Clients;
 import Core.Commands;
 import ProvaEmail.EmailSender;
@@ -66,13 +67,15 @@ public class Setting extends SL_JFrame{
 		    static int			cols = 0; 		    
 		    
 	
-		    
+	public 	JTextField			text;	    
 		    
 	private Setting 			w;	
 	private JFrame 				frmSchoolib;
 	private AppReader 			a;
 	private LoadUser 			l = new LoadUser();
 	private Client 				me;
+
+	
 	
 	private JTextField 			textFieldsrvIPlocal; 
 	private JTextField 			textFieldsrvIPlan; 
@@ -95,9 +98,6 @@ public class Setting extends SL_JFrame{
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
 	private String [] 	userdata;
-	
-
-
 
 	
 	//private JPanel panelAccount;
@@ -116,7 +116,6 @@ public class Setting extends SL_JFrame{
     private JTextField textField_1;
     private JTextField textField_2;
     private JTextField textField_4;
-    private JTextField textField_5;
     private JTextField textField_6;
     private JPasswordField passwordField;
     private JTextField textField_3;
@@ -129,18 +128,19 @@ public class Setting extends SL_JFrame{
     private JButton button;
     private JButton button_1;
     private JComboBox comboBox;
+    private JTextField textField_5;
 
 
-public Setting(Component c,Client x)
+public Setting(Component c,Client x,String[]userdata)
 	{
-		
 		setW(this);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
 		me.setCliType(Clients.Librarian);		
-		
 		Setting(c);
+		setUserdata(userdata);
+		setf(userdata);
 		
 	}
 	
@@ -173,11 +173,11 @@ public Setting(Component c,Client x)
 		panelChangePass.add(lblChange);
 		
 		lblLocalhost = new JLabel("IP localhost");
-		lblLocalhost.setBounds(64, 101, 42, 14);
+		lblLocalhost.setBounds(64, 101, 127, 14);
 		panelChangePass.add(lblLocalhost);
 		
 		lblLanIp = new JLabel("IP lan");
-		lblLanIp.setBounds(64, 139, 66, 14);
+		lblLanIp.setBounds(64, 139, 127, 14);
 		panelChangePass.add(lblLanIp);
 		
 		lblWwwIp = new JLabel("IP www");
@@ -211,11 +211,6 @@ public Setting(Component c,Client x)
 		textField_4.setBounds(208, 167, 137, 20);
 		panelChangePass.add(textField_4);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(208, 207, 137, 20);
-		panelChangePass.add(textField_5);
-		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
 		textField_6.setBounds(208, 278, 272, 20);
@@ -230,19 +225,30 @@ public Setting(Component c,Client x)
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
+
+					me.setActW(me.getStartWindow());
+					
+					System.out.println("combo: " + getComboBox().getSelectedItem().toString());
+					System.out.println("email: " + getTextField_6().getText());
+					
 					MQ_Update.updateSetting(
 												getTextField_2().getText(),
 												getTextField_3().getText(),
 												getTextField_4().getText(),
-												getTextField_5().getText(),
+												getComboBox().getSelectedItem().toString(),
 												getTextField_6().getText(),
-												getPasswordField().getText()
+												getPasswordField().getPassword().toString()
 
 																);
-					PopUp.infoBox(frmSchoolib, "dati modificati con successo ");
-					frmSchoolib.setVisible(false);
+
+					Object x = getComboBox().getSelectedItem();
+					me.getStartWindow().getComboBox().setSelectedItem(x);
+					me.getStartWindow().aggiornaSrvType(x);
 					
-				
+					
+					frmSchoolib.setVisible(false);
+					PopUp.infoBox(frmSchoolib, "dati modificati con successo ");					
+					
 				} catch (SQLException e) {
 					
 					PopUp.infoBox(frmSchoolib, "dati non modificati ");
@@ -257,9 +263,17 @@ public Setting(Component c,Client x)
 		button_1 = new JButton("Annulla");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			
+				me.setActW(me.getStartWindow());
+				
+				String[] datasetting;
 				
 				PopUp.infoBox(frmSchoolib, "dati non modificati ");
 				frmSchoolib.setVisible(false);
+				
+				//Object x = getComboBox().getSelectedItem();
+				//me.getStartWindow().getComboBox().setSelectedItem(x);
+				//me.getStartWindow().aggiornaSrvType(x);
 				
 			}
 		});
@@ -267,7 +281,7 @@ public Setting(Component c,Client x)
 		panelChangePass.add(button_1);
 		
 		JLabel lblLocallanwww = new JLabel("{ local,lan,www }");
-		lblLocallanwww.setBounds(355, 210, 120, 14);
+		lblLocallanwww.setBounds(64, 225, 120, 14);
 		panelChangePass.add(lblLocallanwww);
 		
 		JSeparator separator = new JSeparator();
@@ -275,15 +289,44 @@ public Setting(Component c,Client x)
 		panelChangePass.add(separator);
 		
 		comboBox = new JComboBox();
-		comboBox.setBounds(445, 207, 89, 20);
+		comboBox.setBounds(208, 207, 137, 20);
+		 getComboBox().addItem("local"); 
+		 getComboBox().addItem("lan"); 
+		 getComboBox().addItem("www"); 
 		panelChangePass.add(comboBox);
+		
+		text=new JTextField();
+		text.setBounds(64, 56, 416, 20);
+		panelChangePass.add(text);
+		text.setColumns(10);
 	
 	}
-	
-	
-	
-		
-			public JPasswordField getPasswordField() {
+//********************************************************	
+	public void setf(String[]userd) {
+		getTextField_2().setText(userd[0]);
+		getTextField_3().setText(userd[1]);
+		getTextField_4().setText(userd[2]);
+		switch (userd[3]) {	
+			case "local":
+				getComboBox().setSelectedIndex(0);
+				break;
+			
+			case "lan":
+				getComboBox().setSelectedIndex(1);
+				break;
+					
+			case "www":
+				getComboBox().setSelectedIndex(2);
+				break;		
+			
+			default:
+				break;
+		}
+		getTextField_6().setText(userd[4]);
+		getPasswordField().setText(userd[5]);
+	}
+//********************************************************	
+	public JPasswordField getPasswordField() {
 		return passwordField;
 	}
 
@@ -323,14 +366,6 @@ public Setting(Component c,Client x)
 		this.textField_4 = textField_4;
 	}
 
-	public JTextField getTextField_5() {
-		return textField_5;
-	}
-
-	public void setTextField_5(JTextField textField_5) {
-		this.textField_5 = textField_5;
-	}
-
 	public JTextField getTextField_6() {
 		return textField_6;
 	}
@@ -347,28 +382,6 @@ public Setting(Component c,Client x)
 		this.textField_3 = textField_3;
 	}
 
-			public void updateall(String[] user )
-	{
-		String idutente = user[0];
-		if (idutente.equals("")||idutente.equals("Nessun Dato")) {
-			setIdUser(0);	
-		}else {
-			setIdUser(Integer.valueOf(idutente));
-		}
-		
-		
-		getTextFieldsrvIPdefault().setText(user[0]);
-		getTextFieldsrvIPlocal().setText(user[1]);
-		getTextFieldsrvIPlan().setText(user[2]);
-		getTextFieldsrvIPwww().setText(user[3]);
-		
-		getTextFieldsrvMailAddress().setText(user[4]);
-		getTextFieldsrvMailPW().setText(user[5]);
-
-		
-
-		
-	}	
 // testaggio campi *************************************************************************************************************************** 	
 	
 	public JTextField getTextFieldsrvIPlocal() {

@@ -123,7 +123,7 @@ public class ServerSkeleton implements IServer, Runnable {
 		 					
  							if (myOper.getCommand()==Commands.ConnSTOP){
 		 						System.out.println("attuale numero connessioni : "+ Server.getSrvconn() +"\n");
-		 						Thread.sleep(1000);
+		 						//Thread.sleep(1000);
 		 						_socket.close();
 		 					}
  							

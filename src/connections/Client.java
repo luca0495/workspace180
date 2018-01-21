@@ -67,6 +67,7 @@ import java.awt.Component;
 public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
+	private 			AppMain 			StartWindow;
 	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
@@ -134,14 +135,14 @@ public class Client implements Serializable, Runnable  {
 				try {
 					
 					Client x  = new Client();
-					AppMain StartWindow = new AppMain(x);
-					x.setMeMain(StartWindow);
-					StartWindow.getFrame().setVisible(true);	//System.out.println("creato start windows");
+					x.setStartWindow(new AppMain(x));
+					x.setMeMain(x.getStartWindow());
+					x.getStartWindow().getFrame().setVisible(true);	//System.out.println("creato start windows");
 					
-					ClientCMDuser.ClientGetDataFromSetting(x,StartWindow);					
+					ClientCMDuser.ClientGetDataFromSetting(x,x.getStartWindow());					
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec										
 					
-					StartWindow.addMsg("Initialize...");	
+					x.getStartWindow().addMsg("Initialize...");	
 					new Thread(x).start();	  // Logica di controllo comandi ricevuti
 					new Thread(y1).start();  // Client Connection Controller [CCC]	
 				} catch (Exception e) {
@@ -434,9 +435,11 @@ public class Client implements Serializable, Runnable  {
 																} catch (Exception e) {
 																}	
 															}
-															incRepeatconnCount();	
+															incRepeatconnCount();
+															
 															srv  = new ServerStub(this,SRVaddress);	
-															}
+															
+														}
 										}catch (Exception e) {e.printStackTrace();} finally {}//server.closeConnection();}	
 		 								setBusyControl(false);
 		 								
@@ -594,8 +597,7 @@ public class Client implements Serializable, Runnable  {
 														}
 													//conteggio...
 													incRepeatconnCount();
-													
-													
+															
 													srv  = new ServerStub(this,SRVaddress);
 													setBusy(false);
 												}
@@ -1987,6 +1989,12 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			}
 			public void setSRVtype(String sRVtype) {
 				SRVtype = sRVtype;
+			}
+			public AppMain getStartWindow() {
+				return StartWindow;
+			}
+			public void setStartWindow(AppMain startWindow) {
+				StartWindow = startWindow;
 			}
 
 			
