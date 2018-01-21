@@ -229,7 +229,9 @@ public Setting(Component c,Client x,String[]userdata)
 					me.setActW(me.getStartWindow());
 					
 					System.out.println("combo: " + getComboBox().getSelectedItem().toString());
-					System.out.println("email: " + getTextField_6().getText());
+					System.out.println("email user : " + getTextField_6().getText());
+					System.out.println("email pw   : " + String.valueOf(getPasswordField().getPassword()));
+					
 					
 					MQ_Update.updateSetting(
 												getTextField_2().getText(),
@@ -237,8 +239,7 @@ public Setting(Component c,Client x,String[]userdata)
 												getTextField_4().getText(),
 												getComboBox().getSelectedItem().toString(),
 												getTextField_6().getText(),
-												getPasswordField().getPassword().toString()
-
+												String.valueOf(getPasswordField().getPassword())
 																);
 
 					Object x = getComboBox().getSelectedItem();

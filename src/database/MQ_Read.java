@@ -215,13 +215,19 @@ public class MQ_Read {
 	public static String ReadPassTemp1(String email) throws SQLException
 	{
 	String query = "SELECT password_temp FROM utente WHERE email ='" + email +"';";
+	System.err.println(query+"dany");
 	DBmanager.openConnection();
 	ResultSet rs = DBmanager.executeQuery(query);
 	String value = null;
+	
 	while(rs.next())
 	{	
 		value = rs.getString("password_temp");
+	System.out.println("entrato...");
+	System.err.println("entrato...");
 	}
+	
+	System.err.println("value :"+value);
 	DBmanager.closeConnection();
 	
 	

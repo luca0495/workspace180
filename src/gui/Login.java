@@ -140,7 +140,9 @@ public class Login extends SL_JFrame  {
 				
 		//Assegna a delle variabili il contenuto dei text field
 				
-				String mail 			= getTxtEmail().getText();
+				
+				
+				String mail = getTxtEmail().getText();
 				setMailcheckinprogress(true);
 				
 				me.setSql2("LoginPWRecovery");
@@ -197,6 +199,8 @@ public class Login extends SL_JFrame  {
 					PopUp.infoBox(frmSchoolib, "Inizio PROCEDURA INVIO EMAIL CON PW TEMP");
 					//random password check ok
 					String newpass= Check.s();
+					//String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
+					
 					String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
 					
 					try
@@ -463,8 +467,7 @@ public class Login extends SL_JFrame  {
 			
 // APERTA FINESTRA		
 				   
-					try {
-						
+					try {	
 					MQ_Delete.deletePassTemp(pass);				
 					} catch (SQLException e1) {
 						e1.printStackTrace();

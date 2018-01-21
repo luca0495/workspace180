@@ -17,6 +17,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	String		SQLQuery;	
 	private 	String		SQLQuery2;
 	private 	String  	text;
+	private 	String  	pw;
 	private 	ResultSet 	rs;
 	private 	int			LoginTry;
 	private		int			idut;
@@ -26,7 +27,11 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 	}	
-	public Message (Commands cmd,Clients Ut,String IdClient){
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient){
+		
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 		
@@ -34,7 +39,12 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setDateOfRequest(new Date());
 		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
 	}
-	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery){
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String SQLQuery){
+		
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 		
@@ -43,7 +53,13 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
 		setSQLQuery(SQLQuery);
 	}	
-	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2){
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String SQLQuery,
+			String SQLQuery2){
+		
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 		
@@ -54,7 +70,33 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSQLQuery2(SQLQuery2);
 		
 	}
-	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2,int tentativi){
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String SQLQuery,
+			String SQLQuery2,
+			String pw){
+		
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setSQLQuery(SQLQuery);
+		setSQLQuery2(SQLQuery2);
+		setPw(pw);
+		setIdut(idut);
+	}	
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String SQLQuery,
+			String SQLQuery2,
+			int tentativi){
+		
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 		
@@ -66,7 +108,15 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setLoginTry(tentativi);
 		
 	}	
-	public Message (Commands cmd,Clients Ut,String IdClient,String SQLQuery,String SQLQuery2,int tentativi,int idut){
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String SQLQuery,
+			String SQLQuery2,
+			int tentativi,
+			int idut){
+		
 		setCommands(cmd);
 		setDateOfRequest(new Date());
 		
@@ -77,10 +127,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSQLQuery2(SQLQuery2);
 		setIdut(idut);
 	}	
-	
-	
-	
-	
+
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
 	public boolean equalTo(Message x){
@@ -156,6 +203,12 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setIdut(int idut) {
 		this.idut = idut;
+	}
+	public String getPw() {
+		return pw;
+	}
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 	
 }

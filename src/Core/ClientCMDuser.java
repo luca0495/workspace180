@@ -31,7 +31,10 @@ public class ClientCMDuser {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client 
-					me.getSql()
+					me.getSql(),				//q
+					me.getSql2(),				//mail
+					me.getPw()					//pw
+					
 					);
 			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
@@ -101,7 +104,7 @@ public class ClientCMDuser {
 		System.out.println("ottengo campo 2 :"+datasetting[2]);
 		System.out.println("ottengo campo 3 :"+datasetting[3]);
 		System.out.println("ottengo campo 4 :"+datasetting[4]);
-		System.out.println("ottengo campo 5 :"+datasetting[5]);
+		//System.out.println("ottengo campo 5 :"+datasetting[5]);
 	}	
 
 	

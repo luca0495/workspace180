@@ -29,6 +29,8 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import org.omg.PortableServer.THREAD_POLICY_ID;
+
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
@@ -537,6 +539,14 @@ public class AppReader extends SL_JFrame {
 				checkcf();
 				
 				while (isMailcheckinprogress()||(isCfcheckinprogress())) {	//attendi... //System.out.println("attesa per check email exist");		
+					
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
+					
 					System.out.println("APPA READER attendo check MAIL result"+getMailcheckResult());
 					System.out.println("APPA READER attendo check CF   result"+getCfcheckResult());
 					try {
@@ -751,7 +761,7 @@ public class AppReader extends SL_JFrame {
 								System.out.println(" ***** sto controllando la email : email MODIFICATA");
 								String email = getTxtEmail().getText();
 								me.setSql(email);
-								//me.setSql2("AppReader");
+								me.setSql2("AppReader");
 								me.setActW(getW());
 								me.setActF(frmSchoolib);
 								//me.setActC(c);									

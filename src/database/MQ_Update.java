@@ -142,7 +142,15 @@ public class MQ_Update {
 		DBmanager.executeUpdate(query1);
 		DBmanager.closeConnection();
 	}
-
+	public static void updatePassForgotDirect(String email,String pass) throws SQLException
+	{	
+		String query1 = "UPDATE utente SET  password = '" + pass + "' WHERE email = '" + email + "'';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query1);
+		DBmanager.closeConnection();
+	}
+	
 	public static String updateNewPassForgotGETQUERY (String email,String pass) {
 		String q = "UPDATE utente SET password = '" + pass +"' WHERE email = '" + email +"';";
 		return q;

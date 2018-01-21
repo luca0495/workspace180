@@ -105,58 +105,58 @@ public class EmailSender{
 	 
 
 	 public static void send_uninsubria_recoverypassword(String to,Client Me,String newpassword) throws SendFailedException, MessagingException, SQLException{
-		    // String hasher = hash;	  
+		    // String hasher = hash;
+		 
+		 	String [] userdata = MQ_Read.readSettingTable();
+		 	
+		 	//System.out.println("spedizione mail utilizzo USER 	: "+userdata[4]);
+		 	//System.out.println("spedizione mail utilizzo PW 	: "+userdata[5]);
+		 	
+		 	String tox=userdata[4];
+	 		String pwx=newpassword;
+	 		
+	 		/*
+		 	if (Me==null) {
+		 		tox = to;
+		 		pwx=newpassword;
+		 	}else {
+				me=Me;		
+		 		tox=me.getUSERNAME();
+		 		pwx=me.getPASSWORD();
+		 		System.out.println("Controllo errore:" + me.toString());
+		 	}
+		 	*/
+		 	
 
-			 me=Me;
-			 System.out.println("Controllo errore:" + me.toString());
 		     String host = "smtp.office365.com";
-		     String from= me.getUSERNAME();
+		     String from= tox;
 		     
 		     Authenticator authenticator = new Authenticator()
 		      {         @Override
 		    	          protected PasswordAuthentication getPasswordAuthentication() {
-		    	             return new PasswordAuthentication(me.getUSERNAME(), me.getPASSWORD());
+		    	             return new PasswordAuthentication(tox,userdata[5]);
 		    	          }
 		      };
-		     
-		     //SMTPAuthenticator authenticator = new SMTPAuthenticator(me.getUSERNAME(), me.getPASSWORD());
 			 Properties props = new Properties();
-			 /*
-			 props.put( "mail.smtp.host" , "smtp.live.com");
-			 props.put( "mail.smtp.user" , USERNAME );
-			 props.put( "mail.smtp.starttls.enable" , "true" );
-			 props.put( "mail.smtp.password" , PASSWORD);
-	        */
-			 //props.setProperty("mail.smtp.submitter", authenticator.getPasswordAuthentication().getUserName());
 			 props.setProperty("mail.smtp.auth" , "true" );
 			 props.setProperty("mail.smtp.host",host);
 		     props.setProperty("mail.smtp.port","587");
 		     props.setProperty("mail.smtp.starttls.enable", "true");
-		     
-		    // props.put("mail.debug", "true");
 		     System.out.println("Controllo props:" + props + "Controllo authenticator:" + authenticator );
 		     Session session = Session.getInstance( props, authenticator );
-			 // problema username e password perchè devi averle!!   
-		   
-		        
-		     //String link = MAIL_REGISTRATION_SITE_LINK+"?scope=activation&userId="+to+"&hash="+hash;
 			 StringBuilder bodyText = new StringBuilder(); 
 				 bodyText.append("<div>").append("Caro Utente<br/><br/>").append(", <br/>")
-				  .append("la tua password temporanea è").append("  <br/>").append(newpassword)
+				  .append("la tua password temporanea è").append("  <br/>").append(pwx)
 			      .append("  <br/>").append("  Grazie <br/>").append("</div>");
 			try{	
-				
 			 Message msg = new MimeMessage(session);
 			 msg.setFrom(new InternetAddress(from));
 			 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
 			 msg.setSubject("Recovery Password");
 			 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
-		      
-			 System.out.println("Controllo msg:" + msg + "Controllo user:" + me.getUSERNAME() + "Controllo password:" + me.getPASSWORD());
-			 Transport.send(msg,me.getUSERNAME(), me.getPASSWORD());	     
-			 
+			 System.out.println("Controllo msg:" + msg + "Controllo user:" + tox + "Controllo password:" + pwx);
+			 Transport.send(msg,tox, pwx);	     			 
 			 //Transport.send(msg);
-			 
 		     System.out.println("\nMail was sent successfully.");   
 			}catch(MessagingException exception)
 	        {

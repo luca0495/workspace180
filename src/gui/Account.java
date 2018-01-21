@@ -1395,7 +1395,7 @@ public class Account extends SL_JFrame{
 								System.out.println(" ***** sto controllando la email : email MODIFICATA");
 								String email = getTxtMailMod().getText();
 								me.setSql(email);				
-								//me.setSql2("Account");
+								me.setSql2("Account");
 								me.setActW(getW());
 								me.setActF(frmSchoolib);
 								//me.setActC(c);									

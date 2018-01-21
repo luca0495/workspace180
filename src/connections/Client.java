@@ -342,12 +342,6 @@ public class Client implements Serializable, Runnable  {
 								
 								break;								
 
-								
-								
-								
-								
-								
-								
 							default:				
 								break;
 								}
@@ -512,36 +506,7 @@ public class Client implements Serializable, Runnable  {
 		}
 		return this.mSgBack;
 	}	
-	/*
-	// test
-	public void metodo1 () throws IOException, ClassNotFoundException{		
-			for (int i = 0 ; i< 10; i++){	
-				System.out.print("CLIENT : cmd no " + i + " Richiedo test 1");				
-			
-			String M1 = this.getSrv().metodotest1().getText();
-				getActW().addMsg(M1);
-				System.out.println("CLIENT : Elemento ritornato: " + M1);	
-			}
-	}
-	public void metodo2 () throws IOException, ClassNotFoundException{		
-		
-			System.out.print("CLIENT : cmd no  Richiedo test 2");				
-			
-			String M1 = this.getSrv().metodotest2().getText();
-				getActW().addMsg(M1);
-				System.out.println("CLIENT : Elemento ritornato: " + M1);	
-		
-	}	
-	public void metodo3 () throws IOException, ClassNotFoundException{		
-		
-			System.out.print("CLIENT : cmd no  Richiedo test 3");				
-			
-			String M1 = this.getSrv().metodotest3().getText();
-				getActW().addMsg(M1);
-				System.out.println("CLIENT : Elemento ritornato: " + M1);	
-	
-	}
-*/
+
 	void ClientConnectionTest() throws Exception {	
  								try{									
 								System.out.println(mSg = "CLI :> CType:"	+ getCliType());										
@@ -668,10 +633,7 @@ public class Client implements Serializable, Runnable  {
 setBusy(false);
 //!!!! --------------------------										
 }//ClientConnectionTest
-	
-	
-	
-	
+
 	public void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
@@ -709,16 +671,17 @@ setBusy(false);
 								// mail     == getsql2
 								// password == getpw
 								
-								EmailSender.send_uninsubria_recoverypassword(getSql2(), this, getPw());
+								//email spedita dal server
+								//EmailSender.send_uninsubria_recoverypassword(getSql2(), this, getPw());
 								
 								Login X = (Login)ActW;
 								
 								//X.PanelRegi.setVisible(false);
-								X.getPr().setVisible(false);
+								X.getPr().setVisible(true);
 								//X.PanelFirstAcc.setVisible(true);
-								X.getPfa().setVisible(true);
+								X.getPfa().setVisible(false);
 								//X.PanelForgPass.setVisible(false);
-								
+
 								
 								break;
 								
@@ -1238,10 +1201,7 @@ setBusy(false);
 						setBusy(false);
 			}
 	}
-	
-	
-	// check
-	private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistSetting;
 		MessageBack Mb = new MessageBack();
 		
@@ -1265,7 +1225,7 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
-	private void ClientCheckExistTableBooking() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientCheckExistTableBooking() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBooking;
 		MessageBack Mb = new MessageBack();
 		
@@ -1288,12 +1248,8 @@ setBusy(false);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
-	}	
-	
-	
-	
-	
-	private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+	}		
+		private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
 		
@@ -1317,8 +1273,7 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}			
-	
-	private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
 		
@@ -1342,8 +1297,7 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
-	
-	private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
 		
@@ -1368,8 +1322,7 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
-	
-	private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
 		
@@ -1394,9 +1347,7 @@ setBusy(false);
 			
 		}	
 	}
-	
-//TODO ADATTA	
-private void BookLast () throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void BookLast () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookLast;
 		MessageBack Mb = new MessageBack();
@@ -1416,8 +1367,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			sendM(MsgSend, Mb);	
 		}		
 	}
-	
-	private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookExecuteQuery;
 		
@@ -1443,10 +1393,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			sendM(MsgSend, Mb);	
 		}		
 	}
-
-	
-//TODO SISTEMA	
-	private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.BookADD;
 		MessageBack Mb = new MessageBack();
 		
@@ -1469,8 +1416,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 			// **** Client invia Message
 			
 			sendM(MsgSend, Mb);
-			
-			
 		}	
 	}
 		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException, InterruptedException{
@@ -1496,7 +1441,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}	
-
 		private void UserREADcheckCfExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADcheckCF;
 			MessageBack Mb = new MessageBack();
@@ -1518,9 +1462,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 						);
 				sendM(MsgSend, Mb);
 			}	
-		}
-		
-		
+		}		
 		private void UserREADcheckEmailExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADcheckEmail;
 			MessageBack Mb = new MessageBack();
@@ -1565,9 +1507,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}
-		
-		//BookLast();
-		
 		private void UserGetDatabyEmail() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmail;
 			MessageBack Mb = new MessageBack();
@@ -1637,9 +1576,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 						);
 				sendM(MsgSend, Mb);
 			}	
-		}		
-		
-		
+		}				
 		private void UserGetDataLogin() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADlogin;
 			MessageBack Mb = new MessageBack();
@@ -1688,8 +1625,7 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 						);
 				sendM(MsgSend, Mb);
 			}	
-		}		
-				
+		}			
 		private void UserGetDataAccountMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADaccountMod;
 			MessageBack Mb = new MessageBack();
@@ -1711,7 +1647,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}	
-	
 		private void UserUPDATE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserUPDATE;
 			MessageBack Mb = new MessageBack();
@@ -1740,7 +1675,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}	
-		
 		private void UserDELETE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserDELETE;
 			MessageBack Mb = new MessageBack();
@@ -1767,8 +1701,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}	
-
-		
 //TODO DA TESTARE		
 		private void LoanGetData() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.LoanREAD;
@@ -1792,9 +1724,6 @@ private void BookLast () throws SendFailedException, MessagingException, SQLExce
 				sendM(MsgSend, Mb);
 			}	
 		}
-		
-		
-		
 	//------------------------------------------------------------------------		 
 	// get & set
 		

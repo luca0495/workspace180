@@ -568,7 +568,15 @@ public class ServerReal extends ServerSkeleton {
 									try {
 										
 										//cambia query
-										MQ_Update.updateNewPassForgot(M.getMsg().getSQLQuery());				
+										MQ_Update.updateNewPassForgot(M.getMsg().getSQLQuery());
+										
+										
+										
+										//invia mail
+										EmailSender.send_uninsubria_recoverypassword(M.getMsg().getSQLQuery2(), 
+																					null, 
+																					M.getMsg().getPw());
+										
 										
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> UPRecovery :> OK"));	
@@ -634,6 +642,8 @@ public class ServerReal extends ServerSkeleton {
 										
 										String rf 		= Check.checkAdminLogInFIRST(email, pass);
 										
+										
+										
 										if(	rf.equals("I Campi Non Possono Essere Vuoti")
 											||	
 											rf.equals("Nessun Dato")
@@ -667,8 +677,8 @@ public class ServerReal extends ServerSkeleton {
 											// INCREMENTA CAMPO TENTATIVI
 											tentativi++;
 											System.out.println("REAL SERVER L-A:> recuperati numero tentativi aumentati: "+tentativi);	
-											// AGGIORNA DB test OK
 											
+											// AGGIORNA campo numero tentativi
 											MQ_Update.updateLoginTry(email, tentativi);
 											
 											System.out.println("REAL SERVER L-A:> PROCEDURA dopo update numero tentativi ");
