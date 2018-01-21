@@ -51,6 +51,8 @@ import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class Setting extends SL_JFrame{
 	
@@ -144,7 +146,7 @@ public class Setting extends SL_JFrame{
 	
 		frmSchoolib = new JFrame();
 		frmSchoolib.setTitle("Schoolib");
-		frmSchoolib.setBounds(100, 100, 893, 545);
+		frmSchoolib.setBounds(100, 100, 560, 545);
 		frmSchoolib.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSchoolib.setLocationRelativeTo(c);
 		frmSchoolib.setVisible(true);
@@ -162,61 +164,63 @@ public class Setting extends SL_JFrame{
 		ButtonGroup bgMod = new ButtonGroup();
 		
 		JLabel lblChange = new JLabel("SETTING");
+		lblChange.setForeground(new Color(255, 51, 153));
+		lblChange.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChange.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblChange.setBounds(172, 11, 348, 34);
+		lblChange.setBounds(10, 11, 524, 34);
 		panelChangePass.add(lblChange);
 		
-		lblLocalhost = new JLabel("localhost");
-		lblLocalhost.setBounds(27, 119, 120, 14);
+		lblLocalhost = new JLabel("IP localhost");
+		lblLocalhost.setBounds(64, 101, 42, 14);
 		panelChangePass.add(lblLocalhost);
 		
-		lblLanIp = new JLabel("lan IP");
-		lblLanIp.setBounds(24, 157, 123, 14);
+		lblLanIp = new JLabel("IP lan");
+		lblLanIp.setBounds(64, 139, 66, 14);
 		panelChangePass.add(lblLanIp);
 		
-		lblWwwIp = new JLabel("www IP");
-		lblWwwIp.setBounds(27, 182, 120, 14);
+		lblWwwIp = new JLabel("IP www");
+		lblWwwIp.setBounds(64, 164, 127, 14);
 		panelChangePass.add(lblWwwIp);
 		
 		lblEmailPw = new JLabel("email PW");
-		lblEmailPw.setBounds(27, 299, 120, 14);
+		lblEmailPw.setBounds(64, 312, 43, 14);
 		panelChangePass.add(lblEmailPw);
 		
-		lblDefault = new JLabel("Default");
-		lblDefault.setBounds(27, 228, 120, 14);
+		lblDefault = new JLabel("Default Server Type");
+		lblDefault.setBounds(64, 210, 97, 14);
 		panelChangePass.add(lblDefault);
 		
 		lblEmailAddress = new JLabel("email Address");
-		lblEmailAddress.setBounds(27, 268, 120, 14);
+		lblEmailAddress.setBounds(64, 281, 66, 14);
 		panelChangePass.add(lblEmailAddress);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(157, 116, 272, 20);
+		textField_2.setBounds(208, 98, 137, 20);
 		panelChangePass.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
-		textField_3.setBounds(157, 154, 272, 20);
+		textField_3.setBounds(208, 136, 137, 20);
 		panelChangePass.add(textField_3);
 		
 		textField_4 = new JTextField();
 		textField_4.setColumns(10);
-		textField_4.setBounds(157, 185, 272, 20);
+		textField_4.setBounds(208, 167, 137, 20);
 		panelChangePass.add(textField_4);
 		
 		textField_5 = new JTextField();
 		textField_5.setColumns(10);
-		textField_5.setBounds(157, 225, 272, 20);
+		textField_5.setBounds(208, 207, 137, 20);
 		panelChangePass.add(textField_5);
 		
 		textField_6 = new JTextField();
 		textField_6.setColumns(10);
-		textField_6.setBounds(157, 265, 272, 20);
+		textField_6.setBounds(208, 278, 272, 20);
 		panelChangePass.add(textField_6);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(157, 296, 272, 20);
+		passwordField.setBounds(208, 309, 138, 20);
 		panelChangePass.add(passwordField);
 		
 		button = new JButton("Conferma");
@@ -244,7 +248,7 @@ public class Setting extends SL_JFrame{
 					}
 			}
 		});
-		button.setBounds(271, 378, 158, 82);
+		button.setBounds(322, 379, 158, 82);
 		panelChangePass.add(button);
 		
 		
@@ -257,8 +261,16 @@ public class Setting extends SL_JFrame{
 				
 			}
 		});
-		button_1.setBounds(85, 379, 158, 82);
+		button_1.setBounds(57, 379, 158, 82);
 		panelChangePass.add(button_1);
+		
+		JLabel lblLocallanwww = new JLabel("{ local,lan,www }");
+		lblLocallanwww.setBounds(355, 210, 120, 14);
+		panelChangePass.add(lblLocallanwww);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(47, 250, 450, 109);
+		panelChangePass.add(separator);
 	
 	}
 	

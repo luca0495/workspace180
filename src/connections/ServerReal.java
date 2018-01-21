@@ -87,7 +87,7 @@ public class ServerReal extends ServerSkeleton {
 				x.setText(new String ("SRV - chiudo socket tra 5 secondi..."));			
 				
 				
-				Thread.sleep(5000);
+				Thread.sleep(10);
 				super._socket.close();
 				
 				
@@ -1110,8 +1110,10 @@ public class ServerReal extends ServerSkeleton {
 	@Override
 	public void connstop() {
 			
+			getMeS().getFrame().setVisible(false);
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
+			System.exit(0);
 			
 	}
 

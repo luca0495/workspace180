@@ -68,12 +68,6 @@ public class Client implements Serializable, Runnable  {
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	
-	//private 			String				SRVaddress="127.0.0.1";		//localhost
-	//private 			String				SRVaddress="192.168.0.6";	//localhost
-	//private 			String				SRVaddress;
-	private 			String				SRVaddress;	
-	private 			String				SRVtype;
-	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
 	
@@ -100,12 +94,23 @@ public class Client implements Serializable, Runnable  {
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 
-//		
-	//private 			String				PASSWORD="ACmilan1994$";
-	//private 			String				USERNAME="llazzati@studenti.uninsubria.it";
+	//TEST OK...
 	
-	private 			String				PASSWORD;
-	private 			String				USERNAME;
+	//private 			String				SRVaddress="127.0.0.1";		//localhost
+	//private 			String				SRVaddress="192.168.0.6";	//localhost
+	//private 			String				SRVaddress;
+
+	//SETTING *************************************************
+	private 			String				SRVtype;
+	private 			String				SRVaddress;	
+	
+	private 			String				ipaddLocal;
+	private 			String				ipadLan;
+	private 			String				ipadWww;
+	
+	private 			String				PASSWORD;	//private String PASSWORD="ACmilan1994$";
+	private 			String				USERNAME;	//private String USERNAME="llazzati@studenti.uninsubria.it";
+	//SETTING *************************************************
 	
 	private 			String 				Sql;
 	private 			String 				Sql2;
@@ -129,68 +134,14 @@ public class Client implements Serializable, Runnable  {
 				try {
 					
 					Client x  = new Client();
-					
-					
-					String [] datasetting = MQ_Read.readSettingTable();
-					System.out.println("ottengo campo 0 :"+datasetting[0]);
-					System.out.println("ottengo campo 1 :"+datasetting[1]);
-					System.out.println("ottengo campo 2 :"+datasetting[2]);
-					System.out.println("ottengo campo 3 :"+datasetting[3]);
-					System.out.println("ottengo campo 4 :"+datasetting[4]);
-					
-					
-					x.USERNAME=	datasetting[4];
-					x.PASSWORD= datasetting[5];
-					
-					System.out.println("indirizzo email utilizzato dal srv: "+x.USERNAME);
-					System.out.println("tipo di 	server : "+ datasetting[3]);
-					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec					
-					
 					AppMain StartWindow = new AppMain(x);
 					x.setMeMain(StartWindow);
-					StartWindow.getFrame().setVisible(true);							
-					StartWindow.getTextField_3().setText(x.getSRVaddress());
-
-					//analisi server type
-					if (datasetting[3]==null){
-												x.SRVaddress="127.0.0.1";
-					}else {
-						x.SRVtype=datasetting[3];
-						
-							switch (datasetting[3]) {//tipo di server
-							case "":
-								
-								break;
-							case "www":
-								x.setSRVaddress(datasetting[2]);
-								//StartWindow.getComboBox().setSelectedIndex(2);			
-								break;
-							case "lan":
-								x.setSRVaddress(datasetting[1]);
-								x.SRVaddress=datasetting[1];
-								//StartWindow.getComboBox().setSelectedIndex(1);
-								break;
-							case "local":
-								x.setSRVaddress(datasetting[0]);
-								x.SRVaddress=datasetting[0];
-								//StartWindow.getComboBox().setSelectedIndex(0);
-								break;	
-							default:
-												x.SRVaddress="127.0.0.1";
-								break;
-							}
-					}
+					StartWindow.getFrame().setVisible(true);	//System.out.println("creato start windows");
 					
-
-					System.out.println("indirizzo 	server : "+ x.getSRVaddress());
+					ClientCMDuser.ClientGetDataFromSetting(x,StartWindow);					
+					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec										
 					
-					
-					
-										
-					//se in STUB non settato ip server...richiedi inserimento
-					
-					System.out.println("creato start windows");
-					StartWindow.addMsg("test");	
+					StartWindow.addMsg("Initialize...");	
 					new Thread(x).start();	  // Logica di controllo comandi ricevuti
 					new Thread(y1).start();  // Client Connection Controller [CCC]	
 				} catch (Exception e) {

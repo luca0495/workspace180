@@ -149,13 +149,15 @@ public class ServerStub implements Serializable, IServer {
 			}
 			
 			
-			
+			/*
 			try{
+				
 				_socket.close();
+				
 			}catch(IOException e ){
 				e.printStackTrace();
 			}
-			
+			*/
 			
 			
 		}
