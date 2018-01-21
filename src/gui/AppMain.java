@@ -461,7 +461,7 @@ public class AppMain extends SL_JFrame  {
 						 s.getTextField_3().setText(datasetting[1]);
 						 s.getTextField_4().setText(datasetting[2]);
 						 s.getTextField_5().setText(datasetting[3]);
-						 
+						 s.getComboBox().addItem(datasetting[3]); 
 						 s.getTextField_6().setText(datasetting[4]);
 						 s.getPasswordField().setText(datasetting[5]);
 

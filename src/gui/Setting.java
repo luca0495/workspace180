@@ -53,6 +53,7 @@ import javax.swing.JPasswordField;
 import java.awt.Font;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class Setting extends SL_JFrame{
 	
@@ -127,9 +128,10 @@ public class Setting extends SL_JFrame{
     private JLabel lblEmailPw;
     private JButton button;
     private JButton button_1;
+    private JComboBox comboBox;
 
-	
-   public Setting(Component c,Client x)
+
+public Setting(Component c,Client x)
 	{
 		
 		setW(this);
@@ -271,6 +273,10 @@ public class Setting extends SL_JFrame{
 		JSeparator separator = new JSeparator();
 		separator.setBounds(47, 250, 450, 109);
 		panelChangePass.add(separator);
+		
+		comboBox = new JComboBox();
+		comboBox.setBounds(445, 207, 89, 20);
+		panelChangePass.add(comboBox);
 	
 	}
 	
@@ -467,4 +473,12 @@ public class Setting extends SL_JFrame{
 	public void setW(Setting w) {
 		this.w = w;
 	}
+	
+	   public JComboBox getComboBox() {
+			return comboBox;
+		}
+
+		public void setComboBox(JComboBox comboBox) {
+			this.comboBox = comboBox;
+		}
 }
