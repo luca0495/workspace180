@@ -15,9 +15,6 @@ import database.ChkDBandTab;
 public class ServerSkeleton implements IServer, Runnable {
 			Socket 		_socket;
 			ServerReal 	_meServer;
-			
-			
-			
 			boolean STOP=false;
 			String mSg;
 	private ObjectInputStream istream ;
@@ -45,11 +42,8 @@ public class ServerSkeleton implements IServer, Runnable {
 				case CHANGE:
 					System.out.println("Skeleton SWITCH Type:> rx cmd :> MODIFICA");
 					MessageBack mb = new MessageBack();
-					
 					//mb.setText("SRVSKT:> Cmd accodato");
 					//ostream.writeObject(mb);
-					
-					
 					ostream.writeObject(modifica(myOper));
  					ostream.flush();					
 					//------------------------------------------------------------------------------------------
@@ -124,17 +118,15 @@ public class ServerSkeleton implements IServer, Runnable {
 						
 				case CONNECTION:
 					System.out.println("Skeleton SWITCH Type:> rx cmd :>  richiesta CONNECTIONs");
-					ostream.writeObject(connection(myOper));
- 					ostream.flush();
+ 					ostream.writeObject(connection(myOper));
+ 		 			ostream.flush(); 
 		 					
  							if (myOper.getCommand()==Commands.ConnSTOP){
-		 						_socket.close();
-		 						
-		 						//Thread.sleep(2000);
-		 						STOP=true;
 		 						System.out.println("attuale numero connessioni : "+ Server.getSrvconn() +"\n");
-		 						connstop();
-		 					}			
+		 						Thread.sleep(1000);
+		 						_socket.close();
+		 					}
+ 							
 					break;		
 					
 					
@@ -317,6 +309,4 @@ public class ServerSkeleton implements IServer, Runnable {
 	
 	public void connstop() {
 	}
-
-
 	}

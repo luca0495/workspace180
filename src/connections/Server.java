@@ -17,6 +17,8 @@ public class Server {
 	private static 			String 			msg		=null;
 	private static 			int 			srvconn = 0;
 	
+	private 				LinkedList<ServerReal>operatori;
+	
 	private 				Guardian		G;		
 	private 				Requests 		R;
 
@@ -33,6 +35,8 @@ public class Server {
 	
 	public static void main(String[] args) throws Exception {
 		me = new Server();
+		me.setOperatori(new LinkedList<>());
+		
 		setMeG(new SystemServer(me));
 		getMeG().getFrame().setVisible(true);
 		
@@ -45,7 +49,12 @@ public class Server {
 	    			System.out.println(msg="Connessioni attive : " + getSrvconn() + "\n Waiting a connection... ");
 	    			getMeG().addMsg(msg);
 	    			Socket socket = serverSocket.accept();
-	    			new Thread(new ServerReal(socket,me)).start();			
+	    			
+	    			ServerReal x = new ServerReal(socket,me);
+	    			me.getOperatori().add(x);
+	    			
+	    			new Thread(x).start();
+	    			
 			} catch (Exception e) {
 			} 
 	    	 //System.out.println("schoolLib Server // connessioni attive : "+srvconnlist.size());
@@ -83,4 +92,22 @@ public class Server {
 		R = r;
 	}
 
+	public LinkedList<ServerReal> getOperatori() {
+		return operatori;
+	}
+
+	public void setOperatori(LinkedList<ServerReal> operatori) {
+		this.operatori = operatori;
+	}
+
+	public void removeOp(ServerReal x) {
+		this.operatori.remove(x);
+		setSrvconnDEC();
+		
+		System.out.println(msg="Connessioni attive : " + getSrvconn() + "\n Waiting a connection... ");
+		getMeG().addMsg(msg);
+		
+		
+	}
+	
 }

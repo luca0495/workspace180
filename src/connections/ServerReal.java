@@ -46,7 +46,8 @@ public class ServerReal extends ServerSkeleton {
 		private 	Server					Srv;
 		private 	Guardian				GpG;
 		private 	Requests				Req;		
-		private 	String 					mSg;	
+		private 	String 					mSg;
+		
 		private  	Map<String,Message>  	listcmdDONE = new TreeMap<>();		
 
 		public 		Boolean					Go;
@@ -54,17 +55,16 @@ public class ServerReal extends ServerSkeleton {
 		private 	MessageBack				mSgB;		
 //**-------------------------------------------------------------------------------------------------------------
 		public ServerReal(Socket socket,Server SrvRif) throws Exception{
-		super(socket);
+		super(socket);//SERVER Skeleton...
+		
 		setSrv(SrvRif);
-		super.set_meServer(this);
 		// Ottiene i riferimenti di Request e Guardian dal Server
 		setGpG(Srv.getG());
 		setReq(Srv.getR());	
 		Go=false;
-
+		
 		setMeS(new SystemServerSkeleton(this));
 		getMeS().getFrame().setVisible(true);	
-		
 		
 		Srv.setSrvconnINC();		//	INCrease Server Connections counter
 		Srv.getMeG().addMsg(mSg="numero connessioni attive :"+ Srv.getSrvconn());	
@@ -85,14 +85,13 @@ public class ServerReal extends ServerSkeleton {
 				System.out.println(mSg = "REALServer:> CHIUSURA connessione richiesta ");
 				getMeS().addMsg(mSg);
 				x.setText(new String ("SRV - chiudo socket tra 5 secondi..."));			
+				super.STOP=true;
 				
+				//Server.setSrvconn(Server.getSrvconn() - 1);	
+				getSrv().removeOp(this);
+				getMeS().getFrame().setVisible(false);
 				
 				Thread.sleep(10);
-				super._socket.close();
-				
-				
-				
-				Server.setSrvconn(Server.getSrvconn() - 1);	
 				
 				System.out.println("REALServer:> attuale numero connessioni : "+ Server.getSrvconn() +"\n"); 	
 				System.out.println("REALServer:> chiusura socket...");
@@ -1110,11 +1109,14 @@ public class ServerReal extends ServerSkeleton {
 	@Override
 	public void connstop() {
 			
+			getSrv().removeOp(this);
+		
 			getMeS().getFrame().setVisible(false);
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
-			System.exit(0);
+					
 			
 	}
+
 
 }
