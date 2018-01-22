@@ -54,6 +54,21 @@ public class ServerReal extends ServerSkeleton {
 
 		private 	MessageBack				mSgB;		
 //**-------------------------------------------------------------------------------------------------------------
+		private boolean 	chkinprogress1=false;
+		private String 		chkResult1;
+		private boolean 	chkinprogress2=false;
+		private String 		chkResult2;
+		private boolean 	chkinprogress3=false;
+		private String 		chkResult3;
+		private boolean 	chkinprogress4=false;
+		private String 		chkResult4;
+		private boolean 	chkinprogress5=false;
+		private String 		chkResult5;		
+		private boolean 	chkinprogress6=false;
+		private String 		chkResult6;	
+//**-------------------------------------------------------------------------------------------------------------		
+		
+	
 		public ServerReal(Socket socket,Server SrvRif) throws Exception{
 		super(socket);//SERVER Skeleton...
 		
@@ -499,8 +514,7 @@ public class ServerReal extends ServerSkeleton {
 							//******************************************************************************							
 							switch (M.getMsg().getCommand()) {
 							
-							case tableExistBooking:
-								
+							case tableExistBooking:							
 								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBooking ");					
 							try {
 								ChkDBandTab.tableExistBooking();
@@ -514,8 +528,7 @@ public class ServerReal extends ServerSkeleton {
 							}
 								System.out.println("SYS AL :> srv ritorna "+x.getText());										
 							return x;								
-							//break;	
-
+							//break;		
 							default:
 								break;
 							
@@ -808,7 +821,9 @@ public class ServerReal extends ServerSkeleton {
 								e.printStackTrace();
 							}	
 							break;				
-	
+					
+							
+					//Loans / Prestiti		
 					case Prenotation:	//PL	//-->[GpG [PL]] ---->[DB]
 										//System.out.println("RealServer :> Rx Prenotation");
 							try {							
@@ -846,6 +861,116 @@ public class ServerReal extends ServerSkeleton {
 										return x;
 										//break;
 									
+									case LoanASK:	
+										//TODO far passare dal client 
+										
+										int idut = M.getMsg().getIdut();
+										int idbook = M.getMsg().getIdbook();
+										
+										System.err.println("server estrapola... idbook:"+idbook);
+										
+										
+										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Loans ASK ");					
+										try {
+											
+											Boolean CK = true;	//esito di tutti i controlli
+											//PRASSI CONTROLLO PRESTITI GIA EFFETTUATI
+											
+											//PRASSI ARDITO *****************************************
+											//TEST OK 
+											setChkinprogress1(true);
+											//setChkinprogress2(true);
+											//setChkinprogress3(true);
+											//setChkinprogress4(true);
+											//setChkinprogress5(true);
+											//setChkinprogress6(true);
+
+											//parte check mail e check cf...
+											
+											System.err.println("server estrapola... idbook:"+idbook);
+											
+											
+											ck1(idut, idbook);		// limite massimo prestiti 
+											
+											
+											
+											boolean Timeout=true;
+											int c=0;
+											
+											while (		isChkinprogress1()
+//													&& 	isChkinprogress2()
+//													&& 	isChkinprogress3()
+//													&& 	isChkinprogress4()
+//													&& 	isChkinprogress5()
+//													&& 	isChkinprogress6()
+													
+													&&	Timeout
+													) 
+											{//while //attesa termine di tutti i controlli...
+													
+												try {
+													Thread.sleep(10);
+													c+=10;													
+													if (c==2000) {
+														Timeout=false;//scaduto
+														System.out.println("tempo di attesa scaduto, problemi...");
+														CK=false;
+														x.setText(new String ("SRV :> Loans ASK :> NG" ));	
+													}	
+												} catch (InterruptedException e1) {
+													CK=false;
+													x.setText(new String ("SRV :> Loans ASK :> NG" ));	
+													e1.printStackTrace();
+												}
+												
+											}//while
+												
+												String rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";
+												
+												if (		chkResult1.equals(rok)
+												//		&& 	chkResult2.equals(rok)
+												//		&& 	chkResult3.equals(rok)
+												//		&& 	chkResult4.equals(rok)
+												//		&& 	chkResult5.equals(rok)
+												//		&& 	chkResult6.equals(rok)
+
+													) 	{	//se tutti i check restituiscono esito positivo...
+													
+													x.setText(new String ("SRV :> Loans ASK :> OK" ));
+													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");
+													
+//TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO
+													
+													
+													
+													
+													
+													
+																										
+														}else {
+															
+															
+															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
+															
+															
+															
+														}
+												
+											//PRASSI ARDITO *****************************************
+														
+											
+											getMeS().addMsg(mSg);
+											
+											
+										} catch (Exception e) {
+											getMeS().addMsg(mSg);
+											x.setText(new String ("SRV :> Loans ASK :> NG"));	
+											System.out.println("problemi con  SRV :> Loans ASK :> NG");
+											e.printStackTrace();
+										}
+										System.out.println("SYS BL :> srv ritorna "+x.getText());
+										return x;
+										//break;									
 									default:
 										break;
 								}
@@ -1112,6 +1237,102 @@ public class ServerReal extends ServerSkeleton {
 	public void setReq(Requests req) {
 		Req = req;
 	}
+	public boolean isChkinprogress1() {
+		return chkinprogress1;
+	}
+	public void setChkinprogress1(boolean chkinprogress1) {
+		this.chkinprogress1 = chkinprogress1;
+	}
+	public String getChkResult1() {
+		return chkResult1;
+	}
+	public void setChkResult1(String chkResult1) {
+		this.chkResult1 = chkResult1;
+	}
+	public boolean isChkinprogress2() {
+		return chkinprogress2;
+	}
+	public void setChkinprogress2(boolean chkinprogress2) {
+		this.chkinprogress2 = chkinprogress2;
+	}
+	public String getChkResult2() {
+		return chkResult2;
+	}
+	public void setChkResult2(String chkResult2) {
+		this.chkResult2 = chkResult2;
+	}
+	public boolean isChkinprogress3() {
+		return chkinprogress3;
+	}
+	public void setChkinprogress3(boolean chkinprogress3) {
+		this.chkinprogress3 = chkinprogress3;
+	}
+	public String getChkResult3() {
+		return chkResult3;
+	}
+	public void setChkResult3(String chkResult3) {
+		this.chkResult3 = chkResult3;
+	}
+	public boolean isChkinprogress4() {
+		return chkinprogress4;
+	}
+	public void setChkinprogress4(boolean chkinprogress4) {
+		this.chkinprogress4 = chkinprogress4;
+	}
+	public String getChkResult4() {
+		return chkResult4;
+	}
+	public void setChkResult4(String chkResult4) {
+		this.chkResult4 = chkResult4;
+	}
+	public boolean isChkinprogress5() {
+		return chkinprogress5;
+	}
+	public void setChkinprogress5(boolean chkinprogress5) {
+		this.chkinprogress5 = chkinprogress5;
+	}
+	public String getChkResult6() {
+		return chkResult6;
+	}
+	public void setChkResult6(String chkResult6) {
+		this.chkResult6 = chkResult6;
+	}
+	public String getChkResult5() {
+		return chkResult5;
+	}
+	public void setChkResult5(String chkResult5) {
+		this.chkResult5 = chkResult5;
+	}
+	public boolean isChkinprogress6() {
+		return chkinprogress6;
+	}
+	public void setChkinprogress6(boolean chkinprogress6) {
+		this.chkinprogress6 = chkinprogress6;
+	}
+	
+//**********************************************************************************************************************************************	
+	public void ck1(int idut,int idbook) {//utilizzare per test prestiti con stesso libro limite massimo 2 raggiunto	
+		int pe;
+		try {
+			pe = MQ_Read.checkLoansIdutIdbook_2(idut, idbook);	
+			if (pe==2||pe>2) {		//limite massimo raggiunto
+				//prestito negato
+				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (2) dello stesso libro raggiunto ");
+			}else {
+				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ");
+			}
+		} catch (SQLException e) {
+				setChkResult1("SRV :> Loans ASK :> NG - " + e.toString());
+			e.printStackTrace();
+		}		//pe prestiti effettuati
+		
+		setChkinprogress1(false);		
+	}
+//**********************************************************************************************************************************************	
+	
+	
+	
+	
 	// *************************************************************	
 	public MessageRealServer MessageEncapsulation (Message msg){
 		MessageRealServer mrs=new MessageRealServer(msg, this);

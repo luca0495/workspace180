@@ -145,11 +145,11 @@ public class Guardian implements Runnable {
 								R.setBRcs(4);	//decremento conteggio BR
 												//al prossimo turno verra servita
 								
-								Val_AL();		//altre valutazioni a partire da AL
+								Val_PL();		//altre valutazioni a partire da AL
 						}		
 				}		
 		}else{								//nessuna richiesta in attesa per BR
-				Val_AL();
+				Val_PL();
 		}		
 	}
 	//------------------------------------------------------------

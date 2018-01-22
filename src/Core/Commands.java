@@ -27,16 +27,20 @@ public enum Commands{
 			BookExecuteQuery	("Book Execute Query"			,		SearchFor.Book,			CommandsType.READ,			1,	0),			
 			BookREAD 			("Book Read			"			,		SearchFor.Book,			CommandsType.READ,			1,	0), 						
 			BookLast 			("Book find last id	"			,		SearchFor.Book,			CommandsType.READ,			1,	0), 	
-// Loans			
-			LoanListADD			("Loan add 			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanListREMOVE		("Loan del 			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanNoticeAvaiable	("Loan notice av	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanNoticeExpiration("Loan notice ex	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanNew				("Loan New			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanBookGet			("Loan Get			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
-			LoanBookGiveback	("Loan Give back	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),			
-			LoanREAD			("Loan read			"			,		SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
-// Booking			
+// Loans - Prestiti			
+			LoanListADD				("Loan add 			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanListREMOVE			("Loan del 			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanNoticeAvaiable		("Loan notice av	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanNoticeExpiration	("Loan notice ex	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanNew					("Loan New			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanBookGet				("Loan Get			"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanBookGiveback		("Loan Give back	"			,		SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanASK					("Loan Ask for 		"			,		SearchFor.Prenotation,	CommandsType.CHANGE ,		4,	0),
+			LoanREAD				("Loan read			"			,		SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
+	//		Loan					("Loan read			"			,		SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
+	//		Loan					("Loan read			"			,		SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
+			
+// Booking - Prenotazioni			
 			BookingListADD			("Booking add 			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingListREMOVE		("Booking del 			"	,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingNoticeAvaiable	("Booking notice av	"		,		SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),

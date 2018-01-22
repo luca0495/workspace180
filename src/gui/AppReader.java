@@ -530,6 +530,7 @@ public class AppReader extends SL_JFrame {
 				
 				me.setSql2("AppReader");
 				
+				//PRASSI ARDITO *****************************************
 				//TEST OK 
 				setMailcheckinprogress(true);
 				setCfcheckinprogress(true);
@@ -554,7 +555,9 @@ public class AppReader extends SL_JFrame {
 					} catch (InterruptedException ee) {
 						ee.printStackTrace();
 					}
-				}				
+				}	
+				
+				
 					System.out.println("ritornato cf	check result"+getCfcheckResult());
 					System.out.println("ritornato mail 	check result"+getMailcheckResult());
 					

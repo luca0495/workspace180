@@ -21,6 +21,8 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	ResultSet 	rs;
 	private 	int			LoginTry;
 	private		int			idut;
+	private		int			idbook;
+	
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -127,7 +129,23 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSQLQuery2(SQLQuery2);
 		setIdut(idut);
 	}	
-
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			int idbook,
+			int idut){
+		
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setIdut(idut);
+		setIdbook(idbook);
+		
+	}	
+	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
 	public boolean equalTo(Message x){
@@ -209,6 +227,12 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setPw(String pw) {
 		this.pw = pw;
+	}
+	public int getIdbook() {
+		return idbook;
+	}
+	public void setIdbook(int idbook) {
+		this.idbook = idbook;
 	}
 	
 }

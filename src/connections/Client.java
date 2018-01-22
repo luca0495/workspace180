@@ -26,6 +26,7 @@ import com.sun.org.apache.bcel.internal.generic.POP2;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import Check.PopUp;
+import Core.ClientCMDloans;
 import Core.ClientCMDuser;
 import Core.Clients;
 import Core.Commands;
@@ -46,6 +47,8 @@ import java.awt.event.WindowEvent;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -60,13 +63,19 @@ import gui.ResearchBooks;
 import gui.AppMain;
 import gui.SL_JFrame;
 import gui.SystemClientStub;
+import gui.SystemServer;
 import sun.security.x509.IPAddressName;
 
 import java.awt.Component;
 
 public class Client implements Serializable, Runnable  {
+	
+
+	
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
+	private				int 				CurrentUser=0;	// if ( CurrentUser==0 ) non loggato 
+	
 	private 			AppMain 			StartWindow;
 	
 	private 			AppMain				meMain=null;
@@ -118,6 +127,7 @@ public class Client implements Serializable, Runnable  {
 	private				String				pw;
 	private				String[] 			datiUtente;
 	
+	private 			int 				idbook;	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
@@ -133,7 +143,6 @@ public class Client implements Serializable, Runnable  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
 					Client x  = new Client();
 					x.setStartWindow(new AppMain(x));
 					x.setMeMain(x.getStartWindow());
@@ -154,6 +163,10 @@ public class Client implements Serializable, Runnable  {
 //------------------------------------------------------------------------------------------
 	@Override
 	public void run() {	
+		
+
+		
+		
 		try {
 			while (isClientON()){
 					//Attesa comandi...					
@@ -310,16 +323,21 @@ public class Client implements Serializable, Runnable  {
 							case UserRegistration: 
 														ClientCHANGEuserRegistration();
 								break;
-							case UserPasswordRecovery: 
-														ClientCMDuser.UserPasswordRecovery(this);
+							case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);
 								break;
-							
-							
-							case UserActivation: 
-											
+							case UserActivation: 		
 								break;				
 									
 						//	Loans
+
+//TODO							
+							case LoanASK:				
+								
+								System.err.println("leggo da client ... idbook: "+getIdbook());
+								
+								ClientCMDloans.LoansNew(this);//richiesta nuovo prestito 
+								break;
+							
 							case LoanNew: 
 								
 								break;
@@ -890,6 +908,7 @@ setBusy(false);
 	
 							case "SRV :> selected user login check:> Login Corretto":
 								
+								setCurrentUser(Mb.getIdUser());			//settato id utente su Client
 								setIdut(Mb.getIdUser());
 								setDatiUtente(Mb.getRowUser());
 								
@@ -1928,10 +1947,21 @@ setBusy(false);
 			public void setStartWindow(AppMain startWindow) {
 				StartWindow = startWindow;
 			}
+			public int getIdbook() {
+				return idbook;
+			}
+			public void setIdbook(int idbook) {
+				this.idbook = idbook;
+			}
+			public int getCurrentUser() {
+				return CurrentUser;
+			}
+			public void setCurrentUser(int currentUser) {
+				CurrentUser = currentUser;
+			}
 
 			
-	
-	
+
 		
 		
 		

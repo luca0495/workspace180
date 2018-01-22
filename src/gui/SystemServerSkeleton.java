@@ -67,7 +67,7 @@ public class SystemServerSkeleton extends SL_JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
+		
 			
 			}
 		});

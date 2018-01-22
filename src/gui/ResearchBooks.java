@@ -210,6 +210,33 @@ public class ResearchBooks extends SL_JFrame {
 		*/
 		
 		btnPrenotazione = new JButton("Prenotazione Libro");
+		btnPrenotazione.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//TODO BOTTONE TEST DA MODIFICARE PER PROVA PRENOTA LIBRO
+				
+				 int idbookTEST = 1;
+				
+				
+				try {
+					System.out.println("GUI account:> ottenuti dati user ");
+					me.setCliType(Clients.Librarian);
+					
+					System.err.println("passo prima del metodo idbook : "+idbookTEST);
+					
+					me.setIdbook(idbookTEST);
+					me.getCmdLIST().put(Commands.LoanASK);
+					
+				} catch (InterruptedException e2) {
+					System.out.println("GUI account:> NON ottenuti dati user ");	
+					e2.printStackTrace(); 
+				}
+			
+				
+				
+				//********************************************************
+			}
+		});
 		btnPrenotazione.setBounds(791, 7, 183, 23);
 		frame.getContentPane().add(btnPrenotazione);
 		
