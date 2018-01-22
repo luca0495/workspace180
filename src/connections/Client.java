@@ -655,7 +655,10 @@ setBusy(false);
 								
 							case "SRV :> user Registration :> OK":							
 								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
-								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());									
+								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());			
+								
+// TODO spostare lato server
+								
 								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
 								this.setSql(null);		
