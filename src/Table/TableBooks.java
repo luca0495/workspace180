@@ -56,9 +56,8 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         tm = new TableModelBooks();
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
-        
         JMenuItem deleteItem = new JMenuItem("Delete");
-        JMenuItem prenotaItem = new JMenuItem("Prenota");
+        //JMenuItem prenotaItem = new JMenuItem("Prenota");
         
         
         deleteItem.addActionListener(new ActionListener() {
@@ -109,7 +108,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         });
         System.out.println("6");
         popupMenu.add(deleteItem);
-        popupMenu.add(prenotaItem);
+       //popupMenu.add(prenotaItem);
         
         
 		getTable().addMouseListener(new MouseAdapter() {
@@ -118,9 +117,6 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			{
 				System.out.println("7");
 				if(SwingUtilities.isRightMouseButton(e)){ }
-				
-				
-				
 			}
             public void mouseReleased(MouseEvent e)
             {
@@ -149,18 +145,13 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     JTable source 	= (JTable)e.getSource();
                     selectedRow 	= source.rowAtPoint(e.getPoint());
                     //colonna idbook == 0
-                    
                     String idb		= (String) source.getValueAt(selectedRow, 0);
-                    int idbook=Integer.valueOf(idb);
-                    
+                    int idbook=Integer.valueOf(idb);                    
                     //setta su client idbook selezionato
                     me.setIdbook(idbook);
                     PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getIdbook()));
 					
 				
-				
-				
-
             }
 		});
 		 System.out.println("12");

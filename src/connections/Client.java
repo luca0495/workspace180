@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -128,7 +129,22 @@ public class Client implements Serializable, Runnable  {
 	private				String[] 			datiUtente;
 	
 	private				int					selectedIdBook;
+	private				int					selectedIdUser;
+	private				Date				selectedIdDataStart;
+	private				Date				selectedIdDataStop;	
 	
+	public Date getSelectedIdDataStart() {
+		return selectedIdDataStart;
+	}
+	public void setSelectedIdDataStart(Date selectedIdDataStart) {
+		this.selectedIdDataStart = selectedIdDataStart;
+	}
+	public Date getSelectedIdDataStop() {
+		return selectedIdDataStop;
+	}
+	public void setSelectedIdDataStop(Date selectedIdDataStop) {
+		this.selectedIdDataStop = selectedIdDataStop;
+	}
 	private 			int 				idbook;	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
@@ -334,9 +350,7 @@ public class Client implements Serializable, Runnable  {
 
 //TODO							
 							case LoanASK:				
-								
 								System.err.println("leggo da client ... idbook: "+getIdbook());
-								
 								ClientCMDloans.LoansNew(this);//richiesta nuovo prestito 
 								break;
 							
@@ -1966,6 +1980,12 @@ setBusy(false);
 			}
 			public void setSelectedIdBook(int selectedIdBook) {
 				this.selectedIdBook = selectedIdBook;
+			}
+			public int getSelectedIdUser() {
+				return selectedIdUser;
+			}
+			public void setSelectedIdUser(int selectedIdUser) {
+				this.selectedIdUser = selectedIdUser;
 			}
 
 			

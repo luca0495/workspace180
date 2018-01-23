@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -45,6 +46,9 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	private int deleteRow;
 	private int selectedR;
 	private int selectedC;	
+	private int 	selectedRow;
+	private Client	me;
+	
 	private String oldValue;
 	//private static DefaultTableModel dm;
 	
@@ -53,11 +57,14 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     public TableLoans(JFrame frame,Client me)  
     {
         super(new GridLayout(1,0));
+    	this.me=me;
         this.frame = frame;
         tm = new TableModelLoans();
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
+        //JMenuItem prenotaItem = new JMenuItem("Prenota");
+        
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,9 +142,39 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	                    }
 	                    System.out.println("11");
 	                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
-	                }
-				}
+	                }//fine trigger    
+				}//fine click rx
 
+				
+				
+                JTable source 	= (JTable)e.getSource();
+                selectedRow 	= source.rowAtPoint(e.getPoint());
+                
+                //dati TUPLA in selezione salvati su Client
+                String idlibro				= (String) source.getValueAt(selectedRow, 0);
+                String idutente				= (String) source.getValueAt(selectedRow, 1);
+                String dataStart			= (String) source.getValueAt(selectedRow, 2);
+                String dataStop				= (String) source.getValueAt(selectedRow, 3);
+                
+                int 	idbook		=Integer.valueOf(	idlibro);  
+                int 	iduser		=Integer.valueOf(	idutente);  
+                Date 	iddataStart =Date.valueOf(		dataStart);                  
+                Date 	iddataStop  =Date.valueOf(		dataStop);            
+                
+                
+                //setta su client idbook selezionato
+                me.setSelectedIdBook(idbook);
+                me.setSelectedIdUser(iduser);
+                me.setSelectedIdDataStart(iddataStart);
+                me.setSelectedIdDataStop(iddataStop);
+                
+                PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
+                									"\nottenuto iduser  : "+me.getSelectedIdUser()+
+                									"\nottenuto idD init: "+me.getSelectedIdDataStart()+
+													"\nottenuto idD stop: "+me.getSelectedIdDataStop())
+                			);
+				
+		
             }
 		});
 		 System.out.println("12");

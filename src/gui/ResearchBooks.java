@@ -227,7 +227,13 @@ public class ResearchBooks extends SL_JFrame {
 		btnPrenotazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				askIdBook(getIdbookSelected());
+				if (askIdBook()) {		//	test login e test prenotazione con 
+										//	me.iduser
+										//	me.idbook
+				PopUp.infoBox(btnResearch, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());
+				
+				}else{
+				};
 				
 			}
 		});
@@ -653,23 +659,33 @@ public class ResearchBooks extends SL_JFrame {
 	}
 
 //********************************************************	
-	public boolean askIdBook (int idbook){
+	public boolean askIdBook(){
 		boolean checkok=true;
-		//int idbookTEST = 1;
-	try {
-		System.out.println("GUI account:> ottenuti dati user ");
-		me.setCliType(Clients.Librarian);
-		System.err.println("passo prima del metodo idbook : "+idbook);
-		me.setIdbook(idbook);
-		me.getCmdLIST().put(Commands.LoanASK);
-	} catch (InterruptedException e2) {
-		System.out.println("GUI account:> NON ottenuti dati user ");
-		checkok=false;
-		e2.printStackTrace(); 
-	}
-	return checkok;	
-	}
-	//********************************************************	
+		int idbook = me.getSelectedIdBook();
+		int iduser = me.getIdut();//UTENTE LOGGATO
+	//controllo LOGIN	
+		if (iduser == 0 || iduser==0) {
+			checkok=false;
+			return checkok;		
+		}else
+		{//LOGIN OK
+			try {
+				
+				me.setSelectedIdUser(me.getIdut());	
+				System.out.println("GUI account:> ottenuti dati user ");
+				me.setCliType(Clients.Librarian);
+				System.err.println("passo prima del metodo idbook : "+idbook);
+				me.setIdbook(idbook);
+				me.getCmdLIST().put(Commands.LoanASK);
+			} catch (InterruptedException e2) {
+				System.out.println("GUI account:> NON ottenuti dati user ");
+				checkok=false;
+				e2.printStackTrace(); 
+			}
+			return checkok;	
+			}				
+		}
+//********************************************************	
 	
 	
 	
