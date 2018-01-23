@@ -148,11 +148,6 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     //setta su client idbook selezionato
                     me.setIdbook(idbook);
                     PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getIdbook()));
-					
-<<<<<<< HEAD
-				
-=======
->>>>>>> Research Book indietro
             }
 		});
 		 System.out.println("12");
