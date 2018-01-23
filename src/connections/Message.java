@@ -23,6 +23,10 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private		int			idut;
 	private		int			idbook;
 	
+	private		int			selectedIdBook;
+	private		int			selectedIdUser;
+	private		Date		selectedIdDataStart;
+	private		Date		selectedIdDataStop;	
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -141,9 +145,8 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setUType(Ut);
 		setDateOfRequest(new Date());
 		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
-		setIdut(idut);
-		setIdbook(idbook);
-		
+		setSelectedIdUser(idut);
+		setSelectedIdBook(idbook);
 	}	
 	
 	
@@ -234,5 +237,30 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	public void setIdbook(int idbook) {
 		this.idbook = idbook;
 	}
+
 	
+	public int getSelectedIdBook() {
+		return selectedIdBook;
+	}
+	public void setSelectedIdBook(int selectedIdBook) {
+		this.selectedIdBook = selectedIdBook;
+	}
+	public int getSelectedIdUser() {
+		return selectedIdUser;
+	}
+	public void setSelectedIdUser(int selectedIdUser) {
+		this.selectedIdUser = selectedIdUser;
+	}
+	public Date getSelectedIdDataStart() {
+		return selectedIdDataStart;
+	}
+	public void setSelectedIdDataStart(Date selectedIdDataStart) {
+		this.selectedIdDataStart = selectedIdDataStart;
+	}
+	public Date getSelectedIdDataStop() {
+		return selectedIdDataStop;
+	}
+	public void setSelectedIdDataStop(Date selectedIdDataStop) {
+		this.selectedIdDataStop = selectedIdDataStop;
+	}
 }

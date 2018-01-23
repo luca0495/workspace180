@@ -36,6 +36,11 @@ import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import com.sun.org.apache.bcel.internal.generic.POP;
+
+import Check.PopUp;
+
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -228,23 +233,32 @@ public class AppMain extends SL_JFrame  {
 			}
 		});
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
-		 @Override
-			public void mousePressed(MouseEvent arg0) {
-				EventQueue.invokeLater(new Runnable() {
-						public void run() 
-						{
-						 try 
-						{
-						 Login lo = new Login(getFrame(), me);
-					    } 
-						catch (Exception e) 
-						{
-						e.printStackTrace();
-						}
-					
-					}	
 		
-				 });    
+			
+			
+			
+		@Override
+			public void mousePressed(MouseEvent arg0) {
+			if (me.isStubok()) {
+			 	//*************************************************************
+			 	EventQueue.invokeLater(new Runnable() {
+						public void run() 
+							{
+							 try 
+							{	 
+								Login lo = new Login(getFrame(), me);
+						    } 
+							catch (Exception e) 
+							{
+							e.printStackTrace();
+							}
+						}
+			 	});		
+				//************************************************************* 	 
+			 }else {
+				 
+				 PopUp.errorBox(frame, "non collegato al Server...Attendere prego");
+			 }    
 			}
 	 });
 		
@@ -287,29 +301,34 @@ public class AppMain extends SL_JFrame  {
 			}
 		});
 		btnRegistrazione.addMouseListener(new MouseAdapter() {
-		 @Override
+		 		
+		@Override
 			public void mousePressed(MouseEvent arg0) {
 			
-			 
-			 EventQueue.invokeLater(new Runnable() {
-						public void run() 
-						{
-						 try 
-						{
-						 AppReader al = new AppReader(getFrame(),me);
-					    } 
-						catch (Exception e) 
-						{
-						e.printStackTrace();
-						}
-					
-			}	
+			 if (me.isStubok()) {
+				 	//*************************************************************
+				 	EventQueue.invokeLater(new Runnable() {
+							public void run() 
+								{
+								 try 
+								{	 
+									 AppReader al = new AppReader(getFrame(),me);
+							    } 
+								catch (Exception e) 
+								{
+								e.printStackTrace();
+								}
+							}
+				 	});		
+					//************************************************************* 	 
+				 }else {
+					 
+					 PopUp.errorBox(frame, "non collegato al Server...Attendere prego");
+				 }
+		}
+	});
+
 		
-						
-						
-				 });    
-			}
-	 });
 		
 		btnRegistrazione.setBounds(134, 135, 154, 23);
 		panelLog.add(btnRegistrazione);
@@ -328,17 +347,10 @@ public class AppMain extends SL_JFrame  {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			try {
-				
-				
 				System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
-				
 				//me.setCliType(Clients.Librarian); // siamo sicuri che sia Librarian?
-				
 				System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
 				//me.setBusy(true);
-				
-				
-				
 				/* OLD TEST NG
 				// BookRead				
 					try {
@@ -346,8 +358,6 @@ public class AppMain extends SL_JFrame  {
 					} catch (Exception e) {
 						System.out.println("appMain :> problemi con accodamento comando per leggere database");					
 					}
-					
-					
 				// BookUpdate				
 					try {
 						
@@ -393,36 +403,38 @@ public class AppMain extends SL_JFrame  {
 					me.setBusy(false);
 				}
 				*/			
-			me.setCliType(Clients.Default);	
-	
+			//me.setCliType(Clients.Default);	
 			} catch (Exception e) {
-				
 				e.printStackTrace();	
 			}	
 		}
 	});
 		btnRicerca.addMouseListener(new MouseAdapter() {
-	 @Override
-		public void mousePressed(MouseEvent arg0) {
-			EventQueue.invokeLater(new Runnable() {
-					public void run() 
-					{
-					 try 
-					{
-						 
-						 
-					 ResearchBooks rb = new ResearchBooks(getFrame(),me);
-				    } 
-					catch (Exception e) 
-					{
-					e.printStackTrace();
-					}
-				
-				}	
-	
-			 });    
-		}
- });
+			 @Override
+				public void mousePressed(MouseEvent arg0) {
+					
+						 if (me.isStubok()) {
+						 	//*************************************************************
+						 	EventQueue.invokeLater(new Runnable() {
+									public void run() 
+										{
+										 try 
+										{	 
+										 ResearchBooks rb = new ResearchBooks(getFrame(),me);
+									    } 
+										catch (Exception e) 
+										{
+										e.printStackTrace();
+										}
+									}
+						 	});		
+							//************************************************************* 	 
+						 }else {
+							 
+							 PopUp.errorBox(frame, "non collegato al Server...Attendere prego");
+						 }
+				 }
+		});
 		btnRicerca.setBounds(134, 88, 154, 23);
 		panelLog.add(btnRicerca);
 		

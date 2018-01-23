@@ -230,9 +230,10 @@ public class ResearchBooks extends SL_JFrame {
 				if (askIdBook()) {		//	test login e test prenotazione con 
 										//	me.iduser
 										//	me.idbook
-				PopUp.infoBox(btnResearch, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());
-				
-				}else{
+				PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());
+				}else{	
+				PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");		
+					
 				};
 				
 			}
@@ -666,7 +667,6 @@ public class ResearchBooks extends SL_JFrame {
 	//controllo LOGIN	
 		if (iduser == 0 || iduser==0) {
 			checkok=false;
-			return checkok;		
 		}else
 		{//LOGIN OK
 			try {
@@ -682,8 +682,9 @@ public class ResearchBooks extends SL_JFrame {
 				checkok=false;
 				e2.printStackTrace(); 
 			}
-			return checkok;	
-			}				
+			
+			}
+		return checkok;
 		}
 //********************************************************	
 	

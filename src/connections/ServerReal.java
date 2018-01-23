@@ -864,13 +864,12 @@ public class ServerReal extends ServerSkeleton {
 									case LoanASK:	
 										//TODO far passare dal client 
 										
-										int idut = M.getMsg().getIdut();
-										int idbook = M.getMsg().getIdbook();
+										int idut 		= M.getMsg().getSelectedIdUser();
+										int idbook 		= M.getMsg().getSelectedIdBook();							
 										
 										System.err.println("server estrapola... idbook:"+idbook);
-										
-										
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Loans ASK ");					
+										
 										try {
 											
 											Boolean CK = true;	//esito di tutti i controlli
@@ -940,12 +939,7 @@ public class ServerReal extends ServerSkeleton {
 													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");
 													
 //TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO
-													
-													
-													
-													
-													
-													
+
 																										
 														}else {
 															
