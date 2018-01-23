@@ -32,8 +32,9 @@ public class ClientCMDloans {
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
 					
-					me.getSelectedIdUser(),		// id utente
-					me.getSelectedIdBook()		// id libro
+					me.getSelectedIdBook(),		// id libro
+					me.getSelectedIdUser()		// id utente
+					
 					);
 			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message

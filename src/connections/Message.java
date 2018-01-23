@@ -133,6 +133,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSQLQuery2(SQLQuery2);
 		setIdut(idut);
 	}	
+	//usato in ASK Loans
 	public Message (
 			Commands cmd,
 			Clients Ut,

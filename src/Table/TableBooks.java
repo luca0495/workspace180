@@ -146,8 +146,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     String idb		= (String) source.getValueAt(selectedRow, 0);
                     int idbook=Integer.valueOf(idb);                    
                     //setta su client idbook selezionato
-                    me.setIdbook(idbook);
-                    PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getIdbook()));
+                    me.setSelectedIdBook(idbook);
+                    
+                    PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook()));
             }
 		});
 		 System.out.println("12");
