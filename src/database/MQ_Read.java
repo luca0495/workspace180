@@ -74,7 +74,7 @@ public class MQ_Read {
 			DBmanager.closeConnection();
 			
 			return dati;
-		}
+}
 	
  public static String [][] ResearchLoans ()throws SQLException{			
 		String query = "SELECT * FROM prestiti;";

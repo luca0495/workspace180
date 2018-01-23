@@ -41,6 +41,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -623,6 +624,18 @@ public class ResearchBooks extends SL_JFrame {
 		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
 		panelResearch.add(btnDeleteBookReturned);
 		
+		JButton btnReturnBack = new JButton("Indietro");
+		btnReturnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 WindowEvent close = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
+				 frame.dispatchEvent(close);
+				
+			}
+		});
+		btnReturnBack.setBounds(10, 7, 89, 23);
+		frame.getContentPane().add(btnReturnBack);
+		
 		
 		if (	me.getCliType()==Clients.Admin||
 				me.getCliType()==Clients.Librarian) {
@@ -797,9 +810,4 @@ public JTextField getTxtInsertCDBook() {
 public void setTxtInsertCDBook(JTextField txtInsertCDBook) {
 	this.txtInsertCDBook = txtInsertCDBook;
 }
-
-
-
-
-
 }

@@ -140,8 +140,6 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	                }//fine trigger    
 				}//fine click rx
 
-					
-					
                     JTable source 	= (JTable)e.getSource();
                     selectedRow 	= source.rowAtPoint(e.getPoint());
                     //colonna idbook == 0
@@ -151,7 +149,10 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     me.setIdbook(idbook);
                     PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getIdbook()));
 					
+<<<<<<< HEAD
 				
+=======
+>>>>>>> Research Book indietro
             }
 		});
 		 System.out.println("12");
