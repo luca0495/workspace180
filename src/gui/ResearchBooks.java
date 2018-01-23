@@ -64,28 +64,30 @@ public class ResearchBooks extends SL_JFrame {
     private JTable tableBooks;
    
     
-	protected String ValToSearch;
-	private JTextField txtName;
-	private JTextField txtSurname;
-	private JTextField txtCat;
-	private JTextField txtTitle;
-	private JLabel lblAdd;
-	private JLabel lblEr1;
-	private JLabel lblEr2;
-	private JLabel lblEr3;
-	private JLabel lblEr4;
-    private JLabel  lblPopUpCat;
-	private JButton btnPrenotazione;
-	private ImageIcon iconLogoQ;
+	protected String 	ValToSearch;
+	private JTextField 	txtName;
+	private JTextField 	txtSurname;
+	private JTextField 	txtCat;
+	private JTextField 	txtTitle;
+	private JLabel 		lblAdd;
+	private JLabel 		lblEr1;
+	private JLabel 		lblEr2;
+	private JLabel 		lblEr3;
+	private JLabel 		lblEr4;
+    private JLabel  	lblPopUpCat;
+	private JButton 	btnPrenotazione;
+	private ImageIcon 	iconLogoQ;
 	
-	private boolean LastIDbookcheckinprogress=false;
-	private int 	LastIDbookcheckResult;
-	private JTextField txtInsertCDBook;
-	private JTextField txtInsertNameBook;
-	private JTextField txtInsertSurnameBook;
-	private JTextField txtInsertCatBook;
-	private JTextField txtInsertTitleBook;
+	private boolean 	LastIDbookcheckinprogress=false;
+	private int 		LastIDbookcheckResult;
+	private JTextField 	txtInsertCDBook;
+	private JTextField 	txtInsertNameBook;
+	private JTextField 	txtInsertSurnameBook;
+	private JTextField 	txtInsertCatBook;
+	private JTextField 	txtInsertTitleBook;
 
+	private int 		idbookSelected;
+	
 	/**
 	 * Create the application.
 	 * @param me2 
@@ -122,6 +124,9 @@ public class ResearchBooks extends SL_JFrame {
 		frame.setLocationRelativeTo(c);
 		frame.setVisible(true);
 		
+		
+		
+		
 		JPanel panelModify = new JPanel();
 		panelModify.setBounds(10, 36, 997, 614);
 		panelModify.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -142,6 +147,15 @@ public class ResearchBooks extends SL_JFrame {
 		panelLoans.setLayout(null);
 		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
+		
+		panelTableResearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+		
+				
+			}
+		});
 		panelTableResearch.setBounds(0, 0, 995, 439);
 		panelResearch.add(panelTableResearch);
 		
@@ -212,29 +226,9 @@ public class ResearchBooks extends SL_JFrame {
 		btnPrenotazione = new JButton("Prenotazione Libro");
 		btnPrenotazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				//TODO BOTTONE TEST DA MODIFICARE PER PROVA PRENOTA LIBRO
-				
-				 int idbookTEST = 1;
-				
-				
-				try {
-					System.out.println("GUI account:> ottenuti dati user ");
-					me.setCliType(Clients.Librarian);
-					
-					System.err.println("passo prima del metodo idbook : "+idbookTEST);
-					
-					me.setIdbook(idbookTEST);
-					me.getCmdLIST().put(Commands.LoanASK);
-					
-				} catch (InterruptedException e2) {
-					System.out.println("GUI account:> NON ottenuti dati user ");	
-					e2.printStackTrace(); 
-				}
 			
+				askIdBook(getIdbookSelected());
 				
-				
-				//********************************************************
 			}
 		});
 		btnPrenotazione.setBounds(791, 7, 183, 23);
@@ -657,8 +651,31 @@ public class ResearchBooks extends SL_JFrame {
 			//******************************************************************
 			return checkok;
 	}
+
+//********************************************************	
+	public boolean askIdBook (int idbook){
+		boolean checkok=true;
+		//int idbookTEST = 1;
+	try {
+		System.out.println("GUI account:> ottenuti dati user ");
+		me.setCliType(Clients.Librarian);
+		System.err.println("passo prima del metodo idbook : "+idbook);
+		me.setIdbook(idbook);
+		me.getCmdLIST().put(Commands.LoanASK);
+	} catch (InterruptedException e2) {
+		System.out.println("GUI account:> NON ottenuti dati user ");
+		checkok=false;
+		e2.printStackTrace(); 
+	}
+	return checkok;	
+	}
+	//********************************************************	
 	
 	
+	
+	
+	
+//*****************************************************************************************************************	
 	public JTextField getTxtName() {
 		return txtName;
 	}
@@ -744,4 +761,29 @@ public ImageIcon getIconLogoQ() {
 public void setIconLogoQ(ImageIcon iconLogoQ) {
 	this.iconLogoQ = iconLogoQ;
 }
+
+
+public int getIdbookSelected() {
+	return idbookSelected;
+}
+
+
+public void setIdbookSelected(int idbookSelected) {
+	this.idbookSelected = idbookSelected;
+}
+
+
+public JTextField getTxtInsertCDBook() {
+	return txtInsertCDBook;
+}
+
+
+public void setTxtInsertCDBook(JTextField txtInsertCDBook) {
+	this.txtInsertCDBook = txtInsertCDBook;
+}
+
+
+
+
+
 }

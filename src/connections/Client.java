@@ -127,6 +127,8 @@ public class Client implements Serializable, Runnable  {
 	private				String				pw;
 	private				String[] 			datiUtente;
 	
+	private				int					selectedIdBook;
+	
 	private 			int 				idbook;	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
@@ -1958,6 +1960,12 @@ setBusy(false);
 			}
 			public void setCurrentUser(int currentUser) {
 				CurrentUser = currentUser;
+			}
+			public int getSelectedIdBook() {
+				return selectedIdBook;
+			}
+			public void setSelectedIdBook(int selectedIdBook) {
+				this.selectedIdBook = selectedIdBook;
 			}
 
 			
