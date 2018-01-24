@@ -74,7 +74,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<8; i++)
+        			for(int i = 0; i<4; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
@@ -95,7 +95,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         				//tm.fireTableDataChanged();
 						//table.repaint();					
 						
-        				TableUpdateBooks.deleteRow(rowData, getTable(), me);
+        				TableUpdateLoans.deleteRow(rowData, getTable(), me);
 
 						//tm.fireTableDataChanged();
 						//getTable().repaint();
@@ -372,7 +372,6 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		{
         	TableUpdateLoans.setColumn(column);
         	TableUpdateLoans.setInput((String)model.getValueAt(row, column));
-        	TableUpdateLoans.check(frame, getTable());
 		} 
 	}
 	

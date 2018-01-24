@@ -67,7 +67,7 @@ public class TableUpdateBooks {
 		}
 		else if(column == 4)
 		{
-			if(Check.checkName(input))
+			if(Check.checkTitle(input))
 			{
 				execute(frame, t);
 			}

@@ -22,15 +22,17 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}
 	
-	public static void deletePassTemp(int id,String pass) throws SQLException
-	{			
-		String query = "DELETE FROM utente WHERE id ='" + id + "' AND password_temp = '" + pass + "';";
-    	
+	public static void deleteRowLoans(List<String> r) throws SQLException
+	{		
+		String query = "DELETE FROM prestiti WHERE "
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND id = '" 		           + r.get(1) 
+				+ "' AND data_inizio = '" 	       + r.get(2)
+		        + "' AND data_fine = '"            + r.get(3) + "';";
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
-	}
-	
+	}	
 	
 	public static void deleteRowBooks(String q) throws SQLException
 	{			
@@ -50,7 +52,30 @@ public class MQ_Delete {
 		        + "' AND prenotazioni_in_coda = '" + r.get(6) + "';";
 		return query;
 	}
+	public static void deleteRowLoans(String q) throws SQLException
+	{			
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	public static String deleteRowLoansGetQuery(List<String> r) throws SQLException
+	{		
+		String query = "DELETE FROM prestiti WHERE "
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND id = '" 		           + r.get(1) 
+				+ "' AND data_inizio = '" 	       + r.get(2)
+		        + "' AND data_fine = '"            + r.get(3) + "';";
+		return query;
+	}
 	
+	public static void deletePassTemp(int id,String pass) throws SQLException
+	{			
+		String query = "DELETE FROM utente WHERE id ='" + id + "' AND password_temp = '" + pass + "';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
 	//test OK
 	public static String deleteRowPerson(List<String> r) throws SQLException
 	{			

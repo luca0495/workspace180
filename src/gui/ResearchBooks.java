@@ -118,15 +118,19 @@ public class ResearchBooks extends SL_JFrame {
 
 	
 	public void initialize(Component c) {
+		
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1033, 700);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(c);
 		frame.setVisible(true);
 		
-		
-		
+		//frmSchoolib.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//frmSchoolib.setLocationRelativeTo(c);
+		//frmSchoolib.setVisible(true);
+		//frmSchoolib.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		JPanel panelModify = new JPanel();
 		panelModify.setBounds(10, 36, 997, 614);

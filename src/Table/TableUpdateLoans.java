@@ -23,74 +23,20 @@ public class TableUpdateLoans {
 	private static int column;
 	private static boolean notOk = false;
 	
-	public static void check(JFrame frame, JTable t) 
-	{	
-		if(column == 1)
-		{
-			//Nome
-			
-			if(Check.checkName(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Nome Errato");
-				setNotOk(true);
-			}
-		}
-		else if(column == 2)
-		{
-			//Cognome
-			if(Check.checkName(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Cognome Errato");
-				setNotOk(true);
-			}
-		}
-		else if(column == 3)
-		{
-			//nome
-			if(Check.checkCat(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Categoria errata");
-				setNotOk(true);
-			}
-		}
-		else if(column == 4)
-		{
-			if(Check.checkName(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Titolo errato");
-				setNotOk(true);
-			}
-		}
-	}
-	
 	// 	OLD TEST OK
+    // delete row per tabella prestiti?	
 	 public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
-		 	MQ_Delete.deleteRowBooks(r);
+		 	MQ_Delete.deleteRowLoans(r);
 		}
 	 // NEW IN TEST 27.12.2017
 	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
-		 	String q = MQ_Delete.deleteRowBooksGetQuery(r);
+		 	String q = MQ_Delete.deleteRowLoansGetQuery(r);
 			me.setActTable(t);
 			me.setSql(q);
 			try {
+				// cambiare comando per delete loans
 				me.getCmdLIST().put(Commands.BookDELETE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -108,23 +54,6 @@ public class TableUpdateLoans {
 
 	public static void setNotOk(boolean notOk) {
 		TableUpdateLoans.notOk = notOk;
-	}
-
-	public static void execute(JFrame frame, JTable t) 
-	{
-		try 
-		{
-			MQ_Update.updateTableLoans(rowData.get(0), input, column);
-			PopUp.infoBox(frame, "Modifica Corretta");
-			if(!isNotOk())
-			{
-				t.getSelectionModel().clearSelection();
-			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
 	}
 	
 	public static String getInput() {
