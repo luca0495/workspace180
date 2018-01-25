@@ -887,12 +887,9 @@ public class ServerReal extends ServerSkeleton {
 											//parte check mail e check cf...
 											
 											System.err.println("server estrapola... idbook:"+idbook);
-											
-											
+
 											ck1(idut, idbook);		// limite massimo prestiti 
-											
-											
-											
+
 											boolean Timeout=true;
 											int c=0;
 											

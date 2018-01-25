@@ -686,20 +686,21 @@ public class ResearchBooks extends SL_JFrame {
 			checkok=false;
 		}else
 		{//LOGIN OK
-			try {
-				
-				me.setSelectedIdUser(me.getIdut());	
+			try {				
+				me.setSelectedIdUser(me.getIdut());				
 				System.out.println("GUI account:> ottenuti dati user ");
+				
+//TODO RIMUOVERE E COPIARE METODO PER LIBRARIAN ANCHE PER READER nel REALSERVER
 				me.setCliType(Clients.Librarian);
+				
 				System.err.println("passo prima del metodo idbook : "+idbook);
 				me.setIdbook(idbook);
-				me.getCmdLIST().put(Commands.LoanASK);
+				me.getCmdLIST().put(Commands.LoanASK);	
 			} catch (InterruptedException e2) {
 				System.out.println("GUI account:> NON ottenuti dati user ");
 				checkok=false;
 				e2.printStackTrace(); 
 			}
-			
 			}
 		return checkok;
 		}
