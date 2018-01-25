@@ -64,7 +64,8 @@ public class MQ_Delete {
 				+ "codice = '" 					   + r.get(0) 
 				+ "' AND id = '" 		           + r.get(1) 
 				+ "' AND data_inizio = '" 	       + r.get(2)
-		        + "' AND data_fine = '"            + r.get(3) + "';";
+		        + "' AND data_fine = '"            + r.get(3) 
+		        + "' AND rientrato = '"            + r.get(4) + "';";
 		return query;
 	}
 	

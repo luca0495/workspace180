@@ -155,5 +155,35 @@ public class MQ_Check {
 		
 		return codCF;
 	}
+	
+	public static int checkLoansIdutIdbook_5(int idut,int idbook) throws SQLException
+	{
+		System.err.println("idut  :"+idut);
+		System.err.println("idbook  :"+idbook);
+		
+		String q="SELECT count(codice) FROM prestiti WHERE codice='"+idbook+"' AND id ='"+idut+"' AND data_fine is null;";			
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+		
+		int count;
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			count = 0;
+		}
+		else
+		{
+			rs.next();
+			count = rs.getInt(1);
+		}	
+		
+		
+		System.out.println("ottenuto count : "+count);
+		
+		
+		rs.close();
+		DBmanager.closeConnection();
+		return count;
+	}
 
 }

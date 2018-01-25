@@ -74,7 +74,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<4; i++)
+        			for(int i = 0; i<5; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
