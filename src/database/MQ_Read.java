@@ -86,13 +86,13 @@ public class MQ_Read {
 		
 		if (!rs.isBeforeFirst()) 
 		{
-			dati = new String[1][5];
+			dati = new String[1][6];
 			dati[0][0] = null;
 			dati[0][1] = null;
 			dati[0][2] = null;
 			dati[0][3] = null;
 			dati[0][4] = null;
-		
+			dati[0][5] = null;
 			
 		}
 		else
@@ -104,8 +104,9 @@ public class MQ_Read {
 				results.add(rs.getString("data_inizio"));
 				results.add(rs.getString("data_fine"));
 				results.add(rs.getString("rientrato"));
+				results.add(rs.getString("ritirato"));
 				
-				int cols = 5;
+				int cols = 6;
 		    	int rows = results.size() / cols;
 		    	
 		    	dati = new String[rows][cols];
