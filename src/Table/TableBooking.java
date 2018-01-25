@@ -37,12 +37,12 @@ import Core.Commands;
 import connections.Client;
 import database.DBmanager;
 
-public class TableLoans extends JPanel implements TableModelListener,Serializable{
+public class TableBooking extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private static JTable table;
 	private JFrame frame;
-	private TableModelLoans tm;
+	private TableModelBooking tm;
 	private int deleteRow;
 	private int selectedR;
 	private int selectedC;	
@@ -54,12 +54,12 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	
 	
 	
-    public TableLoans(JFrame frame,Client me)  
+    public TableBooking(JFrame frame,Client me)  
     {
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelLoans();
+        tm = new TableModelBooking();
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
@@ -74,7 +74,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<8; i++)
+        			for(int i = 0; i<2; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
@@ -95,7 +95,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         				//tm.fireTableDataChanged();
 						//table.repaint();					
 						
-        				TableUpdateLoans.deleteRow(rowData, getTable(), me);
+        				TableUpdateBooking.deleteRow(rowData, getTable(), me);
 
 						//tm.fireTableDataChanged();
 						//getTable().repaint();
@@ -209,22 +209,22 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     	@Override
         public void editingCanceled(ChangeEvent e) 
     	{            
-    		if(TableUpdateLoans.isNotOk())
+    		if(TableUpdateBooking.isNotOk())
     		{
     			System.out.println("15");
     			tm.setValueAt(oldValue, selectedR, selectedC);
-    			TableUpdateLoans.setNotOk(false);
+    			TableUpdateBooking.setNotOk(false);
     		}
         }
 
         @Override
         public void editingStopped(ChangeEvent e) 
         {            
-    		if(TableUpdateLoans.isNotOk())
+    		if(TableUpdateBooking.isNotOk())
     		{    
     			System.out.println("16");
     			tm.setValueAt(oldValue, selectedR, selectedC);
-    			TableUpdateLoans.setNotOk(false);
+    			TableUpdateBooking.setNotOk(false);
     		}
         }
     };
@@ -365,13 +365,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	{
         int row = e.getFirstRow();
         int column = e.getColumn();
-        TableModelLoans model = (TableModelLoans)e.getSource(); // book
+        TableModelBooking model = (TableModelBooking)e.getSource();
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
-        if(!TableUpdateLoans.isNotOk())
+        if(!TableUpdateBooking.isNotOk())
 		{
-        	TableUpdateLoans.setColumn(column);
-        	TableUpdateLoans.setInput((String)model.getValueAt(row, column));
+        	TableUpdateBooking.setColumn(column);
+        	TableUpdateBooking.setInput((String)model.getValueAt(row, column));
 		} 
 	}
 	
@@ -388,6 +388,6 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 
 
 	public static void setTable(JTable table) {
-		TableLoans.table = table;
+		TableBooking.table = table;
 	}
 }

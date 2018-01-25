@@ -34,6 +34,17 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}	
 	
+	public static void deleteRowBooking(List<String> r) throws SQLException
+	{		
+		String query = "DELETE FROM prenotazioni WHERE "
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND id = '" 		           + r.get(1) 
+		        + "' AND priorità = '"            + r.get(2) + "';";
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}	
+	
 	public static void deleteRowBooks(String q) throws SQLException
 	{			
 		DBmanager.openConnection();
@@ -66,6 +77,22 @@ public class MQ_Delete {
 				+ "' AND data_inizio = '" 	       + r.get(2)
 		        + "' AND data_fine = '"            + r.get(3) 
 		        + "' AND rientrato = '"            + r.get(4) + "';";
+		return query;
+	}
+	
+	
+	public static void deleteRowBooking(String q) throws SQLException
+	{			
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	public static String deleteRowBookingGetQuery(List<String> r) throws SQLException
+	{		
+		String query = "DELETE FROM prenotazioni WHERE "
+				+ "codice = '" 					   + r.get(0) 
+				+ "' AND id = '" 		           + r.get(1) 
+		        + "' AND priorità = '"            + r.get(2) + "';";
 		return query;
 	}
 	

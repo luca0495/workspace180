@@ -23,6 +23,7 @@ import Check.Check;
 import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
+import Table.TableBooking;
 import Table.TableBooks;
 import Table.TableLoans;
 import Table.TableModelBooks;
@@ -151,22 +152,24 @@ public class ResearchBooks extends SL_JFrame {
 		panelLoans.setBackground(Color.WHITE);
 		panelLoans.setLayout(null);
 		
+		JPanel panelBooking = new JPanel();
+		panelModify.add(panelBooking);
+		panelBooking.setVisible(false);
+		panelBooking.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panelBooking.setBackground(Color.WHITE);
+		panelBooking.setLayout(null);
+		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
-		
-		panelTableResearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-		
-				
-			}
-		});
-		panelTableResearch.setBounds(0, 0, 995, 439);
+		panelTableResearch.setBounds(0, 11, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
 		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
 		panelTableLoansResearch.setBounds(0, 11, 995, 416);
 		panelLoans.add(panelTableLoansResearch);
+		
+		TableBooking panelTableBookingResearch = new TableBooking(frame,me);
+		panelTableBookingResearch.setBounds(0, 11, 995, 416);
+		panelBooking.add(panelTableBookingResearch);
 		
 		ImageIcon iconLogoA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Add.png")));
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
@@ -246,6 +249,7 @@ public class ResearchBooks extends SL_JFrame {
 		JComboBox<String> comboBoxB = new JComboBox<String>();
 		comboBoxB.addItem("Ricerca_Libro");
 		comboBoxB.addItem("Prestiti");
+		comboBoxB.addItem("Prenotazioni");
 		comboBoxB.setSelectedItem("Ricerca_Libro");
 		comboBoxB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -254,7 +258,9 @@ public class ResearchBooks extends SL_JFrame {
 					panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
+					panelBooking.setVisible(false);
 					
+					System.out.println("7" + comboBoxB.toString());
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
@@ -264,15 +270,31 @@ public class ResearchBooks extends SL_JFrame {
 				{
 					
 					panelTableLoansResearch.update();
+					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
 					comboBoxB.setSelectedItem("Ricerca_Libro");
+					//comboBoxB.setSelectedItem("Prenotazioni");
 					
+					System.out.println("8" + comboBoxB.toString());
 
 				//	icon a null
-				}
+			    }
+			   else if(comboBoxB.getSelectedItem().equals("Prenotazioni"))// mettere qui la di verifica lettore o libraio + query su check
+			     {
+				
+				panelTableBookingResearch.update();
+				panelResearch.setVisible(false);
+				panelLoans.setVisible(false);
+				panelBooking.setVisible(true);
+				comboBoxB.setSelectedItem("Ricerca_Libro");
+				
+				System.out.println("9" + comboBoxB.toString());
+
+			//	icon a null
 			}
-		});
+		}
+	});
 		comboBoxB.setBounds(10, 443, 200, 20);
 		panelResearch.add(comboBoxB);
 		
@@ -280,6 +302,7 @@ public class ResearchBooks extends SL_JFrame {
 		JComboBox<String> comboBoxL = new JComboBox<String>();
 		comboBoxL.addItem("Ricerca_Libro");
 		comboBoxL.addItem("Prestiti");
+		comboBoxL.addItem("Prenotazioni");
 		comboBoxL.setSelectedItem("Prestiti");
 		comboBoxL.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -288,8 +311,10 @@ public class ResearchBooks extends SL_JFrame {
 					panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
+					panelBooking.setVisible(false);
 					comboBoxL.setSelectedItem("Prestiti");
-					
+					//comboBoxL.setSelectedItem("Prenotazioni");
+					System.out.println("1" + comboBoxL.toString());
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
@@ -298,16 +323,76 @@ public class ResearchBooks extends SL_JFrame {
 				else if(comboBoxL.getSelectedItem().equals("Prestiti"))
 				{
 					panelTableLoansResearch.update();
+					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
-					
 
+					System.out.println("2" + comboBoxL.toString());
+
+				//	icon a null
+				}
+				else if(comboBoxL.getSelectedItem().equals("Prenotazioni"))
+				{
+					panelTableBookingResearch.update();
+					panelResearch.setVisible(false);
+					panelLoans.setVisible(false);
+					panelBooking.setVisible(true);
+					comboBoxL.setSelectedItem("Prestiti");
+					System.out.println("3" + comboBoxL.toString());
 				//	icon a null
 				}
 			}
 		});
 		comboBoxL.setBounds(10, 443, 200, 20);
 		panelLoans.add(comboBoxL);
+		
+		
+		JComboBox<String> comboBoxBooking = new JComboBox<String>();
+		comboBoxBooking.addItem("Ricerca_Libro");
+		comboBoxBooking.addItem("Prestiti");
+		comboBoxBooking.addItem("Prenotazioni");
+		comboBoxBooking.setSelectedItem("Prenotazioni");
+		comboBoxBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBoxBooking.getSelectedItem().equals("Ricerca_Libro"))
+				{
+					panelTableResearch.update();
+					panelResearch.setVisible(true);
+					panelLoans.setVisible(false);
+					panelBooking.setVisible(false);
+					comboBoxBooking.setSelectedItem("Prenotazioni");
+					System.out.println("4" + comboBoxBooking.toString());
+					
+					lblEr1.setIcon(null);
+					lblEr2.setIcon(null);
+					lblEr3.setIcon(null);
+					lblEr4.setIcon(null);
+				}
+				else if(comboBoxBooking.getSelectedItem().equals("Prestiti"))
+				{
+					panelTableLoansResearch.update();
+					panelResearch.setVisible(false);
+					panelLoans.setVisible(true);
+					panelBooking.setVisible(false);
+					comboBoxBooking.setSelectedItem("Prenotazioni");
+					System.out.println("5" + comboBoxBooking.toString());
+				//	icon a null
+				}
+				else if(comboBoxBooking.getSelectedItem().equals("Prenotazioni"))
+				{
+					panelTableBookingResearch.update();
+					panelResearch.setVisible(false);
+					panelLoans.setVisible(false);
+					panelBooking.setVisible(true);
+
+					System.out.println("6" + comboBoxBooking.toString());
+
+				//	icon a null
+				}
+			}
+		});
+		comboBoxBooking.setBounds(10, 443, 200, 20);
+		panelBooking.add(comboBoxBooking);
 		
 		
 		lblEr1 = new JLabel();

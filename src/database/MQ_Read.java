@@ -86,13 +86,15 @@ public class MQ_Read {
 		
 		if (!rs.isBeforeFirst()) 
 		{
-			dati = new String[1][6];
+			dati = new String[1][8];
 			dati[0][0] = null;
 			dati[0][1] = null;
 			dati[0][2] = null;
 			dati[0][3] = null;
 			dati[0][4] = null;
 			dati[0][5] = null;
+			dati[0][6] = null;
+			dati[0][7] = null;
 			
 		}
 		else
@@ -105,8 +107,10 @@ public class MQ_Read {
 				results.add(rs.getString("data_fine"));
 				results.add(rs.getString("rientrato"));
 				results.add(rs.getString("ritirato"));
+				results.add(rs.getString("scaduto"));
+				results.add(rs.getString("email_inviata"));
 				
-				int cols = 6;
+				int cols = 8;
 		    	int rows = results.size() / cols;
 		    	
 		    	dati = new String[rows][cols];
@@ -127,7 +131,51 @@ public class MQ_Read {
 		return dati;
 	}
 	
+ public static String [][] ResearchBooking ()throws SQLException{			
+		String query = "SELECT * FROM prenotazioni;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[][] dati = null;
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			dati = new String[1][3];
+			dati[0][0] = null;
+			dati[0][1] = null;
+			dati[0][2] = null;
 	
+			
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("codice"));
+				results.add(rs.getString("id"));
+				results.add(rs.getString("priorità"));
+				
+				int cols = 3;
+		    	int rows = results.size() / cols;
+		    	
+		    	dati = new String[rows][cols];
+		    	
+				for(int i = 0, d = 0; i < rows; i++)
+				{
+		    		for(int j = 0; j < cols; j++, d++)
+		    		{
+		    			dati[i][j] = results.get(d);
+				    }
+				}
+			}
+		}
+
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return dati;
+	}
 	
 	public static LoadUser getUserById(int UserId) {
 		LoadUser loaduser = new LoadUser();

@@ -58,6 +58,79 @@ public class MQ_Check {
 		return datiCliente;
 	}
 	
+	public static String[] readReaderUserLoans(int idut) throws SQLException
+	{
+		
+		String query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti WHERE id ='"+idut+"';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[8]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			results.add("Nessun Dato");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("codice")); //0 
+				results.add(rs.getString("id")); // 1
+				results.add(rs.getString("data_inizio")); // 2
+				results.add(rs.getString("data_fine")); // 3
+				results.add(rs.getString("rientrato")); // 4
+				results.add(rs.getString("ritirato")); // 5 
+				results.add(rs.getString("scaduto")); // 6
+				results.add(rs.getString("email_inviata")); // 7
+			}
+		}
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
+	}
+	
+	public static String[] readReaderUserBooking(int idut) throws SQLException
+	{
+		
+		String query = "SELECT codice,id,priorità FROM prenotazioni WHERE id ='"+idut+"';";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		
+		List<String> results = new ArrayList<String>();
+		String[] user = new String[3]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			results.add("Nessun Dato");
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("codice")); //0 
+				results.add(rs.getString("id")); // 1
+				results.add(rs.getString("priorità")); // 2
+			}
+		}
+		for(int i = 0; i<results.size(); i++)
+		{
+			user[i]=results.get(i);
+		}
+		
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return user;
+	}
+	
 	public static String selectPass(String pass) throws SQLException
 	{
 		String query = "SELECT id FROM utente WHERE password = '" + pass + "';";

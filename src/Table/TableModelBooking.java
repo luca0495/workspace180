@@ -11,17 +11,17 @@ import Books.Books;
 import database.MQ_Delete;
 import database.MQ_Read;
 
-public class TableModelLoans extends AbstractTableModel implements Serializable {
+public class TableModelBooking extends AbstractTableModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"Codice", "Id", "Data_Inizio","Data_Fine","Rientrato","Ritirato","Scaduto","Email_Inviata"};
+    private String[] columnNames = {"Codice", "Id", "Priorità"};
     private Object[][] data = null;
     
-    public TableModelLoans()
+    public TableModelBooking()
     {
 		try 
 		{
-			data = MQ_Read.ResearchLoans();
+			data = MQ_Read.ResearchBooking();
 		} 
 		catch (SQLException e)
 		{
@@ -42,7 +42,7 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
     { 
 		try 
 		{
-			data = MQ_Read.ResearchLoans();
+			data = MQ_Read.ResearchBooking();
 		} 
 		catch (SQLException e)
 		{

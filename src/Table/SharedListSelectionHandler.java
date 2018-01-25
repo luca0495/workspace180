@@ -10,6 +10,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 
 	private TableModelBooks tb;
 	private TableModelLoans tl;
+	private TableModelBooking tc;
 	private boolean selection = false;
 	
     public SharedListSelectionHandler(TableModelBooks t)
@@ -23,6 +24,13 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
     {
     	super();
     	tl = t;
+    	selection = false;
+    }
+    
+    public SharedListSelectionHandler(TableModelBooking t)
+    {
+    	super();
+    	tc = t;
     	selection = false;
     }
 	
@@ -50,13 +58,24 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		{
 			if(!isAdjusting)
 			{
-				for(int j = 0; j<6; j++)
+				for(int j = 0; j<8; j++)
 				{
 					rowData.add((String) tl.getValueAt(index, j));
 				}
+				TableUpdateLoans.setRowData(rowData);
+			}
+			else
+			{
+				if(!isAdjusting)
+				{
+					for(int j = 0; j<2; j++)
+					{
+						rowData.add((String) tl.getValueAt(index, j));
+					}
+					TableUpdateBooking.setRowData(rowData);
+				}
 			}
 			
-			TableUpdateLoans.setRowData(rowData);
 		}
 	}
 
