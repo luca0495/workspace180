@@ -645,6 +645,10 @@ public class Guardian implements Runnable {
 
 //TODO PROCEDURA q
 		
+		//q update che segna una flag come SCADUTO
+		
+		
+		
 		System.out.println("GPG :> STO CONTROLLANDO PRESTITI , SCADENZA > 30 GIORNI");
 		
 //TODO PROCEDURA q
