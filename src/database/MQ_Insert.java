@@ -1,7 +1,7 @@
 package database;
 
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -140,22 +140,25 @@ public class MQ_Insert {
 				int codice,
 				int id,
 				Date data_inizio,
-				Date data_fine, 
+				//Date data_fine, 
 				boolean rientrato, 
 				boolean ritirato 
 				) throws SQLException
 		{
+			String data_F="";
+
+			
 			String query = 		"INSERT INTO prestiti("
 					+ "codice, "
 					+ "id, "
 					+ "data_inizio, "
-					+ "data_fine, "
+					
 					+ "rientrato, "
 					+ "ritirato )"
 					+ "VALUES('" 		+ codice	    + "' , '"
 										+ id		    + "' , '" 
 										+ data_inizio	+ "' , '" 
-										+ data_fine 	+ "' , '" 
+										
 										+ rientrato 	+ "' , '" 
 									    + ritirato 	    + "')";
 			return 	query;

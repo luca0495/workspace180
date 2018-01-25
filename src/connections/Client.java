@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.bcel.internal.generic.POP;
 import com.sun.org.apache.bcel.internal.generic.POP2;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
@@ -671,14 +672,9 @@ setBusy(false);
 	public void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
-						
-						
-						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND								
-								
+						Mb = this.getSrv().SendRequest(MsgSend);	// SPEDISCE AL SRV [STUB] MESSAGE contenente COMMAND																
 						// Reazioni di Client ai messaggi ritornati dal Server
-						
-						
-						
+
 						switch (Mb.getText()) {
 							case "OK":							
 								break;
@@ -1202,7 +1198,28 @@ setBusy(false);
 							
 							case "SRV :> table Loans populate :> NG":	System.out.println("ritornato al client POPULATE NG : ");
 								clrParFS();
+								break;
+								
+								
+							//TASTO PRESTITO	
+							case "SRV :> Loans ASK :> OK":								PopUp.infoBox(getActF(), "PRESTITO ACCORDATO");
+					
+							
+							
+								break;
+							case "SRV :> Loans ASK :> NG":								PopUp.infoBox(getActF(), "PROBLEMI SERI, TIPO DEPRESSIONE ");
+							
+							
+							
+							
 								break;	
+							case "SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO":	PopUp.infoBox(getActF(), "PRESTITO NON CONSENTITO");
+								
+								
+								
+								break;
+							//TASTO PRESTITO	
+
 								
 								
 //BOOK

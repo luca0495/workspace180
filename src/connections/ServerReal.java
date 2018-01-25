@@ -8,11 +8,21 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+
+
+
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -865,7 +875,7 @@ public class ServerReal extends ServerSkeleton {
 //TODO far passare dal client 
 										
 										int idut 		= M.getMsg().getSelectedIdUser();
-										int idbook 		= M.getMsg().getSelectedIdBook();							
+										int idbook 		= M.getMsg().getSelectedIdBook();		
 										
 										System.err.println("server estrapola... idbook:"+idbook);
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Loans ASK ");					
@@ -931,8 +941,19 @@ public class ServerReal extends ServerSkeleton {
 													) 	{	//se tutti i check restituiscono esito positivo...
 													
 													x.setText(new String ("SRV :> Loans ASK :> OK" ));
+//TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO													
+													//crea query aggiungi prestito
+													//data fine 	= null
+													//rientrato		= false	
+													//ritirato		= false
+													
+													Calendar calendar = new GregorianCalendar();
+													java.util.Date datacorrente = 	calendar.getTime();  
+													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, false);
+													MQ_Insert.insertLoans(q);
+													
 													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");													
-//TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO														
+														
 														}else {															
 															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));	
 														}
@@ -1295,6 +1316,7 @@ public class ServerReal extends ServerSkeleton {
 				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (2) dello stesso libro raggiunto ");
 			}else {
 				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ");
+				System.out.println("SRV :> Loans ASK :> OK CHECK 1 - MAX 2 PRESTITI PER LIBRO PER USER :> ");
 			}
 		} catch (SQLException e) {
 				setChkResult1("SRV :> Loans ASK :> NG - " + e.toString());
@@ -1309,17 +1331,17 @@ public class ServerReal extends ServerSkeleton {
 		try {
 			
 //TODO CAMBIA QUERY
-			
-			//pe= MQ_Read.checkLoans(idut, idbook);	
-			
+			pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);
+						
 			if (pe==5||pe>5) {		//limite massimo di 5 raggiunto
 				//prestito negato
 				setChkResult2("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (5) per lo stesso utente raggiunto ");
 			}else {
 				setChkResult2("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ");
+				System.out.println("SRV :> Loans ASK :> OK CHECK 2 - MAX 5 PRESTITI PER USER :> ");
 			}
 		} catch (SQLException e) {
-				setChkResult1("SRV :> Loans ASK :> NG - " + e.toString());
+				setChkResult2("SRV :> Loans ASK :> NG - " + e.toString());
 			e.printStackTrace();
 		}		//pe prestiti effettuati
 		setChkinprogress2(false);		

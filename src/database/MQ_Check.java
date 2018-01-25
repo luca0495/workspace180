@@ -161,7 +161,7 @@ public class MQ_Check {
 		System.err.println("idut  :"+idut);
 		System.err.println("idbook  :"+idbook);
 		
-		String q="SELECT count(codice) FROM prestiti WHERE codice='"+idbook+"' AND id ='"+idut+"' AND data_fine is null;";			
+		String q="SELECT count(codice) FROM prestiti WHERE id ='"+idut+"'AND data_fine is null";			
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);
 		
@@ -170,6 +170,10 @@ public class MQ_Check {
 		if (!rs.isBeforeFirst()) 
 		{ 
 			count = 0;
+
+			System.out.println("ottenuto count : NESSUN DATO DALLA QUERY");
+			
+			
 		}
 		else
 		{

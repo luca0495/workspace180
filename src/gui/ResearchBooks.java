@@ -235,10 +235,7 @@ public class ResearchBooks extends SL_JFrame {
 				if (askIdBook()) {		//	test login e test prenotazione con 
 										//	me.iduser
 										//	me.idbook
-				PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());
-				}else{	
-				PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");		
-					
+				PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());	
 				};
 				
 			}
@@ -681,27 +678,41 @@ public class ResearchBooks extends SL_JFrame {
 		boolean checkok=true;
 		int idbook = me.getSelectedIdBook();
 		int iduser = me.getIdut();//UTENTE LOGGATO
-	//controllo LOGIN	
-		if (iduser == 0 || iduser==0) {
+		
+		if (idbook == 0) {
 			checkok=false;
-		}else
-		{//LOGIN OK
-			try {				
-				me.setSelectedIdUser(me.getIdut());				
-				System.out.println("GUI account:> ottenuti dati user ");
-				
+			PopUp.errorBox(frame, "NESSUN LIBRO SELEZIONATO ");			
+		}else {
+			
+					//controllo LOGIN	
+					if (iduser == 0) {
+						checkok=false;
+						PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");		
+						
+					}else
+					{//LOGIN OK
+						try {				
+							me.setSelectedIdUser(me.getIdut());				
+							System.out.println("GUI account:> ottenuti dati user ");
+							
 //TODO RIMUOVERE E COPIARE METODO PER LIBRARIAN ANCHE PER READER nel REALSERVER
-				me.setCliType(Clients.Librarian);
-				
-				System.err.println("passo prima del metodo idbook : "+idbook);
-				me.setIdbook(idbook);
-				me.getCmdLIST().put(Commands.LoanASK);	
-			} catch (InterruptedException e2) {
-				System.out.println("GUI account:> NON ottenuti dati user ");
-				checkok=false;
-				e2.printStackTrace(); 
-			}
-			}
+							me.setCliType(Clients.Librarian);
+							
+							System.err.println("passo prima del metodo idbook : "+idbook);
+							me.setIdbook(idbook);
+							me.getCmdLIST().put(Commands.LoanASK);	
+						} catch (InterruptedException e2) {
+							System.out.println("GUI account:> NON ottenuti dati user ");
+							checkok=false;
+							e2.printStackTrace(); 
+						}
+						}			
+			
+		}
+		
+		
+		
+
 		return checkok;
 		}
 //********************************************************	

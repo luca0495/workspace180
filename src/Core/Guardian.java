@@ -58,7 +58,12 @@ public class Guardian implements Runnable {
 				dataultimocontrollo = c.getTime();
 				//PROCEDURE CONTROLLO SCADENZE
 				try {
+					
+					
 					CheckLoans();
+					
+					
+					
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
