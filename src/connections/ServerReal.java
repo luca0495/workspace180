@@ -950,7 +950,32 @@ public class ServerReal extends ServerSkeleton {
 													Calendar calendar = new GregorianCalendar();
 													java.util.Date datacorrente = 	calendar.getTime();  
 													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, false);
-													MQ_Insert.insertLoans(q);
+													
+													
+													//q interrogazione se libero
+													
+													Boolean Libero=false;
+													
+			//TODO VALUTAZIONE SE IL LIBRO E'LIBERO
+					
+			//TODO QUERY READ DI CONTROLLO LIBERO										
+													
+													if (Libero) {
+													
+													MQ_Insert.insertLoans(q);//test ok
+													}else {
+														
+			//TODO PROCEDURA DI INSERIMENTO IN LISTA PRENOTAZIONI											
+														
+			//TODO QUERY INSERIMENTO NUOVA PRENOTAZIONE											
+														
+													}
+														
+														
+														
+													
+													
+													
 													
 													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");													
 														
@@ -1346,6 +1371,7 @@ public class ServerReal extends ServerSkeleton {
 		public void ck3(int idut,int idbook) {//TEST pestiti dello stesso utente almeno uno SCADUTO	
 			int pe;
 			try {				
+
 //TODO CAMBIA QUERY				
 				pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);
 							
@@ -1371,17 +1397,9 @@ public class ServerReal extends ServerSkeleton {
 	// *************************************************************
 	@Override
 	public void connstop() {
-
-		
 			getSrv().removeOp(this);
 			getMeS().getFrame().setVisible(false);
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
-
-			getSrv().removeOp(this);
-			getMeS().getFrame().setVisible(false);
-			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
-			getMeS().getFrame().dispatchEvent(close);	
-
 	}
 }

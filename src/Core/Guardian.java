@@ -1,16 +1,27 @@
 package Core;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.mail.MessagingException;
+
+import com.sun.org.apache.bcel.internal.generic.POP;
+
+import Check.Check;
+import Check.PopUp;
 import Core.Clients;
 import Core.Requests.RS;
+import ProvaEmail.EmailSender;
 import connections.Message;
 import connections.MessageRealServer;
 import connections.Server;
 import connections.ServerReal;
+import database.MQ_Check;
+import database.MQ_Read;
+import database.MQ_Update;
  
  
 public class Guardian implements Runnable {
@@ -51,22 +62,33 @@ public class Guardian implements Runnable {
 			while (isBusy()){}	//attesa query in esecuzione...
 			
 			
-			//valuta ora del controllo scadenze...
-			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST	
-			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {			//controllo ogni 5 minuti				
+//	clock	//valuta ora del controllo scadenze...
+			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>30000) {				//controllo otni 30 secondi PER TEST	
+				
+			
+			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST		
+			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {				//controllo ogni 5 minuti				
 				System.err.println("passati 5 secondi, controllo scadenze prestiti");				
 				dataultimocontrollo = c.getTime();
+				
 				//PROCEDURE CONTROLLO SCADENZE
+				//--------------------------------------------------------
 				try {
-					
-					
 					CheckLoans();
-					
-					
-					
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+										} catch (InterruptedException e) {
+													e.printStackTrace();
 				}
+				//--------------------------------------------------------
+				try {
+					checkLoansSendEmail();
+										} catch (InterruptedException e) {
+													e.printStackTrace();
+				}				
+				//--------------------------------------------------------				
+				
+				
+				
+				
 			}	
 			
 			//TODO RIMETTI println
@@ -635,36 +657,77 @@ public class Guardian implements Runnable {
 	
 	public void CheckLoans() throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE CHECK LOANS");		
-		//SERVE
-		
-		Busy			=true;
-		
-		
-		
-		System.out.println("GPG :> STO CONTROLLANDO PRENOTAZIONI , SCADENZA > 1 SETTIMANA");	
-
-//TODO PROCEDURA q
-		
-		//q update che segna una flag come SCADUTO
-		
-		
-		
-		System.out.println("GPG :> STO CONTROLLANDO PRESTITI , SCADENZA > 30 GIORNI");
-		
-//TODO PROCEDURA q
-		
-		
-		Busy			=false;
+		//SERVE controllo prestiti scaduti
+		Busy=true;
+		try {
+			MQ_Check.updatePrestitoScaduto();
+		} catch (SQLException e) {
+			System.out.println("Errore... "+e.getMessage());
+			e.printStackTrace();
+		}
+		Busy=false;
 	}
 	
-	
-	
-	
-	
-	
-	//TODO INSERISCI SERVIRE PRENOTAZIONI
-	
-	
+
+	public void checkLoansSendEmail() throws InterruptedException{
+		String [] em=null;
+		
+		System.out.println("GPG :> Guardian SERVE CHECK LOANS send Email");		
+		//SERVE invio email 
+		//AL PRIMO
+		//in lista dei prestiti spediti con email non inviata 
+		
+		Busy=true;
+		try {
+			em = MQ_Read.readLoansForSendEmail();
+			
+			if (em[0].equals("Nessun Dato")) {
+				
+				System.out.println(("nessun prestito scaduto") );
+				meS.getMeG().addMsg("nessun prestito scaduto");
+				//non fare piu nulla
+				
+			}else {
+				
+				String codice 			= em[0];System.out.println("codice:"		+codice);
+				String iduser 			= em[1];System.out.println("iduser:"		+iduser);
+				String nome 			= em[2];System.out.println("nome:"			+nome);
+				String cognome 			= em[3];System.out.println("cognome:"		+cognome);
+				String email 			= em[4];System.out.println("email:"			+email);
+				String tipoutente		= em[5];System.out.println("tipo utente:"	+tipoutente);
+				String nome_autore		= em[6];System.out.println("nome 	autore:"+nome_autore);
+				String cognome_autore	= em[7];System.out.println("cognome utente:"+cognome_autore);
+				String titolo			= em[8];System.out.println("titolo:"		+titolo);
+				
+				MQ_Update.updateLoansEmailSent(iduser, codice);
+				
+//TODO ESTRAPOLA CREDENZIALI DA TABELLA SETTING
+				
+				String [] datasetting = MQ_Read.readSettingTable();
+				String un = datasetting[4];
+				String pw = datasetting[5];
+				
+//TODO send email
+				
+				try {
+				EmailSender.send_LoansExpired(un, pw, email, codice, nome, cognome,nome_autore,cognome_autore,titolo);
+				} catch (MessagingException e) {	
+					e.printStackTrace();
+				} 
+				
+				
+			}
+			
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Errore... "+e.getMessage());
+			e.printStackTrace();
+		}
+		Busy=false;
+	}
+
 	public boolean isBusy() {
 		return Busy;
 	}

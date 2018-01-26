@@ -265,7 +265,7 @@ public class MQ_Read {
 	public static String ReadPassTemp1(String email) throws SQLException
 	{
 	String query = "SELECT password_temp FROM utente WHERE email ='" + email +"';";
-	System.err.println(query+"dany");
+	
 	DBmanager.openConnection();
 	ResultSet rs = DBmanager.executeQuery(query);
 	String value = null;
@@ -274,12 +274,8 @@ public class MQ_Read {
 	{	
 		value = rs.getString("password_temp");
 	System.out.println("entrato...");
-	System.err.println("entrato...");
 	}
-	
-	System.err.println("value :"+value);
 	DBmanager.closeConnection();
-	
 	
 	return value;
 }
@@ -662,7 +658,57 @@ public class MQ_Read {
 	}
 
 //PRESTITI***************************************************************************************************************
+/*
+select id,codice from prestiti 
+where 
+	data_fine is null 					AND
+    scaduto = true						AND
+	email_inviata  = false
+    ;	
+	*/
+	
+	public static String[] readLoansForSendEmail() throws SQLException
+	{
+		//restituisce il primo prestito SCADUTO con email NON inviata
+		String query = "select prestiti.codice,utente.id,nome,cognome,email,tipo_utente,nome_autore,cognome_autore,titolo from prestiti ,utente,libro " + 
+				"where 	prestiti.id		=utente.id		AND"	+ 
+				"		prestiti.codice	=libro.codice	AND"	+
+				
+				"		data_fine 		is null 	AND" + 
+				"    	scaduto 		= true		AND" + 
+				"		email_inviata  	= false" + 
+				"    ;";
+		
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
 
+		String[] loan = new String[10]; // codice utente codice libro
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			loan[0]=("Nessun Dato");
+		}
+		else
+		{
+			rs.next(); 
+			
+			loan[0]=(rs.getString("codice")); 			//0 
+			loan[1]=(rs.getString("id"));				//1
+			loan[2]=(rs.getString("nome")); 			//2
+			loan[3]=(rs.getString("cognome")); 			//3
+			loan[4]=(rs.getString("email")); 			//4
+			loan[5]=(rs.getString("tipo_utente")); 		//5
+			loan[6]=(rs.getString("nome_autore")); 		//6
+			loan[7]=(rs.getString("cognome_autore")); 	//7
+			loan[8]=(rs.getString("titolo")); 			//8
+			
+		}
+		rs.close();
+		DBmanager.closeConnection();
+		return loan;
+	}	
+	
+	
 	
 
 	

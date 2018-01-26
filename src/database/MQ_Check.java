@@ -263,4 +263,16 @@ public class MQ_Check {
 		return count;
 	}
 
+	
+	public static void updatePrestitoScaduto() throws SQLException
+	{	
+		String q = "update prestiti set scaduto=true where data_fine is null AND scaduto = false AND current_date - data_inizio >= '30';";
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	
+	
+	
+	
 }

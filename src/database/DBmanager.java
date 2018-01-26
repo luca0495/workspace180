@@ -59,8 +59,7 @@ public class DBmanager {
 		
 		PreparedStatement stmt = connection.prepareStatement(query);
 		stmt.executeUpdate();
-	}
-	
+	}	
 	public static void 		executeUpdate1(Statement stmt2) throws SQLException
 	{
 		//Returns an integer representing the number of rows affected by the SQL statement.
