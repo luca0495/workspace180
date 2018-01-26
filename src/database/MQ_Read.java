@@ -141,11 +141,11 @@ public class MQ_Read {
 		
 		if (!rs.isBeforeFirst()) 
 		{
-			dati = new String[1][3];
+			dati = new String[1][4];
 			dati[0][0] = null;
 			dati[0][1] = null;
 			dati[0][2] = null;
-	
+			dati[0][3] = null;
 			
 		}
 		else
@@ -155,8 +155,9 @@ public class MQ_Read {
 				results.add(rs.getString("codice"));
 				results.add(rs.getString("id"));
 				results.add(rs.getString("priorità"));
+				results.add(rs.getString("data_inizio"));
 				
-				int cols = 3;
+				int cols = 4;
 		    	int rows = results.size() / cols;
 		    	
 		    	dati = new String[rows][cols];

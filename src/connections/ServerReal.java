@@ -1356,15 +1356,10 @@ public class ServerReal extends ServerSkeleton {
 	// *************************************************************
 	@Override
 	public void connstop() {
-			
-			getSrv().removeOp(this);
 		
+			getSrv().removeOp(this);
 			getMeS().getFrame().setVisible(false);
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
-					
-			
 	}
-
-
 }

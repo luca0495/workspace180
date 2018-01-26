@@ -74,7 +74,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<2; i++)
+        			for(int i = 0; i<3; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));

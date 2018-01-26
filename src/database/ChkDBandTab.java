@@ -184,6 +184,7 @@ public class ChkDBandTab {
 	                  +"codice serial not null,"
 	                  +"id serial not null,"
 	                  +"priorità integer not null,"
+	                  +"data_inizio date not null,"
 	                  +"foreign key (id)   references utente (id) ON UPDATE CASCADE ON DELETE CASCADE,"
 	                  +"foreign key (codice) references libro (codice) ON UPDATE CASCADE ON DELETE CASCADE)")  ;
 			 

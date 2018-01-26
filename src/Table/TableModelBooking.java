@@ -14,7 +14,7 @@ import database.MQ_Read;
 public class TableModelBooking extends AbstractTableModel implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"Codice", "Id", "Priorità"};
+    private String[] columnNames = {"Codice", "Id", "Priorità","Data_Inizio"};
     private Object[][] data = null;
     
     public TableModelBooking()
