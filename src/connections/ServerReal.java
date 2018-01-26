@@ -1321,18 +1321,14 @@ public class ServerReal extends ServerSkeleton {
 		} catch (SQLException e) {
 				setChkResult1("SRV :> Loans ASK :> NG - " + e.toString());
 			e.printStackTrace();
-		}		//pe prestiti effettuati
-		
+		}		//pe prestiti effettuati		
 		setChkinprogress1(false);		
 	}
 //**********************************************************************************************************************************************	
 	public void ck2(int idut,int idbook) {//TEST pestiti dello stesso utente, limite massimo 5 raggiunto	
 		int pe;
-		try {
-			
-//TODO CAMBIA QUERY
-			pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);
-						
+		try {		
+			pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);						
 			if (pe==5||pe>5) {		//limite massimo di 5 raggiunto
 				//prestito negato
 				setChkResult2("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (5) per lo stesso utente raggiunto ");
@@ -1347,7 +1343,26 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress2(false);		
 	}
 //**********************************************************************************************************************************************	
-	
+		public void ck3(int idut,int idbook) {//TEST pestiti dello stesso utente almeno uno SCADUTO	
+			int pe;
+			try {				
+//TODO CAMBIA QUERY				
+				pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);
+							
+				if (pe==5||pe>5) {		//limite massimo di 5 raggiunto
+					//prestito negato
+					setChkResult3("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER prestito SCADUTO risultante ");
+				}else {
+					setChkResult3("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ");
+					System.out.println("SRV :> Loans ASK :> OK CHECK 3 -  :> ");
+				}
+			} catch (SQLException e) {
+					setChkResult3("SRV :> Loans ASK :> NG - " + e.toString());
+				e.printStackTrace();
+			}		//pe prestiti effettuati
+			setChkinprogress3(false);		
+		}
+//**********************************************************************************************************************************************	
 	// *************************************************************	
 	public MessageRealServer MessageEncapsulation (Message msg){
 		MessageRealServer mrs=new MessageRealServer(msg, this);
@@ -1356,10 +1371,17 @@ public class ServerReal extends ServerSkeleton {
 	// *************************************************************
 	@Override
 	public void connstop() {
+<<<<<<< HEAD
 		
 			getSrv().removeOp(this);
 			getMeS().getFrame().setVisible(false);
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
+=======
+			getSrv().removeOp(this);
+			getMeS().getFrame().setVisible(false);
+			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
+			getMeS().getFrame().dispatchEvent(close);	
+>>>>>>> nn
 	}
 }
