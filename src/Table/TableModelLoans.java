@@ -8,22 +8,25 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import Books.Books;
+import Core.Commands;
+import connections.Client;
 import database.MQ_Delete;
 import database.MQ_Read;
 
 public class TableModelLoans extends AbstractTableModel implements Serializable {
-	
+	private Client me;
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Id", "Data_Inizio","Data_Fine","Rientrato","Ritirato","Scaduto","Email_Inviata"};
     private Object[][] data = null;
     
-    public TableModelLoans()
+    public TableModelLoans(Client me)
     {
 		try 
 		{
-			data = MQ_Read.ResearchLoans();
+			me.getCmdLIST().put(Commands.LoanPopulate);	
+			//data = MQ_Read.ResearchLoans();
 		} 
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -42,9 +45,10 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
     { 
 		try 
 		{
-			data = MQ_Read.ResearchLoans();
+			me.getCmdLIST().put(Commands.LoanPopulate);	
+			//data = MQ_Read.ResearchLoans();
 		} 
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}

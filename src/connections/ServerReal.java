@@ -49,7 +49,8 @@ public class ServerReal extends ServerSkeleton {
 		private 	String 					mSg;		
 		private  	Map<String,Message>  	listcmdDONE = new TreeMap<>();		
 		public 		Boolean					Go;
-		private 	MessageBack				mSgB;		
+		private 	MessageBack				mSgB;	
+		private 	String [][] 			datitabella = null;
 //**-------------------------------------------------------------------------------------------------------------
 		private boolean 	chkinprogress1=false;
 		private String 		chkResult1;
@@ -121,9 +122,28 @@ public class ServerReal extends ServerSkeleton {
 		MessageBack x 			= new MessageBack();
 		MessageBack AnswerM 	= new MessageBack();
 		
+		
 		// ********************************
 		switch (M.getMsg().getCommand()) {
 		// ********************************
+
+		case LoanPopulate:
+			try {datitabella = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
+					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Loans populate :> OK"));		
+			} 		catch (Exception e) {			x.setText(new String ("SRV :> table Loans populate :> NG"));}break;	
+		case BookPopulate:
+			try {datitabella = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
+					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Book populate :> OK"));		
+	} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}break;	
+		case BookingPopulate:
+			try {datitabella = MQ_Read.ResearchBooking();	getMeS().addMsg(mSg);
+					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
+	} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}break;	
+		
+		
+		
+		
+		
 		
 			case LoanREAD://----> [DB] 
 	
@@ -185,7 +205,7 @@ public class ServerReal extends ServerSkeleton {
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;
 		
-		
+
 		
 			case 	BookExecuteQuery://----> [DB]
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query ");					

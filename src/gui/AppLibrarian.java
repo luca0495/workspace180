@@ -36,13 +36,13 @@ public class AppLibrarian extends JFrame  {
 	private JFrame frame;
     private JTable tableBooks;
 	
-	public AppLibrarian(Component c)
+	public AppLibrarian(Component c) throws InterruptedException
 	{
 		AppLibrarian(c);
 	}
 
 
-	public void AppLibrarian(Component c) {
+	public void AppLibrarian(Component c) throws InterruptedException {
 
 		frmSchoolib = new JFrame();
 		frmSchoolib.setTitle("Schoolib");

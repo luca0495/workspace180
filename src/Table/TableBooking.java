@@ -31,7 +31,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import Check.PopUp;
 import Core.Commands;
 import connections.Client;
@@ -54,12 +53,12 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 	
 	
 	
-    public TableBooking(JFrame frame,Client me)  
+    public TableBooking(JFrame frame,Client me) throws InterruptedException  
     {
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelBooking();
+        tm = new TableModelBooking(me);
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");

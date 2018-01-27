@@ -47,13 +47,13 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	
 	
 	
-    public TableBooks(JFrame frame,Client me)  
+    public TableBooks(JFrame frame,Client me) throws InterruptedException  
     {
 
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelBooks();
+        tm = new TableModelBooks(me);
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");

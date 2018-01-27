@@ -94,9 +94,10 @@ public class ResearchBooks extends SL_JFrame {
 	 * Create the application.
 	 * @param me2 
 	 * @param me2 
+	 * @throws InterruptedException 
 	 */
     
-	public ResearchBooks(Component c, Client x) {
+	public ResearchBooks(Component c, Client x) throws InterruptedException {
 		
 		setW(this);
 		me = x;
@@ -118,7 +119,7 @@ public class ResearchBooks extends SL_JFrame {
 	}
 
 	
-	public void initialize(Component c) {
+	public void initialize(Component c) throws InterruptedException {
 		
 		
 		frame = new JFrame();

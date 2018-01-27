@@ -8,6 +8,8 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import Books.Books;
+import Core.Commands;
+import connections.Client;
 import database.MQ_Delete;
 import database.MQ_Read;
 
@@ -16,14 +18,16 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo","Disponibilità","Prenotazioni_in_coda"};
     private Object[][] data = null;
+    private Client me;
     
-    public TableModelBooks()
+    public TableModelBooks(Client me) throws InterruptedException
     {
 		try 
 		{
-			data = MQ_Read.RicercaLibro();
+			me.getCmdLIST().put(Commands.BookPopulate);	
+			//data = MQ_Read.RicercaLibro();
 		} 
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -40,14 +44,10 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 	@Override
     public void fireTableDataChanged()
     { 
-		try 
-		{
-			data = MQ_Read.RicercaLibro();
-		} 
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
+		try {
+			me.getCmdLIST().put(Commands.BookPopulate);	
+			//data = MQ_Read.RicercaLibro();
+			}catch (Exception e)	{e.printStackTrace();		} 
     }
     
     @Override

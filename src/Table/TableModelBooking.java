@@ -8,22 +8,25 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
 import Books.Books;
+import Core.Commands;
+import connections.Client;
 import database.MQ_Delete;
 import database.MQ_Read;
 
 public class TableModelBooking extends AbstractTableModel implements Serializable {
-	
+	private Client me;
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Id", "Priorità","Data_Inizio"};
     private Object[][] data = null;
     
-    public TableModelBooking()
+    public TableModelBooking(Client me) throws InterruptedException
     {
 		try 
 		{
-			data = MQ_Read.ResearchBooking();
+			me.getCmdLIST().put(Commands.BookingPopulate);	
+			//data = MQ_Read.ResearchBooking();
 		} 
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -42,9 +45,10 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
     { 
 		try 
 		{
-			data = MQ_Read.ResearchBooking();
+			me.getCmdLIST().put(Commands.BookingPopulate);
+			//data = MQ_Read.ResearchBooking();
 		} 
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}

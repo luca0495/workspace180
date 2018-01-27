@@ -27,6 +27,9 @@ public enum Commands{
 			BookExecuteQuery		("Book Execute Query"			,	SearchFor.Book,			CommandsType.READ,			1,	0),			
 			BookREAD 				("Book Read			"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 						
 			BookLast 				("Book find last id	"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 	
+			BookPopulate			("Book Populate		"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 	
+
+			
 // Loans - Prestiti			
 			LoanListADD				("Loan add 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanListREMOVE			("Loan del 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
@@ -37,7 +40,10 @@ public enum Commands{
 			LoanBookGiveback		("Loan Give back	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanASK					("Loan Ask for 		"			,	SearchFor.Prenotation,	CommandsType.CHANGE ,		4,	0),
 			LoanREAD				("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
-	//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
+			LoanPopulate			("Loan Populate		"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0), 	
+
+			
+			//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 	//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 			
 // Booking - Prenotazioni			
@@ -49,6 +55,8 @@ public enum Commands{
 			BookingBookGet			("Booking Get			"		,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingBookGiveback		("Booking Give back	"			,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),			
 			BookingREAD				("Booking read			"		,	SearchFor.Booking,		CommandsType.READ	,		4,	0),
+			BookingPopulate			("Booking Populate		"		,	SearchFor.Booking,		CommandsType.READ,			1,	0), 	
+
 // User
 			UserRegistration	("User registration"				,	SearchFor.Account,		CommandsType.CHANGE,		1,	0),
 			UserActivation		("User activation"  				,	SearchFor.Account,		CommandsType.CHANGE,		1,	0),

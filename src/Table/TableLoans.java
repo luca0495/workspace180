@@ -59,7 +59,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelLoans();
+        tm = new TableModelLoans(me);
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");

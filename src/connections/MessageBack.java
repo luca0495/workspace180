@@ -28,6 +28,8 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private String[] 	RowBook;
 	private String[] 	RowLoans;
 	
+	private String[][]	Datitabella;
+	
 	private Record		Record;
 	private RecordSet	RecordSet;
 	
@@ -110,6 +112,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setIdBook(int idBook) {
 		IdBook = idBook;
+	}
+	public String[][] getDatitabella() {
+		return Datitabella;
+	}
+	public void setDatitabella(String[][] datitabella) {
+		Datitabella = datitabella;
 	}
 
 

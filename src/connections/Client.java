@@ -30,6 +30,7 @@ import Check.PopUp;
 import Core.ClientCMDloans;
 import Core.ClientCMDuser;
 import Core.ClientCMDBooking;
+import Core.ClientCMDBook;
 
 import Core.Clients;
 import Core.Commands;
@@ -245,6 +246,13 @@ public class Client implements Serializable, Runnable  {
 								//	book
 								case BookExecuteQuery:		BookPopulate();								break;//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
 								case BookLast:				BookLast();									break;//arriva DA GUI TABLEBOOKS //	
+								case BookingPopulate:		ClientCMDBooking.Bookingpopulate(this);		break;
+								//	Loans
+								case LoanREAD: 															break;
+								case LoanPopulate:			ClientCMDloans.Loanspopulate(this);			break;
+								//	Booking			
+								case BookingREAD: 														break;
+								case BookPopulate:			ClientCMDBooking.Bookingpopulate(this);		break;
 								//	Person
 								case UserREAD: 				UserGetData();								break;	//necessario setSql con query completa			
 								case UserREADbyEmail: 		UserGetDatabyEmail();						break;	//necessario setSql con email							
@@ -254,10 +262,8 @@ public class Client implements Serializable, Runnable  {
 								case UserREADaccountMod: 	UserGetDataAccountMod();					break;	//necessario setSql con email setSql2 con password																				
 								case UserREADcheckEmail: 	UserREADcheckEmailExist();					break;	//necessario setSql con email 																	
 								case UserREADcheckCF:		UserREADcheckCfExist();						break;//necessario setSql con cf 					
-								//	Loans
-								case LoanREAD: break;			
-								//	Booking			
-								case BookingREAD: break;	
+
+								
 								default:break;	
 							}				
 					break;
@@ -1090,24 +1096,6 @@ setBusy(false);
 								PopUp.errorBox(getActC(),Mb.getText() );
 								break;									
 							
-							
- 					
-//LOANS \ READ
-							case "SRV :> table Loans populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");									
-							
-								setActTable(Mb.getTab());
-//TODO ADATTA A LOANS									
-								TableBooks.getTable().setModel(Mb.getTab().getModel());
-
-								this.setActF(null);
-								this.setSql(null);
-								setBusy(false);
-								break;
-							
-							case "SRV :> table Loans populate :> NG":	System.out.println("ritornato al client POPULATE NG : ");
-								clrParFS();
-								break;
-								
 								
 							//TASTO PRESTITO	
 							case "SRV :> Loans ASK :> OK":								//PopUp.infoBox(getActF(), "PRESTITO ACCORDATO");
@@ -1167,9 +1155,13 @@ setBusy(false);
 							case 	"SRV :> Del-Booking:> OK": 	ClientCMDBooking.BookingDeleteRES(this, "OK");	break;
 							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
 								
-								
-								
-								
+							//table populate
+							case	"SRV :> table Loans populate 	:> OK":	ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
+							case	"SRV :> table Loans populate 	:> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
+							case	"SRV :> table Book populate 	:> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
+							case	"SRV :> table Book populate 	:> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
+							case	"SRV :> table Booking populate 	:> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
+							case	"SRV :> table Booking populate 	:> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
 								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
