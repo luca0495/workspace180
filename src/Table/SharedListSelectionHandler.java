@@ -39,6 +39,8 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		List<String> rowData = new ArrayList<String>();
 		
 		int index = e.getFirstIndex();
+		System.err.println("first index: "+e.toString());
+		
 		
 		boolean isAdjusting = e.getValueIsAdjusting();
 		
