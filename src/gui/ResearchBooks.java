@@ -160,7 +160,7 @@ public class ResearchBooks extends SL_JFrame {
 		panelBooking.setLayout(null);
 		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
-		panelTableResearch.setBounds(10, -45, 995, 416);
+		panelTableResearch.setBounds(0, 11, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
 		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
