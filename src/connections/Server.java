@@ -23,7 +23,6 @@ public class Server {
 	private 				Requests 		R;
 
 	public Server(){
-		//me=this;
 		setR(new Requests(10));
 		setG(new Guardian(this,getR()));
 		try {
@@ -34,8 +33,7 @@ public class Server {
 		}
 	}
 	public static void main(String[] args) throws Exception {
-		Server mex = new Server();
-		me=mex;
+		me = new Server();
 		me.setOperatori(new LinkedList<>());
 		
 		setMeG(new SystemServer(me));
