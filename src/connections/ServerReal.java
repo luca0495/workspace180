@@ -949,7 +949,7 @@ public class ServerReal extends ServerSkeleton {
 													
 													Calendar calendar = new GregorianCalendar();
 													java.util.Date datacorrente = 	calendar.getTime();  
-													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, false);
+													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
 													
 													
 													//q interrogazione se libero

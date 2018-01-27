@@ -142,7 +142,9 @@ public class MQ_Insert {
 				Date data_inizio,
 				//Date data_fine, 
 				boolean rientrato, 
-				boolean ritirato 
+				boolean ritirato, 
+				boolean scaduto,
+				boolean email_inviata 
 				) throws SQLException
 		{
 			String data_F="";
@@ -152,15 +154,17 @@ public class MQ_Insert {
 					+ "codice, "
 					+ "id, "
 					+ "data_inizio, "
-					
 					+ "rientrato, "
-					+ "ritirato )"
-					+ "VALUES('" 		+ codice	    + "' , '"
-										+ id		    + "' , '" 
-										+ data_inizio	+ "' , '" 
-										
-										+ rientrato 	+ "' , '" 
-									    + ritirato 	    + "')";
+					+ "ritirato, "
+					+ "scaduto, "
+					+ "email_inviata)"
+					+ "VALUES('" 		+ codice	            + "' , '"
+										+ id		            + "' , '" 
+										+ data_inizio	        + "' , '" 
+										+ rientrato          	+ "' , '"
+										+ ritirato           	+ "' , '"
+			                            + scaduto 	            + "' , '" 
+			                            + email_inviata 	    + "')";
 			return 	query;
 		}
 
