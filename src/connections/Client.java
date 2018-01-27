@@ -165,7 +165,7 @@ public class Client implements Serializable, Runnable  {
 			public void run() {
 				try {
 					Client x  = new Client();
-					Server srvx = new Server();
+					//Server srvx = new Server();
 					
 					
 					x.setStartWindow(new AppMain(x));
@@ -176,7 +176,7 @@ public class Client implements Serializable, Runnable  {
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec										
 					
 					x.getStartWindow().addMsg("Initialize...");	
-					new Thread(srvx).start();	//Server
+					//new Thread(srvx).start();	//Server
 					
 					new Thread(x).start();	  // Logica di controllo comandi ricevuti
 					new Thread(y1).start();  // Client Connection Controller [CCC]	
