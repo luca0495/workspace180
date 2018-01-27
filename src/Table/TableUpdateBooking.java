@@ -37,7 +37,7 @@ public class TableUpdateBooking {
 			me.setSql(q);
 			try {
 				// cambiare comando per delete loans
-				me.getCmdLIST().put(Commands.BookDELETE);
+				me.getCmdLIST().put(Commands.BookingListREMOVE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

@@ -135,13 +135,13 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
                 
                 //dati TUPLA in selezione salvati su Client
                 String idlibro				= (String) source.getValueAt(selectedRow, 0);
-                String idutente				= (String) source.getValueAt(selectedRow, 1);
+                //String idutente				= (String) source.getValueAt(selectedRow, 1);
                 int 	idbook				=Integer.valueOf(idlibro);  
-                int 	iduser				=Integer.valueOf(idutente);  
+                //int 	iduser				=Integer.valueOf(idutente);  
                 
                 //setta su client idbook selezionato
                 me.setSelectedIdBook(idbook);
-                me.setSelectedIdUser(iduser);
+               // me.setSelectedIdUser(iduser);
                 
                 PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
                 									"\nottenuto iduser  : "+me.getSelectedIdUser() 
