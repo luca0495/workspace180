@@ -371,7 +371,7 @@ public class Client implements Serializable, Runnable  {
 														}
 														else {															
 															for (int i = 5;i>0;i--){
-																try {Thread.sleep(100);//default 1000
+																try {Thread.sleep(1000);//default 1000
 																System.out.println(mSg = "CLI :> Verifica Stub NG \nTentativo "+getRepeatconnCount()+ " \nnuovo tentativo tra "+i+" secondi ");
 																getActW().addMsg(mSg);
 																} catch (Exception e) {
