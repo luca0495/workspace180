@@ -29,6 +29,8 @@ import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import Check.PopUp;
 import Core.ClientCMDloans;
 import Core.ClientCMDuser;
+import Core.ClientCMDBooking;
+
 import Core.Clients;
 import Core.Commands;
 import Core.CommandsList;
@@ -163,6 +165,9 @@ public class Client implements Serializable, Runnable  {
 			public void run() {
 				try {
 					Client x  = new Client();
+					Server srvx = new Server();
+					
+					
 					x.setStartWindow(new AppMain(x));
 					x.setMeMain(x.getStartWindow());
 					x.getStartWindow().getFrame().setVisible(true);	//System.out.println("creato start windows");
@@ -171,8 +176,15 @@ public class Client implements Serializable, Runnable  {
 					ClientConnectionController y1 = new ClientConnectionController(x,10000);//1 controllo connessione al server OGNI 10 sec										
 					
 					x.getStartWindow().addMsg("Initialize...");	
+					new Thread(srvx).start();	//Server
+					
 					new Thread(x).start();	  // Logica di controllo comandi ricevuti
 					new Thread(y1).start();  // Client Connection Controller [CCC]	
+					
+					
+
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -182,18 +194,11 @@ public class Client implements Serializable, Runnable  {
 //------------------------------------------------------------------------------------------
 	@Override
 	public void run() {	
-		
-
-		
-		
 		try {
 			while (isClientON()){
-					//Attesa comandi...					
-					while ( getCmdLIST().getCmdList().size() < 1){								
-							//System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
-							//System.out.println("CLI :> IN ATTESA di COMANDI... ");
-						try {
-							//System.out.println("CLI :> IN ATTESA di COMANDI... dormo100");
+										
+					while ( getCmdLIST().getCmdList().size() < 1){	//Attesa comandi...	//System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
+						try {		//System.out.println("CLI :> IN ATTESA di COMANDI... dormo100");
 							Thread.sleep(100);
 						} catch (Exception e) { e.printStackTrace();
 						}
@@ -220,173 +225,81 @@ public class Client implements Serializable, Runnable  {
 					switch (com.getCommandType()) {				//   		Core\CommandsType	***   									
 				//	****************************************************	Connections	   		***		
 					case CONNECTION:										
-								switch (com) {							
-								case ConnSTOP: 					//   		Core\Commands		***
-												ClientConnectionClose();
-												setBusy(false);
-									break;
-								case ConnTEST: 
-												ClientConnectionTest();
-												setBusy(false);
-									break;
-								}
+							switch (com) {							
+								case ConnSTOP: 				ClientConnectionClose();							//Core\Commands		***
+															setBusy(false);								break;
+								case ConnTEST: 				ClientConnectionTest();
+															setBusy(false);								break;
+							}
 					break;
 				//	****************************************************	Test		   		***	
 					case TEST:
-								switch (com) {							
-								case DBExist:							
-									
-									break;
-								default:
-									
-									break;
+							switch (com) {							
+								case DBExist:															break;
+								default:																break;
 								}
 					break;
 				//	****************************************************	Read		   		***			
 					case READ:
-								switch (com) {							
-						//	book
-								case BookExecuteQuery:	//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
-														BookPopulate();
-									break;
-								case BookLast:			//arriva DA GUI TABLEBOOKS //
-														BookLast();
-									break;
-						//	Person
-								case UserREAD: 						
-														UserGetData();			//necessario setSql con query completa
-									break;
-								case UserREADbyEmail: 								
-														UserGetDatabyEmail();		//necessario setSql con email
-									break;
-								case UserREADbyEmailAcc:																		
-														UserGetDatabyEmailAcc();	//necessario setidut
-									break;
-								case UserREADbyEmailMod: 																										
-														UserGetDatabyEmailMod();	//necessario setidut
-									break;
-
-								case UserREADlogin: 								
-														UserGetDataLogin();			//necessario setSql con email setSql2 con password					
-									break;
-								case UserREADaccountMod: 								
-														UserGetDataAccountMod();	//necessario setSql con email setSql2 con password					
-									break;									
-								case UserREADcheckEmail: 								
-														UserREADcheckEmailExist();	//necessario setSql con email 					
-									break;									
-								case UserREADcheckCF:
-														UserREADcheckCfExist();		//necessario setSql con cf 		
-									break;		
-						//	Loans
-								case LoanREAD: 
-									
-									break;
-						//	Booking			
-								case BookingREAD: 
-									
-									break;	
-									
-									
-									
-								default:
-									
-									break;
-								}				
+							switch (com) {							
+								//	book
+								case BookExecuteQuery:		BookPopulate();								break;//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
+								case BookLast:				BookLast();									break;//arriva DA GUI TABLEBOOKS //	
+								//	Person
+								case UserREAD: 				UserGetData();								break;	//necessario setSql con query completa			
+								case UserREADbyEmail: 		UserGetDatabyEmail();						break;	//necessario setSql con email							
+								case UserREADbyEmailAcc:	UserGetDatabyEmailAcc();					break;			//necessario setidut															
+								case UserREADbyEmailMod: 	UserGetDatabyEmailMod();					break;	//necessario setidut																									
+								case UserREADlogin: 		UserGetDataLogin();							break;	//necessario setSql con email setSql2 con password							
+								case UserREADaccountMod: 	UserGetDataAccountMod();					break;	//necessario setSql con email setSql2 con password																				
+								case UserREADcheckEmail: 	UserREADcheckEmailExist();					break;	//necessario setSql con email 																	
+								case UserREADcheckCF:		UserREADcheckCfExist();						break;//necessario setSql con cf 					
+								//	Loans
+								case LoanREAD: break;			
+								//	Booking			
+								case BookingREAD: break;	
+								default:break;	
+							}				
 					break;
 				//	****************************************************	Change		   		***			
 					case CHANGE:
-								switch (com) {							
-	
-						//	All Table		
-							case tableExistBook: 
-														ClientCheckExistTableBook();
-								break;	
-							
-							case tableExistLoans: 
-														ClientCheckExistTableLoans();
-								break;
-							
-							case tableExistPerson: 
-														ClientCheckExistTablePerson();
-								break;
-							case tableExistBooking: 
-														ClientCheckExistTableBooking();
-								break;
-							case tableExistSetting: 
-														ClientCheckExistTableSetting();
-								break;
+							switch (com) {							
+								//	All Table		
+								case tableExistBook: 		ClientCheckExistTableBook();				break;	
+								case tableExistLoans:		ClientCheckExistTableLoans();				break;
+								case tableExistPerson: 		ClientCheckExistTablePerson();				break;
+								case tableExistBooking:		ClientCheckExistTableBooking();				break;
+								case tableExistSetting: 	ClientCheckExistTableSetting();				break;
+								//	book			
+								case BookADD:				ClientBookAdd();							break;	// arriva DA GUI 		TABLEBOOKS			
+								case BookDELETE: 			ClientBookDelete();							break;	// arriva DA classe 	tableupdatebooks						
+								//	Person
+								case UserUPDATE: 			UserUPDATE();								break;
+								case UserDELETE: 			UserDELETE();								break;	
+								case UserREADloginFIRST: 	UserGetDataLoginFIRST();					break;	//necessario setSql con email setSql2 con password_temp									
+								case UserRegistration: 		ClientCHANGEuserRegistration();				break;
+								case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);	break;
+								case UserActivation: 													break;				
+								//	Loans
+								case LoanASK:				ClientCMDloans.LoansNew(this);				break;	//richiesta nuovo prestito -- System.err.println("leggo da client ... idbook: "+getIdbook()); 
+								case LoanNew: 															break;
+								case LoanListADD: 														break;		
+								case LoanListREMOVE: 													break;	
+								case LoanBookGet: 														break;	
+								case LoanBookGiveback: 													break;	
+								case LoanNoticeAvaiable: 												break;	
+								case LoanNoticeExpiration: 												break;
+								//	Booking
+								case BookingListREMOVE:		ClientCMDBooking.BookingDelete(this);		break;
+								default:																break;
 								
 								
-								
-						//	book			
-							case BookADD:				// arriva DA GUI 		TABLEBOOKS									
-														ClientBookAdd();
-								break;
-							case BookDELETE: 			// arriva DA classe 	tableupdatebooks
-														ClientBookDelete();				
-								break;
-						
-						//	Person
-							case UserUPDATE: 
-														UserUPDATE();	
-								break;
-							case UserDELETE: 
-														UserDELETE();
-								break;	
-							
-							case UserREADloginFIRST: 								
-														UserGetDataLoginFIRST();//necessario setSql con email setSql2 con password_temp
-								break;									
-
-							case UserRegistration: 
-														ClientCHANGEuserRegistration();
-								break;
-							case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);
-								break;
-							case UserActivation: 		
-								break;				
-									
-						//	Loans
-
-//TODO							
-							case LoanASK:				
-								System.err.println("leggo da client ... idbook: "+getIdbook());
-								ClientCMDloans.LoansNew(this);//richiesta nuovo prestito 
-								break;
-							
-							case LoanNew: 
-								
-								break;
-							case LoanListADD: 
-								
-								break;								
-							case LoanListREMOVE: 
-								
-								break;								
-							case LoanBookGet: 
-									
-								break;
-							case LoanBookGiveback: 
-								
-								break;
-							case LoanNoticeAvaiable: 
-								
-								break;															
-							case LoanNoticeExpiration: 
-								
-								break;								
-
-							default:				
-								break;
-								}
+							}
 					break;
 				//	****************************************************	Default		   		***			
-					default:
-						
+					default:						
 					break;
 				}													
-				
 			}//Client settato off		
 			//Logica();
 		} catch (Exception e) {			
@@ -458,7 +371,7 @@ public class Client implements Serializable, Runnable  {
 														}
 														else {															
 															for (int i = 5;i>0;i--){
-																try {Thread.sleep(1000);
+																try {Thread.sleep(100);//default 1000
 																System.out.println(mSg = "CLI :> Verifica Stub NG \nTentativo "+getRepeatconnCount()+ " \nnuovo tentativo tra "+i+" secondi ");
 																getActW().addMsg(mSg);
 																} catch (Exception e) {
@@ -679,16 +592,11 @@ setBusy(false);
 							case "OK":							
 								break;
 	
-							case "STUB :> Eccezione *** nessuna risposta da SKELETON":
-								System.out.println("CLI - ECCEZIONE DA STUB");	
+							case "STUB :> Eccezione *** nessuna risposta da SKELETON":		System.out.println("CLI - ECCEZIONE DA STUB");	
 								break;
-								
 							case "SRV :> user Registration :> OK":							
 								PopUp.infoBox(getActC(), "Registrazione avvenuta con successo, attiva account dal codice che ti abbiamo inviato");							
 								System.out.println("TO ARRIVATO AL CLIENT : "+getTo());			
-								
-// TODO spostare lato server
-								
 								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
 								this.setSql(null);		
@@ -1240,17 +1148,8 @@ setBusy(false);
 									+ "\n"
 									+ "\n"
 									+ "\n");
-								
-								
-							
-							
-								
-								
 								break;
 							//TASTO PRESTITO	
-
-								
-								
 //BOOK
 							case	"SRV :> BookLastId :> OK":
 								ResearchBooks resB = (ResearchBooks) ActW;						
@@ -1264,6 +1163,14 @@ setBusy(false);
 								resBk.setLastIDbookcheckinprogress(false);
 								break;								
 
+							//Booking Delete	
+							case 	"SRV :> Del-Booking:> OK": 	ClientCMDBooking.BookingDeleteRES(this, "OK");	break;
+							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
+								
+								
+								
+								
+								
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								

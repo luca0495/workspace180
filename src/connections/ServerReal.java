@@ -14,24 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-
-
-
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
@@ -51,17 +42,13 @@ import database.*;
 
 //ver 2017 03 29 v1
 public class ServerReal extends ServerSkeleton {
-		private 	SystemServerSkeleton 	meS;
-		
+		private 	SystemServerSkeleton 	meS;		
 		private 	Server					Srv;
 		private 	Guardian				GpG;
 		private 	Requests				Req;		
-		private 	String 					mSg;
-		
+		private 	String 					mSg;		
 		private  	Map<String,Message>  	listcmdDONE = new TreeMap<>();		
-
 		public 		Boolean					Go;
-
 		private 	MessageBack				mSgB;		
 //**-------------------------------------------------------------------------------------------------------------
 		private boolean 	chkinprogress1=false;
@@ -77,8 +64,6 @@ public class ServerReal extends ServerSkeleton {
 		private boolean 	chkinprogress6=false;
 		private String 		chkResult6;	
 //**-------------------------------------------------------------------------------------------------------------		
-		
-	
 		public ServerReal(Socket socket,Server SrvRif) throws Exception{
 		super(socket);//SERVER Skeleton...
 		
@@ -115,9 +100,7 @@ public class ServerReal extends ServerSkeleton {
 				//Server.setSrvconn(Server.getSrvconn() - 1);	
 				getSrv().removeOp(this);
 				getMeS().getFrame().setVisible(false);
-				
-				
-				
+
 				Thread.sleep(10);
 				
 				System.out.println("REALServer:> attuale numero connessioni : "+ Server.getSrvconn() +"\n"); 	
@@ -390,13 +373,9 @@ public class ServerReal extends ServerSkeleton {
 					System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login");					
 					try {				
 						String email 	= M.getMsg().getSQLQuery();
-						String pass 	= M.getMsg().getSQLQuery2();	
-						
-						String []r 		= Check.checkAdminLogIn(email, pass);
-						
-						System.out.println("ottenuto dalla query id utente"+r[1]);
-						
-						
+						String pass 	= M.getMsg().getSQLQuery2();							
+						String []r 		= Check.checkAdminLogIn(email, pass);						
+						System.out.println("ottenuto dalla query id utente"+r[1]);												
 						if (r[1]==null) {
 							x.setIdUser(0);
 						}else {
@@ -405,18 +384,15 @@ public class ServerReal extends ServerSkeleton {
 						
 						x.setRowUser(r);
 						x.setUserEmail(email);
-						x.setText(new String ("SRV :> selected user login check:> "+r[0]));
-						
+						x.setText(new String ("SRV :> selected user login check:> "+r[0]));						
 					} catch (SQLException e) {	
 						System.out.println("problemi con \"SRV :> selected user login check ");
-						e.printStackTrace();				
-						
+						e.printStackTrace();										
 						getMeS().addMsg(mSg);
 						x.setText(new String ("SRV :> selected user login check:> NG"));
 					}
 					System.out.println("SYS AL :> srv ritorna "+x.getText());										
 					return x;				
-
 			default:
 					break;
 	}		
@@ -432,12 +408,9 @@ public class ServerReal extends ServerSkeleton {
 												//	---->	[	Prenotation [PL]	[PR]		]
 		
 												// accodamento richiesta su Requests gestita da Guardian 	
-		
-		System.out.println("RealServer :> Rx Change ");
-		
+												//System.out.println("RealServer :> Rx Change ");
 		MessageRealServer M = this.MessageEncapsulation(Mes);
-		System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
-		
+												//System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
 		MessageBack x 		= new MessageBack();
 		MessageBack Answer 	= new MessageBack();
 		
@@ -449,14 +422,12 @@ public class ServerReal extends ServerSkeleton {
 							System.out.println("RealServer :> Rx Librarian");			
 							
 				switch ( M.getMsg().getCommand().getTarget()){
-
-				
+	
 				case Setting:		//SL	//-->[GpG [SL]] ---->[DB]	
 					//System.out.println("RealServer :> Rx Account");
 					try {					
 							System.out.println("RealServer :> Accodo M [ SL ]");
 							System.out.println("RealServer :> AL in attesa prima... "+Req.getSL().getWr());
-		
 							Req.getSL().put(M);
 							//******************************************************************************
 							while (!Go){
@@ -485,32 +456,20 @@ public class ServerReal extends ServerSkeleton {
 							}
 								System.out.println("SYS AL :> srv ritorna "+x.getText());										
 							return x;								
-							//break;
-								
-								
-								
+							//break;		
 							default:
-								break;
-							
-							}
-							
-							
-							
-							
-							
-					}catch (Exception e) {
-						
+								break;							
+							}		
+					}catch (Exception e) {						
 					}
 				break;
-				
-				
+
 				
 				case Booking:		//BKL	//-->[GpG [BKL]] ---->[DB]	
 					//System.out.println("RealServer :> Rx Account");
 					try {					
 							System.out.println("RealServer :> Accodo M [ BKL ]");
-							System.out.println("RealServer :> AL in attesa prima... "+Req.getBKL().getWr());
-		
+							System.out.println("RealServer :> AL in attesa prima... "+Req.getBKL().getWr());		
 							Req.getBKL().put(M);
 							//******************************************************************************
 							while (!Go){
@@ -522,30 +481,45 @@ public class ServerReal extends ServerSkeleton {
 									System.out.println("REAL SERVER L-BK:> go "+Go);						
 							}	//Attesa del turno...									
 							//******************************************************************************							
-							switch (M.getMsg().getCommand()) {
-							
+							switch (M.getMsg().getCommand()) {							
 							case tableExistBooking:							
 								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistBooking ");					
-							try {
-								ChkDBandTab.tableExistBooking();
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> OK"));	
-							} catch (SQLException e) {
-								getMeS().addMsg(mSg);
-								x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> NG..."));
-								System.out.println("problemi con controllo tabella Booking");
-								e.printStackTrace();
-							}
+								try {
+									ChkDBandTab.tableExistBooking();
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> OK"));	
+								} catch (SQLException e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Booking Exist :> NG..."));
+									System.out.println("problemi con controllo tabella Booking");
+									e.printStackTrace();
+								}
+									System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;							
+							case BookingListREMOVE:	
+								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Loans LIST DELETE ");					
+								System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
+								try {									
+									int[]r=null;
+									r[0]=M.getMsg().getSelectedIdBook() ;
+									r[1]=M.getMsg().getSelectedIdUser();											
+									MQ_Delete.deleteRowBooking(r);									
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> Del-Booking:> OK"));										
+								} catch (SQLException e) {	
+									System.out.println("problemi con query Del-Booking");
+									e.printStackTrace();														
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> Del-Booking:> NG"));
+								}
 								System.out.println("SYS AL :> srv ritorna "+x.getText());										
-							return x;								
-							//break;		
+								return x;	
+								//break;							
 							default:
-								break;
-							
-							}
-		
-					}catch (Exception e) {
-						
+								break;							
+							}		
+					}catch (Exception e) {						
 					}
 				break;
 			
@@ -570,10 +544,8 @@ public class ServerReal extends ServerSkeleton {
 															
 								case UserRegistration:
 									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> userRegistration ");					
-									try {
-									
-										MQ_Insert.insertUtente(M.getMsg().getSQLQuery());				
-										
+									try {									
+										MQ_Insert.insertUtente(M.getMsg().getSQLQuery());														
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> user Registration :> OK"));	
 									} catch (SQLException e) {
@@ -584,26 +556,18 @@ public class ServerReal extends ServerSkeleton {
 									}
 									System.out.println("SYS AL :> srv ritorna "+x.getText());										
 									return x;								
-									//break;
-								
+									//break;	
 								case UserPasswordRecovery:
 									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> UserPasswordRecovery ");					
-									try {
-										
+									try {										
 										//cambia query
 										MQ_Update.updateNewPassForgot(M.getMsg().getSQLQuery());
-										
-										
-										
 										//invia mail
 										EmailSender.send_uninsubria_recoverypassword(M.getMsg().getSQLQuery2(), 
 																					null, 
 																					M.getMsg().getPw());
-										
-										
 										getMeS().addMsg(mSg);
-										x.setText(new String ("SRV :> UPRecovery :> OK"));	
-										
+										x.setText(new String ("SRV :> UPRecovery :> OK"));											
 									} catch (Exception e) {
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> UPRecovery :> NG"));
@@ -612,22 +576,18 @@ public class ServerReal extends ServerSkeleton {
 									}
 									System.out.println("SYS AL :> srv ritorna "+x.getText());										
 									return x;								
-									//break;
-									
+									//break;									
 								case UserUPDATE:	//SRV UP
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
 									try {
 										System.out.println("REAL SERVER :> Query passata dal client :"+M.getMsg().getSQLQuery().toString());
 										System.out.println("REAL SERVER :> email user passata dal client :"+M.getMsg().getSQLQuery2().toString());
-										System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
-										
+										System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());										
 										MQ_Update.updateModUserIdbyQuery(M.getMsg().getSQLQuery());		
-
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> UP :> OK"));
 										x.setIdUser(M.getMsg().getIdut());
-										x.setUserEmail(M.getMsg().getSQLQuery2());
-										
+										x.setUserEmail(M.getMsg().getSQLQuery2());										
 									} catch (Exception e) {
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> UP :> NG"));
@@ -636,15 +596,12 @@ public class ServerReal extends ServerSkeleton {
 									}
 									System.out.println("SYS AL :> srv ritorna "+x.getText());										
 									return x;								
-									//break;	
-								
+									//break;									
 								case UserDELETE:	
 										System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> USER DELETE ");					
 										System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
-									try {				
-										
-										MQ_Delete.deleteRowPerson(M.getMsg().getIdut());
-										
+									try {														
+										MQ_Delete.deleteRowPerson(M.getMsg().getIdut());										
 										getMeS().addMsg(mSg);
 										x.setText(new String ("SRV :> USER del :> OK"));										
 									} catch (SQLException e) {	
@@ -870,7 +827,7 @@ public class ServerReal extends ServerSkeleton {
 										System.out.println("SYS BL :> srv ritorna "+x.getText());
 										return x;
 										//break;
-									
+																		
 									case LoanASK:	
 //TODO copiare anche per reader ... far passare dal client 
 										
@@ -942,7 +899,7 @@ public class ServerReal extends ServerSkeleton {
 
 													) 	{	//se tutti i check restituiscono esito positivo...
 													
-<<<<<<< HEAD
+
 													x.setText(new String ("SRV :> Loans ASK :> OK" ));
 //TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO													
 													//crea query aggiungi prestito
@@ -953,32 +910,29 @@ public class ServerReal extends ServerSkeleton {
 													Calendar calendar = new GregorianCalendar();
 													java.util.Date datacorrente = 	calendar.getTime();  
 													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
-=======
+
 													x.setText(new String ("SRV :> Loans ASK :> OK" ));																			
->>>>>>> ampliato controllo prenotazione, inserisce prestito o coda prenotazioni
-													
-													
-													
+											
 													//CHECK : conta utenti in coda per il libro
 													int coda = MQ_Read.checkLoansIdBookWait(idbook);
-													if (coda == 0) {												
-														//crea query aggiungi prestito
-														//data fine 	= null
-														//rientrato		= false	
-														//ritirato		= false
-														
-														Calendar calendar = new GregorianCalendar();
-														java.util.Date datacorrente = 	calendar.getTime();  
-														String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, false);				
+													if (coda == 0) {															
 														
 														MQ_Insert.insertLoans(q);//test ok
 														String msg = "inserito prestito";
 														String[] rokmsg =new String[2]; 
 														rokmsg[0]=msg;
-														x.setRowLoans(rokmsg);	
+														x.setRowLoans(rokmsg);
+														
+			//q aggiorna campo LIBERO in OCCUPATO
+														MQ_Update.updateLoansStato(String.valueOf(idbook));
+
+														
 													}else {
 														System.out.println("ci sono in coda "+coda+" utenti");	
-														MQ_Insert.insertLoansCoda(idbook, idut);
+														
+														String qw = MQ_Insert.insertLoansCodaGetQuery(idbook, idut, 10, datacorrente);
+														MQ_Insert.insertLoansCoda(qw);
+														
 			//TODO QUERY INSERIMENTO NUOVA PRENOTAZIONE											
 														String msg = "inserito in coda prenotazine";
 														String[] rokmsg =new String[2]; 														
@@ -1002,17 +956,7 @@ public class ServerReal extends ServerSkeleton {
 															rokmsg[3]=chkResult3;
 															rokmsg[4]="NN";
 															rokmsg[5]="NN";
-															
-															
-															x.setRowLoans(rokmsg);
-															
-															
-															
-															
-															
-															
-															
-															
+															x.setRowLoans(rokmsg);															
 														}
 											//PRASSI ARDITO *****************************************
 											getMeS().addMsg(mSg);

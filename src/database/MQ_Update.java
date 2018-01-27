@@ -265,10 +265,7 @@ public class MQ_Update {
 	public static void updateLoansEmailSent(	String idut,   
 												String idlib) 	throws SQLException
 							{	
-							
-							
-		
-		
+
 							String query1 = "UPDATE prestiti set email_inviata = true where id='"+idut+"' and codice='"+idlib+"';";
 							
 							DBmanager.openConnection();
@@ -276,7 +273,15 @@ public class MQ_Update {
 							DBmanager.closeConnection();
 	}	
 	
+		public static void updateLoansStato(String idlib) 	throws SQLException
+	{	
 	
+	String query1 = "UPDATE libro set disponibilità =  'PRENOTATO' where codice='"+idlib+"';";
+	
+	DBmanager.openConnection();
+	DBmanager.executeUpdate(query1);
+	DBmanager.closeConnection();
+	}		
 	
 	
 }

@@ -10,7 +10,7 @@ import gui.SystemServerSkeleton;
 
 // 2017 04 01 V9
 
-public class Server {						
+public class Server implements Runnable{						
 	private	static 			Server 			me;
 	private static 			SystemServer 	meG		=null;
 	
@@ -23,6 +23,7 @@ public class Server {
 	private 				Requests 		R;
 
 	public Server(){
+		me=this;
 		setR(new Requests(10));
 		setG(new Guardian(this,getR()));
 		try {
@@ -32,9 +33,9 @@ public class Server {
 			System.out.println("problemi con creazione Guardian");
 		}
 	}
-	
 	public static void main(String[] args) throws Exception {
-		me = new Server();
+		Server mex = new Server();
+		me=mex;
 		me.setOperatori(new LinkedList<>());
 		
 		setMeG(new SystemServer(me));
@@ -106,6 +107,48 @@ public class Server {
 		System.out.println(msg="Connessioni attive : " + getSrvconn() + "\n Waiting a connection... ");
 		getMeG().addMsg(msg);
 		
+		
+	}
+
+	@Override
+	public void run() {
+		
+		me.setOperatori(new LinkedList<>());
+		try {
+			me.setMeG(new SystemServer(me));
+		} catch (Exception e1) {
+			
+			e1.printStackTrace();
+		}
+		me.getMeG().getFrame().setVisible(true);
+		
+		ServerSocket serverSocket;
+		try {
+			serverSocket = new ServerSocket(IServer.PORT);
+			System.out.println(msg = "xxx schoolLib Server Started: \n" + serverSocket);
+			getMeG().addMsg(msg);
+		    while(true){
+		    	try {
+		    			System.out.println(msg="Connessioni attive : " + getSrvconn() + "\n Waiting a connection... ");
+		    			getMeG().addMsg(msg);
+		    			Socket socket = serverSocket.accept();
+		    			
+		    			ServerReal x = new ServerReal(socket,me);
+		    			me.getOperatori().add(x);
+		    			new Thread(x).start();
+		    			
+				} catch (Exception e) {
+				} 
+		    	 //System.out.println("schoolLib Server // connessioni attive : "+srvconnlist.size());
+		    	 //srvconnlist.add(socket);	 
+		    }			
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+		
+
 		
 	}
 	

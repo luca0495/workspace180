@@ -170,15 +170,40 @@ public class MQ_Insert {
 			return 	query;
 		}
 
-public static void insertLoansCoda(int codice,int utente) throws SQLException
-		{
+public static String insertLoansCodaGetQuery(		
+				int codice,
+				int id,
+				int priorita,
+				Date data_inizio 
+				) throws SQLException
+{			
 			Calendar c = new GregorianCalendar();
 			Date datacorrente = c.getTime();
 			int pr = 10;
-					
-			String query = "INSERT INTO prenotazioni VALUES ('codice','utente','10','datacorrente');";
+
+			String query = 		"INSERT INTO prenotazioni("
+					+ "codice, "
+					+ "id, "
+					+ "priorità, "
+					+ "data_inizio )"
+					+ "VALUES('" 		+ codice	            + "' , '"
+										+ id		            + "' , '" 
+										+ priorita		        + "' , '" 
+			                            + data_inizio	 	    + "')";
+			return 	query;
+}				
+	
+
+	
+	
+		
+		
+		
+		
+public static void insertLoansCoda(String q) throws SQLException
+		{
 			DBmanager.openConnection();
-			DBmanager.executeUpdate(query);
+			DBmanager.executeUpdate(q);
 			DBmanager.closeConnection();
 }
 		

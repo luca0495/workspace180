@@ -160,12 +160,30 @@ public class ResearchBooks extends SL_JFrame {
 		panelBooking.setLayout(null);
 		
 		TableBooks panelTableResearch = new TableBooks(frame,me);
-		panelTableResearch.setBounds(0, 11, 995, 416);
+		panelTableResearch.setBounds(10, -45, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
 		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
 		panelTableLoansResearch.setBounds(0, 11, 995, 416);
 		panelLoans.add(panelTableLoansResearch);
+		
+		JButton button = new JButton("CancellaPrenotazione");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+				
+					//TODO prelevare idbook idutente 
+					me.getCmdLIST().put(Commands.BookingListREMOVE);
+				
+				
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			
+			}
+		});
+		button.setBounds(719, 438, 240, 51);
+		panelBooking.add(button);
 		
 		TableBooking panelTableBookingResearch = new TableBooking(frame,me);
 		panelTableBookingResearch.setBounds(0, 11, 995, 416);
@@ -222,7 +240,7 @@ public class ResearchBooks extends SL_JFrame {
 			    				} catch (InterruptedException e1) {				
 			    					e1.printStackTrace();
 			    				}			
-			    			    }else{
+			    }else{
 			    	//TODO PASSA A CLIENT da TableBooks	
 			    	//me.getCmdLIST().put(Commands.tableBookPopulate);	
 			    			      try {
@@ -233,7 +251,7 @@ public class ResearchBooks extends SL_JFrame {
 			    					e1.printStackTrace();
 			    				}
 			    			     
-			    			 }
+			    }
 	    
 	   }
    });
@@ -774,27 +792,22 @@ public class ResearchBooks extends SL_JFrame {
 	public boolean askIdBook(){
 		boolean checkok=true;
 		int idbook = me.getSelectedIdBook();
-		int iduser = me.getIdut();//UTENTE LOGGATO
-		
+		int iduser = me.getIdut();//UTENTE LOGGATO		
 		if (idbook == 0) {
 			checkok=false;
 			PopUp.errorBox(frame, "NESSUN LIBRO SELEZIONATO ");			
 		}else {
-			
 					//controllo LOGIN	
 					if (iduser == 0) {
 						checkok=false;
-						PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");		
-						
+						PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");								
 					}else
 					{//LOGIN OK
 						try {				
 							me.setSelectedIdUser(me.getIdut());				
-							System.out.println("GUI account:> ottenuti dati user ");
-							
+							System.out.println("GUI account:> ottenuti dati user ");							
 //TODO RIMUOVERE E COPIARE METODO PER LIBRARIAN ANCHE PER READER nel REALSERVER
-							me.setCliType(Clients.Librarian);
-							
+							me.setCliType(Clients.Librarian);							
 							System.err.println("passo prima del metodo idbook : "+idbook);
 							me.setIdbook(idbook);
 							me.getCmdLIST().put(Commands.LoanASK);	

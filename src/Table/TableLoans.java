@@ -152,21 +152,14 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 
                 //dati TUPLA in selezione salvati su Client
                 String idlibro				= (String) source.getValueAt(selectedRow, 0);
-                String idutente				= (String) source.getValueAt(selectedRow, 1);
-                String dataStart			= (String) source.getValueAt(selectedRow, 2);
-                String dataStop				= (String) source.getValueAt(selectedRow, 3);
-                
+                String idutente				= (String) source.getValueAt(selectedRow, 1);	
                 int 	idbook		=Integer.valueOf(	idlibro);  
                 int 	iduser		=Integer.valueOf(	idutente);  
-                Date 	iddataStart =Date.valueOf(		dataStart);                  
-                Date 	iddataStop  =Date.valueOf(		dataStop);            
-                
-                
+
                 //setta su client idbook selezionato
                 me.setSelectedIdBook(idbook);
                 me.setSelectedIdUser(iduser);
-                me.setSelectedIdDataStart(iddataStart);
-                me.setSelectedIdDataStop(iddataStop);
+
                 
                 PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
                 									"\nottenuto iduser  : "+me.getSelectedIdUser()+

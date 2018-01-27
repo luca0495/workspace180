@@ -58,17 +58,21 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		{
 			if(!isAdjusting)
 			{
-				for(int j = 0; j<8; j++)
+				for(int j = 0; j<4; j++)
 				{
+					
+					//errore da booking
 					rowData.add((String) tl.getValueAt(index, j));
 				}
-				TableUpdateLoans.setRowData(rowData);
+				
+				//TableUpdateLoans.setRowData(rowData);
+				TableUpdateBooking.setRowData(rowData);	
 			}
 			else
 			{
 				if(!isAdjusting)
 				{
-					for(int j = 0; j<3; j++)
+					for(int j = 0; j<4; j++)
 					{
 						rowData.add((String) tl.getValueAt(index, j));
 					}

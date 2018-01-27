@@ -151,7 +151,15 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}
 
-
+	public static void deleteRowBooking(int [] r) throws SQLException
+	{		
+		String query = "DELETE FROM prenotazioni WHERE "
+				+ "			codice 		= '"   + r[0] 				//book
+		        + "' AND 	id		 	= '"   + r[1] + "';";		//user
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}	
 	
 
 }

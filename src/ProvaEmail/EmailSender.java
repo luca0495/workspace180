@@ -186,20 +186,16 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 											 String nome_autore,
 											 String cognome_autore,
 											 String titolo
-											 
-											 
+											 							 
 			 ) throws SendFailedException, MessagingException, SQLException{
-		 
 		     String host = "smtp.office365.com";
-		     String from= UN;
-		     
+		     String from= UN; 
 		     Authenticator authenticator = new Authenticator()
 		      {         @Override
 		    	          protected PasswordAuthentication getPasswordAuthentication() {
 		    	             return new PasswordAuthentication(UN, PW);
 		    	          }
 		      };
-		     
 		     //SMTPAuthenticator authenticator = new SMTPAuthenticator(me.getUSERNAME(), me.getPASSWORD());
 			 Properties props = new Properties();
 			 props.setProperty("mail.smtp.auth" , "true" );
@@ -215,10 +211,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 				  			.append("Il prestito in oggetto : libro ID: "+idlibro).append("  <br/>")
 				  			.append(" TITOLO: "+titolo).append("  <br/>")
 				  			.append(" Autore: "+nome_autore+" "+cognome_autore ).append("  <br/>")
-				  			
-				  .append("").append("  <br/>")
-				  
-			      .append("  <br/>").append(" Nell'invitarla alla restituzione il prima possibile, la ringraziamo in anticipo <br/>").append("</div>");
+				  			.append("  <br/>").append(" Nell'invitarla alla restituzione il prima possibile, la ringraziamo in anticipo <br/>").append("</div>");
 			try{		
 			 
 			Message msg = new MimeMessage(session);

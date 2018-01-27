@@ -68,39 +68,22 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
             	System.out.println("1");
                 if(PopUp.confirmBox(frame))
                 {
                 	System.out.println("2");
                 	List<String> rowData = new ArrayList<String>();
                 	System.out.println("3");
-        			for(int i = 0; i<3; i++)
+        			for(int i = 0; i<4; i++)
         			{
         				System.out.println("4");
         				rowData.add((String) tm.getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
-        				System.out.println("5");      				
-//TODO CANCELLA PRESTITO PASSA METODO AL CLIENT        	////////////////////////////////////////////////////////////////////////////////			
-        				
-        				//old OK
-						//TableUpdateBooks.deleteRow(rowData, getTable());
-        				
-
-//TODO CANCELLA PRESTITO PASSA METODO AL CLIENT        	/////////////////////////////////////////////////////////////////////////////////			
-						
-        				//TableUpdateBooks.deleteRow(rowData, table);
-						
-        				//tm.fireTableDataChanged();
-						//table.repaint();					
-						
+        				System.out.println("5");      							
         				TableUpdateBooking.deleteRow(rowData, getTable(), me);
-
-						//tm.fireTableDataChanged();
-						//getTable().repaint();
-					
-        			
         			} 
 
         			catch (SQLException e1)
@@ -153,26 +136,16 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
                 //dati TUPLA in selezione salvati su Client
                 String idlibro				= (String) source.getValueAt(selectedRow, 0);
                 String idutente				= (String) source.getValueAt(selectedRow, 1);
-                String dataStart			= (String) source.getValueAt(selectedRow, 2);
-                String dataStop				= (String) source.getValueAt(selectedRow, 3);
-                
-                int 	idbook		=Integer.valueOf(	idlibro);  
-                int 	iduser		=Integer.valueOf(	idutente);  
-                Date 	iddataStart =Date.valueOf(		dataStart);                  
-                Date 	iddataStop  =Date.valueOf(		dataStop);            
-                
+                int 	idbook				=Integer.valueOf(idlibro);  
+                int 	iduser				=Integer.valueOf(idutente);  
                 
                 //setta su client idbook selezionato
                 me.setSelectedIdBook(idbook);
                 me.setSelectedIdUser(iduser);
-                me.setSelectedIdDataStart(iddataStart);
-                me.setSelectedIdDataStop(iddataStop);
                 
                 PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
-                									"\nottenuto iduser  : "+me.getSelectedIdUser()+
-                									"\nottenuto idD init: "+me.getSelectedIdDataStart()+
-													"\nottenuto idD stop: "+me.getSelectedIdDataStop())
-                			);
+                									"\nottenuto iduser  : "+me.getSelectedIdUser() 
+                			));
 				
 		
             }
