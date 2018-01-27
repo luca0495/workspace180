@@ -225,7 +225,7 @@ public class Guardian implements Runnable {
 								R.setPRcs(4);	//decremento conteggio BR
 												//al prossimo turno verra servita
 								
-								Val_AL();		//altre valutazioni a partire da AL
+								Val_BKL();		//altre valutazioni a partire da AL
 						}		
 				}		
 		}else{								//nessuna richiesta in attesa per BR
@@ -243,7 +243,7 @@ public class Guardian implements Runnable {
 		if (R.getBKL().getWr()>0){		//richieste in attesa per BKL
 			
 				if(R.getLastserved()!=Requests.RS.BKL){	//ultima richiesta servita diversa da 	BKL
-						ServePR(0);				//SERVITA mod PRIMA RICHIESTA BR					
+						ServeBKL(0);				//SERVITA mod PRIMA RICHIESTA BR					
 				}else{
 						x = R.getBKLcs();		//						
 						if (x < 5){				//servite continuativamente MENO di 5 BR
