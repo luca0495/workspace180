@@ -48,7 +48,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		boolean isAdjusting = e.getValueIsAdjusting();
 		String sel=getSel();
 		
-		
+		/*
 		//mauro TEST
 		if(!isAdjusting)
 		{		
@@ -83,8 +83,8 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 						break;
 				}
 		}
+		*/
 		
-	/*	
 		
 		if(selection)
 		{
@@ -125,7 +125,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 			}
 			
 		}
-		*/
+	
 		
 	}
 
