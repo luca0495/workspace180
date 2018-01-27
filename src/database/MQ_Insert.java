@@ -1,7 +1,9 @@
 package database;
 
 import java.sql.Connection;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -168,6 +170,19 @@ public class MQ_Insert {
 			return 	query;
 		}
 
+public static void insertLoansCoda(int codice,int utente) throws SQLException
+		{
+			Calendar c = new GregorianCalendar();
+			Date datacorrente = c.getTime();
+			int pr = 10;
+					
+			String query = "INSERT INTO prenotazioni VALUES ('codice','utente','10','datacorrente');";
+			DBmanager.openConnection();
+			DBmanager.executeUpdate(query);
+			DBmanager.closeConnection();
+}
+		
+		
 		
 /*
 public static void insertPassTemp(int x) throws SQLException

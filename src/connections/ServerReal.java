@@ -872,7 +872,7 @@ public class ServerReal extends ServerSkeleton {
 										//break;
 									
 									case LoanASK:	
-//TODO far passare dal client 
+//TODO copiare anche per reader ... far passare dal client 
 										
 										int idut 		= M.getMsg().getSelectedIdUser();
 										int idbook 		= M.getMsg().getSelectedIdBook();		
@@ -888,23 +888,24 @@ public class ServerReal extends ServerSkeleton {
 											//PRASSI ARDITO *****************************************
 											//TEST OK 
 											setChkinprogress1(true);			//
-											//setChkinprogress2(true);
-											//setChkinprogress3(true);
+											setChkinprogress2(true);			//
+											setChkinprogress3(true);			//
 											//setChkinprogress4(true);
 											//setChkinprogress5(true);
 											//setChkinprogress6(true);
 											
 											System.err.println("server estrapola... idbook:"+idbook);
 
-											ck1(idut, idbook);		// limite massimo prestiti di 2 volte per lo stesso LIBRO
-											ck2(idut, idbook);		// limite massimo prestiti di 5 volte per lo stesso UTENTE
-
+											ck1(idut, idbook);		// limite massimo prestiti di 	2 volte per lo stesso LIBRO
+											ck2(idut, idbook);		// limite massimo prestiti di 	5 volte per lo stesso UTENTE
+											ck3(idut, idbook);		// limite massimo scaduti 		0 per lo stesso UTENTE
+											
 											boolean Timeout=true;
 											int c=0;
 											
 											while (		isChkinprogress1()
 													&& 	isChkinprogress2()
-//													&& 	isChkinprogress3()
+													&& 	isChkinprogress3()
 //													&& 	isChkinprogress4()
 //													&& 	isChkinprogress5()
 //													&& 	isChkinprogress6()
@@ -929,17 +930,19 @@ public class ServerReal extends ServerSkeleton {
 												
 											}//while
 												
+												
 												String 							rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";
 												
 												if (		chkResult1.equals(	rok)
 														&& 	chkResult2.equals(	rok)
-												//		&& 	chkResult3.equals(	rok)
+														&& 	chkResult3.equals(	rok)
 												//		&& 	chkResult4.equals(	rok)
 												//		&& 	chkResult5.equals(	rok)
 												//		&& 	chkResult6.equals(	rok)
 
 													) 	{	//se tutti i check restituiscono esito positivo...
 													
+<<<<<<< HEAD
 													x.setText(new String ("SRV :> Loans ASK :> OK" ));
 //TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO													
 													//crea query aggiungi prestito
@@ -950,37 +953,66 @@ public class ServerReal extends ServerSkeleton {
 													Calendar calendar = new GregorianCalendar();
 													java.util.Date datacorrente = 	calendar.getTime();  
 													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
+=======
+													x.setText(new String ("SRV :> Loans ASK :> OK" ));																			
+>>>>>>> ampliato controllo prenotazione, inserisce prestito o coda prenotazioni
 													
 													
-													//q interrogazione se libero
 													
-													Boolean Libero=false;
-													
-			//TODO VALUTAZIONE SE IL LIBRO E'LIBERO
-					
-			//TODO QUERY READ DI CONTROLLO LIBERO										
-													
-													if (Libero) {
-													
-													MQ_Insert.insertLoans(q);//test ok
+													//CHECK : conta utenti in coda per il libro
+													int coda = MQ_Read.checkLoansIdBookWait(idbook);
+													if (coda == 0) {												
+														//crea query aggiungi prestito
+														//data fine 	= null
+														//rientrato		= false	
+														//ritirato		= false
+														
+														Calendar calendar = new GregorianCalendar();
+														java.util.Date datacorrente = 	calendar.getTime();  
+														String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, false);				
+														
+														MQ_Insert.insertLoans(q);//test ok
+														String msg = "inserito prestito";
+														String[] rokmsg =new String[2]; 
+														rokmsg[0]=msg;
+														x.setRowLoans(rokmsg);	
 													}else {
-														
-			//TODO PROCEDURA DI INSERIMENTO IN LISTA PRENOTAZIONI											
-														
+														System.out.println("ci sono in coda "+coda+" utenti");	
+														MQ_Insert.insertLoansCoda(idbook, idut);
 			//TODO QUERY INSERIMENTO NUOVA PRENOTAZIONE											
-														
+														String msg = "inserito in coda prenotazine";
+														String[] rokmsg =new String[2]; 														
+														rokmsg[0]=msg;
+														coda++;
+														rokmsg[1]=String.valueOf(coda);//PRIORITA														
+														x.setRowLoans(rokmsg);																										
 													}
-														
-														
-														
-													
-													
-													
+
 													
 													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");													
 														
 														}else {															
-															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));	
+															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
+															
+															String[] rokmsg =new String[6]; 
+															
+															rokmsg[0]="NN";
+															rokmsg[1]=chkResult1;
+															rokmsg[2]=chkResult2;
+															rokmsg[3]=chkResult3;
+															rokmsg[4]="NN";
+															rokmsg[5]="NN";
+															
+															
+															x.setRowLoans(rokmsg);
+															
+															
+															
+															
+															
+															
+															
+															
 														}
 											//PRASSI ARDITO *****************************************
 											getMeS().addMsg(mSg);
@@ -1350,7 +1382,7 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress1(false);		
 	}
 //**********************************************************************************************************************************************	
-	public void ck2(int idut,int idbook) {//TEST pestiti dello stesso utente, limite massimo 5 raggiunto	
+	public void ck2(int idut,int idbook) {//TEST prestiti dello stesso utente, limite massimo 5 raggiunto	
 		int pe;
 		try {		
 			pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);						
@@ -1368,14 +1400,14 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress2(false);		
 	}
 //**********************************************************************************************************************************************	
-		public void ck3(int idut,int idbook) {//TEST pestiti dello stesso utente almeno uno SCADUTO	
+		public void ck3(int idut,int idbook) {//TEST prestiti dello stesso utente almeno uno SCADUTO	
 			int pe;
 			try {				
 
 //TODO CAMBIA QUERY				
-				pe = MQ_Check.checkLoansIdutIdbook_5(idut, idbook);
+				pe = MQ_Read.checkLoansIdutScaduti(idut, idbook);
 							
-				if (pe==5||pe>5) {		//limite massimo di 5 raggiunto
+				if (pe>0) {		//limite massimo di scaduti : 0 
 					//prestito negato
 					setChkResult3("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER prestito SCADUTO risultante ");
 				}else {

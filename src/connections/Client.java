@@ -1202,19 +1202,48 @@ setBusy(false);
 								
 								
 							//TASTO PRESTITO	
-							case "SRV :> Loans ASK :> OK":								PopUp.infoBox(getActF(), "PRESTITO ACCORDATO");
+							case "SRV :> Loans ASK :> OK":								//PopUp.infoBox(getActF(), "PRESTITO ACCORDATO");
 					
-							
-							
+							if (Mb.getRowLoans()[0].equals("inserito prestito")) {		//prestito inserito
+								
+								PopUp.infoBox(getActF(),  "Libro assegnato in prestito, \n"
+														+ "l'utente ha da ora 7 giorni di tempo per il ritiro presso la biblioteca.\n"
+														+ "si ricorda che allo scadere del termine il libro verrá riassegnato. ");
+								
+							}else {														//inserito in coda prenotazione
+								PopUp.infoBox(getActF(),  "Libro non disponibile, \n"
+													   	 +"l'utente é inserito in coda PRENOTAZIONE con prioritá : "+Mb.getRowLoans()[1]);
+																						
+							}
+								
 								break;
-							case "SRV :> Loans ASK :> NG":								PopUp.infoBox(getActF(), "PROBLEMI SERI, TIPO DEPRESSIONE ");
+							case "SRV :> Loans ASK :> NG":								PopUp.infoBox(getActF(), "Errore GESTIONE DB ");
 							
 							
 							
 							
 								break;	
-							case "SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO":	PopUp.infoBox(getActF(), "PRESTITO NON CONSENTITO");
+							case "SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO":	
 								
+									for (int i = 1;i<Mb.getRowLoans().length;i++) {
+										 if (Mb.getRowLoans()[i].equals("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ")) {
+											 Mb.getRowLoans()[i]="";
+										 }
+									}
+								
+								
+									PopUp.infoBox(getActF(), "PRESTITO NON CONSENTITO\n"
+									+ Mb.getRowLoans()[1]+"\n"
+									+ Mb.getRowLoans()[2]+"\n"
+									+ Mb.getRowLoans()[3]+"\n"
+									+ "\n"
+									+ "\n"
+									+ "\n"
+									+ "\n");
+								
+								
+							
+							
 								
 								
 								break;

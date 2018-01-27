@@ -260,7 +260,9 @@ public class ResearchBooks extends SL_JFrame {
 				if (askIdBook()) {		//	test login e test prenotazione con 
 										//	me.iduser
 										//	me.idbook
-				PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());	
+					
+				//PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());	
+				
 				};
 				
 			}

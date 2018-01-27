@@ -744,6 +744,68 @@ where
 		return count;
 	}
 	
+/*select count (scaduto) from prestiti where 
+id = '1'		and
+ritirato=true 	and
+scaduto=true 	
+;
+*/
+	public static int checkLoansIdutScaduti(int idut,int idbook) throws SQLException
+	{
+		System.err.println("idut  :"+idut);
+		System.err.println("idbook  :"+idbook);
+		
+		String q="select count (scaduto) from prestiti where \r\n" + 
+				"id = '"+idut+"'		and\r\n" + 
+				"ritirato=true 	and\r\n" + 
+				"scaduto=true 	\r\n" + 
+				";";
+				
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+		int count;
+		if (!rs.isBeforeFirst()) 
+		{ 
+			count = 0;
+		}
+		else
+		{
+			rs.next();
+			count = rs.getInt(1);
+		}	
+		System.out.println("ottenuto count : "+count);
+		rs.close();
+		DBmanager.closeConnection();
+		return count;
+	}
+
+
+	public static int checkLoansIdBookWait(int idbook) throws SQLException
+	{
+		System.err.println("idbook  :"+idbook);
+		
+		String q="select count (id) from prenotazioni where codice='"+idbook+"';";
+				
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+		int count;
+		
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			count = 0;
+		}
+		else
+		{
+			rs.next();
+			count = rs.getInt(1);
+		}	
+		System.out.println("ottenuto count utenti in attesa di "+idbook+" : "+count);
+		rs.close();
+		DBmanager.closeConnection();
+		return count;
+	}
+	
 	 
 	}
 
