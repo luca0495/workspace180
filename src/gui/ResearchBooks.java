@@ -181,6 +181,28 @@ public class ResearchBooks extends SL_JFrame {
 		lblResearch.setBounds(285, 11, 91, 14);
 		frame.getContentPane().add(lblResearch);
 		
+		JButton btnReturnBack = new JButton("Indietro");
+		btnReturnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 WindowEvent close = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
+				 frame.dispatchEvent(close);
+				
+			}
+		});
+		btnReturnBack.setBounds(10, 7, 89, 23);
+		frame.getContentPane().add(btnReturnBack);
+		
+		JButton btnDelivery = new JButton("Consegna");
+		btnDelivery.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		btnDelivery.setBounds(135, 7, 126, 23);
+		frame.getContentPane().add(btnDelivery);
+		
 		textField = new JTextField();
 		textField.setBounds(337, 8, 315, 20);
 		frame.getContentPane().add(textField);
@@ -710,18 +732,6 @@ public class ResearchBooks extends SL_JFrame {
 		JButton btnDeleteBookReturned = new JButton("Cancella");
 		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
 		panelResearch.add(btnDeleteBookReturned);
-		
-		JButton btnReturnBack = new JButton("Indietro");
-		btnReturnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				 WindowEvent close = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
-				 frame.dispatchEvent(close);
-				
-			}
-		});
-		btnReturnBack.setBounds(10, 7, 89, 23);
-		frame.getContentPane().add(btnReturnBack);
 		
 		
 		if (	me.getCliType()==Clients.Admin||
