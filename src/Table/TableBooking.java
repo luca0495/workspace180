@@ -129,7 +129,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 				}//fine click rx
 
 				
-				
+				 /*
                 JTable source 	= (JTable)e.getSource();
                 selectedRow 	= source.rowAtPoint(e.getPoint());
                 
@@ -146,7 +146,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
                 PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
                 									"\nottenuto iduser  : "+me.getSelectedIdUser() 
                 			));
-				
+			*/
 		
             }
 		});
