@@ -19,7 +19,8 @@ public class ClientCMDBooking {
 		Commands cmd = Commands.BookingListREMOVE;
 		MessageBack Mb = new MessageBack();
 		
-		System.err.println("dal client su clientCMDloans... idbook:"+me.getIdbook());
+		System.err.println("dal client su clientCMDloans... idut:  "+me.getSelectedIdUser());
+		System.err.println("dal client su clientCMDloans... idbook:"+me.getSelectedIdBook());
 		
 		
 		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());

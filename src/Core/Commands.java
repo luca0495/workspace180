@@ -41,6 +41,7 @@ public enum Commands{
 			LoanASK					("Loan Ask for 		"			,	SearchFor.Prenotation,	CommandsType.CHANGE ,		4,	0),
 			LoanREAD				("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 			LoanPopulate			("Loan Populate		"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0), 	
+			LoanExecuteQuery		("Loan Execute Query"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0),			
 
 			
 			//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
@@ -56,6 +57,7 @@ public enum Commands{
 			BookingBookGiveback		("Booking Give back	"			,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),			
 			BookingREAD				("Booking read			"		,	SearchFor.Booking,		CommandsType.READ	,		4,	0),
 			BookingPopulate			("Booking Populate		"		,	SearchFor.Booking,		CommandsType.READ,			1,	0), 	
+			BookingExecuteQuery		("Booking Execute Query "		,	SearchFor.Booking,		CommandsType.READ,			1,	0),			
 
 // User
 			UserRegistration	("User registration"				,	SearchFor.Account,		CommandsType.CHANGE,		1,	0),

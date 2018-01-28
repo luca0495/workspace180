@@ -13,6 +13,8 @@ import Table.TableLoans;
 import connections.Client;
 import connections.Message;
 import connections.MessageBack;
+import gui.ResearchBooks;
+import javafx.scene.control.Separator;
 
 public class ClientCMDAllTables {
 
@@ -43,24 +45,46 @@ public class ClientCMDAllTables {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
-	public static void ATpopulateRES(Client me,String mes,MessageBack Mb) {
+	public static void ATpopulateRES(Client me,String mes,MessageBack Mb) throws SQLException, InterruptedException {
 		
 		System.out.println("ritornato per GETdataFORallTABLES RES");
 		
 		switch (mes){
 		case "OK": 
 			System.out.println("ritornato AT RES OK");
+			me.getMeMain().setReady(true);
 			
-			me.setDatabook(		Mb.getDatabook());
-			me.setDatabooking(	Mb.getDatabooking());
-			me.setDataloans(	Mb.getDataloans());
-
+			
+			
 			if (!me.isRefreshData()) {
 				//richiesto dalla prima apertura di searchbook...
 				me.setActF(null);
 				me.setSql(null);				
 				me.getMeMain().setReady(true);
 			}
+			
+			
+			me.setDatabook(		Mb.getDatabook());
+			me.setDatabooking(	Mb.getDatabooking());
+			me.setDataloans(	Mb.getDataloans());
+			
+			if ( me.getActW().getModel()=="search") {
+			//aggiorno tables
+			 ResearchBooks x = (ResearchBooks) me.getActW();
+			 
+			 x.getPanelTableResearch().getTm().setData(me.getDatabook());
+			 x.getPanelTableBookingResearch().getTm().setData(me.getDatabooking());
+			 x.getPanelTableLoansResearch().getTm().setData(me.getDataloans()); 
+			
+			 Clients ClType = me.getCliType(); 
+			 
+			 TableBooks.PopulateData(null,me);
+			 TableBooking.PopulateData(null,me);
+			 TableLoans.PopulateData(null,me);
+
+						 
+			}
+
 			me.setBusy(false);
 			me.setRefreshData(false);
 			break;

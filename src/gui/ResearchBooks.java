@@ -55,7 +55,7 @@ public class ResearchBooks extends SL_JFrame {
 
 	private Client  		me ;
 	
-	private ResearchBooks w;
+	private ResearchBooks 	w;
 	
 	private JFrame frame;
 	private JTextField textField;
@@ -90,6 +90,11 @@ public class ResearchBooks extends SL_JFrame {
 	private JTextField 	txtInsertCatBook;
 	private JTextField 	txtInsertTitleBook;
 
+	private TableBooks 		panelTableResearch;
+	private TableLoans 		panelTableLoansResearch;
+	private TableBooking	panelTableBookingResearch;
+	
+
 	private int 		idbookSelected;
 	
 	/**
@@ -105,6 +110,8 @@ public class ResearchBooks extends SL_JFrame {
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
+		
+		
 		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
 		
 		
@@ -118,18 +125,20 @@ public class ResearchBooks extends SL_JFrame {
 		
 		initialize(c);
 		super.SL_Type = AppType.AppReader;
+		super.setModel("search");
+		
 	}
 
 	
 	public void initialize(Component c) throws InterruptedException {
 		
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1033, 700);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setLocationRelativeTo(c);
-		frame.setVisible(true);
+		setFrame(new JFrame());
+		getFrame().setBounds(100, 100, 1033, 700);
+		getFrame().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		getFrame().getContentPane().setLayout(null);
+		getFrame().setLocationRelativeTo(c);
+		getFrame().setVisible(true);
 		
 		//frmSchoolib.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//frmSchoolib.setLocationRelativeTo(c);
@@ -139,7 +148,7 @@ public class ResearchBooks extends SL_JFrame {
 		JPanel panelModify = new JPanel();
 		panelModify.setBounds(10, 36, 997, 614);
 		panelModify.setBorder(new LineBorder(new Color(0, 0, 0)));
-		frame.getContentPane().add(panelModify);
+		getFrame().getContentPane().add(panelModify);
 		panelModify.setLayout(new CardLayout(0, 0));
 		
 		JPanel panelResearch = new JPanel();
@@ -162,11 +171,11 @@ public class ResearchBooks extends SL_JFrame {
 		panelBooking.setBackground(Color.WHITE);
 		panelBooking.setLayout(null);
 		
-		TableBooks panelTableResearch = new TableBooks(frame,me);
+		panelTableResearch = new TableBooks(getFrame(),me);
 		panelTableResearch.setBounds(0, 11, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
-		TableLoans panelTableLoansResearch = new TableLoans(frame,me);
+		panelTableLoansResearch = new TableLoans(getFrame(),me);
 		panelTableLoansResearch.setBounds(0, 11, 995, 416);
 		panelLoans.add(panelTableLoansResearch);
 		
@@ -188,7 +197,7 @@ public class ResearchBooks extends SL_JFrame {
 		button.setBounds(719, 438, 240, 51);
 		panelBooking.add(button);
 		
-		TableBooking panelTableBookingResearch = new TableBooking(frame,me);
+		panelTableBookingResearch = new TableBooking(getFrame(),me);
 		panelTableBookingResearch.setBounds(0, 11, 995, 416);
 		panelBooking.add(panelTableBookingResearch);
 		
@@ -200,24 +209,24 @@ public class ResearchBooks extends SL_JFrame {
 		
 		JLabel lblResearch = new JLabel("Ricerca");
 		lblResearch.setBounds(285, 11, 91, 14);
-		frame.getContentPane().add(lblResearch);
+		getFrame().getContentPane().add(lblResearch);
 		
 		JButton btnReturnBack = new JButton("Indietro");
 		btnReturnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				 WindowEvent close = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
-				 frame.dispatchEvent(close);
+				 WindowEvent close = new WindowEvent(getFrame(), WindowEvent.WINDOW_CLOSING);
+				 getFrame().dispatchEvent(close);
 				 
 				 me.getStartWindow().getFrame().setVisible(true);	//System.out.println("creato start windows");
 				 me.getStartWindow().addMsg("ResearchBook closed...");
-				 me.getStartWindow().getMostRecentFocusOwner();
+				 me.setActW(me.getMeMain());
 				
 
 			}
 		});
 		btnReturnBack.setBounds(10, 7, 89, 23);
-		frame.getContentPane().add(btnReturnBack);
+		getFrame().getContentPane().add(btnReturnBack);
 		
 		JButton btnDelivery = new JButton("Consegna");
 		btnDelivery.addActionListener(new ActionListener() {
@@ -227,11 +236,11 @@ public class ResearchBooks extends SL_JFrame {
 			}
 		});
 		btnDelivery.setBounds(135, 7, 126, 23);
-		frame.getContentPane().add(btnDelivery);
+		getFrame().getContentPane().add(btnDelivery);
 		
 		textField = new JTextField();
 		textField.setBounds(337, 8, 315, 20);
-		frame.getContentPane().add(textField);
+		getFrame().getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		JButton btnResearch = new JButton("Ricerca");
@@ -264,7 +273,7 @@ public class ResearchBooks extends SL_JFrame {
 	   }
    });
 		btnResearch.setBounds(679, 7, 89, 23);
-		frame.getContentPane().add(btnResearch);
+		getFrame().getContentPane().add(btnResearch);
 		/*
 		tableBooks = new JTable();
 		tableBooks.setModel(new DefaultTableModel(
@@ -294,7 +303,7 @@ public class ResearchBooks extends SL_JFrame {
 			}
 		});
 		btnPrenotazione.setBounds(791, 7, 183, 23);
-		frame.getContentPane().add(btnPrenotazione);
+		getFrame().getContentPane().add(btnPrenotazione);
 		
 		JComboBox<String> comboBoxB = new JComboBox<String>();
 		comboBoxB.addItem("Ricerca_Libro");
@@ -466,7 +475,7 @@ public class ResearchBooks extends SL_JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//Per informazioni cercare la classe PopUp
-				PopUp.infoBox(frame,"Inserire uno tra: Romanzo,Storico,Giallo,Commedia,Fiaba,Fumetto,Narrativo,Poesia,Racconto,"
+				PopUp.infoBox(getFrame(),"Inserire uno tra: Romanzo,Storico,Giallo,Commedia,Fiaba,Fumetto,Narrativo,Poesia,Racconto,"
 						     + "Fantasy,Azione,Avventura,Drammatico,Favola,Fantascienza,Western,Novella,Thriller,Umoristico,"
 						     + "Psicologico"  );
 			}
@@ -590,7 +599,7 @@ public class ResearchBooks extends SL_JFrame {
 						int newli;						
 						if (li==0) {//id non ottenuto...
 									newli = 0;
-									PopUp.errorBox(frame, "last book id non ottenuto...");							
+									PopUp.errorBox(getFrame(), "last book id non ottenuto...");							
 						}else {
 									newli = ++li;	
 									me.setSql(MQ_Insert.insertBooksGetQuery(newli,txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));													
@@ -618,7 +627,7 @@ public class ResearchBooks extends SL_JFrame {
 										//panelTableResearch.update();
 										
 										System.out.println("9");
-										PopUp.infoBox(frame, "Inserimento Corretto");													
+										PopUp.infoBox(getFrame(), "Inserimento Corretto");													
 						}	
 					} 
 				 catch (SQLException e2) {
@@ -629,7 +638,7 @@ public class ResearchBooks extends SL_JFrame {
 				
 				else//controllo sintattico non corretto... 
 				{
-					PopUp.errorBox(frame, "Campi Errati");
+					PopUp.errorBox(getFrame(), "Campi Errati");
 					System.out.println("9");
 					if(Check.checkName(txtName.getText()))
 					{
@@ -783,7 +792,7 @@ public class ResearchBooks extends SL_JFrame {
 			//******************************************************************									
 								try {
 									me.setActW(getW());
-									me.setActF(frame);
+									me.setActF(getFrame());
 									me.setCliType(Clients.Librarian);
 									me.getCmdLIST().put(Commands.BookLast);
 									
@@ -803,12 +812,12 @@ public class ResearchBooks extends SL_JFrame {
 		int iduser = me.getIdut();//UTENTE LOGGATO		
 		if (idbook == 0) {
 			checkok=false;
-			PopUp.errorBox(frame, "NESSUN LIBRO SELEZIONATO ");			
+			PopUp.errorBox(getFrame(), "NESSUN LIBRO SELEZIONATO ");			
 		}else {
 					//controllo LOGIN	
 					if (iduser == 0) {
 						checkok=false;
-						PopUp.errorBox(frame, "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");								
+						PopUp.errorBox(getFrame(), "EFFETTUARE IL LOGIN PER RICHIEDERE UN PRESTITO ");								
 					}else
 					{//LOGIN OK
 						try {				
@@ -945,4 +954,43 @@ public JTextField getTxtInsertCDBook() {
 public void setTxtInsertCDBook(JTextField txtInsertCDBook) {
 	this.txtInsertCDBook = txtInsertCDBook;
 }
+public TableBooks getPanelTableResearch() {
+	return panelTableResearch;
+}
+
+
+public void setPanelTableResearch(TableBooks panelTableResearch) {
+	this.panelTableResearch = panelTableResearch;
+}
+
+
+public TableLoans getPanelTableLoansResearch() {
+	return panelTableLoansResearch;
+}
+
+
+public void setPanelTableLoansResearch(TableLoans panelTableLoansResearch) {
+	this.panelTableLoansResearch = panelTableLoansResearch;
+}
+
+
+public TableBooking getPanelTableBookingResearch() {
+	return panelTableBookingResearch;
+}
+
+
+public void setPanelTableBookingResearch(TableBooking panelTableBookingResearch) {
+	this.panelTableBookingResearch = panelTableBookingResearch;
+}
+
+
+public JFrame getFrame() {
+	return frame;
+}
+
+
+public void setFrame(JFrame frame) {
+	this.frame = frame;
+}
+
 }

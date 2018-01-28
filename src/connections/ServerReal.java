@@ -150,7 +150,10 @@ public class ServerReal extends ServerSkeleton {
 			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}//break;
 			return x;
 		
-		case GetDataForTables:			System.out.println("RealServer :> GetDataForTables... ");
+		case GetDataForTables:			
+			
+			System.out.println("RealServer :> GetDataForTables... ");
+			
 			try {
 				datitabellaLoans 	= MQ_Read.ResearchLoans();	
 				datitabellaBook 	= MQ_Read.RicercaLibro();
@@ -229,9 +232,118 @@ public class ServerReal extends ServerSkeleton {
 				}
 				System.out.println("SYS AL :> srv ritorna "+x.getText());										
 				return x;
-		
-
-		
+//*
+			case 	LoanExecuteQuery://----> [DB]
+				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Loans Execute Query ");					
+				try {					
+					JTable table=new JTable();
+					// Clear table
+					table.setModel(new DefaultTableModel());			
+					// Model for Table				
+					DefaultTableModel model = (DefaultTableModel)table.getModel();				
+					model.addColumn("Codice");
+					model.addColumn("Id");
+					model.addColumn("Data_Inizio");
+					model.addColumn("Data_Fine");
+					model.addColumn("Rientrato");
+					model.addColumn("Ritirato");
+					model.addColumn("Scaduto");
+					model.addColumn("Email_Inviata");			
+					
+					DBmanager.openConnection();
+					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
+	
+					int row = 0;
+					System.out.println("Test1");
+					while((rs!=null) && (rs.next()))
+					{
+						System.out.println("Test2 addRow");	
+						model.addRow(new Object[0]);
+						System.out.println("Codice : "+rs.getString("codice"));	System.out.println("Test3");
+					model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
+					model.setValueAt(rs.getString("id"), row, 1);				System.out.println("Test5");								
+					model.setValueAt(rs.getString("data_inizio"), row, 2);		System.out.println("Test6");								
+					model.setValueAt(rs.getString("data_fine"), row, 3);		System.out.println("Test7");
+					model.setValueAt(rs.getString("rientrato"), row, 4);		System.out.println("Test7");
+					model.setValueAt(rs.getString("ritirato"), row, 5);		System.out.println("Test7");
+					model.setValueAt(rs.getString("scaduto"), row, 6);		System.out.println("Test7");
+					model.setValueAt(rs.getString("email_inviata"), row, 7);		System.out.println("Test7");
+					
+					
+					row++;						
+					}
+						System.out.println("Test9");
+					
+					rs.close();
+					DBmanager.closeConnection();
+					
+					getMeS().addMsg(mSg);
+					x.setTab(table);
+					x.setText(new String ("SRV :> table loans populate :> OK"));	
+					
+				} catch (SQLException e) {	
+					System.out.println("problemi con query loans table populate");
+					e.printStackTrace();				
+					
+					getMeS().addMsg(mSg);
+					x.setText(new String ("SRV :> table loans populate :> NG"));
+	
+				}
+				System.out.println("SYS AL :> srv ritorna "+x.getText());										
+				return x;			
+				
+				
+				
+			//*		
+			case 	BookingExecuteQuery://----> [DB]
+				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Booking Execute Query ");					
+				try {					
+					JTable table=new JTable();
+					// Clear table
+					table.setModel(new DefaultTableModel());			
+					// Model for Table				
+					DefaultTableModel model = (DefaultTableModel)table.getModel();				
+					model.addColumn("Codice");
+					model.addColumn("Id");
+					model.addColumn("Prioritá");
+					model.addColumn("Data_Inizio");
+	
+					DBmanager.openConnection();
+					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
+	
+					int row = 0;
+					System.out.println("Test1");
+					while((rs!=null) && (rs.next()))
+					{
+						System.out.println("Test2 addRow");	
+						model.addRow(new Object[0]);
+						System.out.println("Codice : "+rs.getString("codice"));	System.out.println("Test3");
+					model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
+					model.setValueAt(rs.getString("id"), row, 1);				System.out.println("Test5");								
+					model.setValueAt(rs.getString("priorità"), row, 2);			System.out.println("Test6");								
+					model.setValueAt(rs.getString("data_inizio"), row, 3);		System.out.println("Test7");								
+					row++;						
+					}
+						System.out.println("Test9");
+					
+					rs.close();
+					DBmanager.closeConnection();
+					
+					getMeS().addMsg(mSg);
+					x.setTab(table);
+					x.setText(new String ("SRV :> table booking populate :> OK"));	
+					
+				} catch (SQLException e) {	
+					System.out.println("problemi con query booking table populate");
+					e.printStackTrace();				
+					
+					getMeS().addMsg(mSg);
+					x.setText(new String ("SRV :> table booking populate :> NG"));
+	
+				}
+				System.out.println("SYS AL :> srv ritorna "+x.getText());										
+				return x;	
+//*		
 			case 	BookExecuteQuery://----> [DB]
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Book Execute Query ");					
 				try {					
@@ -543,13 +655,17 @@ public class ServerReal extends ServerSkeleton {
 								return x;								
 								//break;							
 							case BookingListREMOVE:	
-								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Loans LIST DELETE ");					
-								System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
+								System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Booking LIST DELETE ");					
+								System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getSelectedIdUser());
+								System.out.println("REAL SERVER :> id book passata dal client :"+M.getMsg().getSelectedIdBook());
 								try {									
-									int[]r=null;
+									int[]r=new int[2];
 									r[0]=M.getMsg().getSelectedIdBook() ;
 									r[1]=M.getMsg().getSelectedIdUser();											
-									MQ_Delete.deleteRowBooking(r);									
+									
+									MQ_Delete.deleteRowBooking(r);		
+									
+									
 									getMeS().addMsg(mSg);
 									x.setText(new String ("SRV :> Del-Booking:> OK"));										
 								} catch (SQLException e) {	
@@ -558,6 +674,8 @@ public class ServerReal extends ServerSkeleton {
 									getMeS().addMsg(mSg);
 									x.setText(new String ("SRV :> Del-Booking:> NG"));
 								}
+								
+								
 								System.out.println("SYS AL :> srv ritorna "+x.getText());										
 								return x;	
 								//break;							
@@ -1155,6 +1273,9 @@ public class ServerReal extends ServerSkeleton {
 							//******************************************************************************
 							switch (M.getMsg().getCommand()) {
 							case BookExecuteQuery://ES
+								
+								
+								
 								break;
 								
 							default:

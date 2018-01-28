@@ -58,8 +58,8 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelBooking(me);
-        setTable(new JTable(tm));
+        setTm(new TableModelBooking(me));
+        setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
         //JMenuItem prenotaItem = new JMenuItem("Prenota");
@@ -77,7 +77,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
         			for(int i = 0; i<4; i++)
         			{
         				System.out.println("4");
-        				rowData.add((String) tm.getValueAt(deleteRow, i));
+        				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
@@ -154,7 +154,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 		 System.out.println("12");
 	    getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = getTable().getSelectionModel();
-	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(tm));	    
+	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(getTm()));	    
 		getTable().getModel().addTableModelListener(this);
 		getTable().setPreferredScrollableViewportSize(new Dimension(500, 70));
 		getTable().setFillsViewportHeight(true);
@@ -186,7 +186,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
     		if(TableUpdateBooking.isNotOk())
     		{
     			System.out.println("15");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooking.setNotOk(false);
     		}
         }
@@ -197,7 +197,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
     		if(TableUpdateBooking.isNotOk())
     		{    
     			System.out.println("16");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooking.setNotOk(false);
     		}
         }
@@ -226,6 +226,89 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 	}
 */
 
+	public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
+		// Clear table   
+		getTable().setModel(new DefaultTableModel());	
+		// Model for Table		
+		DefaultTableModel model = (DefaultTableModel)getTable().getModel();		
+		model.addColumn("Codice");
+		model.addColumn("Id");
+		model.addColumn("Prioritá");
+		model.addColumn("Data_Inizio");
+		String query=null;
+		
+		System.out.println("Client me " + me.toString());		
+		System.out.println("Client me type " + me.getCliType().toString());		
+		System.out.println("Valore ritornato:" + x);		
+
+//IN TEST		
+		
+		switch (me.getCliType()) {
+
+		case Librarian:
+			
+			query = "SELECT * FROM prenotazioni" + " WHERE ("
+					+ " id LIKE '%"+x+"%')";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM prenotazioni ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
+			
+			break;
+			
+		case Reader:
+			
+			query = "SELECT * FROM prenotazioni" + " WHERE ("
+					+ " id LIKE '%"+x+"%')";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM prenotazioni ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
+						
+			break;
+			
+		case Guest:
+			
+			query = "SELECT * FROM prenotazioni" + " WHERE ("
+					+ " id LIKE '%"+x+"%')";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM prenotazioni ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
+			
+			break;			
+			
+		case Default:
+			
+			query = "SELECT * FROM prenotazioni" + " WHERE ("
+					+ " id LIKE '%"+x+"%')";			
+			
+			if(x=="" || x==null){			
+				query = "SELECT * FROM prenotazioni ";
+			}
+			System.out.println("q:"+query);
+			me.setSql(query);
+			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
+			
+			break;	
+			
+			
+		default:
+			break;
+		}
+
+	}
+	
+	
 	public static JTable getTable() {
 		return table;
 	}
@@ -233,5 +316,13 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 
 	public static void setTable(JTable table) {
 		TableBooking.table = table;
+	}
+
+	public TableModelBooking getTm() {
+		return tm;
+	}
+
+	public void setTm(TableModelBooking tm) {
+		this.tm = tm;
 	}
 }

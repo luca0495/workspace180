@@ -18,6 +18,7 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 	 */
 	private static final long serialVersionUID = 1L;
 //	School Lib JFrame	
+	private String			Model;
 	
 	AppType					SL_Type;	
 	Client					SL_Client;
@@ -75,5 +76,13 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 
 	public void setSL_Type(AppType sL_Type) {
 		SL_Type = sL_Type;
+	}
+
+	public String getModel() {
+		return Model;
+	}
+
+	public void setModel(String model) {
+		Model = model;
 	}
 }

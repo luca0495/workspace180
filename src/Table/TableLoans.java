@@ -59,8 +59,8 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
-        tm = new TableModelLoans(me);
-        setTable(new JTable(tm));
+        setTm(new TableModelLoans(me));
+        setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
         //JMenuItem prenotaItem = new JMenuItem("Prenota");
@@ -77,7 +77,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         			for(int i = 0; i<8; i++)
         			{
         				System.out.println("4");
-        				rowData.add((String) tm.getValueAt(deleteRow, i));
+        				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
@@ -173,7 +173,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		 System.out.println("12");
 	    getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = getTable().getSelectionModel();
-	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(tm));	    
+	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(getTm()));	    
 		getTable().getModel().addTableModelListener(this);
 		getTable().setPreferredScrollableViewportSize(new Dimension(500, 70));
 		getTable().setFillsViewportHeight(true);
@@ -205,7 +205,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     		if(TableUpdateLoans.isNotOk())
     		{
     			System.out.println("15");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateLoans.setNotOk(false);
     		}
         }
@@ -216,13 +216,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     		if(TableUpdateLoans.isNotOk())
     		{    
     			System.out.println("16");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateLoans.setNotOk(false);
     		}
         }
     };
         
-    public static void PopulateDataLoans(String x,Client me) throws SQLException, InterruptedException {
+    public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		// Clear table   
 		getTable().setModel(new DefaultTableModel());	
 		// Model for Table		
@@ -231,126 +231,61 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Id");
 		model.addColumn("Data_Inizio");
 		model.addColumn("Data_Fine");
+		model.addColumn("Rientrato");
+		model.addColumn("Ritirato");
+		model.addColumn("Scaduto");
+		model.addColumn("Email_Inviata");
 		String query=null;
-		
 		System.out.println("Valore ritornato:" + x);		
-//IN TEST
 		switch (me.getCliType()) {
-
-		case Librarian:
-			
-			query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
-                    + " OR id LIKE '%"+x+"%'"
-                    + " OR data_inizio LIKE '%"+x+"%'"
-                    + " OR data_fine LIKE '%"+x+"%')"
-                    + " ORDER BY id ASC";
-			if(x=="" || x==null){			
-			query = "SELECT * FROM prestiti ";
-			}			
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			break;
-			
-		case Reader:
-			//modifica idut==id DA TESTARE CON DATI...
-			query = "SELECT * FROM libro" + " WHERE ("
-					+ "		nome_autore LIKE '%"+x+"%'"
-                    + " OR 	cognome_autore LIKE '%"+x+"%'"
-                    + " OR 	categoria LIKE '%"+x+"%'"
-                    + " OR 	titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
-                    + " ORDER BY codice ASC";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM libro ";
-			}
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			break;
-			
-		case Guest:
-			
-			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
-                    + " OR cognome_autore LIKE '%"+x+"%'"
-                    + " OR categoria LIKE '%"+x+"%'"
-                    + " OR titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
-                    + " ORDER BY codice ASC";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM libro ";
-			}
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			break;
-			
-		case Default:
-			
-			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
-                    + " OR cognome_autore LIKE '%"+x+"%'"
-                    + " OR categoria LIKE '%"+x+"%'"
-                    + " OR titolo LIKE '%"+x+"%' AND id="+ me.getIdut() +")" 
-                    + " ORDER BY codice ASC";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM libro ";
-			}
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			break;			
-			
-			
-		default:
-			break;
-		}
-		
-		
-		
-		
-		
-		
-		
-
-		
-		// TEST OK 27.12.2017
-		///////////////////////////////////// da rivedere		
-//		me.setSql(query);
-//		me.getCmdLIST().put(Commands.BookExecuteQuery);
-		
-		// in test
-		
-		/* OLD
-		//"ORDER BY CustomerID ASC";
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-		System.out.println(rs);
-		System.out.println(query);
-		int row = 0;
-		System.out.println("Test1");
-		while((rs!=null) && (rs.next()))
-		{          
-	    System.out.println("Test2");
-		model.addRow(new Object[0]);
-		System.out.println("Test3");
-		model.setValueAt(rs.getString("codice"), row, 0);
-		System.out.println("Test4");
-		model.setValueAt(rs.getString("nome_autore"), row, 1);
-		System.out.println("Test5");
-		model.setValueAt(rs.getString("cognome_autore"), row, 2);
-		System.out.println("Test6");
-		model.setValueAt(rs.getString("categoria"), row, 3);
-		System.out.println("Test7");
-		model.setValueAt(rs.getString("titolo"), row, 4);
-		System.out.println("Test8");
-		model.setValueAt(rs.getString("num_prenotazioni"), row, 5);
-		row++;
-		System.out.println("Test9");
-		}
-		System.out.println("Test10");
-		rs.close();
-		DBmanager.closeConnection();
-		
-		*/
-		
-		}
+				case Librarian:		
+					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+		                    + " ORDER BY id ASC";
+					
+					if(x=="" || x==null){			
+					query = "SELECT * FROM prestiti ";
+					}			
+					me.setSql(query);
+					me.getCmdLIST().put(Commands.LoanExecuteQuery);
+					break;
+					
+				case Reader:
+					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+		                    + " ORDER BY id ASC";
+					
+					if(x=="" || x==null){			
+					query = "SELECT * FROM prestiti ";
+					}			
+					me.setSql(query);
+					me.getCmdLIST().put(Commands.LoanExecuteQuery);
+					break;
+					
+				case Guest:			
+					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+		                    + " ORDER BY id ASC";
+					
+					if(x=="" || x==null){			
+					query = "SELECT * FROM prestiti ";
+					}			
+					me.setSql(query);
+					me.getCmdLIST().put(Commands.LoanExecuteQuery);
+					break;
+					
+				case Default:			
+					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+		                    + " ORDER BY id ASC";
+					
+					if(x=="" || x==null){			
+					query = "SELECT * FROM prestiti ";
+					}			
+					me.setSql(query);
+					me.getCmdLIST().put(Commands.LoanExecuteQuery);
+					break;
+					
+				default:
+					break;
+		}	
+	}
   
     
 	@Override
@@ -381,5 +316,15 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 
 	public static void setTable(JTable table) {
 		TableLoans.table = table;
+	}
+
+
+	public TableModelLoans getTm() {
+		return tm;
+	}
+
+
+	public void setTm(TableModelLoans tm) {
+		this.tm = tm;
 	}
 }

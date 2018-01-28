@@ -54,9 +54,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
     	this.me=me;
         this.frame = frame;
         
-        tm = new TableModelBooks(me);
+        setTm(new TableModelBooks(me));
         
-        setTable(new JTable(tm));
+        setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
         //JMenuItem prenotaItem = new JMenuItem("Prenota");
@@ -75,7 +75,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         			for(int i = 0; i<7; i++)
         			{
         				System.out.println("4");
-        				rowData.add((String) tm.getValueAt(deleteRow, i));
+        				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
@@ -156,7 +156,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		 System.out.println("12");
 	    getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = getTable().getSelectionModel();
-	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(tm));	    
+	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(getTm()));	    
 		getTable().getModel().addTableModelListener(this);
 		getTable().setPreferredScrollableViewportSize(new Dimension(500, 70));
 		getTable().setFillsViewportHeight(true);
@@ -188,7 +188,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
     		if(TableUpdateBooks.isNotOk())
     		{
     			System.out.println("15");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooks.setNotOk(false);
     		}
         }
@@ -199,7 +199,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
     		if(TableUpdateBooks.isNotOk())
     		{    
     			System.out.println("16");
-    			tm.setValueAt(oldValue, selectedR, selectedC);
+    			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooks.setNotOk(false);
     		}
         }
@@ -227,8 +227,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		
 		switch (me.getCliType()) {
 
-		case Librarian:
-			
+		case Librarian:			
 			query = "SELECT * FROM libro" + " WHERE ("
 					+ "    nome_autore LIKE '%"+x+"%'"
                     + " OR cognome_autore LIKE '%"+x+"%'"
@@ -242,12 +241,10 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			}
 			System.out.println("q:"+query);
 			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookExecuteQuery);			
-			
+			me.getCmdLIST().put(Commands.BookExecuteQuery);					
 			break;
 			
 		case Reader:
-			
 			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
                     + " OR cognome_autore LIKE '%"+x+"%'"
                     + " OR categoria LIKE '%"+x+"%'"
@@ -258,15 +255,12 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			if(x=="" || x==null){			
 				query = "SELECT * FROM libro ";
 			}
-			
 			System.out.println("q:"+query);
 			me.setSql(query);
 			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			
 			break;
 			
-		case Guest:
-			
+		case Guest:			
 			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
                     + " OR cognome_autore LIKE '%"+x+"%'"
                     + " OR categoria LIKE '%"+x+"%'"
@@ -280,12 +274,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			System.out.println("q:"+query);
 			me.setSql(query);
 			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			
-			
-			
 			break;
-		case Default:
 			
+		case Default:		
 			query = "SELECT * FROM libro" + " WHERE (nome_autore LIKE '%"+x+"%'"
                     + " OR cognome_autore LIKE '%"+x+"%'"
                     + " OR categoria LIKE '%"+x+"%'"
@@ -299,61 +290,11 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			System.out.println("q:"+query);
 			me.setSql(query);
 			me.getCmdLIST().put(Commands.BookExecuteQuery);
-			
-			
-			
 			break;			
-			
-			
-			
 		default:
 			break;
 		}
-		
-
-
-		
-		// TEST OK 27.12.2017
-				
-		//me.setSql(query);
-		//me.getCmdLIST().put(Commands.BookExecuteQuery);
-		
-		// in test
-		
-		/* OLD
-		//"ORDER BY CustomerID ASC";
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-		System.out.println(rs);
-		System.out.println(query);
-		int row = 0;
-		System.out.println("Test1");
-		while((rs!=null) && (rs.next()))
-		{          
-	    System.out.println("Test2");
-		model.addRow(new Object[0]);
-		System.out.println("Test3");
-		model.setValueAt(rs.getString("codice"), row, 0);
-		System.out.println("Test4");
-		model.setValueAt(rs.getString("nome_autore"), row, 1);
-		System.out.println("Test5");
-		model.setValueAt(rs.getString("cognome_autore"), row, 2);
-		System.out.println("Test6");
-		model.setValueAt(rs.getString("categoria"), row, 3);
-		System.out.println("Test7");
-		model.setValueAt(rs.getString("titolo"), row, 4);
-		System.out.println("Test8");
-		model.setValueAt(rs.getString("num_prenotazioni"), row, 5);
-		row++;
-		System.out.println("Test9");
-		}
-		System.out.println("Test10");
-		rs.close();
-		DBmanager.closeConnection();
-		
-		*/
-		
-		}
+	}
   
     
 	@Override
@@ -387,6 +328,16 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 
 	public static void setTable(JTable table) {
 		TableBooks.table = table;
+	}
+
+
+	public TableModelBooks getTm() {
+		return tm;
+	}
+
+
+	public void setTm(TableModelBooks tm) {
+		this.tm = tm;
 	}
 	
 
