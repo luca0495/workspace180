@@ -48,10 +48,13 @@ import javax.swing.JComboBox;
 
 public class AppMain extends SL_JFrame  {
 	
+	private AppMain			meMain;
+	
 	private Client  		me ;
 	private Setting 		s;
 	private AppReader 		c;
 	private AppLibrarian 	a;
+	private boolean			ready;
 	
 	private JFrame 			frame;
 	public 	JPanel 			ac = new JPanel();
@@ -83,7 +86,8 @@ public class AppMain extends SL_JFrame  {
 		initialize();		
 		super.SL_Type = AppType.AppMain;	
 		super.SL_Client		=null;
-		addMsg("inizializzazione completata");	
+		addMsg("inizializzazione completata");
+		setMeMain(this);
 	}
 
 	public AppMain(Client x) {
@@ -96,7 +100,7 @@ public class AppMain extends SL_JFrame  {
 		super.SL_Client.setCliType(Clients.Guest);
 		super.SL_Type	=	AppType.AppMain;
 		me=super.SL_Client;
-		
+		setMeMain(this);
 		initialize();
 	}
 	
@@ -416,9 +420,25 @@ public class AppMain extends SL_JFrame  {
 		btnRicerca.addMouseListener(new MouseAdapter() {
 			 @Override
 				public void mousePressed(MouseEvent arg0) {
-					
+
 						 if (me.isStubok()) {
-						 	//*************************************************************
+						 //*************************************************************
+							 setReady(false);
+							 try {
+							
+								 	me.setMeMain(getMeMain());
+								 	me.getCmdLIST().put(Commands.GetDataForTables);
+									
+									while (!isReady()) {
+										System.out.println("attendo dati dal db...");
+										Thread.sleep(100);
+									}
+								
+							 		} catch (InterruptedException e1) {
+							 		e1.printStackTrace();
+							 		}
+							 
+					 	//*************************************************************
 						 	EventQueue.invokeLater(new Runnable() {
 									public void run() 
 										{
@@ -432,9 +452,8 @@ public class AppMain extends SL_JFrame  {
 										}
 									}
 						 	});		
-							//************************************************************* 	 
+						//************************************************************* 	 
 						 }else {
-							 
 							 PopUp.errorBox(frame, "non collegato al Server...Attendere prego");
 						 }
 				 }
@@ -747,5 +766,21 @@ public class AppMain extends SL_JFrame  {
 
 	public void setComboBox(JComboBox comboBox) {
 		this.comboBox = comboBox;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
+	public AppMain getMeMain() {
+		return meMain;
+	}
+
+	public void setMeMain(AppMain meMain) {
+		this.meMain = meMain;
 	}
 }

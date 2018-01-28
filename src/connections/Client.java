@@ -30,6 +30,7 @@ import Check.PopUp;
 import Core.ClientCMDloans;
 import Core.ClientCMDuser;
 import Core.ClientCMDBooking;
+import Core.ClientCMDAllTables;
 import Core.ClientCMDBook;
 
 import Core.Clients;
@@ -41,6 +42,9 @@ import Core.RequestsList;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
 import Table.TableBooks;
+import Table.TableModelBooking;
+import Table.TableModelBooks;
+import Table.TableModelLoans;
 import database.MQ_Delete;
 import database.MQ_Insert;
 import database.MQ_Read;
@@ -131,24 +135,19 @@ public class Client implements Serializable, Runnable  {
 	private 			String 				Sql2;
 	private				String				pw;
 	private				String[] 			datiUtente;
-	
+	private 			TableModelBooks		tMbook;
+	private 			TableModelBooking	tMbooking;
+	private 			TableModelLoans		tMloans;
+
 	private				int					selectedIdBook;
 	private				int					selectedIdUser;
 	private				Date				selectedIdDataStart;
 	private				Date				selectedIdDataStop;	
 	
-	public Date getSelectedIdDataStart() {
-		return selectedIdDataStart;
-	}
-	public void setSelectedIdDataStart(Date selectedIdDataStart) {
-		this.selectedIdDataStart = selectedIdDataStart;
-	}
-	public Date getSelectedIdDataStop() {
-		return selectedIdDataStop;
-	}
-	public void setSelectedIdDataStop(Date selectedIdDataStop) {
-		this.selectedIdDataStop = selectedIdDataStop;
-	}
+	private 			Object[][]			databook;
+	private 			Object[][]			databooking;
+	private 			Object[][]			dataloans;
+
 	private 			int 				idbook;	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
@@ -240,6 +239,8 @@ public class Client implements Serializable, Runnable  {
 				//	****************************************************	Read		   		***			
 					case READ:
 							switch (com) {							
+								//  all tables
+								case GetDataForTables:		ClientCMDAllTables.ATpopulate(this);		break;
 								//	book
 								case BookExecuteQuery:		BookPopulate();								break;//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
 								case BookLast:				BookLast();									break;//arriva DA GUI TABLEBOOKS //	
@@ -370,11 +371,11 @@ public class Client implements Serializable, Runnable  {
 																getActW().addMsg(mSg);		
 																setStubok(false);
 															}				
-															Thread.sleep(1000);// test conn every 0.1 sec
+															Thread.sleep(100);// test conn every 0.1 sec
 														}
 														else {															
 															for (int i = 5;i>0;i--){
-																try {Thread.sleep(1000);//default 1000
+																try {Thread.sleep(100);//default 1000
 																System.out.println(mSg = "CLI :> Verifica Stub NG \nTentativo "+getRepeatconnCount()+ " \nnuovo tentativo tra "+i+" secondi ");
 																getActW().addMsg(mSg);
 																} catch (Exception e) {
@@ -1159,7 +1160,9 @@ setBusy(false);
 							case	"SRV :> table Book populate 	:> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
 							case	"SRV :> table Booking populate 	:> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
 							case	"SRV :> table Booking populate 	:> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
-								
+							case	"SRV :> tables populate :> OK"		:	ClientCMDAllTables.ATpopulateRES(this, "OK", Mb); 	break;
+							case	"SRV :> tables populate :> NG"		:	ClientCMDAllTables.ATpopulateRES(this, "NG", Mb); 	break;
+							
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
 								
@@ -1929,8 +1932,54 @@ setBusy(false);
 			public void setSelectedIdUser(int selectedIdUser) {
 				this.selectedIdUser = selectedIdUser;
 			}
-
-			
+			public TableModelBooks gettMbook() {
+				return tMbook;
+			}
+			public void settMbook(TableModelBooks tMbook) {
+				this.tMbook = tMbook;
+			}
+			public TableModelBooking gettMbooking() {
+				return tMbooking;
+			}
+			public void settMbooking(TableModelBooking tMbooking) {
+				this.tMbooking = tMbooking;
+			}
+			public TableModelLoans gettMloans() {
+				return tMloans;
+			}
+			public void settMloans(TableModelLoans tMloans) {
+				this.tMloans = tMloans;
+			}
+			public Date getSelectedIdDataStart() {
+				return selectedIdDataStart;
+			}
+			public void setSelectedIdDataStart(Date selectedIdDataStart) {
+				this.selectedIdDataStart = selectedIdDataStart;
+			}
+			public Date getSelectedIdDataStop() {
+				return selectedIdDataStop;
+			}
+			public void setSelectedIdDataStop(Date selectedIdDataStop) {
+				this.selectedIdDataStop = selectedIdDataStop;
+			}
+			public Object[][] getDatabook() {
+				return databook;
+			}
+			public void setDatabook(Object[][] databook) {
+				this.databook = databook;
+			}
+			public Object[][] getDatabooking() {
+				return databooking;
+			}
+			public void setDatabooking(Object[][] databooking) {
+				this.databooking = databooking;
+			}
+			public Object[][] getDataloans() {
+				return dataloans;
+			}
+			public void setDataloans(Object[][] dataloans) {
+				this.dataloans = dataloans;
+			}
 
 		
 		

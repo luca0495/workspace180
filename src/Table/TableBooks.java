@@ -53,7 +53,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
+        
         tm = new TableModelBooks(me);
+        
         setTable(new JTable(tm));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");

@@ -14,13 +14,13 @@ import connections.Client;
 import connections.Message;
 import connections.MessageBack;
 
-public class ClientCMDBook {
+public class ClientCMDAllTables {
 
 
 	
-	public static void Bookpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
+	public static void ATpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
-		Commands cmd = Commands.BookPopulate;
+		Commands cmd = Commands.GetDataForTables;
 		MessageBack Mb = new MessageBack();
 
 		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
@@ -45,31 +45,35 @@ public class ClientCMDBook {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
-	public static void BookpopulateRES(Client me,String mes,MessageBack Mb) {
+	public static void ATpopulateRES(Client me,String mes,MessageBack Mb) {
 		
-		System.out.println("ritornato per bookpopulate RES");
+		System.out.println("ritornato per GETdataFORallTABLES RES");
 		
 		switch (mes){
 		case "OK": 
-			System.out.println("ritornato per bookpopulate RES OK");
-			
-			
-			
-			PopUp.infoBox(me.getActF(), 		"dati tabella Book OK");
+			System.out.println("ritornato AT RES OK");
+
+			//PopUp.infoBox(me.getActF(), 		"ritornato AT RES OK");
 			
 			me.setActTable(Mb.getTab());
-			me.setDatabook(Mb.getDatitabella());
 			
-			
-			//TableBooks.getTable().setModel(Mb.getTab().getModel());
-			
-			
+			me.setDatabook(Mb.getDatabook());
+			me.setDatabooking(Mb.getDatabooking());
+			me.setDataloans(Mb.getDataloans());
 			
 			me.setActF(null);
 			me.setSql(null);
 			me.setBusy(false);
+			me.getMeMain().setReady(true);
+			
 			break;		
-		case "NG": PopUp.errorBox(me.getActF(), "dati tabella Book NG");					
+		case "NG": 
+			
+			//PopUp.errorBox(me.getActF(), "ritornato AT RES NG");
+			
+			me.setBusy(false);
+			me.getMeMain().setReady(true);
+		
 			break;
 		
 		default:

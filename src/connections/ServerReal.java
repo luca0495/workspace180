@@ -50,7 +50,10 @@ public class ServerReal extends ServerSkeleton {
 		private  	Map<String,Message>  	listcmdDONE = new TreeMap<>();		
 		public 		Boolean					Go;
 		private 	MessageBack				mSgB;	
-		private 	String [][] 			datitabella = null;
+		private 	String [][] 			datitabellaBook 	= null;
+		private 	String [][] 			datitabellaBooking 	= null;
+		private 	String [][] 			datitabellaLoans 	= null;
+		
 //**-------------------------------------------------------------------------------------------------------------
 		private boolean 	chkinprogress1=false;
 		private String 		chkResult1;
@@ -127,19 +130,39 @@ public class ServerReal extends ServerSkeleton {
 		switch (M.getMsg().getCommand()) {
 		// ********************************
 
-		case LoanPopulate:
-			try {datitabella = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
-					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Loans populate :> OK"));		
-			} 		catch (Exception e) {			x.setText(new String ("SRV :> table Loans populate :> NG"));}break;	
-		case BookPopulate:
-			try {datitabella = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
-					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Book populate :> OK"));		
-	} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}break;	
-		case BookingPopulate:
-			try {datitabella = MQ_Read.ResearchBooking();	getMeS().addMsg(mSg);
-					x.setDatitabella(datitabella);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
-	} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}break;	
+		case LoanPopulate:				System.out.println("RealServer :> LoanPopulate... ");
+			try {datitabellaLoans = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
+					x.setDatitabella(datitabellaLoans);		x.setText(new String ("SRV :> table Loans populate :> OK"));		
+			} 		catch (Exception e) {					x.setText(new String ("SRV :> table Loans populate :> NG"));}//break;
+			return x;
+		case BookPopulate:				System.out.println("RealServer :> BookPopulate... ");
+			try {datitabellaBook = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
+					x.setDatitabella(datitabellaBook);		x.setText(new String ("SRV :> table Book populate :> OK"));		
+			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}//break;
+			return x;
+		case BookingPopulate:			System.out.println("RealServer :> BookingPopulate... ");
+			try {datitabellaBooking = MQ_Read.ResearchBooking();	
+				getMeS().addMsg(mSg);
+				
+				x.setDatitabella(datitabellaBooking);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
+			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}//break;
+			return x;
 		
+		case GetDataForTables:			System.out.println("RealServer :> GetDataForTables... ");
+			try {
+				datitabellaLoans 	= MQ_Read.ResearchLoans();	
+				datitabellaBook 	= MQ_Read.RicercaLibro();
+				datitabellaBooking 	= MQ_Read.ResearchBooking();
+				getMeS().addMsg(mSg);
+				
+				x.setDataloans(datitabellaLoans);
+				x.setDatabook(datitabellaBook);
+				x.setDatabooking(datitabellaBooking);
+				x.setText(new String ("SRV :> tables populate :> OK"));		
+		} 		
+			catch (Exception e) {			
+				x.setText(new String ("SRV :> tables populate :> NG"));}//break;
+		return x;
 		
 		
 		
@@ -418,7 +441,7 @@ public class ServerReal extends ServerSkeleton {
 	}		
 		return AnswerM;
 	}
-//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
 	@Override
 	public MessageBack modifica(Message Mes) {	//	----> 	[	Guardian	[GpG]				]
 												//	---->	[	 			  Librarian	 		]
@@ -1326,7 +1349,24 @@ public class ServerReal extends ServerSkeleton {
 	public void setChkinprogress6(boolean chkinprogress6) {
 		this.chkinprogress6 = chkinprogress6;
 	}
-	
+	public String[][] getDatitabellaBook() {
+		return datitabellaBook;
+	}
+	public void setDatitabellaBook(String[][] datitabellaBook) {
+		this.datitabellaBook = datitabellaBook;
+	}
+	public String[][] getDatitabellaBooking() {
+		return datitabellaBooking;
+	}
+	public void setDatitabellaBooking(String[][] datitabellaBooking) {
+		this.datitabellaBooking = datitabellaBooking;
+	}
+	public String[][] getDatitabellaLoans() {
+		return datitabellaLoans;
+	}
+	public void setDatitabellaLoans(String[][] datitabellaLoans) {
+		this.datitabellaLoans = datitabellaLoans;
+	}
 //**********************************************************************************************************************************************	
 	public void ck1(int idut,int idbook) {//TSST prestiti dello stesso libro, limite massimo 2 raggiunto	
 		int pe;

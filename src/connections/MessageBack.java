@@ -27,8 +27,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private String[] 	RowUser;
 	private String[] 	RowBook;
 	private String[] 	RowLoans;
-	
+
 	private String[][]	Datitabella;
+	
+	private 			Object[][]			databook;
+	private 			Object[][]			databooking;
+	private 			Object[][]			dataloans;
 	
 	private Record		Record;
 	private RecordSet	RecordSet;
@@ -119,7 +123,24 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	public void setDatitabella(String[][] datitabella) {
 		Datitabella = datitabella;
 	}
-
+	public Object[][] getDatabook() {
+		return databook;
+	}
+	public void setDatabook(Object[][] databook) {
+		this.databook = databook;
+	}
+	public Object[][] getDatabooking() {
+		return databooking;
+	}
+	public void setDatabooking(Object[][] databooking) {
+		this.databooking = databooking;
+	}
+	public Object[][] getDataloans() {
+		return dataloans;
+	}
+	public void setDataloans(Object[][] dataloans) {
+		this.dataloans = dataloans;
+	}
 
 
 

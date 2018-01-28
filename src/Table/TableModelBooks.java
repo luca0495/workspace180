@@ -14,25 +14,18 @@ import database.MQ_Delete;
 import database.MQ_Read;
 
 public class TableModelBooks extends AbstractTableModel implements Serializable {
-	
+    private Client me;
+    
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo","Disponibilità","Prenotazioni_in_coda"};
     private Object[][] data = null;
-    private Client me;
     
-    public TableModelBooks(Client me) throws InterruptedException
+    public TableModelBooks(Client me) 
     {
-		try 
-		{
-			me.getCmdLIST().put(Commands.BookPopulate);	
-			//data = MQ_Read.RicercaLibro();
-		} 
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+    	setData(me.getDatabook());
     }
         
+    
     public String[] getColumnNames(List<Books> books) {
 		return columnNames;
 	}
@@ -65,7 +58,7 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 	@Override
     public int getRowCount()
 	{
-        return data.length;
+        return getData().length;
     }
 	
 	@Override
@@ -77,13 +70,13 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 	@Override
     public Object getValueAt(int row, int col)
 	{
-        return data[row][col];
+        return getData()[row][col];
     }
 	
 	@Override
     public void setValueAt(Object value, int row, int col)
 	{
-	    data[row][col] = value;
+	    getData()[row][col] = value;
 		fireTableCellUpdated(row, col);
     }
 
@@ -91,5 +84,16 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	public Object[][] getData() {
+		return data;
+	}
+
+	public void setData(Object[][] data) {
+		this.data = data;
+	}
+
+
 
 }

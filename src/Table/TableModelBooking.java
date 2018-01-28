@@ -15,21 +15,14 @@ import database.MQ_Read;
 
 public class TableModelBooking extends AbstractTableModel implements Serializable {
 	private Client me;
+	
 	private static final long serialVersionUID = 1L;
     private String[] columnNames = {"Codice", "Id", "Priorità","Data_Inizio"};
     private Object[][] data = null;
     
     public TableModelBooking(Client me) throws InterruptedException
     {
-		try 
-		{
-			me.getCmdLIST().put(Commands.BookingPopulate);	
-			//data = MQ_Read.ResearchBooking();
-		} 
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+			setData(me.getDatabooking());
     }
         
     public String[] getColumnNames(List<Books> books) {
@@ -69,7 +62,7 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
 	@Override
     public int getRowCount()
 	{
-        return data.length;
+        return getData().length;
     }
 	
 	@Override
@@ -81,18 +74,26 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
 	@Override
     public Object getValueAt(int row, int col)
 	{
-        return data[row][col];
+        return getData()[row][col];
     }
 	
 	@Override
     public void setValueAt(Object value, int row, int col)
 	{
-	    data[row][col] = value;
+	    getData()[row][col] = value;
 		fireTableCellUpdated(row, col);
     }
 
 	public void setColumnNames(String string, String string2) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Object[][] getData() {
+		return data;
+	}
+
+	public void setData(Object[][] data) {
+		this.data = data;
 	}
 }

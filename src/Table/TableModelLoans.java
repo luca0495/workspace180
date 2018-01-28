@@ -21,15 +21,7 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
     
     public TableModelLoans(Client me)
     {
-		try 
-		{
-			me.getCmdLIST().put(Commands.LoanPopulate);	
-			//data = MQ_Read.ResearchLoans();
-		} 
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+    	setData(me.getDataloans());
     }
         
     public String[] getColumnNames(List<Books> books) {
@@ -69,7 +61,7 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
 	@Override
     public int getRowCount()
 	{
-        return data.length;
+        return getData().length;
     }
 	
 	@Override
@@ -81,18 +73,26 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
 	@Override
     public Object getValueAt(int row, int col)
 	{
-        return data[row][col];
+        return getData()[row][col];
     }
 	
 	@Override
     public void setValueAt(Object value, int row, int col)
 	{
-	    data[row][col] = value;
+	    getData()[row][col] = value;
 		fireTableCellUpdated(row, col);
     }
 
 	public void setColumnNames(String string, String string2) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Object[][] getData() {
+		return data;
+	}
+
+	public void setData(Object[][] data) {
+		this.data = data;
 	}
 }

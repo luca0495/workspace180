@@ -73,10 +73,10 @@ public enum Commands{
 			UserREADbyEmailMod	("UR panel Modify"					,	SearchFor.Account,		CommandsType.READ,			1,	0), 
 			UserREADlogin		("User Read login"					,	SearchFor.Account,		CommandsType.READ,			1,	0), 
 			UserREADcheckEmail	("User Read check email"			,	SearchFor.Account,		CommandsType.READ,			1,	0),
-			UserREADcheckCF		("User Read check cod fiscale"		,	SearchFor.Account,		CommandsType.READ,			1,	0);			
+			UserREADcheckCF		("User Read check cod fiscale"		,	SearchFor.Account,		CommandsType.READ,			1,	0),			
+//	
+			GetDataForTables	("Get data from db for Table"		,	SearchFor.Book,			CommandsType.READ,			1,	0);			
 	
-	
-
 	
 	
 	
