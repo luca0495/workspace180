@@ -336,6 +336,10 @@ public class AppMain extends SL_JFrame  {
 		JButton btnEsci = new JButton("Esci");
 		btnEsci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			
+				
+				aggiornaSrvType();
+				
 				System.exit(0);
 			}
 		});
@@ -648,7 +652,18 @@ public class AppMain extends SL_JFrame  {
 			}
 		});
 	}
-
+	
+	
+	public void aggiornaSrvType() {
+		try {
+			me.getCmdLIST().put(Commands.ConnSTOP);
+			Thread.sleep(20);
+			
+		} catch (InterruptedException e2) {
+			System.out.println("  ");	
+			e2.printStackTrace(); 
+		}
+	}
 	
 	public void aggiornaSrvType(Object x) {	
 		// gestisci cambio srvtype
