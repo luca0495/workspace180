@@ -50,6 +50,8 @@ import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 import java.awt.Toolkit;
 import javax.swing.JComboBox;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class ResearchBooks extends SL_JFrame {
 
@@ -107,10 +109,12 @@ public class ResearchBooks extends SL_JFrame {
 	public ResearchBooks(Component c, Client x) throws InterruptedException {
 		
 		setW(this);
+		
 		me = x;
-		me.setActW(this);
 		me.setActC(c);
 		
+		me.setActW(this);
+		me.setMeRes(this);
 		
 		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
 		
@@ -152,12 +156,14 @@ public class ResearchBooks extends SL_JFrame {
 		panelModify.setLayout(new CardLayout(0, 0));
 		
 		JPanel panelResearch = new JPanel();
+		me.setMePannelBook(panelResearch);
 		panelModify.add(panelResearch);
 		panelResearch.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panelResearch.setBackground(Color.WHITE);
 		panelResearch.setLayout(null);		
 		
 		JPanel panelLoans = new JPanel();
+		me.setMePannelLoans(panelLoans);
 		panelModify.add(panelLoans);
 		panelLoans.setVisible(false);
 		panelLoans.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -165,6 +171,7 @@ public class ResearchBooks extends SL_JFrame {
 		panelLoans.setLayout(null);
 		
 		JPanel panelBooking = new JPanel();
+		me.setMePannelBooking(panelBooking);
 		panelModify.add(panelBooking);
 		panelBooking.setVisible(false);
 		panelBooking.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -238,21 +245,28 @@ public class ResearchBooks extends SL_JFrame {
 		btnDelivery.setBounds(135, 7, 126, 23);
 		getFrame().getContentPane().add(btnDelivery);
 		
-		textField = new JTextField();
-		textField.setBounds(337, 8, 315, 20);
-		getFrame().getContentPane().add(textField);
-		textField.setColumns(10);
+		setTextField(new JTextField());
+		getTextField().setBounds(337, 8, 315, 20);
+		getFrame().getContentPane().add(getTextField());
+		getTextField().setColumns(10);
 		
 		JButton btnResearch = new JButton("Ricerca");
 		btnResearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			String s=textField.getText();
-			    if(s.length()!=0){			 
+			String s=getTextField().getText();
+			
+				if(s.length()!=0){		
+					
+					 System.err.println("cli query in esecuzione s "+s);
+					 
+					 
 			    	//TODO PASSA A CLIENT da TableBooks		 				 
 			    	//me.getCmdLIST().put(Commands.tableBookPopulate);
 			    				try {	 	 
-			    					TableBooks.PopulateData(s,me);
-			    				 } catch (SQLException e1) {
+			    					
+			    				TableBooks.PopulateData(s,me);
+
+			    				} catch (SQLException e1) {
 			    					e1.printStackTrace();	
 			    				} catch (InterruptedException e1) {				
 			    					e1.printStackTrace();
@@ -260,9 +274,15 @@ public class ResearchBooks extends SL_JFrame {
 			    }else{
 			    	//TODO PASSA A CLIENT da TableBooks	
 			    	//me.getCmdLIST().put(Commands.tableBookPopulate);	
+			    	
+			    	
+			    	 System.err.println("cli query in esecuzione s==0");
+			    	
 			    			      try {
-			    					 TableBooks.PopulateData("",me);
-			    				} catch (SQLException e1) {
+			    					
+			    			     TableBooks.PopulateData("",me);
+
+			    			      } catch (SQLException e1) {
 			    					e1.printStackTrace();
 			    				} catch (InterruptedException e1) {				
 			    					e1.printStackTrace();
@@ -991,6 +1011,16 @@ public JFrame getFrame() {
 
 public void setFrame(JFrame frame) {
 	this.frame = frame;
+}
+
+
+public JTextField getTextField() {
+	return textField;
+}
+
+
+public void setTextField(JTextField textField) {
+	this.textField = textField;
 }
 
 }

@@ -23,8 +23,10 @@ import gui.Login;
 public class MQ_Read {
 	
 	public LoadUser l;
+	
 	public static String [][] RicercaLibro ()throws SQLException{			
-			String query = "SELECT * FROM libro;";
+	 	String 	query = "SELECT * FROM libro;";
+
 			DBmanager.openConnection();
 			ResultSet rs = DBmanager.executeQuery(query);
 			
@@ -77,7 +79,9 @@ public class MQ_Read {
 }
 	
  public static String [][] ResearchLoans ()throws SQLException{			
-		String query = "SELECT * FROM prestiti;";
+	 	
+	 	String 	query = "SELECT * FROM prestiti;";
+
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
@@ -132,7 +136,9 @@ public class MQ_Read {
 	}
 	
  public static String [][] ResearchBooking ()throws SQLException{			
-		String query = "SELECT * FROM prenotazioni;";
+	 	
+	 	String 	query = "SELECT * FROM prenotazioni;";
+
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		

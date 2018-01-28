@@ -1,5 +1,9 @@
 package connections;
 import Core.Commands;
+import Table.TableBooking;
+import Table.TableBooks;
+import Table.TableLoans;
+import gui.ResearchBooks;
 public class ClientConnectionController implements Runnable {
 	private 			Client 				me;
 	private 			MessageBack			mSgBack;
@@ -58,18 +62,48 @@ public class ClientConnectionController implements Runnable {
 						controllo=2;
 					}else {		
 						if (me.isStubok()) {
-						me.getMeMain().getText().setText("Aggiorno Dati sul Client...la finestra attiva é "+me.getActW().toString());
-						me.setRefreshData(true);
-						
-						
+								me.getMeMain().getText().setText("Aggiorno Dati sul Client...la finestra attiva é "+me.getActW().toString());
+								if (me.getMeRes()!=null) {//finesta attiva
+										if (me.getMePannelBook().isVisible()) {
+												System.err.println("vedo pannello book");
+												String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();
+												if (Fbook==null||Fbook.equals("")) {
+													TableBooks.PopulateData(null,me);
+												}else {
+													TableBooks.PopulateData(Fbook,me);	
+												}	
+										}
+										if (me.getMePannelBooking().isVisible()) {
+												System.err.println("vedo pannello booking");
+												String Fbooking = ((ResearchBooks)me.getActW()).getTextField().getText();
+												if (Fbooking==null||Fbooking.equals("")) {
+													TableBooking.PopulateData(null,me);
+												}else {
+													TableBooking.PopulateData(Fbooking,me);	
+												}																
+										}
+										if (me.getMePannelLoans().isVisible()) {
+												System.err.println("vedo pannello loans");
+												String Floans = ((ResearchBooks)me.getActW()).getTextField().getText();
+												if (Floans==null||Floans.equals("")) {
+													TableLoans.PopulateData(null,me);
+												}else {
+													TableLoans.PopulateData(Floans,me);	
+												}
+										}	
+								}//me.getMeRes
+								
+								
+								
+								
+								
+						//me.setRefreshData(true);
 						//me.getCmdLIST().put(Commands.GetDataForTables);	//REFRESH data	
 						}else {
 							me.getMeMain().getText().setText("REFRESH DATI non POSSIBILE [Server OFF-line...]");
 						}
 						controllo=1;
 					}
-
-					
 				}catch (Exception e) {e.printStackTrace();
 				} 								
 		}	//while					

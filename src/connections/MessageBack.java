@@ -40,8 +40,31 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	
 	//private ResultSet	rs;
 	private JTable	tab;
+	private JTable	tabBook;
+	private JTable	tabBooking;
+	private JTable	tabLoans;
 	
 	
+	
+	
+	public JTable getTabBook() {
+		return tabBook;
+	}
+	public void setTabBook(JTable tabBook) {
+		this.tabBook = tabBook;
+	}
+	public JTable getTabBooking() {
+		return tabBooking;
+	}
+	public void setTabBooking(JTable tabBooking) {
+		this.tabBooking = tabBooking;
+	}
+	public JTable getTabLoans() {
+		return tabLoans;
+	}
+	public void setTabLoans(JTable tabLoans) {
+		this.tabLoans = tabLoans;
+	}
 	//Costruttori
 	public MessageBack (){	
 	}

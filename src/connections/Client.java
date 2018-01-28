@@ -16,11 +16,15 @@ import javax.mail.SendFailedException;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.Popup;
+
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.crypto.KeySelector.Purpose;
 
 import com.sun.org.apache.bcel.internal.generic.POP;
 import com.sun.org.apache.bcel.internal.generic.POP2;
@@ -41,7 +45,9 @@ import Core.Requests;
 import Core.RequestsList;
 import Core.SearchFor;
 import ProvaEmail.EmailSender;
+import Table.TableBooking;
 import Table.TableBooks;
+import Table.TableLoans;
 import Table.TableModelBooking;
 import Table.TableModelBooks;
 import Table.TableModelLoans;
@@ -88,7 +94,12 @@ public class Client implements Serializable, Runnable  {
 	private 			AppMain 			StartWindow;
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
+	private				ResearchBooks		meRes=null;
+	private 			JPanel				mePannelBook=null;
+	private 			JPanel				mePannelBooking=null;
+	private 			JPanel				mePannelLoans=null;
 	
+
 	private 			JFrame 				ActF			=null;	//Active Frame
 	private 			SL_JFrame			ActW			=null;	//Active Window
 	private 			Component			ActC			=null;	//Active Component	
@@ -130,6 +141,9 @@ public class Client implements Serializable, Runnable  {
 	private 			String				PASSWORD;	//private String PASSWORD="ACmilan1994$";
 	private 			String				USERNAME;	//private String USERNAME="llazzati@studenti.uninsubria.it";
 	//SETTING *************************************************
+	private 			String  			Fbook;
+	private 			String  			Fbooking;
+	private 			String  			Floans;
 	
 	private 			String 				Sql;
 	private 			String 				Sql2;
@@ -248,8 +262,8 @@ public class Client implements Serializable, Runnable  {
 								//	Loans
 								case LoanREAD: 															break;
 								case LoanPopulate:			ClientCMDloans.Loanspopulate(this);			break;
-								case LoanExecuteQuery:		ClientCMDloans.Loanspopulate(this);	
-								//	Booking			
+								case LoanExecuteQuery:		ClientCMDloans.Loanspopulate(this);			break;
+								
 								case BookingREAD: 														break;
 								case BookingPopulate:		ClientCMDBooking.Bookingpopulate(this);		break;
 								case BookingExecuteQuery:	ClientCMDBooking.Bookingpopulate(this);		break;
@@ -641,31 +655,19 @@ setBusy(false);
 								
 								
 								
-							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");									
+							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");
+							
+								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
+							
 								//System.out.println(Mb.getTab().toString());
 								setActTable(Mb.getTab());
-								/*
-								//test ok
-								System.out.println("ricavo valore record 0 campo 0 : "+ getActTable().getModel().getValueAt(0, 0));
-								System.out.println("ricavo valore record 0 campo 1 : "+ getActTable().getModel().getValueAt(0, 1));
-								System.out.println("ricavo valore record 0 campo 2 : "+ getActTable().getModel().getValueAt(0, 2));
-								System.out.println("ricavo valore record 0 campo 3 : "+ getActTable().getModel().getValueAt(0, 3));
-								System.out.println("ricavo valore record 0 campo 4 : "+ getActTable().getModel().getValueAt(0, 4));
-								System.out.println("ricavo valore record 0 campo 5 : "+ getActTable().getModel().getValueAt(0, 5));								
-								System.out.println("ricavo valore record 1 campo 0 : "+ getActTable().getModel().getValueAt(1, 0));
-								System.out.println("ricavo valore record 1 campo 1 : "+ getActTable().getModel().getValueAt(1, 1));
-								System.out.println("ricavo valore record 1 campo 2 : "+ getActTable().getModel().getValueAt(1, 2));
-								System.out.println("ricavo valore record 1 campo 3 : "+ getActTable().getModel().getValueAt(1, 3));
-								System.out.println("ricavo valore record 1 campo 4 : "+ getActTable().getModel().getValueAt(1, 4));
-								System.out.println("ricavo valore record 1 campo 5 : "+ getActTable().getModel().getValueAt(1, 5));
-								//test ok
-								*/								
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
 								//getActTable().update(null);
 								this.setActF(null);
 								this.setSql(null);
 								setBusy(false);
-								break;		
+								break;																
+		
 							case "SRV :> table book populate :> NG":System.out.println("ritornato al client POPULATE NG : ");	
 								clrParFS();
 								break;
@@ -1158,12 +1160,36 @@ setBusy(false);
 							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
 								
 							//table populate
-							case	"SRV :> table Loans populate 	:> OK":	ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
-							case	"SRV :> table Loans populate 	:> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
-							case	"SRV :> table Book populate 	:> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
-							case	"SRV :> table Book populate 	:> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
-							case	"SRV :> table Booking populate 	:> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
-							case	"SRV :> table Booking populate 	:> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
+							case	"SRV :> table Loans populate :> OK":	//ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
+							
+								System.err.println("SRV :> table Booking populate :> OK");		
+								
+							setActTable(Mb.getTab());
+							TableLoans.getTable().setModel(Mb.getTab().getModel());
+							this.setActF(null);
+							this.setSql(null);
+							setBusy(false);
+							break;	
+							
+							
+							
+							case	"SRV :> table Loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
+							
+							//case	"SRV :> table Book populate :> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
+							//case	"SRV :> table Book populate :> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
+							
+							case	"SRV :> table Booking populate :> OK":	//ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
+							
+								System.err.println("SRV :> table Booking populate :> OK");	
+								
+							setActTable(Mb.getTab());
+							TableBooking.getTable().setModel(Mb.getTab().getModel());
+							this.setActF(null);
+							this.setSql(null);
+							setBusy(false);
+							break;
+							case	"SRV :> table Booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
+							
 							case	"SRV :> tables populate :> OK"		:	ClientCMDAllTables.ATpopulateRES(this, "OK", Mb); 	break;
 							case	"SRV :> tables populate :> NG"		:	ClientCMDAllTables.ATpopulateRES(this, "NG", Mb); 	break;
 							
@@ -1990,8 +2016,49 @@ setBusy(false);
 			public void setRefreshData(boolean refreshData) {
 				RefreshData = refreshData;
 			}
-
-		
+			public String getFbook() {
+				return Fbook;
+			}
+			public void setFbook(String fbook) {
+				Fbook = fbook;
+			}
+			public String getFbooking() {
+				return Fbooking;
+			}
+			public void setFbooking(String fbooking) {
+				Fbooking = fbooking;
+			}
+			public String getFloans() {
+				return Floans;
+			}
+			public void setFloans(String floans) {
+				Floans = floans;
+			}
+			public ResearchBooks getMeRes() {
+				return meRes;
+			}
+			public void setMeRes(ResearchBooks meRes) {
+				this.meRes = meRes;
+			}
+			
+			public JPanel getMePannelBook() {
+				return mePannelBook;
+			}
+			public void setMePannelBook(JPanel mePannelBook) {
+				this.mePannelBook = mePannelBook;
+			}
+			public JPanel getMePannelBooking() {
+				return mePannelBooking;
+			}
+			public void setMePannelBooking(JPanel mePannelBooking) {
+				this.mePannelBooking = mePannelBooking;
+			}
+			public JPanel getMePannelLoans() {
+				return mePannelLoans;
+			}
+			public void setMePannelLoans(JPanel mePannelLoans) {
+				this.mePannelLoans = mePannelLoans;
+			}
 		
 		
 	

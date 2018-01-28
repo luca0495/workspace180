@@ -29,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import Check.PopUp;
 import Core.Commands;
 import connections.Client;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class TableBooks extends JPanel implements TableModelListener,Serializable{
 	
@@ -177,6 +179,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	    });
 	    System.out.println("14");
 		JScrollPane scrollPane = new JScrollPane(getTable());
+		scrollPane.addFocusListener(new FocusAdapter() {
+
+		});
 		add(scrollPane);
     }
     
@@ -241,6 +246,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			}
 			System.out.println("q:"+query);
 			me.setSql(query);
+			
+			System.err.println("srv query in esecuzione "+me.getSql());
+			
 			me.getCmdLIST().put(Commands.BookExecuteQuery);					
 			break;
 			

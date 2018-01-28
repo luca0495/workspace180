@@ -22,7 +22,11 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	int			LoginTry;
 	private		int			idut;
 	private		int			idbook;
-	
+
+	private 	String  	Fbook;
+	private 	String  	Fbooking;
+	private 	String  	Floans;
+
 	private		int			selectedIdBook;
 	private		int			selectedIdUser;
 	private		Date		selectedIdDataStart;
@@ -263,5 +267,23 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setSelectedIdDataStop(Date selectedIdDataStop) {
 		this.selectedIdDataStop = selectedIdDataStop;
+	}
+	public String getFbook() {
+		return Fbook;
+	}
+	public void setFbook(String fbook) {
+		Fbook = fbook;
+	}
+	public String getFbooking() {
+		return Fbooking;
+	}
+	public void setFbooking(String fbooking) {
+		Fbooking = fbooking;
+	}
+	public String getFloans() {
+		return Floans;
+	}
+	public void setFloans(String floans) {
+		Floans = floans;
 	}
 }

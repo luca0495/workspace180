@@ -56,7 +56,9 @@ public class ClientCMDBooking {
 	
 	public static void Bookingpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
-		Commands cmd = Commands.BookingPopulate;
+		//Commands cmd = Commands.BookPopulate;
+		Commands cmd = Commands.BookingExecuteQuery;
+		
 		MessageBack Mb = new MessageBack();
 
 		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
@@ -71,9 +73,9 @@ public class ClientCMDBooking {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
-					
-					me.getSelectedIdBook(),		// id libro
-					me.getSelectedIdUser()		// id utente
+					me.getSql()
+					//me.getSelectedIdBook(),		// id libro
+					//me.getSelectedIdUser()		// id utente
 					
 					);
 			MsgSend.setUType(Clients.Librarian);
@@ -85,7 +87,7 @@ public class ClientCMDBooking {
 		switch (mes){
 		case "OK": 
 			PopUp.infoBox(me.getActF(), 		"dati tabella Booking OK");					
-			me.setActTable(Mb.getTab());
+			me.setActTable(Mb.getTab());			
 			TableBooking.getTable().setModel(Mb.getTab().getModel());
 			me.setActF(null);
 			me.setSql(null);

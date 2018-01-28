@@ -35,10 +35,9 @@ public class ClientCMDAllTables {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
-					
-					me.getSelectedIdBook(),		// id libro
-					me.getSelectedIdUser()		// id utente
-					
+					me.getFbook(),					
+					me.getFbooking(),
+					me.getFloans()
 					);
 			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
@@ -53,40 +52,40 @@ public class ClientCMDAllTables {
 		case "OK": 
 			System.out.println("ritornato AT RES OK");
 			me.getMeMain().setReady(true);
-			
-			
-			
+			//*****************************************************************
 			if (!me.isRefreshData()) {
 				//richiesto dalla prima apertura di searchbook...
 				me.setActF(null);
 				me.setSql(null);				
 				me.getMeMain().setReady(true);
-			}
-			
-			
+			}//apertura finesta reser
+			//*****************************************************************
 			me.setDatabook(		Mb.getDatabook());
 			me.setDatabooking(	Mb.getDatabooking());
 			me.setDataloans(	Mb.getDataloans());
+			
+			
 			
 			if ( me.getActW().getModel()=="search") {
 			//aggiorno tables
 			 ResearchBooks x = (ResearchBooks) me.getActW();
 			 
-			 x.getPanelTableResearch().getTm().setData(me.getDatabook());
-			 x.getPanelTableBookingResearch().getTm().setData(me.getDatabooking());
-			 x.getPanelTableLoansResearch().getTm().setData(me.getDataloans()); 
-			
+			// x.getPanelTableResearch().getTm().setData(me.getDatabook());
+			// x.getPanelTableBookingResearch().getTm().setData(me.getDatabooking());
+			// x.getPanelTableLoansResearch().getTm().setData(me.getDataloans()); 
+				
+			// TableBooks.PopulateData(null,me);
+			// TableBooking.PopulateData(null,me);
+			// TableLoans.PopulateData(null,me);			
+			 
+			 
 			 Clients ClType = me.getCliType(); 
 			 
-			 TableBooks.PopulateData(null,me);
-			 TableBooking.PopulateData(null,me);
-			 TableLoans.PopulateData(null,me);
-
-						 
 			}
 
 			me.setBusy(false);
 			me.setRefreshData(false);
+			azzerafiltri(me);
 			break;
 			
 		case "NG": 
@@ -97,12 +96,21 @@ public class ClientCMDAllTables {
 			}
 			me.setBusy(false);
 			me.setRefreshData(false);
+			azzerafiltri(me);
 			break;
 		
 		default:
+			azzerafiltri(me);
 			break;
 			
 		}
 	}	
 	
+
+
+		public static void azzerafiltri(Client me) {
+			me.setFbook(null);
+			me.setFbooking(null);
+			me.setFloans(null);	
+		}	
 }

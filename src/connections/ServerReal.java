@@ -130,47 +130,52 @@ public class ServerReal extends ServerSkeleton {
 		switch (M.getMsg().getCommand()) {
 		// ********************************
 
-		case LoanPopulate:				System.out.println("RealServer :> LoanPopulate... ");
-			try {datitabellaLoans = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
-					x.setDatitabella(datitabellaLoans);		x.setText(new String ("SRV :> table Loans populate :> OK"));		
-			} 		catch (Exception e) {					x.setText(new String ("SRV :> table Loans populate :> NG"));}//break;
-			return x;
-		
-		case BookPopulate:				System.out.println("RealServer :> BookPopulate... ");
-			try {datitabellaBook = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
-					x.setDatitabella(datitabellaBook);		x.setText(new String ("SRV :> table Book populate :> OK"));		
-			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}//break;
-			return x;
-		
-		case BookingPopulate:			System.out.println("RealServer :> BookingPopulate... ");
-			try {datitabellaBooking = MQ_Read.ResearchBooking();	
-				getMeS().addMsg(mSg);
-				
-				x.setDatitabella(datitabellaBooking);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
-			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}//break;
-			return x;
+
 		
 		case GetDataForTables:			
 			
 			System.out.println("RealServer :> GetDataForTables... ");
 			
 			try {
-				datitabellaLoans 	= MQ_Read.ResearchLoans();	
-				datitabellaBook 	= MQ_Read.RicercaLibro();
-				datitabellaBooking 	= MQ_Read.ResearchBooking();
+				datitabellaLoans 	= MQ_Read.ResearchLoans();	//Filtro opzionale
+				datitabellaBook 	= MQ_Read.RicercaLibro();		//Filtro opzionale
+				datitabellaBooking 	= MQ_Read.ResearchBooking(); 	//Filtro opzionale
+				
 				getMeS().addMsg(mSg);
 				
 				x.setDataloans(datitabellaLoans);
 				x.setDatabook(datitabellaBook);
 				x.setDatabooking(datitabellaBooking);
+				
 				x.setText(new String ("SRV :> tables populate :> OK"));		
 		} 		
 			catch (Exception e) {			
 				x.setText(new String ("SRV :> tables populate :> NG"));}//break;
 		return x;
+				
 		
 		
-		
+				/*
+				case LoanPopulate:				System.out.println("RealServer :> LoanPopulate... ");
+				try {datitabellaLoans = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
+						x.setDatitabella(datitabellaLoans);		x.setText(new String ("SRV :> table Loans populate :> OK"));		
+				} 		catch (Exception e) {					x.setText(new String ("SRV :> table Loans populate :> NG"));}//break;
+				return x;
+			
+				case BookPopulate:				System.out.println("RealServer :> BookPopulate... ");
+				try {datitabellaBook = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
+						x.setDatitabella(datitabellaBook);		x.setText(new String ("SRV :> table Book populate :> OK"));		
+				} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}//break;
+				return x;
+			
+				case BookingPopulate:			System.out.println("RealServer :> BookingPopulate... ");
+				try {datitabellaBooking = MQ_Read.ResearchBooking();	
+					getMeS().addMsg(mSg);
+					
+					x.setDatitabella(datitabellaBooking);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
+				} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}//break;
+				return x;
+				*/
 		
 		
 			case LoanREAD://----> [DB] 
@@ -361,6 +366,9 @@ public class ServerReal extends ServerSkeleton {
 					model.addColumn("Prenotazioni_in_coda");
 	
 					DBmanager.openConnection();
+					
+					 System.err.println("srv query in esecuzione "+M.getMsg().getSQLQuery());
+					
 					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
 	
 					int row = 0;

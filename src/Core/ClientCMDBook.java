@@ -16,11 +16,11 @@ import connections.MessageBack;
 
 public class ClientCMDBook {
 
-
-	
 	public static void Bookpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
-		Commands cmd = Commands.BookPopulate;
+		//Commands cmd = Commands.BookPopulate;
+		Commands cmd = Commands.BookExecuteQuery;
+		
 		MessageBack Mb = new MessageBack();
 
 		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
@@ -35,9 +35,9 @@ public class ClientCMDBook {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
-					
-					me.getSelectedIdBook(),		// id libro
-					me.getSelectedIdUser()		// id utente
+					me.getSql()
+					//me.getSelectedIdBook(),		// id libro
+					//me.getSelectedIdUser()		// id utente
 					
 					);
 			MsgSend.setUType(Clients.Librarian);
