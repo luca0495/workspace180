@@ -32,21 +32,24 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
 	public void setColumnNames(String[] columnNames) {
 		this.columnNames = columnNames;
 	}
-
+    /*
 	@Override
     public void fireTableDataChanged()
     { 
+		
 		try 
 		{
-			me.getCmdLIST().put(Commands.BookingPopulate);
+			
+			//me.getCmdLIST().put(Commands.BookingPopulate);
 			//data = MQ_Read.ResearchBooking();
+			//setData(me.getDatabooking());
 		} 
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
     }
-    
+   */ 
     @Override
     public boolean isCellEditable(int row, int col)
     { 

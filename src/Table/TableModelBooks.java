@@ -33,16 +33,19 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
 	public void setColumnNames(String[] columnNames) {
 		this.columnNames = columnNames;
 	}
-
-	@Override
-    public void fireTableDataChanged()
+	/*
+	 @Override
+	public void fireTableDataChanged()
     { 
+		 
 		try {
-			me.getCmdLIST().put(Commands.BookPopulate);	
-			//data = MQ_Read.RicercaLibro();
+			
+			//me.getCmdLIST().put(Commands.BookPopulate);	
+			data = MQ_Read.RicercaLibro();
+			setData(me.getDatabook());
 			}catch (Exception e)	{e.printStackTrace();		} 
     }
-    
+    */
     @Override
     public boolean isCellEditable(int row, int col)
     { 

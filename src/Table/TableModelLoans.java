@@ -32,24 +32,34 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
 		this.columnNames = columnNames;
 	}
 
+	/*
 	@Override
     public void fireTableDataChanged()
     { 
+<<<<<<< HEAD
 		setData(me.getDataloans());
+=======
+>>>>>>> Idbook ok, update table ok(combobox), verifica update su libro prenotazioni
 		
 		try 
 		{
 			
+<<<<<<< HEAD
 			
 			//me.getCmdLIST().put(Commands.LoanPopulate);	
 			//data = MQ_Read.ResearchLoans();
+=======
+			//me.getCmdLIST().put(Commands.LoanPopulate);	
+			data = MQ_Read.ResearchLoans();
+			setData(me.getDataloans());
+>>>>>>> Idbook ok, update table ok(combobox), verifica update su libro prenotazioni
 		} 
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
     }
-    
+    */
     @Override
     public boolean isCellEditable(int row, int col)
     { 

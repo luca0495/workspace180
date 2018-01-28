@@ -141,7 +141,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	                }//fine trigger    
 				}//fine click rx
-                   /*
+                   
                     JTable source 	= (JTable)e.getSource();
                     selectedRow 	= source.rowAtPoint(e.getPoint());
                     //colonna idbook == 0
@@ -149,8 +149,8 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     int idbook=Integer.valueOf(idb);                    
                     //setta su client idbook selezionato
                     me.setSelectedIdBook(idbook);
-                    */
-                    //PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook()));
+                    
+                    PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook()));
             }
 		});
 		 System.out.println("12");
@@ -372,12 +372,13 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		} 
 	}
 	
+	/*
 	public void update()
 	{
 		tm.fireTableDataChanged();
 		getTable().repaint();
 	}
-
+*/
 
 	public static JTable getTable() {
 		return table;

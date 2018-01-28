@@ -305,7 +305,7 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxB.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					panelTableResearch.update();
+					//panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(false);
@@ -319,7 +319,7 @@ public class ResearchBooks extends SL_JFrame {
 				else if(comboBoxB.getSelectedItem().equals("Prestiti"))// mettere qui la di verifica lettore o libraio + query su check
 				{
 					
-					panelTableLoansResearch.update();
+					//panelTableLoansResearch.update();
 					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
@@ -333,7 +333,7 @@ public class ResearchBooks extends SL_JFrame {
 			   else if(comboBoxB.getSelectedItem().equals("Prenotazioni"))// mettere qui la di verifica lettore o libraio + query su check
 			     {
 				
-				panelTableBookingResearch.update();
+				//panelTableBookingResearch.update();
 				panelResearch.setVisible(false);
 				panelLoans.setVisible(false);
 				panelBooking.setVisible(true);
@@ -358,7 +358,7 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxL.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					panelTableResearch.update();
+					//panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(false);
@@ -372,7 +372,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxL.getSelectedItem().equals("Prestiti"))
 				{
-					panelTableLoansResearch.update();
+					//panelTableLoansResearch.update();
 					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
@@ -383,7 +383,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxL.getSelectedItem().equals("Prenotazioni"))
 				{
-					panelTableBookingResearch.update();
+					//panelTableBookingResearch.update();
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(true);
@@ -406,7 +406,7 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxBooking.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					panelTableResearch.update();
+					//panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(false);
@@ -420,7 +420,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prestiti"))
 				{
-					panelTableLoansResearch.update();
+					//panelTableLoansResearch.update();
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
 					panelBooking.setVisible(false);
@@ -430,7 +430,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prenotazioni"))
 				{
-					panelTableBookingResearch.update();
+					//panelTableBookingResearch.update();
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(true);

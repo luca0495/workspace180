@@ -111,7 +111,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                }
                
             }
-            
+        
         });
         System.out.println("6");
         popupMenu.add(deleteItem);
@@ -145,7 +145,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	                }//fine trigger    
 				}//fine click rx
 
-				/*
+				
 				
                 JTable source 	= (JTable)e.getSource();
                 selectedRow 	= source.rowAtPoint(e.getPoint());
@@ -167,7 +167,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 													"\nottenuto idD stop: "+me.getSelectedIdDataStop())
                 			);
 				
-		*/
+		
             }
 		});
 		 System.out.println("12");
@@ -367,14 +367,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         	TableUpdateLoans.setInput((String)model.getValueAt(row, column));
 		} 
 	}
-	
+	/*
 	public void update()
 	{
 		tm.fireTableDataChanged();
 		getTable().repaint();
 	}
-
-
+   */ 
 	public static JTable getTable() {
 		return table;
 	}
