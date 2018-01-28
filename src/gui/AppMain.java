@@ -690,6 +690,8 @@ public class AppMain extends SL_JFrame  {
 		//Object x = getComboBox().getSelectedItem();
 
 		try {
+			
+			me.setStubok(false);
 			me.getCmdLIST().put(Commands.ConnSTOP);
 			Thread.sleep(20);
 			
