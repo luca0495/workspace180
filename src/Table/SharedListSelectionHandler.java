@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 public class SharedListSelectionHandler implements ListSelectionListener  {
 
@@ -48,7 +47,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		boolean isAdjusting = e.getValueIsAdjusting();
 		String sel=getSel();
 		
-		/*
+		
 		//mauro TEST
 		if(!isAdjusting)
 		{		
@@ -56,7 +55,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 				 	case "loans":
 						for(int j = 0; j<8; j++)
 						{
-							rowData.add((String) tb.getValueAt(index, j));
+							rowData.add((String) tl.getValueAt(index, j));
 						}
 						TableUpdateLoans.setRowData(rowData);
 						break;
@@ -73,7 +72,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 					case "booking":
 						for(int j = 0; j<4; j++)
 						{
-							rowData.add((String) tb.getValueAt(index, j));
+							rowData.add((String) tc.getValueAt(index, j));
 						}
 						TableUpdateBooking.setRowData(rowData);
 						
@@ -83,8 +82,8 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 						break;
 				}
 		}
-		*/
 		
+	/*	
 		
 		if(selection)
 		{
@@ -125,7 +124,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 			}
 			
 		}
-	
+		*/
 		
 	}
 

@@ -128,22 +128,24 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 				}//fine click rx
 
 				
-				 
-                JTable source 	= (JTable)e.getSource();
-                selectedRow 	= source.rowAtPoint(e.getPoint());
-                
-                //dati TUPLA in selezione salvati su Client
-                String idlibro				= (String) source.getValueAt(selectedRow, 0);
-                //String idutente				= (String) source.getValueAt(selectedRow, 1);
-                int 	idbook				=Integer.valueOf(idlibro);  
-                //int 	iduser				=Integer.valueOf(idutente);  
-                
-                //setta su client idbook selezionato
-                me.setSelectedIdBook(idbook);
-               // me.setSelectedIdUser(iduser);
-                
-                PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
-                									"\nottenuto iduser  : "+me.getSelectedIdUser() 
+				 JTable source 	= (JTable)e.getSource();
+	                selectedRow 	= source.rowAtPoint(e.getPoint());
+	                
+	                //dati TUPLA in selezione salvati su Client
+	                String idlibro				= (String) source.getValueAt(selectedRow, 0);
+	                String idutente				= (String) source.getValueAt(selectedRow, 1);	
+	                int 	idbook		=Integer.valueOf(	idlibro);  
+	                int 	iduser		=Integer.valueOf(	idutente);  
+
+	                //setta su client idbook selezionato
+	                me.setSelectedIdBook(idbook);
+	                me.setSelectedIdUser(iduser);
+
+	                
+	                PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
+	                									"\nottenuto iduser  : "+me.getSelectedIdUser()+
+	                									"\nottenuto idD init: "+me.getSelectedIdDataStart()+
+														"\nottenuto idD stop: "+me.getSelectedIdDataStop()
                 			));
 			
 		
