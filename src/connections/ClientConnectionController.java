@@ -59,12 +59,12 @@ public class ClientConnectionController implements Runnable {
 					}else {		
 						if (me.isStubok()) {
 						me.getMeMain().getText().setText("Aggiorno Dati sul Client...");
+						me.setRefreshData(true);
 						me.getCmdLIST().put(Commands.GetDataForTables);	//REFRESH data	
-						controllo=1;
 						}else {
 							me.getMeMain().getText().setText("REFRESH DATI non POSSIBILE [Server OFF-line...]");
-						controllo=1;
 						}
+						controllo=1;
 					}
 
 					

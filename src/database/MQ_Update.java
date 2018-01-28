@@ -273,10 +273,10 @@ public class MQ_Update {
 							DBmanager.closeConnection();
 	}	
 	
-		public static void updateLoansStato(String idlib) 	throws SQLException
+		public static void updateLoansStato(String idlib,String newStato) 	throws SQLException
 	{	
 	
-	String query1 = "UPDATE libro set disponibilità =  'PRENOTATO' where codice='"+idlib+"';";
+	String query1 = "UPDATE libro set disponibilità =  '"+newStato+"' where codice='"+idlib+"';";
 	
 	DBmanager.openConnection();
 	DBmanager.executeUpdate(query1);

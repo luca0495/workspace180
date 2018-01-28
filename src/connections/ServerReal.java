@@ -135,11 +135,13 @@ public class ServerReal extends ServerSkeleton {
 					x.setDatitabella(datitabellaLoans);		x.setText(new String ("SRV :> table Loans populate :> OK"));		
 			} 		catch (Exception e) {					x.setText(new String ("SRV :> table Loans populate :> NG"));}//break;
 			return x;
+		
 		case BookPopulate:				System.out.println("RealServer :> BookPopulate... ");
 			try {datitabellaBook = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
 					x.setDatitabella(datitabellaBook);		x.setText(new String ("SRV :> table Book populate :> OK"));		
 			} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}//break;
 			return x;
+		
 		case BookingPopulate:			System.out.println("RealServer :> BookingPopulate... ");
 			try {datitabellaBooking = MQ_Read.ResearchBooking();	
 				getMeS().addMsg(mSg);
@@ -883,10 +885,8 @@ public class ServerReal extends ServerSkeleton {
 										try {
 											
 											Boolean CK = true;	//esito di tutti i controlli
-											//PRASSI CONTROLLO PRESTITI GIA EFFETTUATI
 											
-											//PRASSI ARDITO *****************************************
-											//TEST OK 
+											//Controlli in concorrenza TEST OK	
 											setChkinprogress1(true);			//
 											setChkinprogress2(true);			//
 											setChkinprogress3(true);			//
@@ -894,7 +894,7 @@ public class ServerReal extends ServerSkeleton {
 											//setChkinprogress5(true);
 											//setChkinprogress6(true);
 											
-											System.err.println("server estrapola... idbook:"+idbook);
+											System.out.println("server estrapola... idbook:"+idbook);
 
 											ck1(idut, idbook);		// limite massimo prestiti di 	2 volte per lo stesso LIBRO
 											ck2(idut, idbook);		// limite massimo prestiti di 	5 volte per lo stesso UTENTE
@@ -918,7 +918,7 @@ public class ServerReal extends ServerSkeleton {
 													c+=10;													
 													if (c==2000) {
 														Timeout=false;//scaduto
-														System.out.println("tempo di attesa scaduto, problemi...");
+														System.out.println("tempo di attesa scaduto, errore di comunicazione...");
 														CK=false;
 														x.setText(new String ("SRV :> Loans ASK :> NG" ));	
 													}	
@@ -926,68 +926,55 @@ public class ServerReal extends ServerSkeleton {
 													CK=false;
 													x.setText(new String ("SRV :> Loans ASK :> NG" ));	
 													e1.printStackTrace();
-												}
-												
+												}			
 											}//while
-												
-												
-												String 							rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";
-												
+												String 							rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";												
 												if (		chkResult1.equals(	rok)
 														&& 	chkResult2.equals(	rok)
 														&& 	chkResult3.equals(	rok)
 												//		&& 	chkResult4.equals(	rok)
 												//		&& 	chkResult5.equals(	rok)
 												//		&& 	chkResult6.equals(	rok)
-
-													) 	{	//se tutti i check restituiscono esito positivo...
+													) 	{	//se tutti i check restituiscono esito positivo...																										
+														   //crea Query aggiungi prestito
 													
-
-													x.setText(new String ("SRV :> Loans ASK :> OK" ));
-//TODO INSERIRE LA QUERY DI ACCODAMENTO PRESTITO													
-													//crea query aggiungi prestito
-													//data fine 	= null
-													//rientrato		= false	
-													//ritirato		= false
-													
+														 //data fine 	= null
+														//rientrato		= false	
+													   //ritirato		= false
 													Calendar calendar = new GregorianCalendar();
 													java.util.Date datacorrente = 	calendar.getTime();  
 													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
 
-													x.setText(new String ("SRV :> Loans ASK :> OK" ));																			
+													x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
 											
 													//CHECK : conta utenti in coda per il libro
 													int coda = MQ_Read.checkLoansIdBookWait(idbook);
-													if (coda == 0) {															
-														
+													if (coda == 0) {																												
 														MQ_Insert.insertLoans(q);//test ok
 														String msg = "inserito prestito";
 														String[] rokmsg =new String[2]; 
 														rokmsg[0]=msg;
-														x.setRowLoans(rokmsg);
-														
-			//q aggiorna campo LIBERO in OCCUPATO
-														MQ_Update.updateLoansStato(String.valueOf(idbook));
-
-														
-													}else {
-														System.out.println("ci sono in coda "+coda+" utenti");	
+														x.setRowLoans(rokmsg);	
+													//q aggiorna campo LIBERO in OCCUPATO
+														MQ_Update.updateLoansStato(String.valueOf(idbook),"In prestito");
+													}else {		System.out.println("ci sono in coda "+coda+" utenti");	
 														
 														String qw = MQ_Insert.insertLoansCodaGetQuery(idbook, idut, 10, datacorrente);
 														MQ_Insert.insertLoansCoda(qw);
 														
-			//TODO QUERY INSERIMENTO NUOVA PRENOTAZIONE											
+													//q INSERIMENTO NUOVA PRENOTAZIONE											
 														String msg = "inserito in coda prenotazine";
 														String[] rokmsg =new String[2]; 														
 														rokmsg[0]=msg;
 														coda++;
 														rokmsg[1]=String.valueOf(coda);//PRIORITA														
-														x.setRowLoans(rokmsg);																										
+														x.setRowLoans(rokmsg);								
+														
+														//q aggiorna campo STATO libro in PRENOTATO...
+														MQ_Update.updateLoansStato(String.valueOf(idbook),"Prenotato, "+coda+" utenti in coda" );
+														
 													}
 
-													
-													System.out.println(" TUTTI I CRITERI RISPETTTI, LIBRO IN PRESTITO !!!! ");													
-														
 														}else {															
 															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
 															
@@ -1001,12 +988,11 @@ public class ServerReal extends ServerSkeleton {
 															rokmsg[5]="NN";
 															x.setRowLoans(rokmsg);															
 														}
-											//PRASSI ARDITO *****************************************
+											
 											getMeS().addMsg(mSg);
 										} catch (Exception e) {
 											getMeS().addMsg(mSg);
-											x.setText(new String ("SRV :> Loans ASK :> NG"));	
-											System.out.println("problemi con  SRV :> Loans ASK :> NG");
+											x.setText(new String ("SRV :> Loans ASK :> NG"));	System.out.println("problemi con  SRV :> Loans ASK :> NG");
 											e.printStackTrace();
 										}
 										System.out.println("SYS BL :> srv ritorna "+x.getText());

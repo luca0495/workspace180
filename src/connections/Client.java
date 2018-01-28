@@ -1109,8 +1109,9 @@ setBusy(false);
 													   	 +"l'utente é inserito in coda PRENOTAZIONE con prioritá : "+Mb.getRowLoans()[1]);
 																						
 							}
-								
 								break;
+							
+
 							case "SRV :> Loans ASK :> NG":								PopUp.infoBox(getActF(), "Errore GESTIONE DB ");
 							
 							
