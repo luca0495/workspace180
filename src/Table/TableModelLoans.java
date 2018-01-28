@@ -35,9 +35,13 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
 	@Override
     public void fireTableDataChanged()
     { 
+		setData(me.getDataloans());
+		
 		try 
 		{
-			me.getCmdLIST().put(Commands.LoanPopulate);	
+			
+			
+			//me.getCmdLIST().put(Commands.LoanPopulate);	
 			//data = MQ_Read.ResearchLoans();
 		} 
 		catch (Exception e)

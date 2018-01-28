@@ -16,7 +16,6 @@ import connections.MessageBack;
 
 public class ClientCMDAllTables {
 
-	
 	public static void ATpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
 		Commands cmd = Commands.GetDataForTables;
@@ -55,19 +54,25 @@ public class ClientCMDAllTables {
 			me.setDatabook(		Mb.getDatabook());
 			me.setDatabooking(	Mb.getDatabooking());
 			me.setDataloans(	Mb.getDataloans());
-			
-			me.setActF(null);
-			me.setSql(null);
-			
+
+			if (!me.isRefreshData()) {
+				//richiesto dalla prima apertura di searchbook...
+				me.setActF(null);
+				me.setSql(null);				
+				me.getMeMain().setReady(true);
+			}
 			me.setBusy(false);
-			me.getMeMain().setReady(true);
-			break;		
+			me.setRefreshData(false);
+			break;
+			
 		case "NG": 
 			
-			//PopUp.errorBox(me.getActF(), "ritornato AT RES NG");
-			
+			if (!me.isRefreshData()) {
+				//richiesto dalla prima apertura di searchbook...
+				me.getMeMain().setReady(true);	
+			}
 			me.setBusy(false);
-			me.getMeMain().setReady(true);
+			me.setRefreshData(false);
 			break;
 		
 		default:

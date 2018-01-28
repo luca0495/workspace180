@@ -86,7 +86,6 @@ public class Client implements Serializable, Runnable  {
 	private				int 				CurrentUser=0;	// if ( CurrentUser==0 ) non loggato 
 	
 	private 			AppMain 			StartWindow;
-	
 	private 			AppMain				meMain=null;
 	private 			Account				meAcc=null;
 	
@@ -112,7 +111,8 @@ public class Client implements Serializable, Runnable  {
 	
 	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
 	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
-
+	private 			boolean				RefreshData=false;
+	
 	//TEST OK...
 	
 	//private 			String				SRVaddress="127.0.0.1";		//localhost
@@ -1979,6 +1979,12 @@ setBusy(false);
 			}
 			public void setDataloans(Object[][] dataloans) {
 				this.dataloans = dataloans;
+			}
+			public boolean isRefreshData() {
+				return RefreshData;
+			}
+			public void setRefreshData(boolean refreshData) {
+				RefreshData = refreshData;
 			}
 
 		

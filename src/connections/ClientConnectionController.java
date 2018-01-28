@@ -28,6 +28,8 @@ public class ClientConnectionController implements Runnable {
 //------------------------------------------------------------------------	
 	void Logica() throws Exception {	
  		int ctc=0;						//---- Connection test counter				
+ 		int controllo=1;				//---- 1 controllo connessione, 2 refresh dati
+ 		
  		System.out.println("CCC :> Inizio Logica");
  		
  		while (me.isRepeatconn()){
@@ -47,8 +49,24 @@ public class ClientConnectionController implements Runnable {
 						} catch (Exception e) {							
 						}
 					TurniBusy--;							
-					}	
-					me.getCmdLIST().put(Commands.ConnTEST);
+					}
+					
+					//alterno i controlli					
+					if (controllo==1) {
+						me.getMeMain().getText().setText("Controllo di connessione...");
+						me.getCmdLIST().put(Commands.ConnTEST);			//CTLL Connessione
+						controllo=2;
+					}else {		
+						if (me.isStubok()) {
+						me.getMeMain().getText().setText("Aggiorno Dati sul Client...");
+						me.getCmdLIST().put(Commands.GetDataForTables);	//REFRESH data	
+						controllo=1;
+						}else {
+							me.getMeMain().getText().setText("REFRESH DATI non POSSIBILE [Server OFF-line...]");
+						controllo=1;
+						}
+					}
+
 					
 				}catch (Exception e) {e.printStackTrace();
 				} 								
