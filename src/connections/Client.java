@@ -183,9 +183,6 @@ public class Client implements Serializable, Runnable  {
 					new Thread(y1).start();  // Client Connection Controller [CCC]	
 					
 					
-
-					
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
