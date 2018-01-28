@@ -754,7 +754,7 @@ public class ResearchBooks extends SL_JFrame {
 		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
 		panelResearch.add(btnDeleteBookReturned);
 		
-		
+		/*
 		if (	me.getCliType()==Clients.Admin||
 				me.getCliType()==Clients.Librarian) {
 		 // mettere qui frame
@@ -765,7 +765,7 @@ public class ResearchBooks extends SL_JFrame {
 			System.out.println("non inserisco combo box visualizzazione prestiti per client.type <> Librarian ");
 		}
 			
-		
+		*/
 		
 	}
 	

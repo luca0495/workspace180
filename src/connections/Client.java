@@ -243,13 +243,13 @@ public class Client implements Serializable, Runnable  {
 								//	book
 								case BookExecuteQuery:		BookPopulate();								break;//arriva DA GUI TABLEBOOKS //System.out.println("passato come parametro sql : "+this.Sql);
 								case BookLast:				BookLast();									break;//arriva DA GUI TABLEBOOKS //	
-								case BookingPopulate:		ClientCMDBooking.Bookingpopulate(this);		break;
+								case BookPopulate:			ClientCMDBook.Bookpopulate(this);		    break;
 								//	Loans
 								case LoanREAD: 															break;
 								case LoanPopulate:			ClientCMDloans.Loanspopulate(this);			break;
 								//	Booking			
 								case BookingREAD: 														break;
-								case BookPopulate:			ClientCMDBooking.Bookingpopulate(this);		break;
+								case BookingPopulate:		ClientCMDBooking.Bookingpopulate(this);		break;
 								//	Person
 								case UserREAD: 				UserGetData();								break;	//necessario setSql con query completa			
 								case UserREADbyEmail: 		UserGetDatabyEmail();						break;	//necessario setSql con email							
