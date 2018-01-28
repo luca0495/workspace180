@@ -371,7 +371,7 @@ public class Client implements Serializable, Runnable  {
 																getActW().addMsg(mSg);		
 																setStubok(false);
 															}				
-															Thread.sleep(100);// test conn every 0.1 sec
+															Thread.sleep(1000);// test conn every 0.1 sec
 														}
 														else {															
 															for (int i = 5;i>0;i--){

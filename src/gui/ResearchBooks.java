@@ -21,6 +21,7 @@ import javax.swing.table.TableRowSorter;
 import Books.Books;
 import Check.Check;
 import Check.PopUp;
+import Core.ClientCMDuser;
 import Core.Clients;
 import Core.Commands;
 import Table.TableBooking;
@@ -29,6 +30,7 @@ import Table.TableLoans;
 import Table.TableModelBooks;
 import Table.TableUpdateBooks;
 import connections.Client;
+import connections.ClientConnectionController;
 import database.MQ_Insert;
 import database.MQ_Read;
 
@@ -206,7 +208,12 @@ public class ResearchBooks extends SL_JFrame {
 				
 				 WindowEvent close = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
 				 frame.dispatchEvent(close);
+				 
+				 me.getStartWindow().getFrame().setVisible(true);	//System.out.println("creato start windows");
+				 me.getStartWindow().addMsg("ResearchBook closed...");
+				 me.getStartWindow().getMostRecentFocusOwner();
 				
+
 			}
 		});
 		btnReturnBack.setBounds(10, 7, 89, 23);

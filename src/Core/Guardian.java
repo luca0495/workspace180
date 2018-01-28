@@ -85,7 +85,8 @@ public class Guardian implements Runnable {
 													e.printStackTrace();
 				}				
 				//--------------------------------------------------------				
-				
+				//--------------------------------------------------------
+				//--------------------------------------------------------				
 				
 				
 				
@@ -656,6 +657,9 @@ public class Guardian implements Runnable {
 	// PROCEDURA CONTROLLO SCADENZE PRESTITI
 	
 	public void CheckLoans() throws InterruptedException{
+		meS.getMeG().addMsg("GpG:> connessioni attive: "+meS.getOperatori().size()+"\n"+
+							"GpG:> Aggiorno Flag Prestiti scaduti... ");
+		
 		System.out.println("GPG :> Guardian SERVE CHECK LOANS");		
 		//SERVE controllo prestiti scaduti
 		Busy=true;
@@ -684,7 +688,10 @@ public class Guardian implements Runnable {
 			if (em[0].equals("Nessun Dato")) {
 				
 				System.out.println(("nessun prestito scaduto") );
-				meS.getMeG().addMsg("nessun prestito scaduto");
+				
+				meS.getMeG().addMsg("GpG:> connessioni attive: "+meS.getOperatori().size()+"\n"+
+						"GpG:> Controllo Prestiti scaduti... : nessuno");
+				
 				//non fare piu nulla
 				
 			}else {
@@ -715,6 +722,8 @@ public class Guardian implements Runnable {
 					e.printStackTrace();
 				} 
 				
+				meS.getMeG().addMsg("GpG:> connessioni attive: "+meS.getOperatori().size()+"\n"+
+						"GpG:> Controllo Prestiti scaduti... : INVIO eMAIL");
 				
 			}
 			

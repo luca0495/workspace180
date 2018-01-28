@@ -16,7 +16,6 @@ import connections.MessageBack;
 
 public class ClientCMDAllTables {
 
-
 	
 	public static void ATpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
@@ -52,20 +51,16 @@ public class ClientCMDAllTables {
 		switch (mes){
 		case "OK": 
 			System.out.println("ritornato AT RES OK");
-
-			//PopUp.infoBox(me.getActF(), 		"ritornato AT RES OK");
 			
-			me.setActTable(Mb.getTab());
-			
-			me.setDatabook(Mb.getDatabook());
-			me.setDatabooking(Mb.getDatabooking());
-			me.setDataloans(Mb.getDataloans());
+			me.setDatabook(		Mb.getDatabook());
+			me.setDatabooking(	Mb.getDatabooking());
+			me.setDataloans(	Mb.getDataloans());
 			
 			me.setActF(null);
 			me.setSql(null);
+			
 			me.setBusy(false);
 			me.getMeMain().setReady(true);
-			
 			break;		
 		case "NG": 
 			
@@ -73,7 +68,6 @@ public class ClientCMDAllTables {
 			
 			me.setBusy(false);
 			me.getMeMain().setReady(true);
-		
 			break;
 		
 		default:
