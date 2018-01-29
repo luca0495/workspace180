@@ -245,6 +245,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 				                               Date  data_inizio,
 				                               Date  data_fine
 				 ) throws SendFailedException, MessagingException, SQLException{
+		 String[] all = MQ_Read.sendEmailLoans();
 	     String host = "smtp.office365.com";
 	     String from= UN; 
 	     Authenticator authenticator = new Authenticator()
@@ -270,7 +271,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 			  			.append("Autore: "+nome_autore+" "+cognome_autore ).append("  <br/>")
 			  			.append("La data di inizio prestito è:" + data_inizio ).append("  <br/>")
 			  			.append("La data di fine prestito è: " + data_fine).append("  <br/>")
-			  			.append("  <br/>").append("Grazie per averci scelto, arrivederci p.s. COLOMBO STRONZO ROTTO IN CULO FACCI PASSARE ALTRIMENTI SBERLE A NON FINIRE <br/>").append("</div>");
+			  			.append("  <br/>").append("Grazie per averci scelto, arrivederci p.s. COLOMBO STRONZO ROTTO IN CULO FACCI PASSARE ALTRIMENTI SBERLE A NON FINIRE,grazie <br/>").append("</div>");
 		try{		
 		 
 		Message msg = new MimeMessage(session);
