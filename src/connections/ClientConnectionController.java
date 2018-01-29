@@ -73,6 +73,7 @@ public class ClientConnectionController implements Runnable {
 													TableBooks.PopulateData(Fbook,me);	
 												}	
 										}
+										/*
 										if (me.getMePannelBooking().isVisible()) {
 												System.err.println("vedo pannello booking");
 												String Fbooking = ((ResearchBooks)me.getActW()).getTextField().getText();
@@ -90,7 +91,8 @@ public class ClientConnectionController implements Runnable {
 												}else {
 													TableLoans.PopulateData(Floans,me);	
 												}
-										}	
+										}
+										*/	
 								}//me.getMeRes
 								
 								

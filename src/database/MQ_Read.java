@@ -787,7 +787,7 @@ scaduto=true
 
 
 	public static int checkLoansIdBookWait(int idbook) throws SQLException
-	{
+	{	
 		System.err.println("idbook  :"+idbook);
 		
 		String q="select count (id) from prenotazioni where codice='"+idbook+"';";
@@ -804,15 +804,45 @@ scaduto=true
 		else
 		{
 			rs.next();
+			
 			count = rs.getInt(1);
+	
 		}	
 		System.out.println("ottenuto count utenti in attesa di "+idbook+" : "+count);
 		rs.close();
 		DBmanager.closeConnection();
 		return count;
+
 	}
 	
-	 
+	public static boolean checkBookingPresente(int idut,int idbook) throws SQLException
+	{
+		System.err.println("idut  :"+idut);
+		System.err.println("idbook  :"+idbook);
+		
+		String q="SELECT count(codice) FROM prenotazioni WHERE codice='"+idbook+"' AND id ='"+idut+"';";			
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+		
+		boolean count;
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			count = false;
+		}
+		else
+		{
+			rs.next();
+			count = true;
+		}	
+		System.out.println("ottenuto conto delle prenotazini " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
+		rs.close();
+		DBmanager.closeConnection();
+		return count;
+	} 
+	
+	
+	
 	}
 
 

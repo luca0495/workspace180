@@ -1054,58 +1054,59 @@ public class ServerReal extends ServerSkeleton {
 													e1.printStackTrace();
 												}			
 											}//while
-												String 							rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";												
-												if (		chkResult1.equals(	rok)
-														&& 	chkResult2.equals(	rok)
-														&& 	chkResult3.equals(	rok)
-												//		&& 	chkResult4.equals(	rok)
-												//		&& 	chkResult5.equals(	rok)
-												//		&& 	chkResult6.equals(	rok)
-													) 	{	//se tutti i check restituiscono esito positivo...																										
-														   //crea Query aggiungi prestito
-													
-														 //data fine 	= null
-														//rientrato		= false	
-													   //ritirato		= false
-													Calendar calendar = new GregorianCalendar();
-													java.util.Date datacorrente = 	calendar.getTime();  
-													String q =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
+																			String	rok = "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ";												
+													if (			chkResult1.equals(	rok)
+																&& 	chkResult2.equals(	rok)
+																&& 	chkResult3.equals(	rok)
+															//	&& 	chkResult4.equals(	rok)
+															//	&& 	chkResult5.equals(	rok)
+															//	&& 	chkResult6.equals(	rok)
+														) 	
+													{//se tutti i check restituiscono esito positivo...																										
+														
+														Calendar calendar = new GregorianCalendar();
+														java.util.Date datacorrente = 	calendar.getTime();  
+														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
+														String qB =  MQ_Insert.insertBookingGetQuery(idbook, idut, 10, datacorrente);
+														x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
 
-													x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
-											
-													//CHECK : conta utenti in coda per il libro
-													int coda = MQ_Read.checkLoansIdBookWait(idbook);
-													if (coda == 0) {																												
-														MQ_Insert.insertLoans(q);//test ok
-														String msg = "inserito prestito";
-														String[] rokmsg =new String[2]; 
-														rokmsg[0]=msg;
-														x.setRowLoans(rokmsg);	
-													//q aggiorna campo LIBERO in OCCUPATO
-														MQ_Update.updateLoansStato(String.valueOf(idbook),"In prestito");
-													}else {		System.out.println("ci sono in coda "+coda+" utenti");	
-														
-														String qw = MQ_Insert.insertLoansCodaGetQuery(idbook, idut, 10, datacorrente);
-														MQ_Insert.insertLoansCoda(qw);
-														
-													//q INSERIMENTO NUOVA PRENOTAZIONE											
-														String msg = "inserito in coda prenotazine";
-														String[] rokmsg =new String[2]; 														
-														rokmsg[0]=msg;
-														coda++;
-														rokmsg[1]=String.valueOf(coda);//PRIORITA														
-														x.setRowLoans(rokmsg);								
-														
-														//q aggiorna campo STATO libro in PRENOTATO...
-														MQ_Update.updateLoansStato(String.valueOf(idbook),"Prenotato, "+coda+" utenti in coda" );
-														
-													}
-
-														}else {															
+																//q CHECK : prenotazione idut idbook ATTIVA
+																boolean presenteincoda = MQ_Read.checkBookingPresente(idut, idbook);
+																if (presenteincoda) {		//		presente in coda prenotazioni
+																	System.out.println("l'utente é gia presente in lista di prenotazione per il libro");
+																	x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));							
+																}else {						//	NON	presente in coda prenotazioni
+																		//q conta utenti in coda per il libro
+																		int coda = MQ_Read.checkLoansIdBookWait(idbook);
+																		if (coda == 0) {																												
+																		//q inserisci prestito	
+																			MQ_Insert.insertLoans(qL);
+																		//q inserisci prenotazione	
+																			MQ_Insert.insertBooking(qB);		
+																			String msg = "inserito prestito";
+																			String[] rokmsg =new String[2]; 
+																			rokmsg[0]=msg;
+																			x.setRowLoans(rokmsg);	
+																		//q aggiorna campo LIBERO in OCCUPATO
+																			MQ_Update.updateLoansStato(String.valueOf(idbook),"In prestito");
+																		}else {		System.out.println("ci sono in coda "+coda+" utenti");	
+																			String qw = MQ_Insert.insertLoansCodaGetQuery(idbook, idut, 10, datacorrente);
+																		//q inserisci prenotazione	
+																			MQ_Insert.insertLoansCoda(qw);
+																		//q INSERIMENTO NUOVA PRENOTAZIONE											
+																			String msg = "inserito in coda prenotazine";
+																			String[] rokmsg =new String[2]; 														
+																			rokmsg[0]=msg;
+																			coda++;
+																			rokmsg[1]=String.valueOf(coda);//PRIORITA														
+																			x.setRowLoans(rokmsg);								
+																		//q aggiorna campo STATO libro in PRENOTATO...
+																			MQ_Update.updateLoansStato(String.valueOf(idbook),"Prenotato, "+coda+" utenti in coda" );	
+																		}
+																}//non presente in coda prenotazione fine
+													}else {	//criteri non rispettati...														
 															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
-															
-															String[] rokmsg =new String[6]; 
-															
+															String[] rokmsg =new String[6]; 			
 															rokmsg[0]="NN";
 															rokmsg[1]=chkResult1;
 															rokmsg[2]=chkResult2;
@@ -1113,7 +1114,7 @@ public class ServerReal extends ServerSkeleton {
 															rokmsg[4]="NN";
 															rokmsg[5]="NN";
 															x.setRowLoans(rokmsg);															
-														}
+												}
 											
 											getMeS().addMsg(mSg);
 										} catch (Exception e) {

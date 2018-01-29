@@ -130,6 +130,48 @@ public class MQ_Insert {
 									    + pren_cod 	+ "')";
 			return 	query;
 		}
+
+		public static void insertBooking(String query) throws SQLException
+		{
+			DBmanager.openConnection();
+			DBmanager.executeUpdate(query);
+			DBmanager.closeConnection();
+		}
+		
+		public static String insertBookingGetQuery(
+				int codice,
+				int id,
+				int priorita,
+				Date data_inizio
+				) throws SQLException
+		{
+			String data_F="";
+			String query = 		"INSERT INTO prenotazioni("
+					+ "codice, "
+					+ "id, "
+					+ "priorità,"
+					+ "data_inizio )"
+					+ "VALUES('" 		+ codice	            + "' , '"
+										+ id		            + "' , '" 
+										+ priorita				+ "' , '" 
+			                            + data_inizio 	    + "')";
+			return 	query;
+		}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public static void insertLoans(String query) throws SQLException
 		{
