@@ -76,7 +76,10 @@ public class MQ_Delete {
 				+ "' AND id = '" 		           + r.get(1) 
 				+ "' AND data_inizio = '" 	       + r.get(2)
 		        + "' AND data_fine = '"            + r.get(3) 
-		        + "' AND rientrato = '"            + r.get(4) + "';";
+		        + "' AND rientrato = '"            + r.get(4) 
+		        + "' AND ritirato = '"             + r.get(5) 
+		        + "' AND scaduto = '"              + r.get(6) 
+		        + "' AND email_inviata = '"        + r.get(7) + "';";
 		return query;
 	}
 	
