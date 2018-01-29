@@ -842,6 +842,32 @@ scaduto=true
 	} 
 	
 	
+	public static int checkBookingCount_10(int idut,int idbook) throws SQLException
+	{
+		System.err.println("idut  :"+idut);
+		System.err.println("idbook  :"+idbook);
+		
+		String q="SELECT count(codice) FROM prenotazioni WHERE codice='"+idbook+"' AND id ='"+idut+"';";			
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+		
+		int count;
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			count = 0;
+		}
+		else
+		{
+			rs.next();
+			count = rs.getInt(1);
+		}	
+		System.out.println("ottenuto conto delle prenotazini " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
+		rs.close();
+		DBmanager.closeConnection();
+		return count;
+	} 
+	
 	
 	}
 
