@@ -95,6 +95,18 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         				//tm.fireTableDataChanged();
 						//table.repaint();					
 						
+        				try {
+        					
+        					//settare su me.idbook me.idut
+        					
+        					
+							me.getCmdLIST().put(Commands.LoanDELETE);
+						} catch (InterruptedException e1) {
+							
+							e1.printStackTrace();
+						}
+        				
+        				
         				TableUpdateLoans.deleteRow(rowData, getTable(), me);
 
 						//tm.fireTableDataChanged();

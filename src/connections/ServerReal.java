@@ -998,7 +998,34 @@ public class ServerReal extends ServerSkeleton {
 										System.out.println("SYS BL :> srv ritorna "+x.getText());
 										return x;
 										//break;
-																		
+									
+										
+									case LoanDELETE:		
+										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> LoanDELETE ");					
+										try {
+											
+											//ChkDBandTab.tableExistLoans();
+											M.getMsg().getIdbook();
+											M.getMsg().getIdut();
+											List<String>r=new ArrayList <String>();
+											r.add(String.valueOf( M.getMsg().getIdbook()));
+											r.add(String.valueOf( M.getMsg().getIdut()));
+											
+											MQ_Delete.deleteRowLoansGetQuery(r);
+											
+											getMeS().addMsg(mSg);
+											x.setText(new String ("SRV :> Loans DELETE :> OK"));	
+										} catch (SQLException e) {
+											getMeS().addMsg(mSg);
+											x.setText(new String ("\"SRV :> Loans DELETE :> NG"));
+											System.out.println("problemi con controllo tabella Loans ");
+											e.printStackTrace();
+										}
+										System.out.println("SYS BL :> srv ritorna "+x.getText());
+										return x;
+										//break;										
+
+										
 									case LoanASK:	
 //TODO copiare anche per reader ... far passare dal client 
 										
