@@ -2,6 +2,7 @@ package ProvaEmail;
 
 import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 
@@ -230,6 +231,65 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 	            exception.printStackTrace();
 	        }      
 		 }
+	 
+
+	 public static void send_email_books_loans(String UN,
+				                               String PW,
+				                               String email,
+				                               String idlibro,
+				                               String utnome,
+				                               String utcognome,
+				                               String nome_autore,
+				                               String cognome_autore,
+				                               String titolo,
+				                               Date  data_inizio,
+				                               Date  data_fine
+				 ) throws SendFailedException, MessagingException, SQLException{
+		 String[] all = MQ_Read.sendEmailLoans();
+	     String host = "smtp.office365.com";
+	     String from= UN; 
+	     Authenticator authenticator = new Authenticator()
+	      {         @Override
+	    	          protected PasswordAuthentication getPasswordAuthentication() {
+	    	             return new PasswordAuthentication(UN, PW);
+	    	          }
+	      };
+	     //SMTPAuthenticator authenticator = new SMTPAuthenticator(me.getUSERNAME(), me.getPASSWORD());
+		 Properties props = new Properties();
+		 props.setProperty("mail.smtp.auth" , "true" );
+		 props.setProperty("mail.smtp.host",host);
+	     props.setProperty("mail.smtp.port","587");
+	     props.setProperty("mail.smtp.starttls.enable", "true");		     
+	    // props.put("mail.debug", "true");
+	     System.out.println("Controllo props:" + props + "Controllo authenticator:" + authenticator );
+	     Session session = Session.getInstance( props, authenticator );
+		 
+	     StringBuilder bodyText = new StringBuilder(); 
+			 bodyText.append("<div>").append("Caro "+utnome+" "+utcognome+"<br/><br/>").append("La contattiamo per dirle che ha preso in prestito il seguente libro. <br/>")
+			  			.append("Libro ID: "+idlibro).append("  <br/>")
+			  			.append("TITOLO: "+titolo).append("  <br/>")
+			  			.append("Autore: "+nome_autore+" "+cognome_autore ).append("  <br/>")
+			  			.append("La data di inizio prestito è:" + data_inizio ).append("  <br/>")
+			  			.append("La data di fine prestito è: " + data_fine).append("  <br/>")
+			  			.append("  <br/>").append("Grazie per averci scelto, arrivederci p.s. COLOMBO STRONZO ROTTO IN CULO FACCI PASSARE ALTRIMENTI SBERLE A NON FINIRE,grazie <br/>").append("</div>");
+		try{		
+		 
+		Message msg = new MimeMessage(session);
+		 msg.setFrom(new InternetAddress(from));
+		 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(email));
+		 msg.setSubject("Avviso Scadenza Prestito");
+		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
+		 
+		 System.out.println("Controllo msg:" + msg + "Controllo user:" + UN + "Controllo password:" + PW);
+		 
+		 Transport.send(msg,UN,PW);	     			 
+		 //Transport.send(msg);			 
+	     System.out.println("\nMail was sent successfully.");   
+		}catch(MessagingException exception)
+        {
+            exception.printStackTrace();
+        }      
+	 }
 
 	 
 	 

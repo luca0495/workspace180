@@ -765,6 +765,42 @@ where
 		return loan;
 	}	
 	
+	public static String[] sendEmailLoans() throws SQLException
+	{
+		//restituisce il primo prestito SCADUTO con email NON inviata
+		String query = "select prestiti.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio,data_fine from prestiti,utente,libro " + 
+				"where 	prestiti.id		=utente.id		AND"	+ 
+				"		prestiti.codice	=libro.codice	   "	+
+				" ;";
+		
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+
+		String[] loan = new String[10]; // codice utente codice libro
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			loan[0]=("Nessun Dato");
+		}
+		else
+		{
+			rs.next(); 
+			
+			loan[0]=(rs.getString("codice")); 			    //0 
+			loan[1]=(rs.getString("id"));				    //1
+			loan[2]=(rs.getString("nome")); 		       	//2
+			loan[3]=(rs.getString("cognome")); 			    //3
+			loan[4]=(rs.getString("email")); 			    //4
+			loan[5]=(rs.getString("nome_autore")); 		    //5
+			loan[6]=(rs.getString("cognome_autore")); 		//6
+			loan[7]=(rs.getString("titolo")); 	            //7
+			loan[8]=(rs.getString("data_inizio")); 			//8
+			loan[9]=(rs.getString("data_fine"));            //9
+		}
+		rs.close();
+		DBmanager.closeConnection();
+		return loan;
+	}	
 	
 	
 
