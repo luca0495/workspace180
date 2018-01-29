@@ -1033,30 +1033,65 @@ public class ServerReal extends ServerSkeleton {
 										//break;										
 
 										
-									case LoanReturn:
-									
+									case LoanReturn://procedura loan return...
+										
+										try {
 										boolean bene=false;
+										List <String> r = new ArrayList<String>(2);	
 										
-										//procedura loan return...
+									//*** cancello dati dalla tabella prenotazioni	
+										r.add(String.valueOf( M.getMsg().getSelectedIdBook()));
+										r.add(String.valueOf( M.getMsg().getSelectedIdUser()));									
+										String q = MQ_Delete.deleteRowBookingGetQuery(r);
+										MQ_Delete.deleteRowBooking(q);
+									//*** cancello dati dalla tabella prenotazioni
 										
-										//CANCELLATO DA LISTA PRENOTAZIONI
+										//RICAVO PRIMO DELLA LISTA [DATA MENO RECENTE ]
+										//Q								idutente
 										
-										//AGGIORNO CAMPO STATO
-										//AGGIORNO CAMPO DATA FINE
+										String[][] primaprenotazione = MQ_Read.ResearchBookingFirst();
+										int iduserNext = Integer.valueOf(primaprenotazione[0][0]);
+										int idbookNext = Integer.valueOf(primaprenotazione[0][1]);
 										
+										System.out.println("il libro "+idbookNext+" verra riassegnato a : "+iduserNext);	
 										
+										//SE CODA PRENOTAZIONE VUOTA:	
+										if (iduserNext==0) {
+																						
+											//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
+												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));
+												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));									
+												String q2 = MQ_Update.updateLoansReturnedGetQuery(Integer.valueOf(r.get(0)),Integer.valueOf(r.get(1)));
+												MQ_Update.updateLoansReturned(q2);
+											//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
+											
+											//*** aggiorno Libro [ Libero ]								
+												MQ_Update.updateBookFree(M.getMsg().getSelectedIdBook());
+											//*** aggiorno Libro [ Libero ]
+												
+										//SE CODA PRENOTAZIONE NON VUOTA:		
+										}else {
+											
+											//creo loans con il primo della lista...
+											String qINS = MQ_Insert.insertLoansGetQuery(idbookNext, iduserNext);
+											MQ_Insert.insertLoans(qINS);
+											
+											//invio email di avviso
+
+										}
+
 										
+
+											x.setText(new String ("SRV :> Loans RETURNED :> OK" ));
+											return x;
 										
-										if (bene)x.setText(new String ("SRV :> Loans RETURNED :> OK" ));
+										}catch (Exception e) {
+											
+											x.setText(new String ("SRV :> Loans RETURNED :> NG" ));
+											return x;
+										}
 										
-										
-										
-										else	 x.setText(new String ("SRV :> Loans RETURNED :> NG" ));
-										
-										
-										return x;
 										//break;
-										
 										
 									case LoanASK:	
 //TODO copiare anche per reader ... far passare dal client 
@@ -1126,7 +1161,7 @@ public class ServerReal extends ServerSkeleton {
 														
 														Calendar calendar = new GregorianCalendar();
 														java.util.Date datacorrente = 	calendar.getTime();  
-														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente, false, true,false,false);
+														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut);
 														String qB =  MQ_Insert.insertBookingGetQuery(idbook, idut, 10, datacorrente);
 														x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
 
@@ -1622,8 +1657,8 @@ public class ServerReal extends ServerSkeleton {
 			int pe;
 			try {
 
-//TODO CAMBIA QUERY	
-				pe = MQ_Read.checkLoansIdutIdbook_2(idut, idbook);	
+//TODO testa QUERY	
+				pe = MQ_Read.checkBookingCount_10(idut, idbook);	
 				
 				if (pe==10||pe>10) {		//limite massimo di 10 raggiunto
 					//prestito negato

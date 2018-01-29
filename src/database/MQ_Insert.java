@@ -182,18 +182,18 @@ public class MQ_Insert {
 		
 		public static String insertLoansGetQuery(
 				int codice,
-				int id,
-				Date data_inizio,
+				int id
+				//Date data_inizio,
 				//Date data_fine, 
-				boolean rientrato, 
-				boolean ritirato, 
-				boolean scaduto,
-				boolean email_inviata 
+				//boolean rientrato, 
+				//boolean ritirato, 
+				//boolean scaduto,
+				//boolean email_inviata 
 				) throws SQLException
 		{
 			String data_F="";
-
-			
+			String datacorrente = "current_date";
+			String falsita		= "false";
 			String query = 		"INSERT INTO prestiti("
 					+ "codice, "
 					+ "id, "
@@ -204,11 +204,11 @@ public class MQ_Insert {
 					+ "email_inviata)"
 					+ "VALUES('" 		+ codice	            + "' , '"
 										+ id		            + "' , '" 
-										+ data_inizio	        + "' , '" 
-										+ rientrato          	+ "' , '"
-										+ ritirato           	+ "' , '"
-			                            + scaduto 	            + "' , '" 
-			                            + email_inviata 	    + "')";
+										+ datacorrente        	+ "' , '" 
+										+ falsita	          	+ "' , '"
+										+ falsita           	+ "' , '"
+			                            + falsita 	            + "' , '" 
+			                            + falsita		 	    + "')";
 			return 	query;
 		}
 

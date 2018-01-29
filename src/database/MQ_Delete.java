@@ -63,6 +63,7 @@ public class MQ_Delete {
 		        + "' AND prenotazioni_in_coda = '" + r.get(6) + "';";
 		return query;
 	}
+	
 	public static void deleteRowLoans(String q) throws SQLException
 	{			
 		DBmanager.openConnection();
@@ -90,7 +91,7 @@ public class MQ_Delete {
 		String query = "DELETE FROM prenotazioni WHERE "
 				+ "codice = '" 					   + r.get(0) 
 				+ "' AND id = '" 		           + r.get(1) 
-		        + "' AND priorità = '"            + r.get(2) + "';";
+		        + "';";
 		return query;
 	}
 	

@@ -135,6 +135,58 @@ public class MQ_Read {
 		return dati;
 	}
 	
+ 
+ public static String [][] ResearchBookingFirst ()throws SQLException{			
+	 	String 	query = "SELECT id,data_inizio from prenotazioni" + 
+	 			"where" + 
+	 			"codice=29" + 
+	 			"ORDER BY data_inizio ASC;";
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(query);
+		List<String> results = new ArrayList<String>();
+		String[][] dati = null;
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			dati = new String[1][4];
+			dati[0][0] = null;
+			dati[0][1] = null;
+			dati[0][2] = null;
+			dati[0][3] = null;
+		}
+		else
+		{
+			while(rs.next()) 
+			{
+				results.add(rs.getString("codice"));
+				results.add(rs.getString("id"));
+				results.add(rs.getString("priorità"));
+				results.add(rs.getString("data_inizio"));
+				
+				int cols = 4;
+		    	int rows = results.size() / cols;
+		    	
+		    	dati = new String[rows][cols];
+		    	
+				for(int i = 0, d = 0; i < rows; i++)
+				{
+		    		for(int j = 0; j < cols; j++, d++)
+		    		{
+		    			dati[i][j] = results.get(d);
+				    }
+				}
+			}
+		}
+
+		rs.close();
+		DBmanager.closeConnection();
+		
+		return dati;
+	}
+ 
+ 
+ 
+ 
  public static String [][] ResearchBooking ()throws SQLException{			
 	 	
 	 	String 	query = "SELECT * FROM prenotazioni;";
@@ -152,7 +204,6 @@ public class MQ_Read {
 			dati[0][1] = null;
 			dati[0][2] = null;
 			dati[0][3] = null;
-			
 		}
 		else
 		{

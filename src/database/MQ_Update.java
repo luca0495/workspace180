@@ -9,6 +9,18 @@ import java.util.List;
 
 public class MQ_Update {
 
+	public static void updateBookFree(int idbook) throws SQLException
+	{	
+												
+		String q = "UPDATE libro SET disponibilità = Libero WHERE codice = '" + idbook + "';";
+    	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	
+	
+	
 
 	public static void updateTableCliente(String cd,String input, int col) throws SQLException
 	{	
@@ -169,6 +181,40 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	//UPDATE LOANS RETURNED	*********************************************************************
+	public static String updateLoansReturnedGetQuery(int idus, int idbook) throws SQLException
+	{
+		String q=null;
+		q = "UPDATE prestiti "
+				+ "SET " 						+ 
+				"data_fine = current_date," 	+ 
+				"rientrato=true" 				+ 
+				"where id='"+idus+"'and codice='"+idbook+"';";
+		return q;
+	}
+	public static void updateLoansReturned(String q) throws SQLException
+	{	
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(q);
+		DBmanager.closeConnection();
+	}
+	//UPDATE LOANS RETURNED	*********************************************************************
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static String updateModUserIdGetQuery(int idus, String nome,  String cognome, String email,  String inq, String ntel,String tipo_utente) throws SQLException
 	{
 		String q=null;
