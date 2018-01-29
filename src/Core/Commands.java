@@ -28,12 +28,14 @@ public enum Commands{
 			BookREAD 				("Book Read			"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 						
 			BookLast 				("Book find last id	"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 	
 			BookPopulate			("Book Populate		"			,	SearchFor.Book,			CommandsType.READ,			1,	0), 	
-
+			
 			
 // Loans - Prestiti			
 			LoanListADD				("Loan add 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanListREMOVE			("Loan del 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanDELETE				("Loan Delete		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		4,	0),	
+			LoanReturn				("Loan Return		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		1,	0),	
+			
 			
 			LoanNoticeAvaiable		("Loan notice av	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanNoticeExpiration	("Loan notice ex	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
@@ -44,6 +46,8 @@ public enum Commands{
 			LoanREAD				("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 			LoanPopulate			("Loan Populate		"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0), 	
 			LoanExecuteQuery		("Loan Execute Query"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0),			
+			
+			
 			
 			
 			//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),

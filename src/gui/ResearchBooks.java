@@ -13,10 +13,13 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.Popup;
 import javax.swing.RowFilter;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
+import com.sun.org.apache.bcel.internal.generic.POP;
 
 import Books.Books;
 import Check.Check;
@@ -238,6 +241,14 @@ public class ResearchBooks extends SL_JFrame {
 		JButton btnDelivery = new JButton("Consegna");
 		btnDelivery.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				PopUp.infoBox(btnReturnBack, "idL"+me.getSelectedIdBook()+"idU"+me.getSelectedIdUser()+"");
+				
+				
+				
+				
+				
 				
 				
 			}
