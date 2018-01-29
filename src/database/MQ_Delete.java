@@ -73,13 +73,8 @@ public class MQ_Delete {
 	{		
 		String query = "DELETE FROM prestiti WHERE "
 				+ "codice = '" 					   + r.get(0) 
-				+ "' AND id = '" 		           + r.get(1) 
-				+ "' AND data_inizio = '" 	       + r.get(2)
-		        + "' AND data_fine = '"            + r.get(3) 
-		        + "' AND rientrato = '"            + r.get(4) 
-		        + "' AND ritirato = '"             + r.get(5) 
-		        + "' AND scaduto = '"              + r.get(6) 
-		        + "' AND email_inviata = '"        + r.get(7) + "';";
+				+ "' AND id = '" 		           + r.get(1)  
+		        + "';";
 		return query;
 	}
 	

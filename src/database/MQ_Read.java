@@ -824,25 +824,58 @@ scaduto=true
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);
 		
-		boolean count;
+		int count;
 		
 		if (!rs.isBeforeFirst()) 
 		{ 
-			count = false;
+			count = 0;
 		}
 		else
 		{
 			rs.next();
-			count = true;
+			count = rs.getInt(1);
 		}	
-		System.out.println("ottenuto conto delle prenotazini " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
+		 boolean presente=false;
+		if (count>0)presente=true;
+		
+		System.out.println("ottenuto conto delle prenotazioni " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
 		rs.close();
 		DBmanager.closeConnection();
-		return count;
+		return presente;
 	} 
 	
 	
 	
+public static boolean checkLoansPresente(int idut,int idbook) throws SQLException
+{
+	System.err.println("idut  :"+idut);
+	System.err.println("idbook  :"+idbook);
+	
+	String q="SELECT count(codice) FROM prestiti WHERE codice='"+idbook+"' AND id ='"+idut+"';";			
+	DBmanager.openConnection();
+	ResultSet rs = DBmanager.executeQuery(q);
+	
+	int count;
+	
+	if (!rs.isBeforeFirst()) 
+	{ 
+		count = 0;
 	}
+	else
+	{
+		rs.next();
+		count = rs.getInt(1);
+	}	
+	 boolean presente=false;
+	if (count>0)presente=true;
+	
+	System.out.println("ottenuto conto delle prestiti " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
+	rs.close();
+	DBmanager.closeConnection();
+	return presente;
+} 
 
+
+
+}
 

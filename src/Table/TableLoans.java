@@ -65,6 +65,9 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         JMenuItem deleteItem = new JMenuItem("Delete");
         //JMenuItem prenotaItem = new JMenuItem("Prenota");
         
+        
+        
+        
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -79,6 +82,23 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         				System.out.println("4");
         				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
+        			
+        			
+        			
+        			
+                    //setta su client idbook selezionato
+                    //me.setSelectedIdBook(idbook);
+                    //me.setSelectedIdUser(iduser);
+                    
+                    
+                    		try {
+    				me.getCmdLIST().put(Commands.LoanDELETE);
+                    		} catch (InterruptedException e1) {e1.printStackTrace();}
+        			
+        			
+        			
+        			
+        			/*
         			try 
         			{ 
         				System.out.println("5");      				
@@ -94,20 +114,19 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 						
         				//tm.fireTableDataChanged();
 						//table.repaint();					
-						
+
+        				
         				try {
         					
         					//settare su me.idbook me.idut
-        					
-        					
-							me.getCmdLIST().put(Commands.LoanDELETE);
+							
 						} catch (InterruptedException e1) {
 							
 							e1.printStackTrace();
 						}
         				
         				
-        				TableUpdateLoans.deleteRow(rowData, getTable(), me);
+        				//TableUpdateLoans.deleteRow(rowData, getTable(), me);
 
 						//tm.fireTableDataChanged();
 						//getTable().repaint();
@@ -119,7 +138,10 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         			{
 						e1.printStackTrace();
 					}
-					
+					*/
+        			
+        			
+        			
                }
                
             }
@@ -147,6 +169,9 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	                    deleteRow = source.rowAtPoint(e.getPoint());
 	                    int column = source.columnAtPoint(e.getPoint());
 
+	                    
+	                    
+	                    
 	                    if (!source.isRowSelected(deleteRow))
 	                    {
 	                    	System.out.println("10");
@@ -165,13 +190,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
                 //dati TUPLA in selezione salvati su Client
                 String idlibro				= (String) source.getValueAt(selectedRow, 0);
                 String idutente				= (String) source.getValueAt(selectedRow, 1);	
-                int 	idbook		=Integer.valueOf(	idlibro);  
-                int 	iduser		=Integer.valueOf(	idutente);  
-
-                //setta su client idbook selezionato
-                me.setSelectedIdBook(idbook);
-                me.setSelectedIdUser(iduser);
-
+                me.setSelectedIdBook(Integer.valueOf(	idlibro));  
+                me.setSelectedIdUser(Integer.valueOf(	idutente));
+                //int 	iduser		=Integer.valueOf(	idutente);  
+                
+                
+                
+                
                 
                 PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
                 									"\nottenuto iduser  : "+me.getSelectedIdUser()+
