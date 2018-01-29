@@ -33,6 +33,8 @@ public enum Commands{
 // Loans - Prestiti			
 			LoanListADD				("Loan add 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanListREMOVE			("Loan del 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
+			LoanDELETE				("Loan Delete		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		4,	0),	
+			
 			LoanNoticeAvaiable		("Loan notice av	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanNoticeExpiration	("Loan notice ex	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanNew					("Loan New			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
@@ -42,7 +44,7 @@ public enum Commands{
 			LoanREAD				("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 			LoanPopulate			("Loan Populate		"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0), 	
 			LoanExecuteQuery		("Loan Execute Query"			,	SearchFor.Prenotation,	CommandsType.READ,			1,	0),			
-
+			
 			
 			//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
 	//		Loan					("Loan read			"			,	SearchFor.Prenotation,	CommandsType.READ	,		4,	0),
@@ -50,6 +52,8 @@ public enum Commands{
 // Booking - Prenotazioni			
 			BookingListADD			("Booking add 			"		,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingListREMOVE		("Booking del 			"		,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			BookingDELETE			("Booking del 			"		,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
+			
 			BookingNoticeAvaiable	("Booking notice av	"			,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingNoticeExpiration	("Booking notice ex	"			,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),
 			BookingNew				("Booking New			"		,	SearchFor.Booking,		CommandsType.CHANGE	,		4,	0),

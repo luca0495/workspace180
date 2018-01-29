@@ -141,13 +141,13 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 	                me.setSelectedIdBook(idbook);
 	                me.setSelectedIdUser(iduser);
 
-	                
+	                /*
 	                PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
 	                									"\nottenuto iduser  : "+me.getSelectedIdUser()+
 	                									"\nottenuto idD init: "+me.getSelectedIdDataStart()+
 														"\nottenuto idD stop: "+me.getSelectedIdDataStop()
                 			));
-			
+	                 */
 		
             }
 		});

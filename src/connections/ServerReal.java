@@ -1009,7 +1009,7 @@ public class ServerReal extends ServerSkeleton {
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> Loans ASK ");					
 										
 										try {
-											
+											String[] rokmsg =new String[6];//SPIEGAZIONI all utente dopo PRESTITO NON CONSENTITO
 											Boolean CK = true;	//esito di tutti i controlli
 											
 											//Controlli in concorrenza TEST OK	
@@ -1074,7 +1074,8 @@ public class ServerReal extends ServerSkeleton {
 																boolean presenteincoda = MQ_Read.checkBookingPresente(idut, idbook);
 																if (presenteincoda) {		//		presente in coda prenotazioni
 																	System.out.println("l'utente é gia presente in lista di prenotazione per il libro");
-																	x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));							
+																	x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
+																	rokmsg[4]="Il prestito risulta essere gia prenotato per l'utente";
 																}else {						//	NON	presente in coda prenotazioni
 																		//q conta utenti in coda per il libro
 																		int coda = MQ_Read.checkLoansIdBookWait(idbook);
@@ -1084,7 +1085,7 @@ public class ServerReal extends ServerSkeleton {
 																		//q inserisci prenotazione	
 																			MQ_Insert.insertBooking(qB);		
 																			String msg = "inserito prestito";
-																			String[] rokmsg =new String[2]; 
+																			rokmsg =new String[2]; 
 																			rokmsg[0]=msg;
 																			x.setRowLoans(rokmsg);	
 																		//q aggiorna campo LIBERO in OCCUPATO
@@ -1095,7 +1096,7 @@ public class ServerReal extends ServerSkeleton {
 																			MQ_Insert.insertLoansCoda(qw);
 																		//q INSERIMENTO NUOVA PRENOTAZIONE											
 																			String msg = "inserito in coda prenotazine";
-																			String[] rokmsg =new String[2]; 														
+																			rokmsg =new String[2]; 														
 																			rokmsg[0]=msg;
 																			coda++;
 																			rokmsg[1]=String.valueOf(coda);//PRIORITA														
@@ -1106,12 +1107,12 @@ public class ServerReal extends ServerSkeleton {
 																}//non presente in coda prenotazione fine
 													}else {	//criteri non rispettati...														
 															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
-															String[] rokmsg =new String[6]; 			
+															 			
 															rokmsg[0]="NN";
 															rokmsg[1]=chkResult1;
 															rokmsg[2]=chkResult2;
 															rokmsg[3]=chkResult3;
-															rokmsg[4]="NN";
+															//rokmsg[4]="NN";
 															rokmsg[5]="NN";
 															x.setRowLoans(rokmsg);															
 												}

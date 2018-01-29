@@ -304,14 +304,20 @@ public class Client implements Serializable, Runnable  {
 								//	Loans
 								case LoanASK:				ClientCMDloans.LoansNew(this);				break;	//richiesta nuovo prestito -- System.err.println("leggo da client ... idbook: "+getIdbook()); 
 								case LoanNew: 															break;
-								case LoanListADD: 														break;		
+								case LoanListADD: 														break;	
+								case LoanDELETE: 														break;	
 								case LoanListREMOVE: 													break;	
 								case LoanBookGet: 														break;	
 								case LoanBookGiveback: 													break;	
 								case LoanNoticeAvaiable: 												break;	
 								case LoanNoticeExpiration: 												break;
 								//	Booking
+								
+								
+								case BookingDELETE :													break;
 								case BookingListREMOVE:		ClientCMDBooking.BookingDelete(this);		break;
+								
+								
 								default:																break;
 								
 								
