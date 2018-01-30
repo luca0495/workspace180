@@ -54,12 +54,14 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 	
 	
 	
-    public TableLoans(JFrame frame,Client me)  
+    public TableLoans(JFrame frame,Client me)  throws InterruptedException
     {
         super(new GridLayout(1,0));
     	this.me=me;
         this.frame = frame;
+        
         setTm(new TableModelLoans(me));
+        
         setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
@@ -71,6 +73,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
             	System.out.println("1");
                 if(PopUp.confirmBox(frame))
                 {
@@ -261,8 +264,9 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
         
     public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		// Clear table   
-		getTable().setModel(new DefaultTableModel());	
-		// Model for Table		
+		
+    	getTable().setModel(new DefaultTableModel());	
+    	// Model for Table		
 		DefaultTableModel model = (DefaultTableModel)getTable().getModel();		
 		model.addColumn("Codice");
 		model.addColumn("Id");
@@ -274,48 +278,71 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Email_Inviata");
 		String query=null;
 		System.out.println("Valore ritornato:" + x);		
+		
+		
 		switch (me.getCliType()) {
-				case Librarian:		
-					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
-		                    + " ORDER BY id ASC";
+				
+		
+		
+		case Librarian:		
+					query = "SELECT * FROM prestiti" + " WHERE "
+							+ " codice LIKE '%"+x+"%'"
+		                    //+ " ORDER BY id ASC"
+							;
 					
 					if(x=="" || x==null){			
 					query = "SELECT * FROM prestiti ";
 					}			
 					me.setSql(query);
+					
+					System.err.println("LIB table loans populate test "+query );
+					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
 					
-				case Reader:
-					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
-		                    + " ORDER BY id ASC";
+		case Reader:
+					query = "SELECT * FROM prestiti" + " WHERE "
+							+ " codice LIKE '%"+x+"%'"
+		                    //+ " ORDER BY id ASC"
+							;
 					
 					if(x=="" || x==null){			
 					query = "SELECT * FROM prestiti ";
 					}			
 					me.setSql(query);
+					
+					System.err.println("READ table loans populate test "+query );
+					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
 					
-				case Guest:			
-					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
-		                    + " ORDER BY id ASC";
+		case Guest:			
+					query = "SELECT * FROM prestiti" + " WHERE "
+							+ " codice LIKE '%"+x+"%'";
+		                    //+ " ORDER BY id ASC";
 					
 					if(x=="" || x==null){			
 					query = "SELECT * FROM prestiti ";
 					}			
 					me.setSql(query);
+					
+					System.err.println("GUEST table loans populate test "+query );
+					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
 					
-				case Default:			
-					query = "SELECT * FROM prestiti" + " WHERE (codice LIKE '%"+x+"%'"
+		case Default:			
+					query = "SELECT * FROM prestiti" + " WHERE "
+							+ " codice LIKE '%"+x+"%'"
 		                    + " ORDER BY id ASC";
 					
 					if(x=="" || x==null){			
 					query = "SELECT * FROM prestiti ";
 					}			
 					me.setSql(query);
+					
+					System.err.println("DEF table loans populate test "+query );
+					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
 					

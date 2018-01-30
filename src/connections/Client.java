@@ -667,6 +667,7 @@ setBusy(false);
 								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
 							
 								//System.out.println(Mb.getTab().toString());
+								
 								setActTable(Mb.getTab());
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
 								//getActTable().update(null);
@@ -1166,14 +1167,23 @@ setBusy(false);
 							//table populate
 							case	"SRV :> table Loans populate :> OK":	//ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
 							
-								System.err.println("SRV :> table Booking populate :> OK");		
-								
+									
+							/*	
 							setActTable(Mb.getTab());
 							TableLoans.getTable().setModel(Mb.getTab().getModel());
 							this.setActF(null);
 							this.setSql(null);
 							setBusy(false);
-							break;	
+							*/
+							
+							setActTable(Mb.getTab());
+							
+							TableLoans.getTable().setModel(Mb.getTab().getModel());
+							
+							this.setActF(null);
+							this.setSql(null);
+							setBusy(false);
+							
 							
 							
 							

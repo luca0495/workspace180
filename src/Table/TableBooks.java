@@ -222,6 +222,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Titolo");
 		model.addColumn("Disponibilità");
 		model.addColumn("Prenotazioni_in_coda");
+		
 		String query=null;
 		
 		System.out.println("Client me " + me.toString());		

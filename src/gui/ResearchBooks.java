@@ -348,9 +348,9 @@ public class ResearchBooks extends SL_JFrame {
 				if(comboBoxB.getSelectedItem().equals("Ricerca_Libro"))
 				{
 					//panelTableResearch.update();
-					panelResearch.setVisible(true);
-					panelLoans.setVisible(false);
-					panelBooking.setVisible(false);
+					panelResearch.setVisible(	true);
+					panelLoans.setVisible(		false);
+					panelBooking.setVisible(	false);
 					
 					System.out.println("7" + comboBoxB.toString());
 					lblEr1.setIcon(null);

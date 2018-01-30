@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import com.sun.corba.se.impl.presentation.rmi.IDLTypesUtil;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import Check.Check;
 import Check.PopUp;
@@ -141,7 +142,7 @@ public class ServerReal extends ServerSkeleton {
 			System.out.println("RealServer :> GetDataForTables... ");
 			
 			try {
-				datitabellaLoans 	= MQ_Read.ResearchLoans();	//Filtro opzionale
+				datitabellaLoans 	= MQ_Read.ResearchLoans();		//Filtro opzionale
 				datitabellaBook 	= MQ_Read.RicercaLibro();		//Filtro opzionale
 				datitabellaBooking 	= MQ_Read.ResearchBooking(); 	//Filtro opzionale
 				
@@ -190,16 +191,15 @@ public class ServerReal extends ServerSkeleton {
 					// Clear table
 					table.setModel(new DefaultTableModel());			
 					// Model for Table				
-					DefaultTableModel model = (DefaultTableModel)table.getModel();
-	
-//TODO ADATTA A LOAN
+					DefaultTableModel model = (DefaultTableModel)table.getModel();				
 					model.addColumn("Codice");
-					model.addColumn("Nome_Autore");
-					model.addColumn("Cognome_Autore");
-					model.addColumn("Categoria");
-					model.addColumn("Titolo");
-					model.addColumn("Disponibilità");
-					model.addColumn("Prenotazioni_in_coda");
+					model.addColumn("Id");
+					model.addColumn("Data_Inizio");
+					model.addColumn("Data_Fine");
+					model.addColumn("Rientrato");
+					model.addColumn("Ritirato");
+					model.addColumn("Scaduto");
+					model.addColumn("Email_Inviata");	
 	
 					DBmanager.openConnection();
 					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
@@ -210,16 +210,17 @@ public class ServerReal extends ServerSkeleton {
 					{
 						System.out.println("Test2 addRow");	
 						model.addRow(new Object[0]);
-						System.out.println("Codice : "+rs.getString("codice"));																		
-						System.out.println("Test3");
-//TODO ADATTA A LOAN						
+						System.out.println("Codice : "+rs.getString("codice"));	System.out.println("Test3");
 					model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
-					model.setValueAt(rs.getString("nome_autore"), row, 1);		System.out.println("Test5");								
-					model.setValueAt(rs.getString("cognome_autore"), row, 2);	System.out.println("Test6");								
-					model.setValueAt(rs.getString("categoria"), row, 3);		System.out.println("Test7");								
-					model.setValueAt(rs.getString("titolo"), row, 4);			System.out.println("Test8");
-					model.setValueAt(rs.getString("disponibilità"), row, 5);
-					model.setValueAt(rs.getString("prenotazioni_in_coda"), row, 6);
+					model.setValueAt(rs.getString("id"), row, 1);				System.out.println("Test5");								
+					model.setValueAt(rs.getString("data_inizio"), row, 2);		System.out.println("Test6");								
+					model.setValueAt(rs.getString("data_fine"), row, 3);		System.out.println("Test7");
+					model.setValueAt(rs.getString("rientrato"), row, 4);		System.out.println("Test7");
+					model.setValueAt(rs.getString("ritirato"), row, 5);			System.out.println("Test7");
+					model.setValueAt(rs.getString("scaduto"), row, 6);			System.out.println("Test7");
+					model.setValueAt(rs.getString("email_inviata"), row, 7);	System.out.println("Test7");
+					
+					
 					row++;						
 					}
 						System.out.println("Test9");
@@ -244,12 +245,18 @@ public class ServerReal extends ServerSkeleton {
 //*
 			case 	LoanExecuteQuery://----> [DB]
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Loans Execute Query ");					
-				try {					
+				try {
+					
+					
 					JTable table=new JTable();
 					// Clear table
-					table.setModel(new DefaultTableModel());			
+					//table.setModel(new DefaultTableModel());
+					table.setModel(new DefaultTableModel());
+					
 					// Model for Table				
 					DefaultTableModel model = (DefaultTableModel)table.getModel();				
+					
+					/*
 					model.addColumn("Codice");
 					model.addColumn("Id");
 					model.addColumn("Data_Inizio");
@@ -258,6 +265,7 @@ public class ServerReal extends ServerSkeleton {
 					model.addColumn("Ritirato");
 					model.addColumn("Scaduto");
 					model.addColumn("Email_Inviata");			
+					*/
 					
 					DBmanager.openConnection();
 					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
@@ -274,9 +282,9 @@ public class ServerReal extends ServerSkeleton {
 					model.setValueAt(rs.getString("data_inizio"), row, 2);		System.out.println("Test6");								
 					model.setValueAt(rs.getString("data_fine"), row, 3);		System.out.println("Test7");
 					model.setValueAt(rs.getString("rientrato"), row, 4);		System.out.println("Test7");
-					model.setValueAt(rs.getString("ritirato"), row, 5);		System.out.println("Test7");
-					model.setValueAt(rs.getString("scaduto"), row, 6);		System.out.println("Test7");
-					model.setValueAt(rs.getString("email_inviata"), row, 7);		System.out.println("Test7");
+					model.setValueAt(rs.getString("ritirato"), row, 5);			System.out.println("Test7");
+					model.setValueAt(rs.getString("scaduto"), row, 6);			System.out.println("Test7");
+					model.setValueAt(rs.getString("email_inviata"), row, 7);	System.out.println("Test7");
 					
 					
 					row++;						
