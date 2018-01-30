@@ -302,6 +302,7 @@ public class Client implements Serializable, Runnable  {
 								case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);	break;
 								case UserActivation: 													break;				
 								//	Loans
+								case LoanReturn:			ClientCMDloans.LoansReturned(this);			break;
 								case LoanASK:				ClientCMDloans.LoansNew(this);				break;	//richiesta nuovo prestito -- System.err.println("leggo da client ... idbook: "+getIdbook()); 
 								case LoanNew: 															break;
 								case LoanListADD: 														break;	

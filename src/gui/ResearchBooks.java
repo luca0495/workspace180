@@ -243,9 +243,11 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				PopUp.infoBox(btnReturnBack, "idL"+me.getSelectedIdBook()+"idU"+me.getSelectedIdUser()+"");
+				PopUp.infoBox(btnReturnBack, "idL "+me.getSelectedIdBook()+"  idU "+me.getSelectedIdUser()+"");
 				
-				
+								try {
+					me.getCmdLIST().put(Commands.LoanReturn);
+								} catch (InterruptedException e1) {e1.printStackTrace();}
 				
 				
 				

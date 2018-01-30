@@ -83,7 +83,17 @@ public class Guardian implements Runnable {
 					checkLoansSendEmail();
 										} catch (InterruptedException e) {
 													e.printStackTrace();
-				}				
+				}
+				//TODO
+				
+				// Q CONTROLLO PRESTITI NON RITIRATI OLTRE 7 GIORNI
+				
+				// PROCEDURA DI CANCELLAZIONE PRESTITO RIPETI PRASSI CONSEGNA
+				
+				
+				
+				
+				
 				//--------------------------------------------------------				
 				//--------------------------------------------------------
 				//--------------------------------------------------------				

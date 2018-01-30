@@ -8,7 +8,8 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.sql.Connection;
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,9 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.sun.corba.se.impl.presentation.rmi.IDLTypesUtil;
+
 import Check.Check;
 import Check.PopUp;
 import Core.Clients;
@@ -1035,60 +1039,136 @@ public class ServerReal extends ServerSkeleton {
 										
 									case LoanReturn://procedura loan return...
 										
+										System.err.println("SRV> Arrivato al server loan return...");
+										
 										try {
+										
+											
+										int iduserNext=0;	
 										boolean bene=false;
 										List <String> r = new ArrayList<String>(2);	
 										
+										Calendar calendar = new GregorianCalendar();
+										Date datacorrente = calendar.getTime();
+										Date dataultimocontrollo=calendar.getTime(); 
+										
+										
+										
 									//*** cancello dati dalla tabella prenotazioni	
-										r.add(String.valueOf( M.getMsg().getSelectedIdBook()));
-										r.add(String.valueOf( M.getMsg().getSelectedIdUser()));									
-										String q = MQ_Delete.deleteRowBookingGetQuery(r);
-										MQ_Delete.deleteRowBooking(q);
-									//*** cancello dati dalla tabella prenotazioni
-										
-										//RICAVO PRIMO DELLA LISTA [DATA MENO RECENTE ]
-										//Q								idutente
-										
-										String[][] primaprenotazione = MQ_Read.ResearchBookingFirst();
-										int iduserNext = Integer.valueOf(primaprenotazione[0][0]);
-										int idbookNext = Integer.valueOf(primaprenotazione[0][1]);
-										
-										System.out.println("il libro "+idbookNext+" verra riassegnato a : "+iduserNext);	
-										
-										//SE CODA PRENOTAZIONE VUOTA:	
-										if (iduserNext==0) {
-																						
-											//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
 												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));
-												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));									
-												String q2 = MQ_Update.updateLoansReturnedGetQuery(Integer.valueOf(r.get(0)),Integer.valueOf(r.get(1)));
-												MQ_Update.updateLoansReturned(q2);
-											//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
-											
-											//*** aggiorno Libro [ Libero ]								
-												MQ_Update.updateBookFree(M.getMsg().getSelectedIdBook());
-											//*** aggiorno Libro [ Libero ]
+												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));	
+												int idbook=M.getMsg().getSelectedIdBook();
+													System.err.println("idbook :"+r.get(0));
+													System.err.println("iduser :"+r.get(1));
+												String q = MQ_Delete.deleteRowBookingGetQuery(r);
+													System.err.println("query ottenuta: "+q);
+													System.err.println("arrivato al server loan return...1");
+												MQ_Delete.deleteRowBooking(q);
+													System.err.println("arrivato al server loan return...2");		
+										
+									//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
+												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));		//0	book
+												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));		//1 user										
+												java.sql.Date dataS = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+												String q2 = MQ_Update.updateLoansReturnedGetQuery(	Integer.valueOf(r.get(0)),
+																									Integer.valueOf(r.get(1)),
+																									dataS);
+												System.err.println("q ritornata : "+q2);
+												MQ_Update.updateLoansReturned(q2);													
+													System.err.println("arrivato al server loan return...3");
 												
-										//SE CODA PRENOTAZIONE NON VUOTA:		
-										}else {
+									//*** ricavo primo della lista prenotazioni	[id utente]								
+												String[] primaprenotazione = MQ_Read.ResearchBookingFirst(M.getMsg().getSelectedIdBook());
+													System.out.println("primo della lista: "+primaprenotazione[0]);
+													System.err.println("arrivato al server loan return...4");
+												
+													if ( primaprenotazione[0]==null || primaprenotazione[0].equals("Nessun Dato")) {
+														
+															System.out.println("NESSUNO IN ATTESA");
+															iduserNext=0;		
+													}else 	{iduserNext=Integer.valueOf(primaprenotazione[0]);
+													}
+												
+										if (iduserNext==0) {	//SE CODA PRENOTAZIONE VUOTA:
+											System.err.println("arrivato al server loan return... idusernext == 0");
+											//*** aggiorno STATO del Libro [ Libero ]								
+												MQ_Update.updateBookFree(M.getMsg().getSelectedIdBook());
 											
+										}else {					//SE CODA PRENOTAZIONE NON VUOTA:	
+											
+											System.out.println("il libro "+idbook+" verra riassegnato a : "+iduserNext);
+											System.err.println("arrivato al server loan return... idusernext != 0");
 											//creo loans con il primo della lista...
-											String qINS = MQ_Insert.insertLoansGetQuery(idbookNext, iduserNext);
+											
+											//*** aggiorno STATO del Libro [ Coda di utenti... ]								
+						
+											
+											// TODO AGGIORNA STATO LIBRO 
+											
+											 	
+											
+											
+											
+						//TODO PREVEDERE PASSAGGIO DELLA DATA DIVERSA DA DATACURRENT
+											
+											if (!M.getMsg().getDateOfRequest().equals(null)) {
+												dataultimocontrollo=M.getMsg().getDateOfRequest();
+											}
+											
+											
+											
+											//inserisce prossimo in lista prenotazioni come in prestito 
+											String qINS = MQ_Insert.insertLoansGetQuery(idbook, iduserNext,datacorrente);
 											MQ_Insert.insertLoans(qINS);
 											
 											//invio email di avviso
-
-										}
-
-										
+												String [] de = MQ_Read.sendEmailLoans();
+												System.err.println("arrivato al server loan return... send email...");
+											
+											String [] userdata = MQ_Read.readSettingTable();
+											
+											System.out.println("ottengo userdata[0]: ["+userdata[0]+"]");
+											System.out.println("ottengo userdata[1]: ["+userdata[1]+"]");
+											System.out.println("ottengo userdata[2]: ["+userdata[2]+"]");
+											System.out.println("ottengo userdata[3]: ["+userdata[3]+"]");
+											System.out.println("ottengo userdata[4]: ["+userdata[4]+"]");
+											System.out.println("ottengo userdata[5]: ["+userdata[5]+"]");
+											System.out.println("ottengo userdata[6]: ["+userdata[6]+"]");
+											
+											
+											
+											String UN=userdata[4];
+											String PW=userdata[5];											
+											EmailSender.send_email_books_loans(
+																			de[0],//codice
+																			
+																			de[2],//nome
+																			de[3],//cognome
+																			de[4],//email
+																			de[5],//nome autore
+																			de[6],//cognome autore
+																			de[7],//titolo
+																			java.sql.Date.valueOf(de[8]),//data inizio
+																			java.sql.Date.valueOf(de[9]),//data fine	
+																			UN,
+																			PW													
+													);
+												
+											}
 
 											x.setText(new String ("SRV :> Loans RETURNED :> OK" ));
 											return x;
 										
 										}catch (Exception e) {
+										
+											
+											
 											
 											x.setText(new String ("SRV :> Loans RETURNED :> NG" ));
 											return x;
+										
+											
+											
 										}
 										
 										//break;
@@ -1161,7 +1241,7 @@ public class ServerReal extends ServerSkeleton {
 														
 														Calendar calendar = new GregorianCalendar();
 														java.util.Date datacorrente = 	calendar.getTime();  
-														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut);
+														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente);
 														String qB =  MQ_Insert.insertBookingGetQuery(idbook, idut, 10, datacorrente);
 														x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
 

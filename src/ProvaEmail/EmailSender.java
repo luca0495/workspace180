@@ -233,17 +233,18 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 		 }
 	 
 
-	 public static void send_email_books_loans(String UN,
-				                               String PW,
-				                               String email,
-				                               String idlibro,
-				                               String utnome,
-				                               String utcognome,
-				                               String nome_autore,
-				                               String cognome_autore,
-				                               String titolo,
-				                               Date  data_inizio,
-				                               Date  data_fine
+	 public static void send_email_books_loans(	String idlibro,
+				 								String utnome,
+				 								String utcognome,
+				 								String email,
+					                            String nome_autore,
+					                            String cognome_autore,
+					                            String titolo,
+					                            Date  data_inizio,
+					                            Date  data_fine,					                               
+					                            String UN,
+					                            String PW
+				                               
 				 ) throws SendFailedException, MessagingException, SQLException{
 		 String[] all = MQ_Read.sendEmailLoans();
 	     String host = "smtp.office365.com";

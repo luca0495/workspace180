@@ -45,7 +45,12 @@ public class ClientCMDloans {
 		String mSg;
 		Commands cmd = Commands.LoanReturn;
 		MessageBack Mb = new MessageBack();		
-		System.err.println("dal client su clientCMDloans... idbook:"+me.getIdbook());			
+		
+		System.err.println("CLI> idbook: "+me.getSelectedIdBook());
+		System.err.println("CLI> iduser: "+me.getSelectedIdUser());
+		
+		
+		
 		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
 		if (!(me.isStubok())){
 			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			

@@ -5,14 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
+
 import java.util.List;
 
 public class MQ_Update {
 
 	public static void updateBookFree(int idbook) throws SQLException
 	{	
-												
-		String q = "UPDATE libro SET disponibilità = Libero WHERE codice = '" + idbook + "';";
+		System.out.println("UPDATE BOOK FREE, setto libro come LIBERO "+idbook);					
+		
+		String q = "UPDATE libro SET disponibilità = 'Libero' WHERE codice = '" + idbook + "';";
     	
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(q);
@@ -189,13 +192,16 @@ public class MQ_Update {
 	
 	
 	//UPDATE LOANS RETURNED	*********************************************************************
-	public static String updateLoansReturnedGetQuery(int idus, int idbook) throws SQLException
+	public static String updateLoansReturnedGetQuery(int idbook,int idus, java.sql.Date datacorrente) throws SQLException
 	{
 		String q=null;
+		//adatta data prima di passarla come stringa
+		
+		
 		q = "UPDATE prestiti "
 				+ "SET " 						+ 
-				"data_fine = current_date," 	+ 
-				"rientrato=true" 				+ 
+				"data_fine = '"+datacorrente+"'," 	+ 
+				"rientrato=true " 				+ 
 				"where id='"+idus+"'and codice='"+idbook+"';";
 		return q;
 	}

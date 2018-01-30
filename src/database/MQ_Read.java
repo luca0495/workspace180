@@ -136,47 +136,34 @@ public class MQ_Read {
 	}
 	
  
- public static String [][] ResearchBookingFirst ()throws SQLException{			
+ public static String [] ResearchBookingFirst (int idus)throws SQLException{			
+	 
+	 
+	 
 	 	String 	query = "SELECT id,data_inizio from prenotazioni" + 
-	 			"where" + 
-	 			"codice=29" + 
-	 			"ORDER BY data_inizio ASC;";
-		DBmanager.openConnection();
+	 			" where " + 
+	 			"codice='"+idus+"' ORDER BY data_inizio ASC LIMIT 1;";
+
+		 System.err.println("ResearchBookingFirst query: "+ query);
+	 	
+	 	DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		List<String> results = new ArrayList<String>();
-		String[][] dati = null;
+		String[] dati = new String [2];
 		
 		if (!rs.isBeforeFirst()) 
-		{
-			dati = new String[1][4];
-			dati[0][0] = null;
-			dati[0][1] = null;
-			dati[0][2] = null;
-			dati[0][3] = null;
+		{  
+			System.out.println("9");
+			dati[0] = "Nessun Dato";
 		}
 		else
 		{
-			while(rs.next()) 
-			{
-				results.add(rs.getString("codice"));
-				results.add(rs.getString("id"));
-				results.add(rs.getString("priorità"));
-				results.add(rs.getString("data_inizio"));
-				
-				int cols = 4;
-		    	int rows = results.size() / cols;
-		    	
-		    	dati = new String[rows][cols];
-		    	
-				for(int i = 0, d = 0; i < rows; i++)
-				{
-		    		for(int j = 0; j < cols; j++, d++)
-		    		{
-		    			dati[i][j] = results.get(d);
-				    }
-				}
-			}
+			System.out.println("10");
+			rs.next();
+			dati[0] = rs.getString("id");
+			dati[1] = rs.getString("data_inizio");
 		}
+		DBmanager.closeConnection();
 
 		rs.close();
 		DBmanager.closeConnection();
@@ -776,7 +763,7 @@ where
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 
-		String[] loan = new String[10]; // codice utente codice libro
+		String[] loan = new String[11]; // codice utente codice libro
 		
 		if (!rs.isBeforeFirst()) 
 		{
@@ -964,7 +951,7 @@ public static boolean checkLoansPresente(int idut,int idbook) throws SQLExceptio
 	System.err.println("idut  :"+idut);
 	System.err.println("idbook  :"+idbook);
 	
-	String q="SELECT count(codice) FROM prestiti WHERE codice='"+idbook+"' AND id ='"+idut+"';";			
+	String q="SELECT count(codice) FROM prestiti WHERE data_fine is null AND codice='"+idbook+"' AND id ='"+idut+"';";			
 	DBmanager.openConnection();
 	ResultSet rs = DBmanager.executeQuery(q);
 	
