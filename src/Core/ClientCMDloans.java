@@ -63,6 +63,7 @@ public class ClientCMDloans {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client					
+					me.getDataLoanReturn(),
 					me.getSelectedIdBook(),		// id libro
 					me.getSelectedIdUser()		// id utente					
 					);
@@ -160,15 +161,21 @@ public class ClientCMDloans {
 	public static void LoanspopulateRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 
-			PopUp.infoBox(me.getActF(), 		"dati tabella loans OK");					
+			//PopUp.infoBox(me.getActF(), 		"dati tabella loans OK");	
 			me.setActTable(Mb.getTab());
 			me.setDataloans(Mb.getDatitabella());
-			//TableLoans.getTable().setModel(Mb.getTab().getModel());
+			TableLoans.getTable().setModel(Mb.getTab().getModel());			
 			me.setActF(null);
 			me.setSql(null);
 			me.setBusy(false);
-			break;		
-		case "NG": PopUp.errorBox(me.getActF(), "dati tabella loans NG");					
+			System.out.println("CLI ritorna da TABLE LOANS POPULATE OK LA TAB : "+ Mb.getTab().getRowCount());
+			System.out.println("CLI ritorna da TABLE LOANS POPULATE OK LA TAB : "+ Mb.getTab().getEditingRow());								
+			break;
+			
+		case "NG": 
+			me.setBusy(false);	
+			PopUp.errorBox(me.getActF(), "dati tabella loans NG");					
+			
 			break;
 		}
 	}

@@ -31,6 +31,8 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private		int			selectedIdUser;
 	private		Date		selectedIdDataStart;
 	private		Date		selectedIdDataStop;	
+	private     String		selectedDataLoanReturn;
+	
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -153,6 +155,34 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSelectedIdUser(idut);
 		setSelectedIdBook(idbook);
 	}	
+	
+	
+	//usato in Loans Returned
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String dataC,
+			int idbook,
+			int idut){
+		
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setSelectedDataLoanReturn(dataC); 
+		setSelectedIdUser(idut);
+		setSelectedIdBook(idbook);
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
@@ -285,5 +315,11 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setFloans(String floans) {
 		Floans = floans;
+	}
+	public String getSelectedDataLoanReturn() {
+		return selectedDataLoanReturn;
+	}
+	public void setSelectedDataLoanReturn(String selectedDataLoanReturn) {
+		this.selectedDataLoanReturn = selectedDataLoanReturn;
 	}
 }

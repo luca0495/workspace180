@@ -36,33 +36,39 @@ import Check.PopUp;
 import Core.Commands;
 import connections.Client;
 import database.DBmanager;
+import gui.ResearchBooks;
+import jdk.nashorn.internal.ir.SetSplitState;
 
 public class TableLoans extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private static JTable table;
-	private JFrame frame;
-	private TableModelLoans tm;
-	private int deleteRow;
-	private int selectedR;
-	private int selectedC;	
+	private static 	JTable table;
+	private ResearchBooks frame;
+//	private JFrame 	frame;
+	private 		TableModelLoans tm;
+	private int 	deleteRow;
+	private int 	selectedR;
+	private int 	selectedC;	
 	private int 	selectedRow;
 	private Client	me;
+	
+	private static boolean storico;
 	
 	private String oldValue;
 	//private static DefaultTableModel dm;
 	
 	
 	
-    public TableLoans(JFrame frame,Client me)  throws InterruptedException
+    public TableLoans(ResearchBooks frame,Client me)  throws InterruptedException
     {
         super(new GridLayout(1,0));
     	this.me=me;
-        this.frame = frame;
+        this.setFrame(frame);
         
         setTm(new TableModelLoans(me));
         
         setTable(new JTable(getTm()));
+        
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
         //JMenuItem prenotaItem = new JMenuItem("Prenota");
@@ -261,10 +267,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     		}
         }
     };
-        
+            
     public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
-		// Clear table   
 		
+    	System.err.println("storico:"+me.isStorico());
+    	
+    	
+    	// Clear table   		
     	getTable().setModel(new DefaultTableModel());	
     	// Model for Table		
 		DefaultTableModel model = (DefaultTableModel)getTable().getModel();		
@@ -276,14 +285,16 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Ritirato");
 		model.addColumn("Scaduto");
 		model.addColumn("Email_Inviata");
+		
 		String query=null;
-		System.out.println("Valore ritornato:" + x);		
+		
+		System.out.println("Client me " + me.toString());		
+		System.out.println("Client me type " + me.getCliType().toString());		
+		System.out.println("Valore ritornato:" + x);	
 		
 		
-		switch (me.getCliType()) {
-				
 		
-		
+<<<<<<< HEAD
 		case Librarian:		
 					query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti" + " WHERE "
 							+ " codice LIKE '%"+x+"%'"
@@ -400,7 +411,29 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 					
 				default:
 					break;
+=======
+		if 
+		if (me.getIdut()==0) {
+			
+			//nessun utente in login utente in login
+		}
+		
+		
+		switch (	me.getCliType()) {		//tipo di utente
+					case Librarian	:			
+										if (me.isStorico()) {	query = "SELECT * FROM prestiti 						ORDER BY data_inizio DESC;";					
+										}else {					query = "SELECT * FROM prestiti WHERE data_fine is null ORDER BY data_inizio DESC;";	
+										}	break;	
+					case Reader		:	if (me.isStorico()) {	query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
+										}else {					query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' AND data_fine is null ORDER BY data_inizio DESC;";	
+										}	break;					
+					case Guest		:							query = "Select  	from prestiti ";	break;			
+					case Default	:							query = "Select  	from prestiti ";	break;			
+					default			:							query = "Select  	from prestiti ";	break;
+>>>>>>> 26a7544511509d8e27116e6f871060a9776152e0
 		}	
+		me.setSql(query);
+		me.getCmdLIST().put(Commands.LoanExecuteQuery);
 	}
   
     
@@ -442,5 +475,25 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 
 	public void setTm(TableModelLoans tm) {
 		this.tm = tm;
+	}
+
+
+	public ResearchBooks getFrame() {
+		return frame;
+	}
+
+
+	public void setFrame(ResearchBooks frame) {
+		this.frame = frame;
+	}
+
+
+	public static boolean isStorico() {
+		return storico;
+	}
+
+
+	public static void setStorico(boolean storico) {
+		storico = storico;
 	}
 }

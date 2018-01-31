@@ -64,14 +64,17 @@ public class ClientConnectionController implements Runnable {
 						me.getMeMain().getText().setText("Controllo di connessione...");
 						me.getCmdLIST().put(Commands.ConnTEST);			//CTLL Connessione
 						controllo=2;
+						
+						
+						
 					}else {							//CONTROLLO == 2 >> Aggiorno Dati 		
 						if (me.isStubok()) {
 								me.getMeMain().getText().setText("Aggiorno Dati sul Client...la finestra attiva é "+me.getActW().toString());
 								if (me.getMeRes()!=null) {//finesta attiva
 										
 										if (me.getMePannelBook().isVisible()) {
-												//System.err.println("vedo pannello book");
 												
+												System.err.println("vedo pannello book");
 												String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();
 												System.out.println("dato nel campo testo: "+Fbook);
 												
@@ -80,40 +83,32 @@ public class ClientConnectionController implements Runnable {
 												}else {
 													TableBooks.PopulateData(Fbook,me);	
 												}	
-										}
-										
-										/*
+										}											
 										if (me.getMePannelLoans().isVisible()) {
-													TableLoans.PopulateData(null,me);
-											
-											
-											
+													
 												System.err.println("vedo pannello loans");
-												//String Floans=null;
 												String Floans = ((ResearchBooks)me.getActW()).getTextField().getText();
-												System.out.println("dato nel campo testo: "+Floans);
 												
 												if (Floans==null||Floans.equals("")) {
-													TableLoans.PopulateData(null,me);
+													TableLoans.PopulateData("",me);
 												}else {
 													TableLoans.PopulateData(Floans,me);	
-												}
-												
-										
-										}
-										*/
-										/*
+												}													
+																					}
 										if (me.getMePannelBooking().isVisible()) {
+											
 												System.err.println("vedo pannello booking");
+												
 												String Fbooking = ((ResearchBooks)me.getActW()).getTextField().getText();
 												if (Fbooking==null||Fbooking.equals("")) {
-													TableBooking.PopulateData(null,me);
+													TableBooking.PopulateData("",me);
 												}else {
 													TableBooking.PopulateData(Fbooking,me);	
-												}																
-										}
-										 */
-											
+												}												
+												
+												
+												
+										}			
 								}//me.getMeRes
 								
 								
