@@ -192,7 +192,9 @@ public class MQ_Update {
 	
 	
 	//UPDATE LOANS RETURNED	*********************************************************************
-	public static String updateLoansReturnedGetQuery(int idbook,int idus, java.sql.Date datacorrente) throws SQLException
+	//public static String updateLoansReturnedGetQuery(int idbook,int idus, java.sql.Date datacorrente) throws SQLException
+	//in test
+	public static String updateLoansReturnedGetQuery(int idbook,int idus, String datacorrente) throws SQLException
 	{
 		String q=null;
 		//adatta data prima di passarla come stringa

@@ -1051,7 +1051,12 @@ public class ServerReal extends ServerSkeleton {
 										
 										try {
 										
-											
+										String DataRiconsegna=M.getMsg().getSelectedDataLoanReturn();
+										
+										System.err.println("data di riconsegna ricevuta :"+DataRiconsegna);
+										
+										
+										
 										int iduserNext=0;	
 										boolean bene=false;
 										List <String> r = new ArrayList<String>(2);	
@@ -1077,7 +1082,14 @@ public class ServerReal extends ServerSkeleton {
 									//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
 												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));		//0	book
 												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));		//1 user										
-												java.sql.Date dataS = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+												
+												//in test:
+												//java.sql.Date dataS = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+												String dataS = DataRiconsegna;
+												
+												
+												
+												
 												String q2 = MQ_Update.updateLoansReturnedGetQuery(	Integer.valueOf(r.get(0)),
 																									Integer.valueOf(r.get(1)),
 																									dataS);

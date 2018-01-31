@@ -63,6 +63,7 @@ public class ClientCMDloans {
 					cmd,						// Comando richiesto
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client					
+					me.getDataLoanReturn(),
 					me.getSelectedIdBook(),		// id libro
 					me.getSelectedIdUser()		// id utente					
 					);

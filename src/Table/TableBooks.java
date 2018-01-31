@@ -162,15 +162,9 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                    
                     me.setSelectedIdBook(idbook);
                     getFrame().getTxtInsertCDBook().setText(String.valueOf(idbook));
-                   
-                    
-                    
-                    
-                    
-                    
-                    
-
-                    PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook()));
+   
+                    PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook())+""
+                    		+ "\n id user corrente salvato in client risulta:"+me.getSelectedIdUser());
             }
 		});
 		 System.out.println("12");

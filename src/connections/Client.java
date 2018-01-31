@@ -145,6 +145,7 @@ public class Client implements Serializable, Runnable  {
 	private 			String  			Fbooking;
 	private 			String  			Floans;
 	
+	private 			String 				DataLoanReturn;
 	private 			String 				Sql;
 	private 			String 				Sql2;
 	private				String				pw;
@@ -465,7 +466,7 @@ public class Client implements Serializable, Runnable  {
 		try {
 			return this.mSgBack = 	Request(Commands.ConnTEST);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 		return this.mSgBack;
@@ -477,7 +478,7 @@ public class Client implements Serializable, Runnable  {
 		try {
 			return this.mSgBack = 	Request(Commands.ConnSTOP);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return this.mSgBack;
@@ -882,6 +883,8 @@ setBusy(false);
 								
 								setCurrentUser(Mb.getIdUser());			//settato id utente su Client
 								setIdut(Mb.getIdUser());
+								setSelectedIdUser(getIdut());
+								
 								setDatiUtente(Mb.getRowUser());
 								
 								System.out.println("settato id utente..."+getIdut());
@@ -2128,6 +2131,12 @@ setBusy(false);
 			}
 			public void setMePannelLoans(JPanel mePannelLoans) {
 				this.mePannelLoans = mePannelLoans;
+			}
+			public String getDataLoanReturn() {
+				return DataLoanReturn;
+			}
+			public void setDataLoanReturn(String dataLoanReturn) {
+				DataLoanReturn = dataLoanReturn;
 			}
 		
 		

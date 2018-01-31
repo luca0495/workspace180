@@ -61,6 +61,7 @@ import java.awt.Toolkit;
 import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.SwingConstants;
 
 public class ResearchBooks extends SL_JFrame {
 
@@ -371,7 +372,7 @@ public class ResearchBooks extends SL_JFrame {
 			}
 		}
 	});
-		comboBoxB.setBounds(10, 443, 200, 20);
+		comboBoxB.setBounds(31, 443, 324, 20);
 		panelResearch.add(comboBoxB);
 		
 		
@@ -472,19 +473,19 @@ public class ResearchBooks extends SL_JFrame {
 		
 		
 		lblEr1 = new JLabel();
-		lblEr1.setBounds(69, 519, 19, 14);
+		lblEr1.setBounds(688, 516, 19, 14);
 		panelResearch.add(lblEr1);
 		
 		lblEr2 = new JLabel();
-		lblEr2.setBounds(298, 519, 19, 14);
+		lblEr2.setBounds(859, 516, 19, 14);
 		panelResearch.add(lblEr2);
 		
 		lblEr3 = new JLabel();
-		lblEr3.setBounds(553, 519, 19, 14);
+		lblEr3.setBounds(542, 438, 19, 14);
 		panelResearch.add(lblEr3);
 		
 		lblEr4 = new JLabel();
-		lblEr4.setBounds(779, 519, 19, 14);
+		lblEr4.setBounds(542, 475, 19, 14);
 		panelResearch.add(lblEr4);
 		
 		lblPopUpCat = new JLabel();
@@ -498,7 +499,7 @@ public class ResearchBooks extends SL_JFrame {
 			}
 		});
 		lblPopUpCat.setIcon(iconLogoQ);
-		lblPopUpCat.setBounds(638, 502, 16, 16);
+		lblPopUpCat.setBounds(571, 469, 16, 16);
 		panelResearch.add(lblPopUpCat);
 		
 		txtName = new JTextField();
@@ -516,7 +517,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});	
-		txtName.setBounds(10, 499, 156, 20);
+		txtName.setBounds(629, 494, 156, 20);
 		panelResearch.add(txtName);
 		txtName.setColumns(10);
 		
@@ -535,7 +536,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		txtSurname.setBounds(234, 499, 156, 20);
+		txtSurname.setBounds(795, 494, 156, 20);
 		panelResearch.add(txtSurname);
 		txtSurname.setColumns(10);
 		
@@ -554,7 +555,7 @@ public class ResearchBooks extends SL_JFrame {
 				}
 			}
 		});
-		txtCat.setBounds(478, 499, 156, 20);
+		txtCat.setBounds(629, 438, 156, 20);
 		panelResearch.add(txtCat);
 		txtCat.setColumns(10);
 		
@@ -576,7 +577,7 @@ public class ResearchBooks extends SL_JFrame {
 
 		
 		
-		txtTitle.setBounds(708, 499, 156, 20);
+		txtTitle.setBounds(629, 469, 322, 20);
 		panelResearch.add(txtTitle);
 		txtTitle.setColumns(10);
 		
@@ -699,28 +700,27 @@ public class ResearchBooks extends SL_JFrame {
 		
 		
 		
-		lblAdd.setBounds(927, 504, 19, 14);
+		lblAdd.setBounds(932, 443, 19, 14);
 		lblAdd.setIcon(iconLogoA);
 		panelResearch.add(lblAdd);
 		
 		JLabel lblInsertBooks = new JLabel("Inserimento Libro");
-		lblInsertBooks.setBounds(369, 442, 186, 14);
+		lblInsertBooks.setBounds(807, 438, 144, 22);
 		panelResearch.add(lblInsertBooks);
 		
-		JLabel lblInsertName = new JLabel("Nome_Autore");
-		lblInsertName.setBounds(10, 474, 156, 14);
+		JLabel lblInsertName = new JLabel("Autore");
+		lblInsertName.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInsertName.setBounds(542, 497, 77, 14);
 		panelResearch.add(lblInsertName);
 		
-		JLabel lblInsertSurname = new JLabel("Cognome_Autore");
-		lblInsertSurname.setBounds(233, 474, 157, 14);
-		panelResearch.add(lblInsertSurname);
-		
 		JLabel lblInsertCat = new JLabel("Categoria");
-		lblInsertCat.setBounds(488, 474, 146, 14);
+		lblInsertCat.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInsertCat.setBounds(567, 441, 56, 14);
 		panelResearch.add(lblInsertCat);
 		
 		JLabel lblInsertTitle = new JLabel("Titolo");
-		lblInsertTitle.setBounds(715, 475, 149, 14);
+		lblInsertTitle.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblInsertTitle.setBounds(561, 469, 62, 14);
 		panelResearch.add(lblInsertTitle);
 				
 				
@@ -731,11 +731,13 @@ public class ResearchBooks extends SL_JFrame {
 		panelResearch.add(lblLine);
 				
 		JLabel lblInsertText = new JLabel("In Selezione");
-		lblInsertText.setBounds(369, 535, 160, 14);
+		lblInsertText.setHorizontalAlignment(SwingConstants.CENTER);
+		lblInsertText.setBounds(361, 561, 136, 14);
 		panelResearch.add(lblInsertText);
 		
 		JLabel lblCDInsert = new JLabel("Codice");
-		lblCDInsert.setBounds(186, 556, 156, 14);
+		lblCDInsert.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCDInsert.setBounds(275, 540, 80, 14);
 		panelResearch.add(lblCDInsert);
 		
 		
@@ -753,23 +755,29 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String dataC = getDatariconsegna().getText();
-				if (dataC.equals("")||dataC==null){
+				if (dataC.equals("")||dataC==null||me.getSelectedIdBook()==0){
 					//campo nullo
+				
 				}else {
-					if (checkDate(dataC)) {
+					
+						
+					
+					
+					//if (checkDate(dataC)) {
 						PopUp.infoBox(btnReturnBack, 
 								"  idL "+me.getSelectedIdBook()+
 								"  idU "+me.getSelectedIdUser()+
 								"  la data di consegna richiesta : "+dataC );
 						
 						try {
+										me.setDataLoanReturn(dataC);							
 										me.getCmdLIST().put(Commands.LoanReturn);
 						} catch (InterruptedException e1) {e1.printStackTrace();}
 						
-					}else {
+					//}else {
 						
-						PopUp.infoBox(btnReturnBack,"la data inserita, "+dataC+" non é nel formato correttto" );
-					}
+						//PopUp.infoBox(btnReturnBack,"la data inserita, "+dataC+" non é nel formato correttto" );
+					//}
 			
 					
 					
@@ -784,26 +792,24 @@ public class ResearchBooks extends SL_JFrame {
 				
 			}
 		});
-		button_1.setBounds(24, 580, 126, 23);
+		button_1.setBounds(31, 557, 110, 23);
 		panelResearch.add(button_1);
 		
 		txtInsertCDBook = new JTextField();
+		txtInsertCDBook.setHorizontalAlignment(SwingConstants.CENTER);
 		txtInsertCDBook.setColumns(10);
-		txtInsertCDBook.setBounds(186, 581, 156, 20);
+		txtInsertCDBook.setBounds(275, 558, 86, 20);
 		panelResearch.add(txtInsertCDBook);
 		
-		JButton btnReturned = new JButton("Rientrato");
-		btnReturned.setBounds(896, 580, 89, 23);
-		panelResearch.add(btnReturned);
-		
 		JButton btnDeleteBookReturned = new JButton("Cancella");
-		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
+		btnDeleteBookReturned.setBounds(816, 557, 98, 23);
 		panelResearch.add(btnDeleteBookReturned);
 
 		//Data riconsegna
 		Datariconsegna = new JTextField();
+		Datariconsegna.setHorizontalAlignment(SwingConstants.CENTER);
 		Datariconsegna.setColumns(10);
-		Datariconsegna.setBounds(352, 581, 156, 20);
+		Datariconsegna.setBounds(151, 560, 98, 20);
 		panelResearch.add(Datariconsegna);
 		
 		//setta data 
@@ -813,7 +819,8 @@ public class ResearchBooks extends SL_JFrame {
 
 		
 		JLabel lblDataRiconsegna = new JLabel("Data Riconsegna");
-		lblDataRiconsegna.setBounds(352, 556, 156, 14);
+		lblDataRiconsegna.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDataRiconsegna.setBounds(151, 540, 98, 14);
 		panelResearch.add(lblDataRiconsegna);
 		
 		/*
