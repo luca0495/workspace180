@@ -601,6 +601,8 @@ public class AppReader extends SL_JFrame {
 															TypePerson
 														)
 								);
+								
+								
 								System.out.println("Destinatario:" + to +" Client:" + me);
 								me.setTo(to);														
 								System.out.println("setto nel client destinatario :"+me.getTo());	// accoda il comando alla lista comandi dalla quale legge il client
@@ -609,16 +611,18 @@ public class AppReader extends SL_JFrame {
 									System.out.println("GUI AppReader:> cmd inserisci utente ");
 									me.setCliType(Clients.Librarian);	
 									me.getCmdLIST().put(Commands.UserRegistration);
+									
 								} catch (InterruptedException e2) {
 									System.out.println("AppReader :> problemi con accodamento comando user registration");	
 									e2.printStackTrace();
 								}				
+								WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+								frmSchoolib.dispatchEvent(close);
 							} catch (SQLException e2) {
 								System.out.println("AppReader :> creazione query NG ERRORE:");	
 								e2.printStackTrace();
 							}
-							WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-							frmSchoolib.dispatchEvent(close);
+							
 							//*********************************************************************************
 							
 					}
@@ -666,14 +670,11 @@ public class AppReader extends SL_JFrame {
 		btnCancelReg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PopUp.warningBox(frmSchoolib, "Tutti i dati immessi verranno cancellati");
-				
-				if(PopUp.confirmBox(c))
-				{
-					
+	
 					 WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
 					 frmSchoolib.dispatchEvent(close);
 					
-			       }   
+			          
 				}
 			});
 		btnCancelReg.setBounds(288, 443, 147, 23);

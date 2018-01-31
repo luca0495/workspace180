@@ -263,7 +263,9 @@ public class Login extends SL_JFrame  {
 		btnIndietro_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				PanelRegi.setVisible(false);
+				
+				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
+				frmSchoolib.dispatchEvent(close);	
 			}
 		});
 		PanelRegi.add(btnIndietro_1);
@@ -419,6 +421,14 @@ public class Login extends SL_JFrame  {
 		PanelFirstAcc.add(passwordField_1);
 		
 		JButton btnIndietro_2 = new JButton("Indietro");
+		btnIndietro_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				PanelRegi.setVisible(true);
+				PanelFirstAcc.setVisible(false);
+				PanelForgPass.setVisible(false);
+			}
+		});
 		btnIndietro_2.setBounds(376, 296, 141, 57);
 		PanelFirstAcc.add(btnIndietro_2);
 		
@@ -446,9 +456,7 @@ public class Login extends SL_JFrame  {
 				System.out.println("GUI login :> problemi con controllo user corretto ");	
 				e2.printStackTrace(); 
 			}
-
-			
-			
+				
 			/*old
 			try 
 			{

@@ -1,5 +1,5 @@
 package Core;
 
 public enum SearchFor {
-Account,Book,Prenotation,Booking,Setting,SystemPar
+Account,Database,Book,Prenotation,Booking,Setting,SystemPar
 }

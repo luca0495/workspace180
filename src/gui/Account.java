@@ -99,6 +99,8 @@ public class Account extends SL_JFrame{
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
 	
+
+
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;
@@ -132,7 +134,7 @@ public class Account extends SL_JFrame{
 	private String input;
 	private List<String> rowData = new ArrayList<String>();
 
-	private String[] user = null;
+	private String[] user = new String[4];
 	private String[] user1 = null;
 	private boolean User = true;
 	
@@ -1112,11 +1114,12 @@ public class Account extends SL_JFrame{
 					
 					try {
 						
-						MQ_Update.updatePassMod(getIdUser(), p);	
+					    MQ_Update.updatePassMod(getIdUser(), p);	
 						PopUp.infoBox(frmSchoolib, "Modifiche password effetuata con successo");
 						
-						//lblSetPass.setText(user[4]);  // aggiornare label client server sentire Mauro
-							
+						// aggiornare label password con updateAll
+						
+						
 						panelModify.setVisible(false);
 						panelAccount.setVisible(true);
 						panelChangePass.setVisible(false);
@@ -1148,7 +1151,7 @@ public class Account extends SL_JFrame{
 		panelChangePass.add(btnChangePass);
 		
 		JButton btnReturnBack = new JButton("Annulla");
-		btnBackData.addActionListener(new ActionListener() {
+		btnReturnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				PopUp.warningBox(frmSchoolib, "Le modifiche effettuate verranno annullate");
@@ -1738,4 +1741,20 @@ public class Account extends SL_JFrame{
 		public void setT(AppType t) {
 			this.t = t;
 		}	
+		
+		public JRadioButton getRdbtnTypeUserLibMod() {
+			return rdbtnTypeUserLibMod;
+		}
+
+		public void setRdbtnTypeUserLibMod(JRadioButton rdbtnTypeUserLibMod) {
+			this.rdbtnTypeUserLibMod = rdbtnTypeUserLibMod;
+		}
+
+		public JRadioButton getRdbtnTypeUserLetMod() {
+			return rdbtnTypeUserLetMod;
+		}
+
+		public void setRdbtnTypeUserLetMod(JRadioButton rdbtnTypeUserLetMod) {
+			this.rdbtnTypeUserLetMod = rdbtnTypeUserLetMod;
+		}
 }

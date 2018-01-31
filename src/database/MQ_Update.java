@@ -134,12 +134,14 @@ public class MQ_Update {
 	
 	public static void updatePassMod(int idus,String pass) throws SQLException
 	{	
-
-		String query1 = "UPDATE utente SET password = '" + pass + "' WHERE id  = '" + idus + "';";
+		String q=null;
+	    q = "UPDATE utente SET password = '" + pass + "' WHERE id  = '" + idus + "';";
     	
 		DBmanager.openConnection();
-		DBmanager.executeUpdate(query1);
+		DBmanager.executeUpdate(q);
 		DBmanager.closeConnection();
+		
+		
 	}
 	public static void updatePassForgot(String email,String pass, int i) throws SQLException
 	{	

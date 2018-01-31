@@ -285,36 +285,87 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		
 		
 		case Librarian:		
-					query = "SELECT * FROM prestiti" + " WHERE "
+					query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti" + " WHERE "
 							+ " codice LIKE '%"+x+"%'"
 		                    //+ " ORDER BY id ASC"
 							;
 					
 					if(x=="" || x==null){			
-					query = "SELECT * FROM prestiti ";
-					}			
+					query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti ";
+					}
+					
+					DBmanager.openConnection();
+					ResultSet rs = DBmanager.executeQuery(query);
+	
+					int row = 0;
+					System.out.println("Test1");
+					while((rs!=null) && (rs.next()))
+					{
+						System.out.println("Test2 addRow");	
+						model.addRow(new Object[0]);
+						System.out.println("Codice : "+rs.getString("codice"));	System.out.println("Test3");
+					model.setValueAt(rs.getString("codice"), row, 0);			System.out.println("Test4");								
+					model.setValueAt(rs.getString("id"), row, 1);				System.out.println("Test5");								
+					model.setValueAt(rs.getString("data_inizio"), row, 2);		System.out.println("Test6");								
+					model.setValueAt(rs.getString("data_fine"), row, 3);		System.out.println("Test7");
+					model.setValueAt(rs.getString("rientrato"), row, 4);		System.out.println("Test7");
+					model.setValueAt(rs.getString("ritirato"), row, 5);			System.out.println("Test7");
+					model.setValueAt(rs.getString("scaduto"), row, 6);			System.out.println("Test7");
+					model.setValueAt(rs.getString("email_inviata"), row, 7);	System.out.println("Test7");
+					row++;						
+					}
+						System.out.println("Test9");
+					
+					rs.close();
+					DBmanager.closeConnection();
+					/*
 					me.setSql(query);
 					
 					System.err.println("LIB table loans populate test "+query );
 					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
-					
+					*/
 		case Reader:
-					query = "SELECT * FROM prestiti" + " WHERE "
+					query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti" + " WHERE "
 							+ " codice LIKE '%"+x+"%'"
 		                    //+ " ORDER BY id ASC"
 							;
 					
 					if(x=="" || x==null){			
-					query = "SELECT * FROM prestiti ";
-					}			
-					me.setSql(query);
+					query = "SELECT codice,id,data_inizio,data_fine,rientrato,ritirato,scaduto,email_inviata FROM prestiti ";
+					}	
 					
-					System.err.println("READ table loans populate test "+query );
+					DBmanager.openConnection();
+					ResultSet rs1= DBmanager.executeQuery(query);
+	
+					int row1 = 0;
+					System.out.println("Test1");
+					while((rs1!=null) && (rs1.next()))
+					{
+						System.out.println("Test2 addRow");	
+						model.addRow(new Object[0]);
+						//System.out.println("Codice : "+row1.getString("codice"));	System.out.println("Test3");
+					model.setValueAt(rs1.getString("codice"), row1, 0);			System.out.println("Test4");								
+					model.setValueAt(rs1.getString("id"), row1, 1);				System.out.println("Test5");								
+					model.setValueAt(rs1.getString("data_inizio"), row1, 2);		System.out.println("Test6");								
+					model.setValueAt(rs1.getString("data_fine"), row1, 3);		System.out.println("Test7");
+					model.setValueAt(rs1.getString("rientrato"), row1, 4);		System.out.println("Test7");
+					model.setValueAt(rs1.getString("ritirato"), row1, 5);			System.out.println("Test7");
+					model.setValueAt(rs1.getString("scaduto"), row1, 6);			System.out.println("Test7");
+					model.setValueAt(rs1.getString("email_inviata"), row1, 7);	System.out.println("Test7");
+					row1++;						
+					}
+						System.out.println("Test9");
 					
-					me.getCmdLIST().put(Commands.LoanExecuteQuery);
-					break;
+					rs1.close();
+					DBmanager.closeConnection();
+					//me.setSql(query);
+					
+					//System.err.println("READ table loans populate test "+query );
+					
+					//me.getCmdLIST().put(Commands.LoanExecuteQuery);
+					//break;
 					
 		case Guest:			
 					query = "SELECT * FROM prestiti" + " WHERE "
@@ -323,14 +374,15 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 					
 					if(x=="" || x==null){			
 					query = "SELECT * FROM prestiti ";
-					}			
+					}
+					/*
 					me.setSql(query);
 					
 					System.err.println("GUEST table loans populate test "+query );
 					
 					me.getCmdLIST().put(Commands.LoanExecuteQuery);
 					break;
-					
+					*/
 		case Default:			
 					query = "SELECT * FROM prestiti" + " WHERE "
 							+ " codice LIKE '%"+x+"%'"

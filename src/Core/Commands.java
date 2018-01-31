@@ -6,7 +6,7 @@ public enum Commands{
 			ConnSTOP				("StopConnection"				,	SearchFor.SystemPar,	CommandsType.CONNECTION,	4,	0), 
 			ConnTEST				("TestConnection"				,	SearchFor.SystemPar,	CommandsType.CONNECTION,	10,	0),		
 // Test
-			DBExist 				("Check DB Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
+			
 			//tableExistBook		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
 			//tableExistLoans		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
 			//tableExistPerson		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
@@ -14,6 +14,7 @@ public enum Commands{
 			//Test2					("Test 2"						,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
 			//Test3					("Test 3"						,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),	
 // Initialize
+			DBExist 				("Check DB Exist"				,	SearchFor.Database,	    CommandsType.CHANGE,		1,	0),
 			tableExistSetting		("Check Tb Exist"				,	SearchFor.Setting,		CommandsType.CHANGE,		1,	0),
 			tableExistBook			("Check Tb Exist"				,	SearchFor.Book,			CommandsType.CHANGE,		1,	0),
 			tableExistLoans			("Check Tb Exist"				,	SearchFor.Prenotation,	CommandsType.CHANGE,		1,	0),
