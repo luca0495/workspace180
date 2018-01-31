@@ -162,7 +162,8 @@ public class ClientCMDloans {
 		case "OK": 
 			PopUp.infoBox(me.getActF(), 		"dati tabella loans OK");					
 			me.setActTable(Mb.getTab());
-			TableLoans.getTable().setModel(Mb.getTab().getModel());
+			me.setDataloans(Mb.getDatitabella());
+			//TableLoans.getTable().setModel(Mb.getTab().getModel());
 			me.setActF(null);
 			me.setSql(null);
 			me.setBusy(false);

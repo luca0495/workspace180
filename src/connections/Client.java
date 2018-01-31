@@ -654,15 +654,11 @@ setBusy(false);
 								
 								break;
 								
-							case "SRV :> UPRecovery :> NG":
-								
-								System.out.println("TORNATO AL CLIENT UPRECOVERY NG");
-								
+							case "SRV :> UPRecovery :> NG":								
+								System.out.println("TORNATO AL CLIENT UPRECOVERY NG");								
 								break;
-								
-								
-								
-							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");
+		
+							case "SRV :> table book populate :> OK":	System.out.println("BOOK metodo old ritornato al client POPULATE OK : ");
 							
 								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
 							
@@ -1183,7 +1179,7 @@ setBusy(false);
 							this.setActF(null);
 							this.setSql(null);
 							setBusy(false);
-							
+							break;
 							
 							
 							
