@@ -29,14 +29,22 @@ import javax.swing.table.DefaultTableModel;
 import Check.PopUp;
 import Core.Commands;
 import connections.Client;
+import gui.ResearchBooks;
+import gui.SL_JFrame;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 public class TableBooks extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private ResearchBooks frame;
+//	private 		JFrame frame;
+	
+	
 	private static 	JTable table;
-	private 		JFrame frame;
+
 	private 		TableModelBooks tm;
 	private int 	deleteRow;
 	private int 	selectedR;
@@ -49,12 +57,13 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	
 	
 	
-    public TableBooks(JFrame frame,Client me) throws InterruptedException  
+    public TableBooks(ResearchBooks frame,Client me) throws InterruptedException  
     {
 
         super(new GridLayout(1,0));
     	this.me=me;
-        this.frame = frame;
+        this.setFrame(frame);
+
         
         setTm(new TableModelBooks(me));
         
@@ -150,8 +159,17 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                     String idb		= (String) source.getValueAt(selectedRow, 0);
                     int idbook=Integer.valueOf(idb);                    
                     //setta su client idbook selezionato
+                   
                     me.setSelectedIdBook(idbook);
+                    getFrame().getTxtInsertCDBook().setText(String.valueOf(idbook));
+                   
                     
+                    
+                    
+                    
+                    
+                    
+
                     PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook()));
             }
 		});
@@ -318,7 +336,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		{
         	TableUpdateBooks.setColumn(column);
         	TableUpdateBooks.setInput((String)model.getValueAt(row, column));
-        	TableUpdateBooks.check(frame, getTable());
+        	TableUpdateBooks.check(getFrame(), getTable());
 		} 
 	}
 	
@@ -347,6 +365,16 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 
 	public void setTm(TableModelBooks tm) {
 		this.tm = tm;
+	}
+
+
+	public ResearchBooks getFrame() {
+		return frame;
+	}
+
+
+	public void setFrame(ResearchBooks frame) {
+		this.frame = frame;
 	}
 	
 

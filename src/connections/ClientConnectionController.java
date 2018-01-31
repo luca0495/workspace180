@@ -1,4 +1,8 @@
 package connections;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import Core.Commands;
 import Table.TableBooking;
 import Table.TableBooks;
@@ -67,6 +71,7 @@ public class ClientConnectionController implements Runnable {
 										
 										if (me.getMePannelBook().isVisible()) {
 												//System.err.println("vedo pannello book");
+												
 												String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();
 												System.out.println("dato nel campo testo: "+Fbook);
 												

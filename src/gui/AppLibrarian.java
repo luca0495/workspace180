@@ -33,6 +33,8 @@ public class AppLibrarian extends JFrame  {
 	private JTextField txtEmailUser;
 	private Client  me ;
 	
+	private ResearchBooks frameRB;
+	
 	private JFrame frame;
     private JTable tableBooks;
 	
@@ -118,7 +120,7 @@ public class AppLibrarian extends JFrame  {
 		panelSearchUser.add(panelSearchUser1);
 		panelSearchUser1.setLayout(null);
 		
-		TableBooks panelSearchUser2 = new TableBooks(frame,me);
+		TableBooks panelSearchUser2 = new TableBooks(frameRB,me);
 		panelSearchUser2.setBounds(0, 0, 857, 420);
 		panelSearchUser1.add(panelSearchUser2);
 		panelSearchUser2.setLayout(new GridLayout(1, 0, 0, 0));

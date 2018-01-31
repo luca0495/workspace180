@@ -723,6 +723,19 @@ setBusy(false);
 								String [] UserData= Mb.getRowUser();
 								String UserType = UserData[7];
 								
+								
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[0]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[1]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[2]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[3]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[4]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[5]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[6]);
+								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[7]);
+								
+								
+								
+								
 								switch (UserType) {
 								case "Administrator":
 									System.out.println("riconosco "+ getCliType());
@@ -766,12 +779,38 @@ setBusy(false);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[4]);
 								
-								//RITORNA AD APP MAIN
 								
-								setIdut(Integer.valueOf(Mb.getRowUser()[0]));
 								
-								this.getMeMain().getFrame().setVisible(true);
-								this.getMeMain().getBtnAccount().setVisible(true);
+								System.err.println("finestra attiva : "+getActW().toString());								
+								
+								
+								Account x = (Account)getActW();
+								
+								if(x.getT()==AppType.AppAccount) {
+									System.out.println("finestra attiva... account");
+									//UserData
+									
+					
+									x.getTxtNameMod().setText			(UserData[1]);
+									x.getTxtSurnameMod().setText		(UserData[2]);
+									x.getTxtMailMod().setText			(UserData[3]);
+									x.getPasswordField().setText		(UserData[4]);
+									x.getPasswordFieldConfMod().setText	(UserData[4]);
+									x.getTxtInqMod().setText			(UserData[5]);
+									x.getTxtTelMod().setText			(UserData[6]);
+								
+	
+								}else {
+									System.out.println("finestra attiva... NON account");
+									//RITORNA AD APP MAIN								
+									setIdut(Integer.valueOf(Mb.getRowUser()[0]));
+									this.getMeMain().getFrame().setVisible(true);
+									this.getMeMain().getBtnAccount().setVisible(true);
+								}
+									
+									
+									
+								
 								
 								
 								clrParFS();	
@@ -785,9 +824,9 @@ setBusy(false);
 								
 								Account accX = new Account(getMeMain().getFrame(),this);				
 								setActW(accX);
-								accX.setAlwaysOnTop(true);	
+								//accX.setAlwaysOnTop(true);	
 								accX.getPanelAccount().setVisible(true);
-								accX.getPanelModify().setVisible(false);
+								//accX.getPanelModify().setVisible(false);
 								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
 		
 								clrParFS();	
@@ -1758,6 +1797,16 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}
+		
+		public void printonResearch(String t) {
+			
+			JFrame x = getActF();
+			ResearchBooks X = (ResearchBooks)x;
+			X.getTxtInsertCDBook().setText(t);
+			
+		}
+		
+		
 	//------------------------------------------------------------------------		 
 	// get & set
 		

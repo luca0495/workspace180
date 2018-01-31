@@ -15,5 +15,7 @@ AppRegistrationAdmin,
 
 AppLoginReader,
 AppLoginLibrarian,
+AppAccount,
 AppLoginAdmin;
+	
 }

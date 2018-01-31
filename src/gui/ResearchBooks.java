@@ -5,8 +5,14 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -61,8 +67,8 @@ public class ResearchBooks extends SL_JFrame {
 	private Client  		me ;
 	
 	private ResearchBooks 	w;
-	
 	private JFrame frame;
+	
 	private JTextField textField;
 	private JTextField textField2;
 	private JPanel panel;
@@ -90,17 +96,15 @@ public class ResearchBooks extends SL_JFrame {
 	private boolean 	LastIDbookcheckinprogress=false;
 	private int 		LastIDbookcheckResult;
 	private JTextField 	txtInsertCDBook;
-	private JTextField 	txtInsertNameBook;
-	private JTextField 	txtInsertSurnameBook;
-	private JTextField 	txtInsertCatBook;
-	private JTextField 	txtInsertTitleBook;
 
 	private TableBooks 		panelTableResearch;
 	private TableLoans 		panelTableLoansResearch;
 	private TableBooking	panelTableBookingResearch;
 	
+	private Date			datarichiesta;
 
 	private int 		idbookSelected;
+	private JTextField  Datariconsegna;
 	
 	/**
 	 * Create the application.
@@ -115,7 +119,7 @@ public class ResearchBooks extends SL_JFrame {
 		
 		me = x;
 		me.setActC(c);
-		
+		me.setActF(this);
 		me.setActW(this);
 		me.setMeRes(this);
 		
@@ -181,7 +185,7 @@ public class ResearchBooks extends SL_JFrame {
 		panelBooking.setBackground(Color.WHITE);
 		panelBooking.setLayout(null);
 		
-		panelTableResearch = new TableBooks(getFrame(),me);
+		panelTableResearch = new TableBooks(getW(),me);//PASSO RESEARCHBOOK
 		panelTableResearch.setBounds(0, 11, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
@@ -237,26 +241,6 @@ public class ResearchBooks extends SL_JFrame {
 		});
 		btnReturnBack.setBounds(10, 7, 89, 23);
 		getFrame().getContentPane().add(btnReturnBack);
-		
-		JButton btnDelivery = new JButton("Consegna");
-		btnDelivery.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				PopUp.infoBox(btnReturnBack, "idL "+me.getSelectedIdBook()+"  idU "+me.getSelectedIdUser()+"");
-				
-								try {
-					me.getCmdLIST().put(Commands.LoanReturn);
-								} catch (InterruptedException e1) {e1.printStackTrace();}
-				
-				
-				
-				
-				
-			}
-		});
-		btnDelivery.setBounds(135, 7, 126, 23);
-		getFrame().getContentPane().add(btnDelivery);
 		
 		setTextField(new JTextField());
 		getTextField().setBounds(337, 8, 315, 20);
@@ -751,49 +735,62 @@ public class ResearchBooks extends SL_JFrame {
 		panelResearch.add(lblInsertText);
 		
 		JLabel lblCDInsert = new JLabel("Codice");
-		lblCDInsert.setBounds(10, 556, 156, 14);
+		lblCDInsert.setBounds(186, 556, 156, 14);
 		panelResearch.add(lblCDInsert);
 		
-		JLabel lblNameInsert = new JLabel("Nome_Autore");
-		lblNameInsert.setBounds(207, 560, 156, 14);
-		panelResearch.add(lblNameInsert);
 		
-		JLabel lblSurnameInsert = new JLabel("Cognome_Autore");
-		lblSurnameInsert.setBounds(379, 560, 156, 14);
-		panelResearch.add(lblSurnameInsert);
 		
-		JLabel lblCatInsert = new JLabel("Categoria");
-		lblCatInsert.setBounds(553, 560, 156, 14);
-		panelResearch.add(lblCatInsert);
 		
-		JLabel lblTitleInsert = new JLabel("Titolo");
-		lblTitleInsert.setBounds(719, 560, 156, 14);
-		panelResearch.add(lblTitleInsert);
+		
+		
+		
+		//
+		
+		
+		
+		JButton button_1 = new JButton("Riconsegna");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String dataC = getDatariconsegna().getText();
+				if (dataC.equals("")||dataC==null){
+					//campo nullo
+				}else {
+					if (checkDate(dataC)) {
+						PopUp.infoBox(btnReturnBack, 
+								"  idL "+me.getSelectedIdBook()+
+								"  idU "+me.getSelectedIdUser()+
+								"  la data di consegna richiesta : "+dataC );
+						
+						try {
+										me.getCmdLIST().put(Commands.LoanReturn);
+						} catch (InterruptedException e1) {e1.printStackTrace();}
+						
+					}else {
+						
+						PopUp.infoBox(btnReturnBack,"la data inserita, "+dataC+" non é nel formato correttto" );
+					}
+			
+					
+					
+					
+				}
+				
+				
+				
+						
+				
+	
+				
+			}
+		});
+		button_1.setBounds(24, 580, 126, 23);
+		panelResearch.add(button_1);
 		
 		txtInsertCDBook = new JTextField();
 		txtInsertCDBook.setColumns(10);
-		txtInsertCDBook.setBounds(10, 581, 156, 20);
+		txtInsertCDBook.setBounds(186, 581, 156, 20);
 		panelResearch.add(txtInsertCDBook);
-		
-		txtInsertNameBook = new JTextField();
-		txtInsertNameBook.setColumns(10);
-		txtInsertNameBook.setBounds(193, 581, 156, 20);
-		panelResearch.add(txtInsertNameBook);
-		
-		txtInsertSurnameBook = new JTextField();
-		txtInsertSurnameBook.setColumns(10);
-		txtInsertSurnameBook.setBounds(369, 581, 156, 20);
-		panelResearch.add(txtInsertSurnameBook);
-		
-		txtInsertCatBook = new JTextField();
-		txtInsertCatBook.setColumns(10);
-		txtInsertCatBook.setBounds(541, 581, 156, 20);
-		panelResearch.add(txtInsertCatBook);
-		
-		txtInsertTitleBook = new JTextField();
-		txtInsertTitleBook.setColumns(10);
-		txtInsertTitleBook.setBounds(715, 581, 156, 20);
-		panelResearch.add(txtInsertTitleBook);
 		
 		JButton btnReturned = new JButton("Rientrato");
 		btnReturned.setBounds(896, 580, 89, 23);
@@ -802,6 +799,22 @@ public class ResearchBooks extends SL_JFrame {
 		JButton btnDeleteBookReturned = new JButton("Cancella");
 		btnDeleteBookReturned.setBounds(896, 541, 89, 23);
 		panelResearch.add(btnDeleteBookReturned);
+
+		//Data riconsegna
+		Datariconsegna = new JTextField();
+		Datariconsegna.setColumns(10);
+		Datariconsegna.setBounds(352, 581, 156, 20);
+		panelResearch.add(Datariconsegna);
+		
+		//setta data 
+		Date datacorrente = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		getDatariconsegna().setText(formatter.format(datacorrente));
+
+		
+		JLabel lblDataRiconsegna = new JLabel("Data Riconsegna");
+		lblDataRiconsegna.setBounds(352, 556, 156, 14);
+		panelResearch.add(lblDataRiconsegna);
 		
 		/*
 		if (	me.getCliType()==Clients.Admin||
@@ -1034,6 +1047,56 @@ public JTextField getTextField() {
 
 public void setTextField(JTextField textField) {
 	this.textField = textField;
+}
+
+
+public JTextField getDatariconsegna() {
+	return Datariconsegna;
+}
+
+
+public void setDatariconsegna(JTextField datariconsegna) {
+	this.Datariconsegna = datariconsegna;
+}
+
+
+public Date getDatarichiesta() {
+	return datarichiesta;
+}
+
+
+public void setDatarichiesta(Date datarichiesta) {
+	this.datarichiesta = datarichiesta;
+}
+
+public static boolean checkDate(String d) 
+{	
+	boolean valid = false;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    formatter.setLenient(false);
+    Date date = new Date();
+    try 
+    { 	
+    	Date parsedDate = formatter.parse(d);
+    	if (date.equals((parsedDate)))
+    	{
+    		valid = true;
+    	}
+    	else if(date.before(parsedDate)) 
+    	{
+    		valid = true;
+    	}
+    	else
+    	{
+    		valid = false;
+    	}
+    } 
+    catch (ParseException e)
+    {
+    	valid = false;
+    }
+    
+    return valid;
 }
 
 }

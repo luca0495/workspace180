@@ -244,7 +244,7 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText("Pz20$Pq20$");
+		passwordFieldUser.setText("Pa20$Pe20$");
 		
 		
 		txtUser = new JTextField();

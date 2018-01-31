@@ -61,6 +61,9 @@ public class Account extends SL_JFrame{
 		    static int			cols = 0; 		    
 		    
 	private Account 			w;	
+	private AppType				t;
+	
+	
 	private JFrame 				frmSchoolib;
 	private AppReader 			a;
 	private LoadUser 			l = new LoadUser();
@@ -163,6 +166,7 @@ public class Account extends SL_JFrame{
 	{
 		
 		setW(this);
+		setT(AppType.AppAccount);
 		me = x;
 		me.setActW(this);
 		me.setActC(c);
@@ -271,6 +275,7 @@ public class Account extends SL_JFrame{
 		JButton btnModify = new JButton("Modifica Profilo");
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				panelAccount.setVisible(false);
 				panelModify.setVisible(true);				
 				//************************************************************
@@ -291,6 +296,12 @@ public class Account extends SL_JFrame{
 				}
 				//*************************************************************
 				System.out.println(" gui account comando modifica  ");	
+				System.err.println("finesta attiva "+me.getActW().toString());
+				
+				Account x = (Account)me.getActW();
+				System.err.println("finesta attiva tipo: "+ x.getT());
+				
+				
 			}
 		});
 		btnModify.setBounds(428, 381, 186, 54);
@@ -1178,6 +1189,102 @@ public class Account extends SL_JFrame{
 	//Fine**********************************************************************************************************	
 	
 	
+	public static String[] getUserData() {
+		return UserData;
+	}
+
+	public static void setUserData(String[] userData) {
+		UserData = userData;
+	}
+
+	public JFrame getFrmSchoolib() {
+		return frmSchoolib;
+	}
+
+	public void setFrmSchoolib(JFrame frmSchoolib) {
+		this.frmSchoolib = frmSchoolib;
+	}
+
+	public JPasswordField getPasswordFieldMod() {
+		return passwordFieldMod;
+	}
+
+	public void setPasswordFieldMod(JPasswordField passwordFieldMod) {
+		this.passwordFieldMod = passwordFieldMod;
+	}
+
+	public JPasswordField getPasswordFieldConfMod() {
+		return passwordFieldConfMod;
+	}
+
+	public void setPasswordFieldConfMod(JPasswordField passwordFieldConfMod) {
+		this.passwordFieldConfMod = passwordFieldConfMod;
+	}
+
+	public JTextField getTxtNameMod() {
+		return txtNameMod;
+	}
+
+	public void setTxtNameMod(JTextField txtNameMod) {
+		this.txtNameMod = txtNameMod;
+	}
+
+	public JTextField getTxtSurnameMod() {
+		return txtSurnameMod;
+	}
+
+	public void setTxtSurnameMod(JTextField txtSurnameMod) {
+		this.txtSurnameMod = txtSurnameMod;
+	}
+
+	public JTextField getTxtInqMod() {
+		return txtInqMod;
+	}
+
+	public void setTxtInqMod(JTextField txtInqMod) {
+		this.txtInqMod = txtInqMod;
+	}
+
+	public JTextField getTxtTelMod() {
+		return txtTelMod;
+	}
+
+	public void setTxtTelMod(JTextField txtTelMod) {
+		this.txtTelMod = txtTelMod;
+	}
+
+	public JTextField getPasswordFieldMod1() {
+		return passwordFieldMod1;
+	}
+
+	public void setPasswordFieldMod1(JTextField passwordFieldMod1) {
+		this.passwordFieldMod1 = passwordFieldMod1;
+	}
+
+	public JTextField getPasswordFieldConfMod1() {
+		return passwordFieldConfMod1;
+	}
+
+	public void setPasswordFieldConfMod1(JTextField passwordFieldConfMod1) {
+		this.passwordFieldConfMod1 = passwordFieldConfMod1;
+	}
+
+	public String getTypePerson() {
+		return TypePerson;
+	}
+
+	public void setTypePerson(String typePerson) {
+		TypePerson = typePerson;
+	}
+
+	public JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public void setPasswordField(JPasswordField passwordField) {
+		this.passwordField = passwordField;
+	}
+
 	public void updateall(String[] user )
 	{
 		setIdUser(Integer.valueOf(user[0]));
@@ -1622,5 +1729,13 @@ public class Account extends SL_JFrame{
 
 		public void setIconLogoQ(ImageIcon iconLogoQ) {
 			this.iconLogoQ = iconLogoQ;
+		}
+
+		public AppType getT() {
+			return t;
+		}
+
+		public void setT(AppType t) {
+			this.t = t;
 		}	
 }
