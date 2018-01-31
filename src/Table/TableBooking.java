@@ -31,6 +31,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
+
 import Check.PopUp;
 import Core.Commands;
 import connections.Client;
@@ -227,6 +231,9 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 */
 
 	public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
+		
+		System.err.println("storico:"+me.isStorico());
+		
 		// Clear table   
 		getTable().setModel(new DefaultTableModel());	
 		// Model for Table		
@@ -243,71 +250,26 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 
 //IN TEST		
 		
-		switch (me.getCliType()) {
-
-		case Librarian:
+		
 			
-			query = "SELECT * FROM prenotazioni" + " WHERE ("
-					+ " id LIKE '%"+x+"%')";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM prenotazioni ";
-			}
-			System.out.println("q:"+query);
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
-			
-			break;
-			
-		case Reader:
-			
-			query = "SELECT * FROM prenotazioni" + " WHERE ("
-					+ " id LIKE '%"+x+"%')";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM prenotazioni ";
-			}
-			System.out.println("q:"+query);
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
-						
-			break;
-			
-		case Guest:
-			
-			query = "SELECT * FROM prenotazioni" + " WHERE ("
-					+ " id LIKE '%"+x+"%')";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM prenotazioni ";
-			}
-			System.out.println("q:"+query);
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
-			
-			break;			
-			
-		case Default:
-			
-			query = "SELECT * FROM prenotazioni" + " WHERE ("
-					+ " id LIKE '%"+x+"%')";			
-			
-			if(x=="" || x==null){			
-				query = "SELECT * FROM prenotazioni ";
-			}
-			System.out.println("q:"+query);
-			me.setSql(query);
-			me.getCmdLIST().put(Commands.BookingExecuteQuery);			
-			
-			break;	
-			
-			
-		default:
-			break;
-		}
-
+		
+		switch (	me.getCliType()) {		//tipo di utente
+					case Librarian	:			
+										if (me.isStorico()) {	query = "SELECT * 	FROM prenotazioni 						ORDER BY data_inizio DESC;";					
+										}else {					query = "SELECT * 	FROM prenotazioni WHERE data_fine is null ORDER BY data_inizio DESC;";	
+										}	break;	
+					case Reader		:	if (me.isStorico()) {	query = "SELECT * 	FROM prenotazioni WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
+										}else {					query = "SELECT * 	FROM prenotazioni WHERE id = '"+me.getIdut()+"' AND data_fine is null ORDER BY data_inizio DESC;";	
+										}	break;					
+					case Guest	:								query = "Select  	from prenotazioni ";	break;			
+					case Default:								query = "Select  	from prenotazioni ";	break;			
+						default	:								query = "Select  	from prenotazioni ";	break;
+		}	
+		me.setSql(query);
+		me.getCmdLIST().put(Commands.BookingExecuteQuery);
+		me.setBusy(false);
+		
 	}
-	
 	
 	public static JTable getTable() {
 		return table;

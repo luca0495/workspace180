@@ -38,13 +38,9 @@ import java.awt.event.FocusEvent;
 public class TableBooks extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	
+	private static 	JTable table;	
 	private ResearchBooks frame;
 //	private 		JFrame frame;
-	
-	
-	private static 	JTable table;
-
 	private 		TableModelBooks tm;
 	private int 	deleteRow;
 	private int 	selectedR;

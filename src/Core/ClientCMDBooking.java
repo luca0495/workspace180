@@ -86,7 +86,7 @@ public class ClientCMDBooking {
 	public static void BookingpopulateRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 
-			PopUp.infoBox(me.getActF(), 		"dati tabella Booking OK");					
+			//PopUp.infoBox(me.getActF(), 		"dati tabella Booking OK");					
 			me.setActTable(Mb.getTab());			
 			TableBooking.getTable().setModel(Mb.getTab().getModel());
 			me.setActF(null);
@@ -94,6 +94,8 @@ public class ClientCMDBooking {
 			me.setBusy(false);
 			break;		
 		case "NG": PopUp.errorBox(me.getActF(), "dati tabella Booking NG");					
+			me.setBusy(false);
+			PopUp.errorBox(me.getActF(), "dati tabella booking NG");			
 			break;
 		}
 	}

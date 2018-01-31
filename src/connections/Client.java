@@ -167,6 +167,7 @@ public class Client implements Serializable, Runnable  {
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
+	private 			boolean				storico=false;
 	
 	
 	public Client() throws Exception {		
@@ -618,8 +619,7 @@ setBusy(false);
 						// Reazioni di Client ai messaggi ritornati dal Server
 
 						switch (Mb.getText()) {
-							case "OK":							
-								break;
+							case "OK":	break;
 	
 							case "STUB :> Eccezione *** nessuna risposta da SKELETON":		System.out.println("CLI - ECCEZIONE DA STUB");	
 								break;
@@ -629,11 +629,8 @@ setBusy(false);
 								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
 								this.setSql(null);		
-								
-								//TODO RIVEDI E CONTROLLA
 								this.getMeMain().getFrame().setVisible(true);
 								this.getMeMain().getBtnAccount().setVisible(true);
-								
 								break;
 							
 							case "SRV :> UPRecovery :> OK":
@@ -662,7 +659,6 @@ setBusy(false);
 							case "SRV :> table book populate :> OK":	System.out.println("BOOK metodo old ritornato al client POPULATE OK : ");
 							
 								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
-							
 								//System.out.println(Mb.getTab().toString());
 								
 								setActTable(Mb.getTab());
@@ -1203,44 +1199,14 @@ setBusy(false);
 							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
 								
 							//table populate
-							case	"SRV :> table Loans populate :> OK":	//ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
-							
-									
-							/*	
-							setActTable(Mb.getTab());
-							TableLoans.getTable().setModel(Mb.getTab().getModel());
-							this.setActF(null);
-							this.setSql(null);
-							setBusy(false);
-							*/
-							
-							setActTable(Mb.getTab());
-							
-							TableLoans.getTable().setModel(Mb.getTab().getModel());
-							
-							this.setActF(null);
-							this.setSql(null);
-							setBusy(false);
-							break;
-							
-							
-							
-							case	"SRV :> table Loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
-							
+							case	"SRV :> table loans populate :> OK":	ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
+							case	"SRV :> table loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
+
 							//case	"SRV :> table Book populate :> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
 							//case	"SRV :> table Book populate :> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
 							
-							case	"SRV :> table Booking populate :> OK":	//ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
-							
-								System.err.println("SRV :> table Booking populate :> OK");	
-								
-							setActTable(Mb.getTab());
-							TableBooking.getTable().setModel(Mb.getTab().getModel());
-							this.setActF(null);
-							this.setSql(null);
-							setBusy(false);
-							break;
-							case	"SRV :> table Booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
+							case	"SRV :> table booking populate :> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
+							case	"SRV :> table booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
 							
 							case	"SRV :> tables populate :> OK"		:ClientCMDAllTables.ATpopulateRES(this, "OK", Mb); 	break;
 							case	"SRV :> tables populate :> NG"		:ClientCMDAllTables.ATpopulateRES(this, "NG", Mb); 	break;
@@ -2137,6 +2103,12 @@ setBusy(false);
 			}
 			public void setDataLoanReturn(String dataLoanReturn) {
 				DataLoanReturn = dataLoanReturn;
+			}
+			public boolean isStorico() {
+				return storico;
+			}
+			public void setStorico(boolean storico) {
+				this.storico = storico;
 			}
 		
 		

@@ -40,6 +40,7 @@ import Table.TableModelBooks;
 import Table.TableUpdateBooks;
 import connections.Client;
 import connections.ClientConnectionController;
+import database.DBmanager;
 import database.MQ_Insert;
 import database.MQ_Read;
 
@@ -62,6 +63,7 @@ import javax.swing.JComboBox;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.SwingConstants;
+import javax.swing.JRadioButton;
 
 public class ResearchBooks extends SL_JFrame {
 
@@ -79,6 +81,7 @@ public class ResearchBooks extends SL_JFrame {
     
     private JTable tableBooks;
    
+    private JRadioButton rdbtnStoricoPrenotazioni;
     
 	protected String 	ValToSearch;
 	private JTextField 	txtName;
@@ -106,6 +109,8 @@ public class ResearchBooks extends SL_JFrame {
 
 	private int 		idbookSelected;
 	private JTextField  Datariconsegna;
+	
+	private boolean storico=false;
 	
 	/**
 	 * Create the application.
@@ -190,7 +195,7 @@ public class ResearchBooks extends SL_JFrame {
 		panelTableResearch.setBounds(0, 11, 995, 416);
 		panelResearch.add(panelTableResearch);
 		
-		panelTableLoansResearch = new TableLoans(getFrame(),me);
+		panelTableLoansResearch = new TableLoans(getW(),me);
 		panelTableLoansResearch.setBounds(0, 11, 995, 416);
 		panelLoans.add(panelTableLoansResearch);
 		
@@ -226,7 +231,7 @@ public class ResearchBooks extends SL_JFrame {
 		lblResearch.setBounds(285, 11, 91, 14);
 		getFrame().getContentPane().add(lblResearch);
 		
-		JButton btnReturnBack = new JButton("Indietro");
+		JButton btnReturnBack = new JButton("Chiudi");
 		btnReturnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -422,6 +427,45 @@ public class ResearchBooks extends SL_JFrame {
 		});
 		comboBoxL.setBounds(10, 443, 200, 20);
 		panelLoans.add(comboBoxL);
+		
+		JButton btnAggiornaLoansTest = new JButton("aggiorna loans TEST");
+		btnAggiornaLoansTest.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent e) {
+			PopUp.infoBox(comboBoxL, "AGGIORNA LOANS IN TEST");
+			
+			try {	 	 
+				
+				TableLoans.PopulateData("",me);
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();	
+				} catch (InterruptedException e1) {				
+					e1.printStackTrace();
+				}	
+			}
+		});
+		btnAggiornaLoansTest.setBounds(151, 504, 162, 23);
+		panelLoans.add(btnAggiornaLoansTest);
+		
+		rdbtnStoricoPrenotazioni = new JRadioButton("Storico Prenotazioni");
+		
+		rdbtnStoricoPrenotazioni.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+				
+				me.setStorico(getRdbtnStoricoPrenotazioni().isSelected());
+				
+			}
+		});
+		rdbtnStoricoPrenotazioni.setBounds(342, 442, 142, 23);
+		panelLoans.add(rdbtnStoricoPrenotazioni);
+		
+		
+		
+		
 		
 		
 		JComboBox<String> comboBoxBooking = new JComboBox<String>();
@@ -1106,4 +1150,23 @@ public static boolean checkDate(String d)
     return valid;
 }
 
+
+public JRadioButton getRdbtnStoricoPrenotazioni() {
+	return rdbtnStoricoPrenotazioni;
+}
+
+
+public void setRdbtnStoricoPrenotazioni(JRadioButton rdbtnStoricoPrenotazioni) {
+	this.rdbtnStoricoPrenotazioni = rdbtnStoricoPrenotazioni;
+}
+
+
+public boolean isStorico() {
+	return storico;
+}
+
+
+public void setStorico(boolean storico) {
+	this.storico = storico;
+}
 }

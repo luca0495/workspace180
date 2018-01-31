@@ -246,17 +246,10 @@ public class ServerReal extends ServerSkeleton {
 			case 	LoanExecuteQuery://----> [DB]
 				System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> Loans Execute Query ");					
 				try {
-					
-					
 					JTable table=new JTable();
-					// Clear table
-					//table.setModel(new DefaultTableModel());
 					table.setModel(new DefaultTableModel());
-					
 					// Model for Table				
 					DefaultTableModel model = (DefaultTableModel)table.getModel();				
-					
-					/*
 					model.addColumn("Codice");
 					model.addColumn("Id");
 					model.addColumn("Data_Inizio");
@@ -265,8 +258,7 @@ public class ServerReal extends ServerSkeleton {
 					model.addColumn("Ritirato");
 					model.addColumn("Scaduto");
 					model.addColumn("Email_Inviata");			
-					*/
-					
+
 					DBmanager.openConnection();
 					ResultSet rs = DBmanager.executeQuery(M.getMsg().getSQLQuery());
 	
@@ -285,14 +277,14 @@ public class ServerReal extends ServerSkeleton {
 					model.setValueAt(rs.getString("ritirato"), row, 5);			System.out.println("Test7");
 					model.setValueAt(rs.getString("scaduto"), row, 6);			System.out.println("Test7");
 					model.setValueAt(rs.getString("email_inviata"), row, 7);	System.out.println("Test7");
-					
-					
 					row++;						
 					}
 						System.out.println("Test9");
 					
 					rs.close();
 					DBmanager.closeConnection();
+					
+					//table.setModel(model);
 					
 					getMeS().addMsg(mSg);
 					x.setTab(table);
