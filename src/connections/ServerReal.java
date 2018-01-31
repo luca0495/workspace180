@@ -157,30 +157,7 @@ public class ServerReal extends ServerSkeleton {
 			catch (Exception e) {			
 				x.setText(new String ("SRV :> tables populate :> NG"));}//break;
 		return x;
-				
-		
-		
-				/*
-				case LoanPopulate:				System.out.println("RealServer :> LoanPopulate... ");
-				try {datitabellaLoans = MQ_Read.ResearchLoans();	getMeS().addMsg(mSg);
-						x.setDatitabella(datitabellaLoans);		x.setText(new String ("SRV :> table Loans populate :> OK"));		
-				} 		catch (Exception e) {					x.setText(new String ("SRV :> table Loans populate :> NG"));}//break;
-				return x;
-			
-				case BookPopulate:				System.out.println("RealServer :> BookPopulate... ");
-				try {datitabellaBook = MQ_Read.RicercaLibro();	getMeS().addMsg(mSg);
-						x.setDatitabella(datitabellaBook);		x.setText(new String ("SRV :> table Book populate :> OK"));		
-				} 				catch (Exception e) {			x.setText(new String ("SRV :> table Book populate :> NG"));}//break;
-				return x;
-			
-				case BookingPopulate:			System.out.println("RealServer :> BookingPopulate... ");
-				try {datitabellaBooking = MQ_Read.ResearchBooking();	
-					getMeS().addMsg(mSg);
-					
-					x.setDatitabella(datitabellaBooking);	x.setText(new String ("SRV :> table Booking populate :> OK"));		
-				} 				catch (Exception e) {			x.setText(new String ("SRV :> table Booking populate :> NG"));}//break;
-				return x;
-				*/
+
 		
 		
 			case LoanREAD://----> [DB] 
@@ -1533,37 +1510,7 @@ public class ServerReal extends ServerSkeleton {
 					default:
 						break;
 				}
-
-/*		
-//***			
-			if (M.getMsg().getCommand().getTarget()== SearchFor.Account ){	//AR
-					try {
-						Req.getAR().put(M);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					while (!Go){	}	//Attesa del turno...					
-					// Query
-					GpG.setBusy(false);
-					return Answer;				
-				}else{
-					if (M.getMsg().getCommand().getTarget()== SearchFor.Book ){	//BR
-						try {
-							Req.getBR().put(M);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}						
-						while (!Go){	}	//Attesa del turno...						
-						// Query
-						GpG.setBusy(false);
-						return Answer;						
-					}else{						
-						// errore
-						System.out.println("comando indefinito");
-					}		
-				}
-//*
-*/				
+			
 				break;		
 			default:
 				break;

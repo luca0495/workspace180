@@ -294,7 +294,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		
 		
 		
-		if 
+		System.out.println("RICONOSCO COME UTENTE : "+me.getIdut());
 		if (me.getIdut()==0) {
 			
 			//nessun utente in login utente in login
@@ -303,10 +303,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		
 		switch (	me.getCliType()) {		//tipo di utente
 					case Librarian	:			
+						System.err.println("ti considero un LIBRARIAN");
 										if (me.isStorico()) {	query = "SELECT * FROM prestiti 						ORDER BY data_inizio DESC;";					
 										}else {					query = "SELECT * FROM prestiti WHERE data_fine is null ORDER BY data_inizio DESC;";	
 										}	break;	
-					case Reader		:	if (me.isStorico()) {	query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
+					case Reader:
+						System.err.println("ti considero un READER");
+										if (me.isStorico()) {	query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
 										}else {					query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' AND data_fine is null ORDER BY data_inizio DESC;";	
 										}	break;					
 					case Guest		:							query = "Select  	from prestiti ";	break;			

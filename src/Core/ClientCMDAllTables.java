@@ -39,7 +39,7 @@ public class ClientCMDAllTables {
 					me.getFbooking(),
 					me.getFloans()
 					);
-			MsgSend.setUType(Clients.Librarian);
+			//MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}		

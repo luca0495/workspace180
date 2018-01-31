@@ -40,7 +40,7 @@ public class ClientCMDBook {
 					//me.getSelectedIdUser()		// id utente
 					
 					);
-			MsgSend.setUType(Clients.Librarian);
+			//MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}		
