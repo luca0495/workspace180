@@ -1409,6 +1409,8 @@ setBusy(false);
 			sendM(MsgSend, Mb);	
 		}		
 	}
+		
+		
 		private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookExecuteQuery;

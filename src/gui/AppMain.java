@@ -151,8 +151,9 @@ public class AppMain extends SL_JFrame  {
 				try {
 					
 					System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
+					Clients oldtype = me.getCliType();  
+					me.setCliType(Clients.Librarian);	
 					
-					me.setCliType(Clients.Librarian);				
 					System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
 					me.setBusy(true);		
 					// Person				
@@ -170,6 +171,8 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistBook);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist BOOK");					
+							me.setCliType(oldtype);	
+							
 						}
 
 					// Loans				
@@ -178,6 +181,7 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistLoans);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist LOANS");					
+							me.setCliType(oldtype);
 						}
 						
 					// Booking				
@@ -186,6 +190,7 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistBooking );							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist BOOKING");					
+							me.setCliType(oldtype);
 						}		
 					// Setting				
 						try {
@@ -193,34 +198,10 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistSetting);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist SETTING");					
+							me.setCliType(oldtype);
 						}	
 						
-						
-						
-					
-					
-				/*	
-				//  Loans	
-					// ChkDBandTab.tableExistLoans();
-					try {
-						
-						//ChkDBandTab.tableExistBook();
-						MessageBack back = me.Request(Commands.tableExistLoans);    
-
-						System.out.println("GUI :> risposta dal DB : "+back.getText());						
-						if (back.getText()!=""){
-							System.out.println("GUI :> LOANS : non ritorna nullo");
-
-							System.out.println("GUI :> sondo in CLI Busy prima: "+me.isBusy());	
-							me.setBusy(false);
-							System.out.println("GUI :> sondo in CLI Busy dopo: "+me.isBusy());	
-						}
-					} catch (Exception e) {
-						System.out.println("appMain :> problemi con table exist LOANS");
-						me.setBusy(false);
-					}
-					*/			
-				me.setCliType(Clients.Default);	
+						me.setCliType(oldtype);
 		
 				} catch (Exception e) {
 					

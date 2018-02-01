@@ -215,8 +215,13 @@ public class Login extends SL_JFrame  {
 					me.setActC(c);				
 					try {
 						System.out.println("GUI account:> ottenuti dati user ");
+						Clients oldtype = me.getCliType();
+						
 					me.setCliType(Clients.Librarian);	
 						me.getCmdLIST().put(Commands.UserPasswordRecovery);
+						me.setCliType(oldtype);
+					
+					
 					} catch (InterruptedException e2) {
 						System.out.println("GUI account:> NON ottenuti dati user ");	
 						e2.printStackTrace(); 
@@ -244,9 +249,8 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText("Pa20$Pe20$");
-		
-		
+		passwordFieldUser.setText(	"Pa20$Pe20$");
+									 
 		txtUser = new JTextField();
 		
 		setTxtEmail(txtUser);
@@ -295,7 +299,7 @@ public class Login extends SL_JFrame  {
 						
 						try {
 							System.out.println("GUI login:> controllo user corretto ");
-						me.setCliType(Clients.Librarian);	
+						//me.setCliType(Clients.Librarian);	
 							me.getCmdLIST().put(Commands.UserREADlogin);
 						} catch (InterruptedException e2) {
 							System.out.println("GUI login :> problemi con controllo user corretto ");	

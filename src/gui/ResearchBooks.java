@@ -667,7 +667,7 @@ public class ResearchBooks extends SL_JFrame {
 									me.setSql(MQ_Insert.insertBooksGetQuery(newli,txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText(),disp,pren_cod));													
 									try {// accoda il comando alla lista comandi dalla quale legge il client
 												System.out.println("GUI AppReader:> cmd inserisci LIBRO ");
-										me.setCliType(Clients.Librarian);	
+									//	me.setCliType(Clients.Librarian);	
 										me.getCmdLIST().put(Commands.BookADD);
 									} catch (InterruptedException e2) {
 												System.out.println("AppReader :> problemi con inserimento nuovo libro");	
@@ -890,7 +890,7 @@ public class ResearchBooks extends SL_JFrame {
 								try {
 									me.setActW(getW());
 									me.setActF(getFrame());
-									me.setCliType(Clients.Librarian);
+									//me.setCliType(Clients.Librarian);
 									me.getCmdLIST().put(Commands.BookLast);
 									
 								} catch (InterruptedException e2) {
@@ -920,8 +920,8 @@ public class ResearchBooks extends SL_JFrame {
 						try {				
 							me.setSelectedIdUser(me.getIdut());				
 							System.out.println("GUI account:> ottenuti dati user ");							
-//TODO RIMUOVERE E COPIARE METODO PER LIBRARIAN ANCHE PER READER nel REALSERVER
-							me.setCliType(Clients.Librarian);							
+
+						//me.setCliType(Clients.Librarian);							
 							System.err.println("passo prima del metodo idbook : "+idbook);
 							me.setIdbook(idbook);
 							me.getCmdLIST().put(Commands.LoanASK);	

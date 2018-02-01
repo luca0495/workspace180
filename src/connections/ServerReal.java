@@ -54,7 +54,9 @@ public class ServerReal extends ServerSkeleton {
 		private 	String 					mSg;		
 		private  	Map<String,Message>  	listcmdDONE = new TreeMap<>();		
 		public 		Boolean					Go;
-		private 	MessageBack				mSgB;	
+		
+		private 	MessageBack 			x; 
+		//private 	MessageBack				mSgB;	
 		private 	String [][] 			datitabellaBook 	= null;
 		private 	String [][] 			datitabellaBooking 	= null;
 		private 	String [][] 			datitabellaLoans 	= null;
@@ -93,7 +95,10 @@ public class ServerReal extends ServerSkeleton {
 	@Override
 	public MessageBack connection(Message msg) throws InterruptedException, IOException {	
 				System.out.println("REAL SERVER :> GESTISCO RICHIESTA CONNNECTION");
-		MessageBack x = new MessageBack();
+		//MessageBack x = new MessageBack();
+		x = new MessageBack();
+		
+		
 		switch (msg.getCommand()) {		
 			case ConnTEST:
 				//System.out.println(mSg = "REALServer:> TEST connessione richiesto ");
@@ -127,9 +132,10 @@ public class ServerReal extends ServerSkeleton {
 		System.out.println("RealServer :> Rx Visualizza ");
 		
 		MessageRealServer M 	= this.MessageEncapsulation(Mes);
-		MessageBack x 			= new MessageBack();
-		MessageBack AnswerM 	= new MessageBack();
+		//MessageBack x 			= new MessageBack();
+		MessageBack AnswerM 		= new MessageBack();
 		
+		x 			= new MessageBack();
 		
 		// ********************************
 		switch (M.getMsg().getCommand()) {
@@ -1727,4 +1733,38 @@ public class ServerReal extends ServerSkeleton {
 			WindowEvent close = new WindowEvent(getMeS().getFrame(), WindowEvent.WINDOW_CLOSING);
 			getMeS().getFrame().dispatchEvent(close);
 	}
+	public MessageBack getX() {
+		return x;
+	}
+	public void setX(MessageBack x) {
+		this.x = x;
+	}
+	public String getmSg() {
+		return mSg;
+	}
+	public void setmSg(String mSg) {
+		this.mSg = mSg;
+	}
+	public Map<String, Message> getListcmdDONE() {
+		return listcmdDONE;
+	}
+	public void setListcmdDONE(Map<String, Message> listcmdDONE) {
+		this.listcmdDONE = listcmdDONE;
+	}
+	public Boolean getGo() {
+		return Go;
+	}
+	public void setGo(Boolean go) {
+		Go = go;
+	}
+	
+	/*
+	public MessageBack getmSgB() {
+		return mSgB;
+	}
+	public void setmSgB(MessageBack mSgB) {
+		this.mSgB = mSgB;
+	}
+	*/
+	
 }
