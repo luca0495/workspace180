@@ -156,7 +156,15 @@ public class AppMain extends SL_JFrame  {
 					
 					System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
 					me.setBusy(true);		
-					// Person				
+					// Person		
+					
+					try {
+						// ChkDBandTab.tableExistPerson();
+						me.getCmdLIST().put(Commands.DBExist);	
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con accodamento comando check DBExist");					
+					}
+					
 						try {
 							// ChkDBandTab.tableExistPerson();
 							me.getCmdLIST().put(Commands.tableExistPerson);	

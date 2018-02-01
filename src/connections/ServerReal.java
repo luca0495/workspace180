@@ -574,7 +574,7 @@ public class ServerReal extends ServerSkeleton {
 							System.out.println("RealServer :> Rx Librarian");			
 							
 				switch ( M.getMsg().getCommand().getTarget()){
-	
+// TODO DBExist qui
 				case Setting:		//SL	//-->[GpG [SL]] ---->[DB]	
 					//System.out.println("RealServer :> Rx Account");
 					try {					
@@ -779,7 +779,7 @@ public class ServerReal extends ServerSkeleton {
 										String pass 	= M.getMsg().getSQLQuery2();
 										
 										String rf 		= Check.checkAdminLogInFIRST(email, pass);
-										
+						
 										
 										
 										if(	rf.equals("I Campi Non Possono Essere Vuoti")

@@ -27,7 +27,7 @@ import javax.swing.table.TableRowSorter;
 
 import com.sun.org.apache.bcel.internal.generic.POP;
 
-import Books.Books;
+
 import Check.Check;
 import Check.PopUp;
 import Core.ClientCMDuser;
@@ -266,8 +266,8 @@ public class ResearchBooks extends SL_JFrame {
 			    	//TODO PASSA A CLIENT da TableBooks		 				 
 			    	//me.getCmdLIST().put(Commands.tableBookPopulate);
 			    				try {	 	 
-			    					
-			    				TableBooks.PopulateData(s,me);
+			    				TableBooks.PopulateData(s,me);	
+			    				
 
 			    				} catch (SQLException e1) {
 			    					e1.printStackTrace();	
@@ -283,8 +283,9 @@ public class ResearchBooks extends SL_JFrame {
 			    	
 			    			      try {
 			    					
-			    			     TableBooks.PopulateData("",me);
-
+			    			    TableBooks.PopulateData("",me);
+			    			    
+			    
 			    			      } catch (SQLException e1) {
 			    					e1.printStackTrace();
 			    				} catch (InterruptedException e1) {				

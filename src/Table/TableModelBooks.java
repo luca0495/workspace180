@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import Books.Books;
 import Core.Commands;
 import connections.Client;
 import database.MQ_Delete;
@@ -25,14 +24,6 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
     	setData(me.getDatabook());
     }
         
-    
-    public String[] getColumnNames(List<Books> books) {
-		return columnNames;
-	}
-
-	public void setColumnNames(String[] columnNames) {
-		this.columnNames = columnNames;
-	}
 	/*
 	 @Override
 	public void fireTableDataChanged()

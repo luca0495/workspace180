@@ -246,12 +246,7 @@ public class Client implements Serializable, Runnable  {
 							}
 					break;
 				//	****************************************************	Test		   		***	
-					case TEST:
-							switch (com) {							
-								case DBExist:															break;
-								default:																break;
-								}
-					break;
+					
 				//	****************************************************	Read		   		***			
 					case READ:
 							switch (com) {							
@@ -286,7 +281,9 @@ public class Client implements Serializable, Runnable  {
 					break;
 				//	****************************************************	Change		   		***			
 					case CHANGE:
-							switch (com) {							
+							switch (com) {		
+							     // Database Exist
+							   case DBExist:				ClientCheckExistDB();						break;
 								//	All Table		
 								case tableExistBook: 		ClientCheckExistTableBook();				break;	
 								case tableExistLoans:		ClientCheckExistTableLoans();				break;
@@ -795,7 +792,14 @@ setBusy(false);
 									x.getPasswordFieldConfMod().setText	(UserData[4]);
 									x.getTxtInqMod().setText			(UserData[5]);
 									x.getTxtTelMod().setText			(UserData[6]);
-								
+									if(UserData[7].equals("Lettore"))
+								    {
+									  x.getRdbtnTypeUserLetMod().setSelected(true);
+								    }
+								else
+								    {
+								      x.getRdbtnTypeUserLibMod().setSelected(true);
+								    }
 	
 								}else {
 									System.out.println("finestra attiva... NON account");
@@ -971,6 +975,7 @@ setBusy(false);
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
 									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 //TODO ELIMINA PASSWORD TEMPORANEA
+									
 //MQ_Delete.deletePassTemp(pass);
 									this.getCmdLIST().put(Commands.UserREADbyEmail);
 
@@ -1243,6 +1248,31 @@ setBusy(false);
 //	
 //*********************************************************************************************************************************************
 //	
+	
+	private void ClientCheckExistDB() throws SendFailedException, MessagingException, SQLException, InterruptedException{
+		Commands cmd = Commands.DBExist;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!stubok){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");
+			
+			System.out.println(mSg);
+			
+			getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message	
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					this.toString()				// id Client 
+									);
+			MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			sendM(MsgSend, Mb);
+		}	
+	}		
 		private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistSetting;
 		MessageBack Mb = new MessageBack();

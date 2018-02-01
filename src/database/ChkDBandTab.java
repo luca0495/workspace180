@@ -16,8 +16,8 @@ public class ChkDBandTab {
 	//	public static boolean DBExist()throws SQLException{
 		
 	
-	/*public static MessageBack DBExist()throws SQLException{
-		MessageBack mb = null;
+	public static MessageBack DBExist()throws SQLException{
+	MessageBack mb = null;
 			
 			
 	String DB_URL = "jdbc:postgresql://localhost/";
@@ -70,7 +70,7 @@ public class ChkDBandTab {
 		return mb;
 		 
 		}
-	*/
+	
 	   
 	 
 
