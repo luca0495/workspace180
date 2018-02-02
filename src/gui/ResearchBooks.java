@@ -407,6 +407,8 @@ public class ResearchBooks extends SL_JFrame {
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
 					lblEr4.setIcon(null);
+					
+					ClientConnectionController.ONEcontrol(me);
 				}
 				else if(comboBoxL.getSelectedItem().equals("Prestiti"))
 				{
@@ -416,6 +418,8 @@ public class ResearchBooks extends SL_JFrame {
 					panelLoans.setVisible(true);
 
 					System.out.println("2" + comboBoxL.toString());
+					
+					ClientConnectionController.ONEcontrol(me);
 
 				//	icon a null
 				}
@@ -427,6 +431,9 @@ public class ResearchBooks extends SL_JFrame {
 					panelBooking.setVisible(true);
 					comboBoxL.setSelectedItem("Prestiti");
 					System.out.println("3" + comboBoxL.toString());
+					
+					ClientConnectionController.ONEcontrol(me);
+					
 				//	icon a null
 				}
 			}
@@ -520,6 +527,8 @@ public class ResearchBooks extends SL_JFrame {
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
 					lblEr4.setIcon(null);
+					
+					ClientConnectionController.ONEcontrol(me);
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prestiti"))
 				{
@@ -530,6 +539,8 @@ public class ResearchBooks extends SL_JFrame {
 					comboBoxBooking.setSelectedItem("Prenotazioni");
 					System.out.println("5" + comboBoxBooking.toString());
 				//	icon a null
+					
+					ClientConnectionController.ONEcontrol(me);
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prenotazioni"))
 				{
@@ -539,6 +550,8 @@ public class ResearchBooks extends SL_JFrame {
 					panelBooking.setVisible(true);
 
 					System.out.println("6" + comboBoxBooking.toString());
+					
+					ClientConnectionController.ONEcontrol(me);
 
 				//	icon a null
 				}

@@ -104,6 +104,7 @@ public class Client implements Serializable, Runnable  {
 	private 			SL_JFrame			ActW			=null;	//Active Window
 	private 			Component			ActC			=null;	//Active Component	
 	private 			JTable 				ActTable		=null;
+
 	private 			Clients				ClientType;
 	private				Clients				ClientTypeOLD;	
 		
@@ -1629,6 +1630,9 @@ setBusy(false);
 						
 						);
 				sendM(MsgSend, Mb);
+
+				
+				
 			}	
 		}
 		private void UserGetDatabyEmailAcc() throws SendFailedException, MessagingException, SQLException, InterruptedException{
