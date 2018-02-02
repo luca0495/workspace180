@@ -99,10 +99,24 @@ public class MQ_Delete {
 	{			
 		String query = "DELETE FROM utente WHERE id ='" + id + "' AND password_temp = '" + pass + "';";
     	
+		System.err.println("query agg pass temp: "+query);
+		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
+	public static void deletePassTempEP(String EM,String PW) throws SQLException
+	{			
+		String query = "UPDATE password_temp SET '0' FROM utente WHERE email ='"+EM+"'";
+    	
+		System.err.println("query agg pass temp: "+query);
+		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(query);
+		DBmanager.closeConnection();
+	}
+	
+	
 	//test OK
 	public static String deleteRowPerson(List<String> r) throws SQLException
 	{			

@@ -352,8 +352,11 @@ public class Check {
 	 // esamina password 
      public static String[] checkAdminLogIn(String email, String pass) throws SQLException
        {
+
+    	 
          String [] res= new String[7];
-         
+
+
            
            if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals(""))
            {
@@ -364,7 +367,20 @@ public class Check {
            {
                String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
       
-               if(datiUtente[1].equals("Nessun Dato")||datiUtente[1].equals(""))
+          	 System.out.println("check admin login");
+        	 System.err.println("email passata"+email);
+        	 System.err.println("pw    passata"+pass);               
+               
+        	 System.out.println(">>>"+datiUtente[0]);
+        	 System.out.println(">>>"+datiUtente[1]);
+        	 System.out.println(">>>"+datiUtente[2]);
+        	 System.out.println(">>>"+datiUtente[3]);
+        	 System.out.println(">>>"+datiUtente[4]);
+        	 System.out.println(">>>"+datiUtente[5]);
+
+               
+               
+               if(datiUtente[0].equals("Nessun Dato")||datiUtente[0].equals(""))
                {
                    res[0]=new String("L'Email Non Esiste");
                    return res;                     

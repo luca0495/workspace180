@@ -65,10 +65,11 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JRadioButton;
 
+
 public class ResearchBooks extends SL_JFrame {
 
 	private Client  		me ;
-	
+	private static ClientConnectionController ccc;
 	private ResearchBooks 	w;
 	private JFrame frame;
 	
@@ -78,6 +79,8 @@ public class ResearchBooks extends SL_JFrame {
 	private JPanel panelResearch;
 	private JPanel panel_1;
     private JTable table4;
+    
+    private JButton button_1;//tasto riconsegna
     
     private JTable tableBooks;
    
@@ -130,20 +133,13 @@ public class ResearchBooks extends SL_JFrame {
 		me.setMeRes(this);
 		
 		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
-		
-		
-		
 		//TODO LUCA per abilitazione bottone VISUALIZZA ELENCO PRESTITI		
 		// me.getCliType()
-
 		//IF LIBRAIO VEDI BOTTONE
 		//ELSE NON LO VEDI
-		
-		
 		initialize(c);
 		super.SL_Type = AppType.AppReader;
 		super.setModel("search");
-		
 	}
 
 	
@@ -343,6 +339,8 @@ public class ResearchBooks extends SL_JFrame {
 					panelLoans.setVisible(		false);
 					panelBooking.setVisible(	false);
 					
+					ClientConnectionController.ONEcontrol(me);
+					
 					System.out.println("7" + comboBoxB.toString());
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
@@ -359,6 +357,8 @@ public class ResearchBooks extends SL_JFrame {
 					comboBoxB.setSelectedItem("Ricerca_Libro");
 					//comboBoxB.setSelectedItem("Prenotazioni");
 					
+					ClientConnectionController.ONEcontrol(me);
+					
 					System.out.println("8" + comboBoxB.toString());
 
 				//	icon a null
@@ -372,11 +372,16 @@ public class ResearchBooks extends SL_JFrame {
 				panelBooking.setVisible(true);
 				comboBoxB.setSelectedItem("Ricerca_Libro");
 				
+				ClientConnectionController.ONEcontrol(me);
+				
 				System.out.println("9" + comboBoxB.toString());
 
 			//	icon a null
 			}
 		}
+				
+		
+			
 	});
 		comboBoxB.setBounds(31, 443, 324, 20);
 		panelResearch.add(comboBoxB);
@@ -429,12 +434,12 @@ public class ResearchBooks extends SL_JFrame {
 		comboBoxL.setBounds(10, 443, 200, 20);
 		panelLoans.add(comboBoxL);
 		
-		JButton btnAggiornaLoansTest = new JButton("aggiorna loans TEST");
+		JButton btnAggiornaLoansTest = new JButton("REFRESH");
 		btnAggiornaLoansTest.addActionListener(new ActionListener() {
 			
 			
 			public void actionPerformed(ActionEvent e) {
-			PopUp.infoBox(comboBoxL, "AGGIORNA LOANS IN TEST");
+			//PopUp.infoBox(comboBoxL, "REFRESH");
 			
 			try {	 	 
 				
@@ -447,8 +452,34 @@ public class ResearchBooks extends SL_JFrame {
 				}	
 			}
 		});
-		btnAggiornaLoansTest.setBounds(151, 504, 162, 23);
+		btnAggiornaLoansTest.setBounds(10, 477, 200, 23);
 		panelLoans.add(btnAggiornaLoansTest);
+		
+		
+		JButton btnAggiornabookingTest = new JButton("REFRESH");
+		btnAggiornabookingTest.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent e) {
+			//PopUp.infoBox(comboBoxL, "REFRESH");
+			
+			try {	 	 
+				
+				TableBooking.PopulateData("",me);
+
+				} catch (SQLException e1) {
+					e1.printStackTrace();	
+				} catch (InterruptedException e1) {				
+					e1.printStackTrace();
+				}	
+			}
+		});
+		btnAggiornabookingTest.setBounds(10, 477, 200, 23);
+		panelBooking.add(btnAggiornabookingTest);
+		
+		
+		
+		
 		
 		rdbtnStoricoPrenotazioni = new JRadioButton("Storico Prenotazioni");
 		
@@ -795,7 +826,7 @@ public class ResearchBooks extends SL_JFrame {
 		
 		
 		
-		JButton button_1 = new JButton("Riconsegna");
+		button_1 = new JButton("Riconsegna");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -804,9 +835,6 @@ public class ResearchBooks extends SL_JFrame {
 					//campo nullo
 				
 				}else {
-					
-						
-					
 					
 					//if (checkDate(dataC)) {
 						PopUp.infoBox(btnReturnBack, 
@@ -823,18 +851,7 @@ public class ResearchBooks extends SL_JFrame {
 						
 						//PopUp.infoBox(btnReturnBack,"la data inserita, "+dataC+" non é nel formato correttto" );
 					//}
-			
-					
-					
-					
 				}
-				
-				
-				
-						
-				
-	
-				
 			}
 		});
 		button_1.setBounds(31, 557, 110, 23);
@@ -1169,5 +1186,15 @@ public boolean isStorico() {
 
 public void setStorico(boolean storico) {
 	this.storico = storico;
+}
+
+
+public JButton getButton_1() {
+	return button_1;
+}
+
+
+public void setButton_1(JButton button_1) {
+	this.button_1 = button_1;
 }
 }

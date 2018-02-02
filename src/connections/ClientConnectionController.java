@@ -3,6 +3,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.sun.org.apache.bcel.internal.generic.POP;
+
 import Core.Commands;
 import Table.TableBooking;
 import Table.TableBooks;
@@ -75,13 +77,30 @@ public class ClientConnectionController implements Runnable {
 										if (me.getMePannelBook().isVisible()) {
 												
 												System.err.println("vedo pannello book");
-												String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();
-												System.out.println("dato nel campo testo: "+Fbook);
-												
+												try {
+													String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();	
+													System.out.println("dato nel campo testo: "+Fbook);
+												//-----------------------------------------------------------------
+												ResearchBooks x = (ResearchBooks)me.getActW();	
+												if (me.getIdut()==0) {
+													x.getButton_1().setVisible(false);//Guest
+												}else {
+														if (me.getDatiUtente()[6].equals("Libraio")) {//librarian	
+															x.getButton_1().setVisible(true);
+															System.out.println("per utente diverso da libraio copro il tasto riconsegna");
+														}else {
+															x.getButton_1().setVisible(false);//reader
+														}
+												}			
+												//-----------------------------------------------------------------
 												if (Fbook==null||Fbook.equals("")) {
 													TableBooks.PopulateData(null,me);
 												}else {
 													TableBooks.PopulateData(Fbook,me);	
+												}		
+	
+												} catch (Exception e) {
+													
 												}	
 										}											
 										if (me.getMePannelLoans().isVisible()) {
@@ -127,4 +146,75 @@ public class ClientConnectionController implements Runnable {
 		}	//while					
 	}		//Logica
 //------------------------------------------------------------------------
+	
+	
+	public static void ONEcontrol (Client me) {
+		
+			if (me.getMePannelBook().isVisible()) {			
+				System.err.println("ONE CONTROL vedo pannello book");
+				try {
+					String Fbook = ((ResearchBooks)me.getActW()).getTextField().getText();	
+					System.out.println("ONE CONTROL  dato nel campo testo: "+Fbook);
+						//-----------------------------------------------------------------
+						ResearchBooks x = (ResearchBooks)me.getActW();	
+						if (me.getIdut()==0) {
+							x.getButton_1().setVisible(false);//Guest
+						}else {
+								if (me.getDatiUtente()[6].equals("Libraio")) {//librarian	
+									x.getButton_1().setVisible(true);
+									System.out.println("ONE CONTROL per utente diverso da libraio copro il tasto riconsegna");
+								}else {
+									x.getButton_1().setVisible(false);//reader
+								}
+						}			
+						//-----------------------------------------------------------------
+						if (Fbook==null||Fbook.equals("")) {
+							TableBooks.PopulateData(null,me);
+						}else {
+							TableBooks.PopulateData(Fbook,me);	
+						}		
+				} catch (Exception e) {
+				}		
+			}
+			
+			if (me.getMePannelLoans().isVisible()) {
+						
+					System.err.println("ONE CONTROL vedo pannello loans");
+					String Floans = ((ResearchBooks)me.getActW()).getTextField().getText();
+					try {
+						if (Floans==null||Floans.equals("")) {
+							TableLoans.PopulateData("",me);
+						}else {
+							TableLoans.PopulateData(Floans,me);	
+						}							
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+												
+			}
+			if (me.getMePannelBooking().isVisible()) {
+				
+					System.err.println("ONE CONTROL vedo pannello booking");
+					String Fbooking = ((ResearchBooks)me.getActW()).getTextField().getText();
+					try {
+						if (Fbooking==null||Fbooking.equals("")) {
+							TableBooking.PopulateData("",me);
+						}else {
+							TableBooking.PopulateData(Fbooking,me);	
+						}	
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+																			
+			}
+			
+}//me.getMeRes
+		
+	
+	
+	
+	
+	
+	
+	
 }

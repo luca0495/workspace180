@@ -35,7 +35,7 @@ public class ClientCMDloans {
 					me.getSelectedIdBook(),		// id libro
 					me.getSelectedIdUser()		// id utente					
 					);
-			//MsgSend.setUType(Clients.Librarian);
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}	
@@ -67,7 +67,7 @@ public class ClientCMDloans {
 					me.getSelectedIdBook(),		// id libro
 					me.getSelectedIdUser()		// id utente					
 					);
-			//MsgSend.setUType(Clients.Librarian);
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}	

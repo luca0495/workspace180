@@ -36,7 +36,7 @@ public class Guardian implements Runnable {
 	public Guardian (Server Srv,Requests Req){
 		meS	=	Srv;
 		R	=	Req;
-		System.out.println("GPG :> Guardian operativo");
+		System.out.println("GPG :> Guardian operativo");	
 	}
 	//-----------------------------------------------------------
 	
@@ -47,6 +47,9 @@ public class Guardian implements Runnable {
 		Date datacorrente = calendar.getTime();  
 		Date dataultimocontrollo=calendar.getTime();  
 
+		
+		
+		
 		
 		while(!Stop){
 			Calendar c = new GregorianCalendar();

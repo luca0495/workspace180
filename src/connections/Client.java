@@ -105,6 +105,8 @@ public class Client implements Serializable, Runnable  {
 	private 			Component			ActC			=null;	//Active Component	
 	private 			JTable 				ActTable		=null;
 	private 			Clients				ClientType;
+	private				Clients				ClientTypeOLD;	
+		
 	private 			ServerStub			srv;		
 	private 			boolean 			stubok			=false;
 	private 			boolean 			repeatconn		=true;
@@ -299,6 +301,8 @@ public class Client implements Serializable, Runnable  {
 								case UserREADloginFIRST: 	UserGetDataLoginFIRST();					break;	//necessario setSql con email setSql2 con password_temp									
 								case UserRegistration: 		ClientCHANGEuserRegistration();				break;
 								case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);	break;
+								case UserPasswordRemovetemp:ClientCMDuser.UserPasswordDelTemp(this);
+								
 								case UserActivation: 													break;				
 								//	Loans
 								case LoanReturn:			ClientCMDloans.LoansReturned(this);			break;
@@ -777,7 +781,7 @@ setBusy(false);
 								
 								System.err.println("finestra attiva : "+getActW().toString());								
 								
-								
+								/*
 								Account x = (Account)getActW();
 								
 								if(x.getT()==AppType.AppAccount) {
@@ -808,7 +812,7 @@ setBusy(false);
 									this.getMeMain().getFrame().setVisible(true);
 									this.getMeMain().getBtnAccount().setVisible(true);
 								}
-									
+								*/	
 									
 									
 								
@@ -889,6 +893,8 @@ setBusy(false);
 								
 								System.out.println("settato id utente..."+getIdut());
 								
+								
+								
 								Login l = (Login)getActW();								
 								//System.out.println("login attiva: "+l.toString());								
 								/*
@@ -958,8 +964,21 @@ setBusy(false);
 	
 							case "SRV :> selected user login check FIRST:> Login Corretto":
 								Login lF = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
+								
+								
+								/*
 								Account loF = new Account(getActF(),this);				
 								setActW(loF);
+								*/
+								
+								
+								
+								
+								//MQ_Delete.deletePassTemp(pass);
+								
+								
+								
+								
 								//chiusura finesta login
 								lF.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
 								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
@@ -971,13 +990,15 @@ setBusy(false);
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
-									this.setCliType(Clients.Librarian);
+									//this.setCliType(Clients.Librarian);
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
-									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									//this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 //TODO ELIMINA PASSWORD TEMPORANEA
 									
-//MQ_Delete.deletePassTemp(pass);
-									this.getCmdLIST().put(Commands.UserREADbyEmail);
+									this.getCmdLIST().put(Commands.UserPasswordRemovetemp);
+									PopUp.infoBox(getActW(), "LOGIN EFFETTUATO CON SUCCESSO");
+									
+									//this.getCmdLIST().put(Commands.UserREADbyEmail);
 
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
@@ -1222,6 +1243,10 @@ setBusy(false);
 							case	"SRV :> Loans RETURNED :> OK"		:ClientCMDloans.LoansReturnedRES(	this, "OK", Mb);break;
 							case	"SRV :> Loans RETURNED :> NG"		:ClientCMDloans.LoansReturnedRES(	this, "NG", Mb);break;
 							
+							case 	"SRV :> DEL pw TEMP :> OK"			:ClientCMDuser.UserPasswordDelTempRES(this, "OK", Mb);break;
+							case 	"SRV :> DEL pw TEMP :> NG"			:ClientCMDuser.UserPasswordDelTempRES(this, "NG", Mb);break;
+							
+							
 							
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -1268,7 +1293,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1292,7 +1317,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1316,11 +1341,14 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			
+			setClientTypeOLD(getCliType());
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
 	}		
+		
 		private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
@@ -1340,7 +1368,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1364,7 +1392,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1387,7 +1415,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			
 			//???????
@@ -1412,7 +1440,7 @@ setBusy(false);
 					this.toString(),			// id Client 
 					this.getSql()
 					);
-			MsgSend.setUType(Clients.Librarian);
+			setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 			
@@ -1461,7 +1489,7 @@ setBusy(false);
 					this.toString(),			// id Client 
 					this.getSql()
 					);
-			//MsgSend.setUType(Clients.Librarian);
+			//setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			
 			sendM(MsgSend, Mb);	
@@ -1486,7 +1514,7 @@ setBusy(false);
 					this.getSql()
 					);
 			
-			// MsgSend.setUType(Clients.Librarian);
+			// setClientTypeOLD(getCliType());
 			// **** Client invia Message
 			
 			sendM(MsgSend, Mb);
@@ -1510,7 +1538,7 @@ setBusy(false);
 						this.toString(),			// id Client 
 						this.getSql()
 						);
-				MsgSend.setUType(Clients.Librarian);
+				setClientTypeOLD(getCliType());
 				// **** Client invia Message
 				sendM(MsgSend, Mb);
 			}	
@@ -1693,9 +1721,8 @@ setBusy(false);
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql(),				// la finestra login passa la stringa email 
-						this.getSql2()				// la finestra login passa la stringa password 
-						
+						this.getSql(),			// la finestra login passa la stringa email 
+						this.getSql2()			// la finestra login passa la stringa password 
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -2142,7 +2169,18 @@ setBusy(false);
 			public void setStorico(boolean storico) {
 				this.storico = storico;
 			}
-		
+			public Clients getClientType() {
+				return ClientType;
+			}
+			public void setClientType(Clients clientType) {
+				ClientType = clientType;
+			}
+			public Clients getClientTypeOLD() {
+				return ClientTypeOLD;
+			}
+			public void setClientTypeOLD(Clients clientTypeOLD) {
+				ClientTypeOLD = clientTypeOLD;
+			}
 		
 	
 	

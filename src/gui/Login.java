@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
+import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -249,7 +250,7 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText(	"Pa20$Pe20$");
+		passwordFieldUser.setText(	"Pe20$Pg20$");
 									 
 		txtUser = new JTextField();
 		
@@ -284,7 +285,7 @@ public class Login extends SL_JFrame  {
 			
 				try 
 				{
-					if(MQ_Read.ReadPassTemp1(email) == null)
+					if(	MQ_Read.ReadPassTemp1(email) == null)
 					{
 						System.out.println("passo email    :"+email);
 						System.out.println("passo password :"+pass);
@@ -302,6 +303,9 @@ public class Login extends SL_JFrame  {
 						try {
 							System.out.println("GUI login:> controllo user corretto ");
 						//me.setCliType(Clients.Librarian);	
+						
+							Thread.sleep(100);
+							
 							me.getCmdLIST().put(Commands.UserREADlogin);
 						} catch (InterruptedException e2) {
 							System.out.println("GUI login :> problemi con controllo user corretto ");	
@@ -387,6 +391,9 @@ public class Login extends SL_JFrame  {
 		JButton btnPrimoAccesso = new JButton("PRIMO ACCESSO");
 		btnPrimoAccesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				
 			}
 		});
 		btnPrimoAccesso.setBounds(443, 212, 135, 46);
@@ -394,9 +401,22 @@ public class Login extends SL_JFrame  {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
+				textField_2.setText(txtUser.getText());
+				passwordFieldUser.getPassword();
+				
+
+				
+				
 				PanelRegi.setVisible(false);
 				PanelFirstAcc.setVisible(true);
 				PanelForgPass.setVisible(false);
+				
+				
+				
+				
+				
+				
+				
 			}
 		});
 		PanelRegi.add(btnPrimoAccesso);
@@ -446,15 +466,21 @@ public class Login extends SL_JFrame  {
 			System.out.println("passo email    :"+email);
 			System.out.println("passo password :"+pass);
 			
+			/*
 			me.setSql(email);
 			me.setSql2(pass);
+			*/
+			
+			me.setSql(email);
+			me.setSql2(pass);
+			
 			me.setActW(getW());
 			me.setActF(frmSchoolib);
 			me.setActC(c);
 			
 			try {
 				System.out.println("GUI login:> controllo user corretto ");
-			me.setCliType(Clients.Librarian);	
+			//me.setCliType(Clients.Librarian);	
 				me.getCmdLIST().put(Commands.UserREADloginFIRST);
 			} catch (InterruptedException e2) {
 				System.out.println("GUI login :> problemi con controllo user corretto ");	

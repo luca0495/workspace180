@@ -22,6 +22,8 @@ public class Server {
 	private 				Guardian		G;		
 	private 				Requests 		R;
 
+	private boolean			dbOK=false;
+	
 	public Server(){
 		setR(new Requests(10));
 		setG(new Guardian(this,getR()));
@@ -115,6 +117,12 @@ public class Server {
 		getMeG().addMsg(msg);
 		
 		
+	}
+	public boolean isDbOK() {
+		return dbOK;
+	}
+	public void setDbOK(boolean dbOK) {
+		this.dbOK = dbOK;
 	}
 
 	

@@ -36,6 +36,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 
 import Check.PopUp;
+import Core.Clients;
 import Core.Commands;
 import connections.Client;
 import database.DBmanager;
@@ -248,26 +249,46 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 		System.out.println("Client me type " + me.getCliType().toString());		
 		System.out.println("Valore ritornato:" + x);		
 
-//IN TEST		
+	
+		Clients tipo;
+		//****************************************************************************************
+		if (me.getIdut()==0) {//utente non loggato
+			tipo = Clients.Guest;	
+		}else{
+			if (  me.getDatiUtente()[6].equals("Libraio")){ 	tipo = Clients.Librarian;
+			}else {
+				if (me.getDatiUtente()[6].equals("Lettore")){	tipo = Clients.Reader;
+				}else {											tipo = Clients.Guest;		
+				}
+			}			
+		}
+		//****************************************************************************************
+		//System.err.println("leggo "+me.getDatiUtente()[6]+"tipo utente prima di lanciare query booking POPULATE : "+tipo);
 		
-		
-			
-		
-		switch (	me.getCliType()) {		//tipo di utente
+		switch (tipo) {		//tipo di utente
 					case Librarian	:			
-										if (me.isStorico()) {	query = "SELECT * 	FROM prenotazioni 						ORDER BY data_inizio DESC;";					
-										}else {					query = "SELECT * 	FROM prenotazioni WHERE data_fine is null ORDER BY data_inizio DESC;";	
-										}	break;	
-					case Reader		:	if (me.isStorico()) {	query = "SELECT * 	FROM prenotazioni WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
-										}else {					query = "SELECT * 	FROM prenotazioni WHERE id = '"+me.getIdut()+"' AND data_fine is null ORDER BY data_inizio DESC;";	
-										}	break;					
-					case Guest	:								query = "Select  	from prenotazioni ";	break;			
-					case Default:								query = "Select  	from prenotazioni ";	break;			
-						default	:								query = "Select  	from prenotazioni ";	break;
+						System.err.println("ti considero un LIBRARIAN");
+										query = "SELECT * FROM prenotazioni ORDER BY data_inizio DESC;";						
+						me.setSql(query);
+						me.getCmdLIST().put(Commands.BookingExecuteQuery);
+						me.setBusy(false);
+						break;	
+					
+					case Reader:
+						System.err.println("ti considero un READER");
+										query = "SELECT * FROM prenotazioni WHERE id = '"+me.getIdut()+"' ORDER BY data_inizio DESC;";													
+						me.setSql(query);
+						me.getCmdLIST().put(Commands.BookingExecuteQuery);
+						me.setBusy(false);
+						break;					
+										
+					case Guest		:			break;
+					case Default	:			break;			
+					default			:			break;				
 		}	
-		me.setSql(query);
-		me.getCmdLIST().put(Commands.BookingExecuteQuery);
-		me.setBusy(false);
+		
+
+
 		
 	}
 	

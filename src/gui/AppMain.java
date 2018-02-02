@@ -18,7 +18,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import Core.Clients;
 import Core.Commands;
+import Table.TableBooking;
 import Table.TableBooks;
+import Table.TableLoans;
 import Table.TableUpdateBooks;
 import connections.Client;
 import connections.MessageBack;
@@ -157,13 +159,15 @@ public class AppMain extends SL_JFrame  {
 					System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
 					me.setBusy(true);		
 					// Person		
+
 					
-					try {
-						// ChkDBandTab.tableExistPerson();
-						me.getCmdLIST().put(Commands.DBExist);	
-					} catch (Exception e) {
-						System.out.println("appMain :> problemi con accodamento comando check DBExist");					
-					}
+					
+						try {
+							// ChkDBandTab.tableExistPerson();
+							me.getCmdLIST().put(Commands.DBExist);	
+						} catch (Exception e) {
+							System.out.println("appMain :> problemi con accodamento comando check DBExist");					
+						}
 					
 						try {
 							// ChkDBandTab.tableExistPerson();
@@ -379,6 +383,8 @@ public class AppMain extends SL_JFrame  {
 										 try 
 										{	 
 										 ResearchBooks rb = new ResearchBooks(getFrame(),me);
+										 
+										 
 									    } 
 										catch (Exception e) 
 										{

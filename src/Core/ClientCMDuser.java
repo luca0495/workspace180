@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
+import Check.PopUp;
 import connections.Client;
 import connections.Message;
 import connections.MessageBack;
@@ -42,6 +43,59 @@ public class ClientCMDuser {
 		}	
 	}
 
+	//UserPasswordDelTemp
+	
+	public static void UserPasswordDelTemp(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
+		String mSg;
+		Commands cmd = Commands.UserPasswordRemovetemp;
+		MessageBack Mb = new MessageBack();
+		
+		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
+		if (!(me.isStubok())){
+			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");			
+			System.out.println(mSg);			
+			me.getActW().addMsg(new String ("Connection Test result"+mSg));
+		}else{	
+			System.out.println("CLI :> Stub OK");
+			// **** Client crea Message						
+			Message MsgSend = new Message(	
+					cmd,						// Comando richiesto
+					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
+					me.toString(),				// id Client 
+					me.getSql(),
+					me.getSql2()
+
+					);
+			//MsgSend.setUType(Clients.Librarian);
+			// **** Client invia Message
+			me.sendM(MsgSend, Mb);	
+		}	
+	}
+public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
+		
+		System.out.println("ritorna da password del temp RES");
+		
+		switch (mes){
+		case "OK": 
+			System.out.println("ritornato per bookpopulate RES OK");
+			PopUp.infoBox(me.getActF(), 		"pw temp annullata 	OK");			
+			me.setActTable(Mb.getTab());
+			me.setActF(null);
+			me.setSql(null);
+			me.setBusy(false);
+			break;		
+		case "NG": PopUp.errorBox(me.getActF(), "pw temp annullata 	NG");					
+			break;
+		
+		default:
+			break;
+			
+		}
+	}	
+	
+	
+	
+	
 	
 	public static void ClientGetDataFromSetting(Client me,AppMain StartWindow) {
 		String dlh = "127.0.0.1";//default localhost

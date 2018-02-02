@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import Check.PopUp;
+import Core.Clients;
 import Core.Commands;
 import connections.Client;
 import database.DBmanager;
@@ -272,7 +273,6 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		
     	System.err.println("storico:"+me.isStorico());
     	
-    	
     	// Clear table   		
     	getTable().setModel(new DefaultTableModel());	
     	// Model for Table		
@@ -285,39 +285,55 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		model.addColumn("Ritirato");
 		model.addColumn("Scaduto");
 		model.addColumn("Email_Inviata");
-		
 		String query=null;
 		
 		System.out.println("Client me " + me.toString());		
 		System.out.println("Client me type " + me.getCliType().toString());		
 		System.out.println("Valore ritornato:" + x);	
-		
-		
-		
 		System.out.println("RICONOSCO COME UTENTE : "+me.getIdut());
-		if (me.getIdut()==0) {
-			
-			//nessun utente in login utente in login
+
+		
+		Clients tipo;
+		//****************************************************************************************
+		if (me.getIdut()==0) {//utente non loggato
+			tipo = Clients.Guest;	
+		}else{
+			if (  me.getDatiUtente()[6].equals("Libraio")){ 	tipo = Clients.Librarian;
+			}else {
+				if (me.getDatiUtente()[6].equals("Lettore")){	tipo = Clients.Reader;
+				}else {											tipo = Clients.Guest;		
+				}
+			}			
 		}
+		//****************************************************************************************
+
+		//System.err.println("leggo "+me.getDatiUtente()[6]+"tipo utente prima di lanciare query LOANS POPULATE : "+tipo);
 		
-		
-		switch (	me.getCliType()) {		//tipo di utente
+		switch (tipo) {		//tipo di utente
 					case Librarian	:			
 						System.err.println("ti considero un LIBRARIAN");
 										if (me.isStorico()) {	query = "SELECT * FROM prestiti 						ORDER BY data_inizio DESC;";					
 										}else {					query = "SELECT * FROM prestiti WHERE data_fine is null ORDER BY data_inizio DESC;";	
-										}	break;	
+										}	
+						me.setSql(query);
+						me.getCmdLIST().put(Commands.LoanExecuteQuery);
+						
+						break;	
+					
 					case Reader:
 						System.err.println("ti considero un READER");
 										if (me.isStorico()) {	query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' 						ORDER BY data_inizio DESC;";					
 										}else {					query = "SELECT * FROM prestiti WHERE id = '"+me.getIdut()+"' AND data_fine is null ORDER BY data_inizio DESC;";	
-										}	break;					
-					case Guest		:							query = "Select  	from prestiti ";	break;			
-					case Default	:							query = "Select  	from prestiti ";	break;			
-					default			:							query = "Select  	from prestiti ";	break;
+										}	
+						me.setSql(query);
+						me.getCmdLIST().put(Commands.LoanExecuteQuery);
+						
+						break;					
+										
+					case Guest		:			break;
+					case Default	:			break;			
+					default			:			break;				
 		}	
-		me.setSql(query);
-		me.getCmdLIST().put(Commands.LoanExecuteQuery);
 	}
   
     

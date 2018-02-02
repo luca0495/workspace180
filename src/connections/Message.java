@@ -155,6 +155,23 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSelectedIdUser(idut);
 		setSelectedIdBook(idbook);
 	}	
+
+	//usato in del pw temp
+	public Message (
+			Commands cmd,
+			Clients Ut,
+			String IdClient,
+			String pw,
+			int idut){
+		
+		setCommands(cmd);
+		setDateOfRequest(new Date());
+		setUType(Ut);
+		setDateOfRequest(new Date());
+		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
+		setIdut(idut);
+		setPw(pw);
+	}
 	
 	
 	//usato in Loans Returned

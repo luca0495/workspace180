@@ -142,6 +142,8 @@ public Setting(Component c,Client x,String[]userdata)
 		setUserdata(userdata);
 		setf(userdata);
 		
+		System.out.println("da lettura query ... userdata [4] " + getUserdata()[4]);
+		
 	}
 	
 	public void Setting(Component c) {
@@ -219,6 +221,12 @@ public Setting(Component c,Client x,String[]userdata)
 		passwordField = new JPasswordField();
 		passwordField.setBounds(208, 309, 138, 20);
 		panelChangePass.add(passwordField);
+		
+	
+		
+		
+		
+		
 		
 		button = new JButton("Conferma");
 		button.addActionListener(new ActionListener() {

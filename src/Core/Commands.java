@@ -76,6 +76,8 @@ public enum Commands{
 			UserUPDATE 			("User Update		"				,	SearchFor.Account,		CommandsType.CHANGE,		2,	0),
 			UserDELETE			("User Delete		"				,	SearchFor.Account,		CommandsType.CHANGE,		3,	0),				
 			UserPasswordRecovery("User Password Recovery"			,	SearchFor.Account,		CommandsType.CHANGE,		3,	0),
+			UserPasswordRemovetemp("User Password Remove temporany"	,	SearchFor.Account,		CommandsType.CHANGE,		3,	0),
+			
 			UserLOGIN 			("User Login"						,	SearchFor.Account,		CommandsType.READ,			1,	0), 
 			UserLOGOUT 			("User Logout"						,	SearchFor.Account,		CommandsType.READ,			1,	0),
 			UserREAD 			("User Read			"				,	SearchFor.Account,		CommandsType.READ,			1,	0),

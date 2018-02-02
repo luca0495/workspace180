@@ -128,7 +128,7 @@ public class ServerReal extends ServerSkeleton {
 //**------------------------------------------------------------------------------------------------------------- Visualizza
 	@Override
 	public MessageBack 	visualizza(Message Mes) {	//----> [DB]	// Query DIRETTA al dbManager
-	
+
 		System.out.println("RealServer :> Rx Visualizza ");
 		
 		MessageRealServer M 	= this.MessageEncapsulation(Mes);
@@ -136,6 +136,14 @@ public class ServerReal extends ServerSkeleton {
 		MessageBack AnswerM 		= new MessageBack();
 		
 		x 			= new MessageBack();
+
+		/*
+		if (!Srv.isDbOK()) {	
+			System.out.println("SRV CONTROLLO DI ESISTENZA DB NG");
+			x.setText("DB down");
+			return x;
+		}
+		*/
 		
 		// ********************************
 		switch (M.getMsg().getCommand()) {
@@ -551,6 +559,27 @@ public class ServerReal extends ServerSkeleton {
 		return AnswerM;
 	}
 	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+	//**------------------------------------------------------------------------------------------------------------- Modifica
+		
+	//**------------------------------------------------------------------------------------------------------------- Modifica
 	@Override
 	public MessageBack modifica(Message Mes) {	//	----> 	[	Guardian	[GpG]				]
 												//	---->	[	 			  Librarian	 		]
@@ -559,23 +588,35 @@ public class ServerReal extends ServerSkeleton {
 												//	---->	[	BookL	 	[BL]	[BR]		]
 												//	---->	[	Prenotation [PL]	[PR]		]
 		
-												// accodamento richiesta su Requests gestita da Guardian 	
-												//System.out.println("RealServer :> Rx Change ");
-		MessageRealServer M = this.MessageEncapsulation(Mes);
-												//System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
+																// accodamento richiesta su Requests gestita da Guardian 	
+																//System.out.println("RealServer :> Rx Change ");
+		MessageRealServer M = this.MessageEncapsulation(Mes);	//System.out.println("RealServer :> Rx Change - vado in switch getUType : "+M.getMsg().getUType());
 		MessageBack x 		= new MessageBack();
 		MessageBack Answer 	= new MessageBack();
+
 		
+		/*
+		if (!Srv.isDbOK()) {	
+			System.out.println("SRV CONTROLLO DI ESISTENZA DB NG");
+			x.setText("DB down");
+			return x;
+		}
+		 */
+
 		//**********************************************************************************		
 		switch (M.getMsg().getUType()) {			// estrae tipo di utente da Message 				
 		//**********************************************************************************
 //****
-			case Librarian :					//-->[GpG [?L]] ---->[DB] 	
-							System.out.println("RealServer :> Rx Librarian");			
+			case Librarian :				//-->[GpG [?L]] ---->[DB] 	System.out.println("RealServer :> Rx Librarian");						
 							
 				switch ( M.getMsg().getCommand().getTarget()){
-// TODO DBExist qui
-				case Setting:		//SL	//-->[GpG [SL]] ---->[DB]	
+
+				case Setting:	
+					
+					
+					
+					
+					//SL	//-->[GpG [SL]] ---->[DB]	
 					//System.out.println("RealServer :> Rx Account");
 					try {					
 							System.out.println("RealServer :> Accodo M [ SL ]");
@@ -734,7 +775,30 @@ public class ServerReal extends ServerSkeleton {
 									}
 									System.out.println("SYS AL :> srv ritorna "+x.getText());										
 									return x;								
-									//break;									
+									//break;	
+									
+								case UserPasswordRemovetemp:
+									int id 			= 	M.getMsg().getIdut();
+									String passT 	= 	M.getMsg().getPw();
+									
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> User Password REMOVE temp ");					
+									try {										
+										//cambia query
+										MQ_Delete.deletePassTemp(id, passT);
+										//cancella pw temp
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> DEL pw TEMP :> OK"));											
+									} catch (Exception e) {
+										getMeS().addMsg(mSg);
+										x.setText(new String ("SRV :> DEL pw TEMP :> NG"));
+										System.out.println("problemi con password TEMP ");
+										e.printStackTrace();
+									}
+									System.out.println("SYS AL :> srv ritorna "+x.getText());										
+									return x;								
+									
+									
+									
 								case UserUPDATE:	//SRV UP
 										System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
 									try {
@@ -1421,41 +1485,198 @@ public class ServerReal extends ServerSkeleton {
 							}	//Attesa del turno...									
 							//******************************************************************************
 							switch (M.getMsg().getCommand()) {
-								case UserUPDATE:
-											System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
-										try {
-											System.out.println("REAL SERVER :> Query passata dal client :"+M.getMsg().getSQLQuery().toString());
-											System.out.println("REAL SERVER :> email user passata dal client :"+M.getMsg().getSQLQuery2().toString());
-											System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
-											
-											MQ_Update.updateModUserIdbyQuery(M.getMsg().getSQLQuery());		
-			
-											getMeS().addMsg(mSg);
-											x.setText(new String ("SRV :> UP :> OK"));
-											x.setIdUser(M.getMsg().getIdut());
-											x.setUserEmail(M.getMsg().getSQLQuery2());
-											
-										} catch (Exception e) {
-											getMeS().addMsg(mSg);
-											x.setText(new String ("SRV :> UP :> NG"));
-											System.out.println("problemi con controllo UPDATE UTENTE");
-											e.printStackTrace();
-										}
-										System.out.println("SYS AL :> srv ritorna "+x.getText());										
+							case UserRegistration:
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> userRegistration ");					
+								try {									
+									MQ_Insert.insertUtente(M.getMsg().getSQLQuery());														
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> user Registration :> OK"));	
+								} catch (SQLException e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> user Registration :> NG..."));
+									System.out.println("problemi con controllo tabella person");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;	
+							case UserPasswordRecovery:
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> UserPasswordRecovery ");					
+								try {										
+									//cambia query
+									MQ_Update.updateNewPassForgot(M.getMsg().getSQLQuery());
+									//invia mail
+									EmailSender.send_uninsubria_recoverypassword(M.getMsg().getSQLQuery2(), 
+																				null, 
+																				M.getMsg().getPw());
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UPRecovery :> OK"));											
+								} catch (Exception e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UPRecovery :> NG"));
+									System.out.println("problemi con password recovery");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;
+								
+							case UserPasswordRemovetemp:
+								String EM = 	M.getMsg().getSQLQuery();
+								String PW = 	M.getMsg().getSQLQuery2();
+								
+								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> User Password REMOVE temp ");					
+								try {										
+									//cambia query
+									MQ_Delete.deletePassTempEP(EM,PW);
+									//cancella pw temp
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> DEL pw TEMP :> OK"));											
+								} catch (Exception e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> DEL pw TEMP :> NG"));
+									System.out.println("problemi con password TEMP ");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;		
+								
+							case UserUPDATE:	//SRV UP
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> USER UPDATE ");					
+								try {
+									System.out.println("REAL SERVER :> Query passata dal client :"+M.getMsg().getSQLQuery().toString());
+									System.out.println("REAL SERVER :> email user passata dal client :"+M.getMsg().getSQLQuery2().toString());
+									System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());										
+									MQ_Update.updateModUserIdbyQuery(M.getMsg().getSQLQuery());		
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UP :> OK"));
+									x.setIdUser(M.getMsg().getIdut());
+									x.setUserEmail(M.getMsg().getSQLQuery2());										
+								} catch (Exception e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> UP :> NG"));
+									System.out.println("problemi con controllo UPDATE UTENTE");
+									e.printStackTrace();
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;									
+							case UserDELETE:	
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> USER DELETE ");					
+									System.out.println("REAL SERVER :> id user passata dal client :"+M.getMsg().getIdut());
+								try {														
+									MQ_Delete.deleteRowPerson(M.getMsg().getIdut());										
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> USER del :> OK"));										
+								} catch (SQLException e) {	
+									System.out.println("problemi con query USER del");
+									e.printStackTrace();														
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> USER del :> NG"));
+								}
+								System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;	
+								//break;			
+								
+							case UserREADloginFIRST:
+									System.out.println("REAL SERVER :> \nREAL SERVER :> Gestisco RICHIESTA :> User Read Login first time");					
+								try {				
+									String email 	= M.getMsg().getSQLQuery();
+									String pass 	= M.getMsg().getSQLQuery2();
+									
+									String rf 		= Check.checkAdminLogInFIRST(email, pass);
+					
+									
+									
+									if(	rf.equals("I Campi Non Possono Essere Vuoti")
+										||	
+										rf.equals("Nessun Dato")
+										||
+										rf.equals("L'Email Non Esiste")) 
+									{
+										System.out.println("riscontrato campi vuoti "); 	
+										//ritorna
+										x.setText("SRV :> selected user login check FIRST:> "+rf);
 										return x;
+									}
+									// RECUPERA VALORE NUMERO TENTATIVI										
+									//*****************************************
+									String[] user = MQ_Read.UserLoginTryCounter(email);
+									//*****************************************										
+									String tent = user[1];
+									int tentativi = Integer.parseInt(tent);
+										System.out.println("REAL SERVER L-A:> recuperati numero tentativi effettuati: "+tentativi);
+									if (tentativi == 5) {
+										String idUser = user[2];
+										System.out.println("REAL SERVER L-A:> PROCEDURA CANCELLAZIONE UTENTE id "+idUser );
+										// PROCEDURA CANCELLAZIONE UTENTE
+										List<String> rowData = new ArrayList<String>();
+										rowData.add(0, idUser);
+										
+										MQ_Delete.deleteRowPerson(rowData);
+										
+										x.setText(new String ("SRV :> selected user login check FIRST:> PROCEDURA CANCELLAZIONE UTENTE" ));										
+									}else {
+										System.out.println("REAL SERVER L-A:> PROCEDURA INCREMENTO NUMERO TENTATIVI ");
+										// INCREMENTA CAMPO TENTATIVI
+										tentativi++;
+										System.out.println("REAL SERVER L-A:> recuperati numero tentativi aumentati: "+tentativi);	
+										
+										// AGGIORNA campo numero tentativi
+										MQ_Update.updateLoginTry(email, tentativi);
+										
+										System.out.println("REAL SERVER L-A:> PROCEDURA dopo update numero tentativi ");
+										//controllo esito operazione
+										//tent= String.valueOf(tentativi);
+										System.out.println("REAL SERVER L-A:> recuperati numero tentativi AGGIORNATO: "+tentativi);											
+										System.out.println("email : "+email);
+										System.out.println("pass  : "+pass);
+										
+										String r 		= Check.checkAdminLogInFIRST(email, pass);
+										
+										x.setUserEmail(email);
+										x.setText(new String ("SRV :> selected user login check FIRST:> "+r));											
+									}
+	
+								} catch (SQLException e) {	
+									System.out.println("problemi con \"SRV :> selected user login check FIRST");
+									e.printStackTrace();				
 									
-									//break;
-									
-								default:
-									break;
-							}
-							//******************************************************************************
-						} catch (InterruptedException e) {	System.out.println("RealServer :> Problemi Accodamento CMD AR");
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> selected user login check FIRST:> NG"));
+								}
+									System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;		
+								
+							case tableExistPerson:								
+									System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPerson ");					
+								try {
+									ChkDBandTab.tableExistPerson();
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Person Exist :> OK"));	
+								} catch (SQLException e) {
+									getMeS().addMsg(mSg);
+									x.setText(new String ("SRV :> CHECK TABLE Person Exist :> NG..."));
+									System.out.println("problemi con controllo tabella person");
+									e.printStackTrace();
+								}
+									System.out.println("SYS AL :> srv ritorna "+x.getText());										
+								return x;								
+								//break;								
+								
+							default:
+								break;
+							} 							
+							//******************************************************************************	
+						} catch (InterruptedException e) {
+							System.out.println("RealServer :> Problemi Accodamento CMD AL");
 							e.printStackTrace();
-							x.setText("RealServer :> Problemi Accodamento CMD AR");	
-						}
+							x.setText("RealServer :> Problemi Accodamento CMD AL");	
+						}			
 						break;
-				//------------------------------------------------------------------------------
+	
+							
+							//------------------------------------------------------------------------------
 					case Book:					//-->[GpG [BR]] ---->[DB]		
 						try {					
 							System.out.println("RealServer :> Accodo M [ BR ]");
