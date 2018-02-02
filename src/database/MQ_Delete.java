@@ -107,8 +107,7 @@ public class MQ_Delete {
 	}
 	public static void deletePassTempEP(String EM,String PW) throws SQLException
 	{			
-		String query = "UPDATE password_temp SET '0' FROM utente WHERE email ='"+EM+"'";
-    	
+		String query = "UPDATE utente SET password_temp=0 WHERE email = '"+EM+"'";
 		System.err.println("query agg pass temp: "+query);
 		
 		DBmanager.openConnection();

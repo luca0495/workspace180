@@ -285,7 +285,9 @@ public class Login extends SL_JFrame  {
 			
 				try 
 				{
-					if(	MQ_Read.ReadPassTemp1(email) == null)
+					System.out.println(" password temp letta"+MQ_Read.ReadPassTemp1(email));
+					
+					if(	MQ_Read.ReadPassTemp1(email) == null || (Integer.valueOf(MQ_Read.ReadPassTemp1(email)) == 0))
 					{
 						System.out.println("passo email    :"+email);
 						System.out.println("passo password :"+pass);
