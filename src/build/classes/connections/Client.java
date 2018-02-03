@@ -104,10 +104,7 @@ public class Client implements Serializable, Runnable  {
 	private 			SL_JFrame			ActW			=null;	//Active Window
 	private 			Component			ActC			=null;	//Active Component	
 	private 			JTable 				ActTable		=null;
-
 	private 			Clients				ClientType;
-	private				Clients				ClientTypeOLD;	
-		
 	private 			ServerStub			srv;		
 	private 			boolean 			stubok			=false;
 	private 			boolean 			repeatconn		=true;
@@ -148,7 +145,6 @@ public class Client implements Serializable, Runnable  {
 	private 			String  			Fbooking;
 	private 			String  			Floans;
 	
-	private 			String 				DataLoanReturn;
 	private 			String 				Sql;
 	private 			String 				Sql2;
 	private				String				pw;
@@ -170,7 +166,6 @@ public class Client implements Serializable, Runnable  {
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
 	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
-	private 			boolean				storico=false;
 	
 	
 	public Client() throws Exception {		
@@ -249,7 +244,12 @@ public class Client implements Serializable, Runnable  {
 							}
 					break;
 				//	****************************************************	Test		   		***	
-					
+					case TEST:
+							switch (com) {							
+								case DBExist:															break;
+								default:																break;
+								}
+					break;
 				//	****************************************************	Read		   		***			
 					case READ:
 							switch (com) {							
@@ -271,7 +271,7 @@ public class Client implements Serializable, Runnable  {
 								//	Person
 								case UserREAD: 				UserGetData();								break;	//necessario setSql con query completa			
 								case UserREADbyEmail: 		UserGetDatabyEmail();						break;	//necessario setSql con email							
-								case UserREADbyEmailAcc:	UserGetDatabyEmailAcc();					break;	//necessario setidut															
+								case UserREADbyEmailAcc:	UserGetDatabyEmailAcc();					break;			//necessario setidut															
 								case UserREADbyEmailMod: 	UserGetDatabyEmailMod();					break;	//necessario setidut																									
 								case UserREADlogin: 		UserGetDataLogin();							break;	//necessario setSql con email setSql2 con password							
 								case UserREADaccountMod: 	UserGetDataAccountMod();					break;	//necessario setSql con email setSql2 con password																				
@@ -284,9 +284,7 @@ public class Client implements Serializable, Runnable  {
 					break;
 				//	****************************************************	Change		   		***			
 					case CHANGE:
-							switch (com) {		
-							     // Database Exist
-							   case DBExist:				ClientCheckExistDB();						break;
+							switch (com) {							
 								//	All Table		
 								case tableExistBook: 		ClientCheckExistTableBook();				break;	
 								case tableExistLoans:		ClientCheckExistTableLoans();				break;
@@ -302,27 +300,18 @@ public class Client implements Serializable, Runnable  {
 								case UserREADloginFIRST: 	UserGetDataLoginFIRST();					break;	//necessario setSql con email setSql2 con password_temp									
 								case UserRegistration: 		ClientCHANGEuserRegistration();				break;
 								case UserPasswordRecovery: 	ClientCMDuser.UserPasswordRecovery(this);	break;
-								case UserPasswordRemovetemp:ClientCMDuser.UserPasswordDelTemp(this);
-								
 								case UserActivation: 													break;				
 								//	Loans
-								case LoanReturn:			ClientCMDloans.LoansReturned(this);			break;
 								case LoanASK:				ClientCMDloans.LoansNew(this);				break;	//richiesta nuovo prestito -- System.err.println("leggo da client ... idbook: "+getIdbook()); 
 								case LoanNew: 															break;
-								case LoanListADD: 														break;	
-								case LoanDELETE: 			ClientCMDloans.LoansDELETE(this);			break;	
+								case LoanListADD: 														break;		
 								case LoanListREMOVE: 													break;	
 								case LoanBookGet: 														break;	
 								case LoanBookGiveback: 													break;	
 								case LoanNoticeAvaiable: 												break;	
 								case LoanNoticeExpiration: 												break;
 								//	Booking
-								
-								
-								case BookingDELETE :													break;
 								case BookingListREMOVE:		ClientCMDBooking.BookingDelete(this);		break;
-								
-								
 								default:																break;
 								
 								
@@ -469,7 +458,7 @@ public class Client implements Serializable, Runnable  {
 		try {
 			return this.mSgBack = 	Request(Commands.ConnTEST);
 		} catch (IOException e) {
-		
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return this.mSgBack;
@@ -481,7 +470,7 @@ public class Client implements Serializable, Runnable  {
 		try {
 			return this.mSgBack = 	Request(Commands.ConnSTOP);
 		} catch (IOException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return this.mSgBack;
@@ -621,7 +610,8 @@ setBusy(false);
 						// Reazioni di Client ai messaggi ritornati dal Server
 
 						switch (Mb.getText()) {
-							case "OK":	break;
+							case "OK":							
+								break;
 	
 							case "STUB :> Eccezione *** nessuna risposta da SKELETON":		System.out.println("CLI - ECCEZIONE DA STUB");	
 								break;
@@ -631,8 +621,11 @@ setBusy(false);
 								EmailSender.send_uninsubria_email(getTo(),this);								
 								this.setTo(null);
 								this.setSql(null);		
+								
+								//TODO RIVEDI E CONTROLLA
 								this.getMeMain().getFrame().setVisible(true);
 								this.getMeMain().getBtnAccount().setVisible(true);
+								
 								break;
 							
 							case "SRV :> UPRecovery :> OK":
@@ -654,15 +647,19 @@ setBusy(false);
 								
 								break;
 								
-							case "SRV :> UPRecovery :> NG":								
-								System.out.println("TORNATO AL CLIENT UPRECOVERY NG");								
+							case "SRV :> UPRecovery :> NG":
+								
+								System.out.println("TORNATO AL CLIENT UPRECOVERY NG");
+								
 								break;
-		
-							case "SRV :> table book populate :> OK":	System.out.println("BOOK metodo old ritornato al client POPULATE OK : ");
+								
+								
+								
+							case "SRV :> table book populate :> OK":	System.out.println("ritornato al client POPULATE OK : ");
 							
 								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
+							
 								//System.out.println(Mb.getTab().toString());
-								
 								setActTable(Mb.getTab());
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
 								//getActTable().update(null);
@@ -722,19 +719,6 @@ setBusy(false);
 								String [] UserData= Mb.getRowUser();
 								String UserType = UserData[7];
 								
-								
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[0]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[1]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[2]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[3]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[4]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[5]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[6]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[7]);
-								
-								
-								
-								
 								switch (UserType) {
 								case "Administrator":
 									System.out.println("riconosco "+ getCliType());
@@ -778,86 +762,12 @@ setBusy(false);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[4]);
 								
+								//RITORNA AD APP MAIN
 								
+								setIdut(Integer.valueOf(Mb.getRowUser()[0]));
 								
-								System.err.println("finestra attiva : "+getActW().toString());								
-								System.err.println("finestra attiva : "+getActW().getSL_Type());
-								
-								
-								if ( getActW().getSL_Type()==AppType.AppAccount ) {
-									Account Ax = (Account)getActW();
-									if (Ax.getPanelModify().isVisible()) {
-										
-										Ax.getTxtNameMod().setText(		Mb.getRowUser()[1]);
-										Ax.getTxtSurnameMod().setText(	Mb.getRowUser()[2]);
-										Ax.getTxtMailMod().setText(		Mb.getRowUser()[3]);
-										//pw
-										Ax.getTxtInqMod().setText(		Mb.getRowUser()[5]);
-										Ax.getTxtTelMod().setText(		Mb.getRowUser()[6]);
-										
-										System.out.println("tipo utente "+Mb.getRowUser()[7]);
-										
-										if ( Mb.getRowUser()[7].equals("Libraio")) {
-											Ax.getRdbtnTypeUserLibMod().setSelected(true);
-											Ax.getRdbtnTypeUserLetMod().setSelected(false);	
-										}else {
-											if ( Mb.getRowUser()[7].equals("Lettore")){
-												Ax.getRdbtnTypeUserLibMod().setSelected(false);
-												Ax.getRdbtnTypeUserLetMod().setSelected(true);	
-											}		
-										}
-	
-									}
-									if (Ax.getPanelAccount().isVisible()) {
-										
-										
-										
-									}
-									
-									
-									
-									
-									
-								}
-								
-								
-								
-								
-								/*
-								Account x = (Account)getActW();
-								
-								if(x.getT()==AppType.AppAccount) {
-									System.out.println("finestra attiva... account");
-									//UserData
-									
-					
-									x.getTxtNameMod().setText			(UserData[1]);
-									x.getTxtSurnameMod().setText		(UserData[2]);
-									x.getTxtMailMod().setText			(UserData[3]);
-									x.getPasswordField().setText		(UserData[4]);
-									x.getPasswordFieldConfMod().setText	(UserData[4]);
-									x.getTxtInqMod().setText			(UserData[5]);
-									x.getTxtTelMod().setText			(UserData[6]);
-									if(UserData[7].equals("Lettore"))
-								    {
-									  x.getRdbtnTypeUserLetMod().setSelected(true);
-								    }
-								else
-								    {
-								      x.getRdbtnTypeUserLibMod().setSelected(true);
-								    }
-	
-								}else {
-									System.out.println("finestra attiva... NON account");
-									//RITORNA AD APP MAIN								
-									setIdut(Integer.valueOf(Mb.getRowUser()[0]));
-									this.getMeMain().getFrame().setVisible(true);
-									this.getMeMain().getBtnAccount().setVisible(true);
-								}
-								*/	
-									
-									
-								
+								this.getMeMain().getFrame().setVisible(true);
+								this.getMeMain().getBtnAccount().setVisible(true);
 								
 								
 								clrParFS();	
@@ -871,9 +781,9 @@ setBusy(false);
 								
 								Account accX = new Account(getMeMain().getFrame(),this);				
 								setActW(accX);
-								//accX.setAlwaysOnTop(true);	
+								accX.setAlwaysOnTop(true);	
 								accX.getPanelAccount().setVisible(true);
-								//accX.getPanelModify().setVisible(false);
+								accX.getPanelModify().setVisible(false);
 								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
 		
 								clrParFS();	
@@ -927,30 +837,11 @@ setBusy(false);
 	
 							case "SRV :> selected user login check:> Login Corretto":
 								
-								
-								System.out.println("ottenuto tipo utente : "+Mb.getRowUser()[6]);
-								
-								String tipoutente = Mb.getRowUser()[6];
-									setCliType(Clients.Guest);
-									
-								if (tipoutente.equals("Libraio")) {
-									setCliType(Clients.Librarian);	
-								}
-								if (tipoutente.equals("Lettore")) {
-									setCliType(Clients.Reader);	
-								}
-							 
-								
-								
 								setCurrentUser(Mb.getIdUser());			//settato id utente su Client
 								setIdut(Mb.getIdUser());
-								setSelectedIdUser(getIdut());
-								
 								setDatiUtente(Mb.getRowUser());
 								
 								System.out.println("settato id utente..."+getIdut());
-								
-								
 								
 								Login l = (Login)getActW();								
 								//System.out.println("login attiva: "+l.toString());								
@@ -1021,34 +912,25 @@ setBusy(false);
 	
 							case "SRV :> selected user login check FIRST:> Login Corretto":
 								Login lF = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
-								/*
 								Account loF = new Account(getActF(),this);				
 								setActW(loF);
-								*/
-								//MQ_Delete.deletePassTemp(pass);
 								//chiusura finesta login
 								lF.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
 								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
 								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
 								getActF().dispatchEvent(closeF);
-								System.err.println("CLI ottenuto IDUSER " + getIdut());
 								
-								setIdut(Mb.getIdUser());
-								//rendi visibile tasto account
-								getMeMain().getBtnAccount().setVisible(true);
+				
 								
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
-									//this.setCliType(Clients.Librarian);
+									this.setCliType(Clients.Librarian);
 									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
-									//this.setSql(Mb.getUserEmail());			//risetta email in campo sql
+									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
 //TODO ELIMINA PASSWORD TEMPORANEA
-									
-									this.getCmdLIST().put(Commands.UserPasswordRemovetemp);
-									PopUp.infoBox(getActW(), "LOGIN EFFETTUATO CON SUCCESSO");
-									
-									//this.getCmdLIST().put(Commands.UserREADbyEmail);
+//MQ_Delete.deletePassTemp(pass);
+									this.getCmdLIST().put(Commands.UserREADbyEmail);
 
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
@@ -1222,31 +1104,34 @@ setBusy(false);
 							case "SRV :> Loans ASK :> OK":								//PopUp.infoBox(getActF(), "PRESTITO ACCORDATO");
 					
 							if (Mb.getRowLoans()[0].equals("inserito prestito")) {		//prestito inserito
+								
 								PopUp.infoBox(getActF(),  "Libro assegnato in prestito, \n"
 														+ "l'utente ha da ora 7 giorni di tempo per il ritiro presso la biblioteca.\n"
 														+ "si ricorda che allo scadere del termine il libro verrá riassegnato. ");
+								
 							}else {														//inserito in coda prenotazione
 								PopUp.infoBox(getActF(),  "Libro non disponibile, \n"
-													   	 +"l'utente é inserito in coda PRENOTAZIONE con prioritá : "+Mb.getRowLoans()[1]);														
+													   	 +"l'utente é inserito in coda PRENOTAZIONE con prioritá : "+Mb.getRowLoans()[1]);
+																						
 							}
 								break;
 							
 
-							case "SRV :> Loans ASK :> NG":								
-								PopUp.infoBox(getActF(), "Errore GESTIONE DB ");
+							case "SRV :> Loans ASK :> NG":								PopUp.infoBox(getActF(), "Errore GESTIONE DB ");
+							
+							
+							
+							
 								break;	
-							case "SRV :> Loans ASK :> OK , PRESTITO gia RICHIESTO":
-								PopUp.infoBox(getActF(), "SRV :> Loans ASK :> OK , PRESTITO gia RICHIESTO");
-								break;
-							case "SRV :> Loans ASK :> OK , PRESTITO gia CONCESSO":
-								PopUp.infoBox(getActF(), "SRV :> Loans ASK :> OK , PRESTITO gia CONCESSO");	
-								break;
-							case "SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO":			
+							case "SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO":	
+								
 									for (int i = 1;i<Mb.getRowLoans().length;i++) {
 										 if (Mb.getRowLoans()[i].equals("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ")) {
 											 Mb.getRowLoans()[i]="";
 										 }
 									}
+								
+								
 									PopUp.infoBox(getActF(), "PRESTITO NON CONSENTITO\n"
 									+ Mb.getRowLoans()[1]+"\n"
 									+ Mb.getRowLoans()[2]+"\n"
@@ -1275,28 +1160,38 @@ setBusy(false);
 							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
 								
 							//table populate
-							case	"SRV :> table loans populate :> OK":	ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
-							case	"SRV :> table loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
-
+							case	"SRV :> table Loans populate :> OK":	//ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
+							
+								System.err.println("SRV :> table Booking populate :> OK");		
+								
+							setActTable(Mb.getTab());
+							TableLoans.getTable().setModel(Mb.getTab().getModel());
+							this.setActF(null);
+							this.setSql(null);
+							setBusy(false);
+							break;	
+							
+							
+							
+							case	"SRV :> table Loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
+							
 							//case	"SRV :> table Book populate :> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
 							//case	"SRV :> table Book populate :> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
 							
-							case	"SRV :> table booking populate :> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
-							case	"SRV :> table booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
+							case	"SRV :> table Booking populate :> OK":	//ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
 							
-							case	"SRV :> tables populate :> OK"		:ClientCMDAllTables.ATpopulateRES(this, "OK", Mb); 	break;
-							case	"SRV :> tables populate :> NG"		:ClientCMDAllTables.ATpopulateRES(this, "NG", Mb); 	break;
+								System.err.println("SRV :> table Booking populate :> OK");	
+								
+							setActTable(Mb.getTab());
+							TableBooking.getTable().setModel(Mb.getTab().getModel());
+							this.setActF(null);
+							this.setSql(null);
+							setBusy(false);
+							break;
+							case	"SRV :> table Booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
 							
-							case 	"SRV :> Loans DELETE :> OK"			:ClientCMDloans.LoansDELETERES(		this, "OK", Mb);break;
-							case	"SRV :> Loans DELETE :> NG"			:ClientCMDloans.LoansDELETERES(		this, "NG", Mb);break;
-							
-							case	"SRV :> Loans RETURNED :> OK"		:ClientCMDloans.LoansReturnedRES(	this, "OK", Mb);break;
-							case	"SRV :> Loans RETURNED :> NG"		:ClientCMDloans.LoansReturnedRES(	this, "NG", Mb);break;
-							
-							case 	"SRV :> DEL pw TEMP :> OK"			:ClientCMDuser.UserPasswordDelTempRES(this, "OK", Mb);break;
-							case 	"SRV :> DEL pw TEMP :> NG"			:ClientCMDuser.UserPasswordDelTempRES(this, "NG", Mb);break;
-							
-							
+							case	"SRV :> tables populate :> OK"		:	ClientCMDAllTables.ATpopulateRES(this, "OK", Mb); 	break;
+							case	"SRV :> tables populate :> NG"		:	ClientCMDAllTables.ATpopulateRES(this, "NG", Mb); 	break;
 							
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -1319,35 +1214,6 @@ setBusy(false);
 						setBusy(false);
 			}
 	}
-	
-//	
-//*********************************************************************************************************************************************
-//	
-	
-	private void ClientCheckExistDB() throws SendFailedException, MessagingException, SQLException, InterruptedException{
-		Commands cmd = Commands.DBExist;
-		MessageBack Mb = new MessageBack();
-		
-		System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString());
-		if (!stubok){
-			Mb.setText(mSg = "CLI :>  nessuna connessione attiva , riprovare ");
-			
-			System.out.println(mSg);
-			
-			getActW().addMsg(new String ("Connection Test result"+mSg));
-		}else{	
-			System.out.println("CLI :> Stub OK");
-			// **** Client crea Message	
-			Message MsgSend = new Message(	
-					cmd,						// Comando richiesto
-					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
-					this.toString()				// id Client 
-									);
-			setClientTypeOLD(getCliType());
-			// **** Client invia Message
-			sendM(MsgSend, Mb);
-		}	
-	}		
 		private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistSetting;
 		MessageBack Mb = new MessageBack();
@@ -1367,7 +1233,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1391,14 +1257,11 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			
-			setClientTypeOLD(getCliType());
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
 	}		
-		
 		private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
@@ -1418,7 +1281,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1442,7 +1305,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 		}	
@@ -1465,7 +1328,7 @@ setBusy(false);
 					this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					this.toString()				// id Client 
 									);
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			
 			//???????
@@ -1490,7 +1353,7 @@ setBusy(false);
 					this.toString(),			// id Client 
 					this.getSql()
 					);
-			setClientTypeOLD(getCliType());
+			MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			sendM(MsgSend, Mb);
 			
@@ -1517,8 +1380,6 @@ setBusy(false);
 			sendM(MsgSend, Mb);	
 		}		
 	}
-		
-		
 		private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookExecuteQuery;
@@ -1539,7 +1400,7 @@ setBusy(false);
 					this.toString(),			// id Client 
 					this.getSql()
 					);
-			//setClientTypeOLD(getCliType());
+			//MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			
 			sendM(MsgSend, Mb);	
@@ -1564,7 +1425,7 @@ setBusy(false);
 					this.getSql()
 					);
 			
-			// setClientTypeOLD(getCliType());
+			// MsgSend.setUType(Clients.Librarian);
 			// **** Client invia Message
 			
 			sendM(MsgSend, Mb);
@@ -1588,7 +1449,7 @@ setBusy(false);
 						this.toString(),			// id Client 
 						this.getSql()
 						);
-				setClientTypeOLD(getCliType());
+				MsgSend.setUType(Clients.Librarian);
 				// **** Client invia Message
 				sendM(MsgSend, Mb);
 			}	
@@ -1679,17 +1540,11 @@ setBusy(false);
 						
 						);
 				sendM(MsgSend, Mb);
-
-				
-				
 			}	
 		}
 		private void UserGetDatabyEmailAcc() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmailAcc;
 			MessageBack Mb = new MessageBack();
-			
-			System.out.println("IDUTENTE SU CLIENT: "+this.getIdut());
-			System.out.println("selIDUTENTE SU CLIENT: "+this.getSelectedIdUser());
 			
 			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by id: "+this.getIdut());
 			if (!stubok){
@@ -1777,8 +1632,9 @@ setBusy(false);
 						cmd,						// Comando richiesto
 						this.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 						this.toString(),			// id Client 
-						this.getSql(),			// la finestra login passa la stringa email 
-						this.getSql2()			// la finestra login passa la stringa password 
+						this.getSql(),				// la finestra login passa la stringa email 
+						this.getSql2()				// la finestra login passa la stringa password 
+						
 						);
 				sendM(MsgSend, Mb);
 			}	
@@ -1881,16 +1737,6 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}
-		
-		public void printonResearch(String t) {
-			
-			JFrame x = getActF();
-			ResearchBooks X = (ResearchBooks)x;
-			X.getTxtInsertCDBook().setText(t);
-			
-		}
-		
-		
 	//------------------------------------------------------------------------		 
 	// get & set
 		
@@ -2213,30 +2059,7 @@ setBusy(false);
 			public void setMePannelLoans(JPanel mePannelLoans) {
 				this.mePannelLoans = mePannelLoans;
 			}
-			public String getDataLoanReturn() {
-				return DataLoanReturn;
-			}
-			public void setDataLoanReturn(String dataLoanReturn) {
-				DataLoanReturn = dataLoanReturn;
-			}
-			public boolean isStorico() {
-				return storico;
-			}
-			public void setStorico(boolean storico) {
-				this.storico = storico;
-			}
-			public Clients getClientType() {
-				return ClientType;
-			}
-			public void setClientType(Clients clientType) {
-				ClientType = clientType;
-			}
-			public Clients getClientTypeOLD() {
-				return ClientTypeOLD;
-			}
-			public void setClientTypeOLD(Clients clientTypeOLD) {
-				ClientTypeOLD = clientTypeOLD;
-			}
+		
 		
 	
 	

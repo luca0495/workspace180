@@ -5,9 +5,6 @@ import java.io.Serializable;
 public enum AppType implements Serializable {
 AppMain,
 
-AppLogin,
-
-
 AppReader,
 AppLibrarian,
 AppAdmin,
@@ -18,10 +15,5 @@ AppRegistrationAdmin,
 
 AppLoginReader,
 AppLoginLibrarian,
-
-AppAccount,
-
-
 AppLoginAdmin;
-	
 }

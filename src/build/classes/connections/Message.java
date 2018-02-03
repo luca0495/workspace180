@@ -11,7 +11,6 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private static final long serialVersionUID =1;	
 	
 	private 	Clients	 	UType;
-	
 	private 	Commands 	Cmd;
 	private		String		MesId;
 	private 	Date		DateOfRequest;
@@ -23,9 +22,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	int			LoginTry;
 	private		int			idut;
 	private		int			idbook;
-	private		String		usertype;
-	
-	
+
 	private 	String  	Fbook;
 	private 	String  	Fbooking;
 	private 	String  	Floans;
@@ -34,8 +31,6 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private		int			selectedIdUser;
 	private		Date		selectedIdDataStart;
 	private		Date		selectedIdDataStop;	
-	private     String		selectedDataLoanReturn;
-	
 	
 	//Costruttori
 	public Message (Commands cmd){
@@ -158,51 +153,6 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 		setSelectedIdUser(idut);
 		setSelectedIdBook(idbook);
 	}	
-
-	//usato in del pw temp
-	public Message (
-			Commands cmd,
-			Clients Ut,
-			String IdClient,
-			String pw,
-			int idut){
-		
-		setCommands(cmd);
-		setDateOfRequest(new Date());
-		setUType(Ut);
-		setDateOfRequest(new Date());
-		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
-		setIdut(idut);
-		setPw(pw);
-	}
-	
-	
-	//usato in Loans Returned
-	public Message (
-			Commands cmd,
-			Clients Ut,
-			String IdClient,
-			String dataC,
-			int idbook,
-			int idut){
-		
-		setCommands(cmd);
-		setDateOfRequest(new Date());
-		setUType(Ut);
-		setDateOfRequest(new Date());
-		setMesId(DateOfRequest.toString().concat(getCmd().toString().concat(IdClient)));
-		setSelectedDataLoanReturn(dataC); 
-		setSelectedIdUser(idut);
-		setSelectedIdBook(idbook);
-	}	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
@@ -335,17 +285,5 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setFloans(String floans) {
 		Floans = floans;
-	}
-	public String getSelectedDataLoanReturn() {
-		return selectedDataLoanReturn;
-	}
-	public void setSelectedDataLoanReturn(String selectedDataLoanReturn) {
-		this.selectedDataLoanReturn = selectedDataLoanReturn;
-	}
-	public String getUsertype() {
-		return usertype;
-	}
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
 	}
 }

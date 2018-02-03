@@ -61,10 +61,6 @@ public class Account extends SL_JFrame{
 		    static int			cols = 0; 		    
 		    
 	private Account 			w;	
-	private AppType				t;
-	
-	private String				emailOLD;
-	
 	private JFrame 				frmSchoolib;
 	private AppReader 			a;
 	private LoadUser 			l = new LoadUser();
@@ -76,14 +72,6 @@ public class Account extends SL_JFrame{
 	private ImageIcon 			iconLogoC;
 	private ImageIcon 			iconLogoRA;
 	private ImageIcon 			iconLogoQ;
-	
-	private JLabel              lblNome;
-	private JLabel              lblCognome;
-	private JLabel              lblPass;
-	private JLabel              lblEmail;
-	private JLabel              lblInq;
-	private JLabel              lblTipoUte ;
-	private JLabel              lblTel ;
 	
     private JLabel		 		lblSetNome;
     private JLabel 				lblSetCognome;
@@ -108,8 +96,6 @@ public class Account extends SL_JFrame{
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
 	
-
-
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;
@@ -143,7 +129,7 @@ public class Account extends SL_JFrame{
 	private String input;
 	private List<String> rowData = new ArrayList<String>();
 
-	private String[] user = new String[4];
+	private String[] user = null;
 	private String[] user1 = null;
 	private boolean User = true;
 	
@@ -175,9 +161,6 @@ public class Account extends SL_JFrame{
 	
 	public Account(Component c,Client x)
 	{
-		super.setSL_Type(AppType.AppAccount);
-		setT(AppType.AppAccount);
-		
 		
 		setW(this);
 		me = x;
@@ -228,62 +211,8 @@ public class Account extends SL_JFrame{
 		/*
 		 
 		 */
-			
-			JLabel lblNome = new JLabel("Nome: ");
-			lblNome.setBounds(10, 31, 42, 30);
-			panelAccount.add(lblNome);
-			
-			JLabel lblCognome = new JLabel("Cognome: ");
-			lblCognome.setBounds(10, 84, 59, 14);
-			panelAccount.add(lblCognome);
-			
-			JLabel lblPass = new JLabel("Password:");
-			lblPass.setBounds(10, 173, 86, 14);
-			panelAccount.add(lblPass);
-			
-			JLabel lblEmail = new JLabel("Email: ");
-			lblEmail.setBounds(10, 130, 46, 14);
-			panelAccount.add(lblEmail);
-			
-		JLabel lblInq = new JLabel("Inquadramento: ");
-		lblInq.setBounds(10, 217, 137, 14);
-		panelAccount.add(lblInq);
-		
-		lblSetTel = new JLabel();
-		//lblSetTel.setText(user[5]);
-		lblSetTel.setBounds(118, 294, 184, 20);
-		panelAccount.add(lblSetTel);
-		
-		lblSetCognome = new JLabel();
-		//lblSetCognome.setText(user[1]);
-		lblSetCognome.setBounds(118, 78, 174, 20);
-		panelAccount.add(lblSetCognome);
-		
-	    lblSetNome = new JLabel();
-	    //lblSetNome.setText(user[0]);
-		lblSetNome.setBounds(118, 31, 174, 20);
-		panelAccount.add(lblSetNome);
-		
-		lblSetInq = new JLabel();
-		//lblSetInq.setText(user[4]);
-		lblSetInq.setBounds(117, 211, 174, 20);
-		panelAccount.add(lblSetInq);
-		
-		lblSetEmail = new JLabel();
-		//lblSetEmail.setText(user[2]);
-		lblSetEmail.setBounds(118, 124, 174, 20);
-		panelAccount.add(lblSetEmail);
-		
-		lblSetTipoUte = new JLabel();
-		//lblSetTipoUte.setText(user[6]);
-		lblSetTipoUte.setBounds(118, 252, 186, 20);
-		panelAccount.add(lblSetTipoUte);
-		
-		lblSetPass = new JLabel();
-		lblSetPass.setBounds(118, 173, 174, 20);
-		panelAccount.add(lblSetPass);
-		//***
-		
+		 //***
+		 
 // PANEL ACCOUNT // ***************************************************************************************************
 		
 		lblReturnBack = new JLabel();
@@ -295,10 +224,6 @@ public class Account extends SL_JFrame{
 				 frmSchoolib.dispatchEvent(close);
 			}
 		});
-		lblReturnBack.setBounds(835, 11, 30, 30);
-		lblReturnBack.setIcon(getIconLogoRA());
-		lblReturnBack.setBorder(null);
-		panelAccount.add(lblReturnBack);
 		
 		JButton btnDelete = new JButton("Cancella Profilo");
 		btnDelete.setBackground(Color.RED);
@@ -339,23 +264,13 @@ public class Account extends SL_JFrame{
 			}
 			}
 		});
-			
-			JLabel lblTipoUte = new JLabel("Tipo Utente:");
-			lblTipoUte.setBounds(10, 258, 74, 14);
-			panelAccount.add(lblTipoUte);
-			
-			JLabel lblTel = new JLabel("Telefono:");
-			lblTel.setBounds(10, 300, 59, 14);
-			panelAccount.add(lblTel);
 		
 			btnDelete.setBounds(192, 381, 193, 54);
 			panelAccount.add(btnDelete);
-<<<<<<< HEAD
 		
 		JButton btnModify = new JButton("Modifica Profilo");
 		btnModify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				panelAccount.setVisible(false);
 				panelModify.setVisible(true);				
 				//************************************************************
@@ -376,12 +291,6 @@ public class Account extends SL_JFrame{
 				}
 				//*************************************************************
 				System.out.println(" gui account comando modifica  ");	
-				System.err.println("finesta attiva "+me.getActW().toString());
-				
-				Account x = (Account)me.getActW();
-				System.err.println("finesta attiva tipo: "+ x.getT());
-				
-				
 			}
 		});
 		btnModify.setBounds(428, 381, 186, 54);
@@ -391,7 +300,7 @@ public class Account extends SL_JFrame{
 		lblReturnBack.setBorder(null);
 		panelAccount.add(lblReturnBack);
 		
-		lblNome = new JLabel("Nome: ");
+		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 31, 42, 30);
 		panelAccount.add(lblNome);
 		
@@ -400,8 +309,8 @@ public class Account extends SL_JFrame{
 		lblSetNome.setBounds(118, 31, 174, 20);
 		panelAccount.add(lblSetNome);
 		
-		lblCognome = new JLabel("Cognome: ");
-		lblCognome.setBounds(10, 84, 98, 14);
+		JLabel lblCognome = new JLabel("Cognome: ");
+		lblCognome.setBounds(10, 84, 59, 14);
 		panelAccount.add(lblCognome);
 		
 		lblSetCognome = new JLabel();
@@ -409,7 +318,7 @@ public class Account extends SL_JFrame{
 		lblSetCognome.setBounds(118, 78, 174, 20);
 		panelAccount.add(lblSetCognome);
 		
-		lblPass = new JLabel("Password:");
+		JLabel lblPass = new JLabel("Password:");
 		lblPass.setBounds(10, 173, 86, 14);
 		panelAccount.add(lblPass);
 		
@@ -417,7 +326,7 @@ public class Account extends SL_JFrame{
 		lblSetPass.setBounds(118, 173, 174, 20);
 		panelAccount.add(lblSetPass);
 		
-		lblEmail = new JLabel("Email: ");
+		JLabel lblEmail = new JLabel("Email: ");
 		lblEmail.setBounds(10, 130, 46, 14);
 		panelAccount.add(lblEmail);
 		
@@ -426,7 +335,7 @@ public class Account extends SL_JFrame{
 		lblSetEmail.setBounds(118, 124, 174, 20);
 		panelAccount.add(lblSetEmail);
 			
-		lblInq = new JLabel("Inquadramento: ");
+		JLabel lblInq = new JLabel("Inquadramento: ");
 		lblInq.setBounds(10, 217, 137, 14);
 		panelAccount.add(lblInq);
 		
@@ -435,7 +344,7 @@ public class Account extends SL_JFrame{
 		lblSetInq.setBounds(140, 211, 174, 20);
 		panelAccount.add(lblSetInq);
 		
-		lblTipoUte = new JLabel("Tipo Utente:");
+		JLabel lblTipoUte = new JLabel("Tipo Utente:");
 		lblTipoUte.setBounds(10, 258, 74, 14);
 		panelAccount.add(lblTipoUte);
 		
@@ -444,7 +353,7 @@ public class Account extends SL_JFrame{
 		lblSetTipoUte.setBounds(118, 252, 186, 20);
 		panelAccount.add(lblSetTipoUte);
 		
-		lblTel = new JLabel("Telefono:");
+		JLabel lblTel = new JLabel("Telefono:");
 		lblTel.setBounds(10, 300, 59, 14);
 		panelAccount.add(lblTel);
 		
@@ -452,45 +361,6 @@ public class Account extends SL_JFrame{
 		//lblSetTel.setText(user[5]);
 		lblSetTel.setBounds(118, 294, 184, 20);
 		panelAccount.add(lblSetTel);
-=======
-			
-			JButton btnModify = new JButton("Modifica Profilo");
-			btnModify.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					panelAccount.setVisible(false);
-					panelModify.setVisible(true);				
-					//************************************************************
-					String email = lblSetEmail.getText();
-					//System.out.println("passo email    :"+email);
-					//System.out.println(" settato finestra attiva : "+getW().toString());	
-					me.setSql(email);				
-					me.setActW(getW());
-					me.setActF(frmSchoolib);
-					me.setActC(c);				
-					try {
-						System.out.println("GUI account:> ottenuti dati user ");
-					//me.setCliType(Clients.Librarian);	
-						me.getCmdLIST().put(Commands.UserREADbyEmail);
-					} catch (InterruptedException e2) {
-						System.out.println("GUI account:> NON ottenuti dati user ");	
-						e2.printStackTrace(); 
-					}
-					//*************************************************************
-					System.out.println(" gui account comando modifica  ");	
-					System.err.println("finesta attiva "+me.getActW().toString());
-					
-					Account x = (Account)me.getActW();
-					x.setEmailOLD(email);
-					
-					System.err.println("finesta attiva tipo: "+ x.getT());
-					
-					
-				}
-			});
-			btnModify.setBounds(428, 381, 186, 54);
-			panelAccount.add(btnModify);
->>>>>>> 2d655813c1069f6a6586aa54054b191893ca5d58
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
@@ -662,15 +532,8 @@ public class Account extends SL_JFrame{
 		getTxtMailMod().addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if (!getTxtMailMod().equals(emailOLD)) {			
-					
-				
-					
-					checkmail();
-				
-				
-				}
-				
+							
+				checkmail();
 				
 				/*
 				System.out.println(" ***** sto controllando la email ");
@@ -1238,12 +1101,11 @@ public class Account extends SL_JFrame{
 					
 					try {
 						
-					    MQ_Update.updatePassMod(getIdUser(), p);	
+						MQ_Update.updatePassMod(getIdUser(), p);	
 						PopUp.infoBox(frmSchoolib, "Modifiche password effetuata con successo");
 						
-						// aggiornare label password con updateAll
-						
-						
+						//lblSetPass.setText(user[4]);  // aggiornare label client server sentire Mauro
+							
 						panelModify.setVisible(false);
 						panelAccount.setVisible(true);
 						panelChangePass.setVisible(false);
@@ -1275,7 +1137,7 @@ public class Account extends SL_JFrame{
 		panelChangePass.add(btnChangePass);
 		
 		JButton btnReturnBack = new JButton("Annulla");
-		btnReturnBack.addActionListener(new ActionListener() {
+		btnBackData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				PopUp.warningBox(frmSchoolib, "Le modifiche effettuate verranno annullate");
@@ -1316,102 +1178,6 @@ public class Account extends SL_JFrame{
 	//Fine**********************************************************************************************************	
 	
 	
-	public static String[] getUserData() {
-		return UserData;
-	}
-
-	public static void setUserData(String[] userData) {
-		UserData = userData;
-	}
-
-	public JFrame getFrmSchoolib() {
-		return frmSchoolib;
-	}
-
-	public void setFrmSchoolib(JFrame frmSchoolib) {
-		this.frmSchoolib = frmSchoolib;
-	}
-
-	public JPasswordField getPasswordFieldMod() {
-		return passwordFieldMod;
-	}
-
-	public void setPasswordFieldMod(JPasswordField passwordFieldMod) {
-		this.passwordFieldMod = passwordFieldMod;
-	}
-
-	public JPasswordField getPasswordFieldConfMod() {
-		return passwordFieldConfMod;
-	}
-
-	public void setPasswordFieldConfMod(JPasswordField passwordFieldConfMod) {
-		this.passwordFieldConfMod = passwordFieldConfMod;
-	}
-
-	public JTextField getTxtNameMod() {
-		return txtNameMod;
-	}
-
-	public void setTxtNameMod(JTextField txtNameMod) {
-		this.txtNameMod = txtNameMod;
-	}
-
-	public JTextField getTxtSurnameMod() {
-		return txtSurnameMod;
-	}
-
-	public void setTxtSurnameMod(JTextField txtSurnameMod) {
-		this.txtSurnameMod = txtSurnameMod;
-	}
-
-	public JTextField getTxtInqMod() {
-		return txtInqMod;
-	}
-
-	public void setTxtInqMod(JTextField txtInqMod) {
-		this.txtInqMod = txtInqMod;
-	}
-
-	public JTextField getTxtTelMod() {
-		return txtTelMod;
-	}
-
-	public void setTxtTelMod(JTextField txtTelMod) {
-		this.txtTelMod = txtTelMod;
-	}
-
-	public JTextField getPasswordFieldMod1() {
-		return passwordFieldMod1;
-	}
-
-	public void setPasswordFieldMod1(JTextField passwordFieldMod1) {
-		this.passwordFieldMod1 = passwordFieldMod1;
-	}
-
-	public JTextField getPasswordFieldConfMod1() {
-		return passwordFieldConfMod1;
-	}
-
-	public void setPasswordFieldConfMod1(JTextField passwordFieldConfMod1) {
-		this.passwordFieldConfMod1 = passwordFieldConfMod1;
-	}
-
-	public String getTypePerson() {
-		return TypePerson;
-	}
-
-	public void setTypePerson(String typePerson) {
-		TypePerson = typePerson;
-	}
-
-	public JPasswordField getPasswordField() {
-		return passwordField;
-	}
-
-	public void setPasswordField(JPasswordField passwordField) {
-		this.passwordField = passwordField;
-	}
-
 	public void updateall(String[] user )
 	{
 		setIdUser(Integer.valueOf(user[0]));
@@ -1856,37 +1622,5 @@ public class Account extends SL_JFrame{
 
 		public void setIconLogoQ(ImageIcon iconLogoQ) {
 			this.iconLogoQ = iconLogoQ;
-		}
-
-		public AppType getT() {
-			return t;
-		}
-
-		public void setT(AppType t) {
-			this.t = t;
 		}	
-		
-		public JRadioButton getRdbtnTypeUserLibMod() {
-			return rdbtnTypeUserLibMod;
-		}
-
-		public void setRdbtnTypeUserLibMod(JRadioButton rdbtnTypeUserLibMod) {
-			this.rdbtnTypeUserLibMod = rdbtnTypeUserLibMod;
-		}
-
-		public JRadioButton getRdbtnTypeUserLetMod() {
-			return rdbtnTypeUserLetMod;
-		}
-
-		public void setRdbtnTypeUserLetMod(JRadioButton rdbtnTypeUserLetMod) {
-			this.rdbtnTypeUserLetMod = rdbtnTypeUserLetMod;
-		}
-
-		public String getEmailOLD() {
-			return emailOLD;
-		}
-
-		public void setEmailOLD(String emailOLD) {
-			this.emailOLD = emailOLD;
-		}
 }

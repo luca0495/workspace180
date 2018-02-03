@@ -13,6 +13,7 @@ import java.util.Queue;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import Books.Books;
 import Core.Commands;
 import Table.TableBooks;
 import gui.Account;
@@ -134,45 +135,6 @@ public class MQ_Read {
 		return dati;
 	}
 	
- 
- public static String [] ResearchBookingFirst (int idus)throws SQLException{			
-	 
-	 
-	 
-	 	String 	query = "SELECT id,data_inizio from prenotazioni" + 
-	 			" where " + 
-	 			"codice='"+idus+"' ORDER BY data_inizio ASC LIMIT 1;";
-
-		 System.err.println("ResearchBookingFirst query: "+ query);
-	 	
-	 	DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-		List<String> results = new ArrayList<String>();
-		String[] dati = new String [2];
-		
-		if (!rs.isBeforeFirst()) 
-		{  
-			System.out.println("9");
-			dati[0] = "Nessun Dato";
-		}
-		else
-		{
-			System.out.println("10");
-			rs.next();
-			dati[0] = rs.getString("id");
-			dati[1] = rs.getString("data_inizio");
-		}
-		DBmanager.closeConnection();
-
-		rs.close();
-		DBmanager.closeConnection();
-		
-		return dati;
-	}
- 
- 
- 
- 
  public static String [][] ResearchBooking ()throws SQLException{			
 	 	
 	 	String 	query = "SELECT * FROM prenotazioni;";
@@ -190,6 +152,7 @@ public class MQ_Read {
 			dati[0][1] = null;
 			dati[0][2] = null;
 			dati[0][3] = null;
+			
 		}
 		else
 		{
@@ -370,11 +333,11 @@ public class MQ_Read {
 	public static String[] selectAdminLogInFIRST(String email,String pass) throws SQLException
 	{
 		
-		String query = "SELECT email, password_temp,id,tipo_utente FROM utente WHERE email = '" + email + "';";
+		String query = "SELECT email, password_temp FROM utente WHERE email = '" + email + "';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		System.out.println(query);
-		String[] User = new String[4]; //3 email, 7 pass_temp, idut
+		String[] User = new String[2]; //3 email, 7 pass_temp
 		
 		if (!rs.isBeforeFirst()) 
 		{  
@@ -387,14 +350,6 @@ public class MQ_Read {
 			rs.next();
 			User[0] = rs.getString("email");
 			User[1] = rs.getString("password_temp");
-			User[2] = rs.getString("id");	
-			User[3] = rs.getString("tipo_utente");
-			
-			
-			//System.out.println("select admin login FIRST email"+User[0]);
-			//System.out.println("select admin login FIRST pw temp"+User[1]);
-			//System.out.println("select admin login FIRST id ut"+User[2]);
-		
 		}
 		DBmanager.closeConnection();
 		
@@ -759,42 +714,6 @@ where
 		return loan;
 	}	
 	
-	public static String[] sendEmailLoans() throws SQLException
-	{
-		//restituisce il primo prestito SCADUTO con email NON inviata
-		String query = "select prestiti.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio,data_fine from prestiti,utente,libro " + 
-				"where 	prestiti.id		=utente.id		AND"	+ 
-				"		prestiti.codice	=libro.codice	   "	+
-				" ;";
-		
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(query);
-
-		String[] loan = new String[11]; // codice utente codice libro
-		
-		if (!rs.isBeforeFirst()) 
-		{
-			loan[0]=("Nessun Dato");
-		}
-		else
-		{
-			rs.next(); 
-			
-			loan[0]=(rs.getString("codice")); 			    //0 
-			loan[1]=(rs.getString("id"));				    //1
-			loan[2]=(rs.getString("nome")); 		       	//2
-			loan[3]=(rs.getString("cognome")); 			    //3
-			loan[4]=(rs.getString("email")); 			    //4
-			loan[5]=(rs.getString("nome_autore")); 		    //5
-			loan[6]=(rs.getString("cognome_autore")); 		//6
-			loan[7]=(rs.getString("titolo")); 	            //7
-			loan[8]=(rs.getString("data_inizio")); 			//8
-			loan[9]=(rs.getString("data_fine"));            //9
-		}
-		rs.close();
-		DBmanager.closeConnection();
-		return loan;
-	}	
 	
 	
 
@@ -905,46 +824,16 @@ scaduto=true
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);
 		
-		int count;
+		boolean count;
 		
 		if (!rs.isBeforeFirst()) 
 		{ 
-			count = 0;
+			count = false;
 		}
 		else
 		{
 			rs.next();
-			count = rs.getInt(1);
-		}	
-		 boolean presente=false;
-		if (count>0)presente=true;
-		
-		System.out.println("ottenuto conto delle prenotazioni " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
-		rs.close();
-		DBmanager.closeConnection();
-		return presente;
-	} 
-	
-	
-	public static int checkBookingCount_10(int idut,int idbook) throws SQLException
-	{
-		System.err.println("idut  :"+idut);
-		System.err.println("idbook  :"+idbook);
-		
-		String q="SELECT count(codice) FROM prenotazioni WHERE codice='"+idbook+"' AND id ='"+idut+"';";			
-		DBmanager.openConnection();
-		ResultSet rs = DBmanager.executeQuery(q);
-		
-		int count;
-		
-		if (!rs.isBeforeFirst()) 
-		{ 
-			count = 0;
-		}
-		else
-		{
-			rs.next();
-			count = rs.getInt(1);
+			count = true;
 		}	
 		System.out.println("ottenuto conto delle prenotazini " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
 		rs.close();
@@ -953,36 +842,7 @@ scaduto=true
 	} 
 	
 	
-public static boolean checkLoansPresente(int idut,int idbook) throws SQLException
-{
-	System.err.println("idut  :"+idut);
-	System.err.println("idbook  :"+idbook);
 	
-	String q="SELECT count(codice) FROM prestiti WHERE data_fine is null AND codice='"+idbook+"' AND id ='"+idut+"';";			
-	DBmanager.openConnection();
-	ResultSet rs = DBmanager.executeQuery(q);
-	
-	int count;
-	
-	if (!rs.isBeforeFirst()) 
-	{ 
-		count = 0;
 	}
-	else
-	{
-		rs.next();
-		count = rs.getInt(1);
-	}	
-	 boolean presente=false;
-	if (count>0)presente=true;
-	
-	System.out.println("ottenuto conto delle prestiti " + idut +" "+" "+idbook+ "  volte: "+rs.getInt(1));
-	rs.close();
-	DBmanager.closeConnection();
-	return presente;
-} 
 
-
-
-}
 

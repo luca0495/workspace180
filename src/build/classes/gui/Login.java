@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
-import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -79,7 +78,6 @@ public class Login extends SL_JFrame  {
 	
 	public Login(Component c,Client x)
 	{
-		
 		setW(this);
 		me = x;
 		me.setActW(this);
@@ -90,8 +88,6 @@ public class Login extends SL_JFrame  {
 	}
 	public void Login(Component c)
 	{
-		super.setSL_Type(AppType.AppLogin);
-		
 		frmSchoolib = new JFrame();
 		frmSchoolib.setTitle("Login");
 		frmSchoolib.setBounds(100, 100, 893, 545);
@@ -117,7 +113,7 @@ public class Login extends SL_JFrame  {
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		
-		JLabel lblLogin = new JLabel("LOGIN/LOGOUT");
+		JLabel lblLogin = new JLabel("LOGIN");
 		lblLogin.setBounds(341, 11, 128, 46);
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		PanelRegi.add(lblLogin);
@@ -219,13 +215,8 @@ public class Login extends SL_JFrame  {
 					me.setActC(c);				
 					try {
 						System.out.println("GUI account:> ottenuti dati user ");
-						Clients oldtype = me.getCliType();
-						
 					me.setCliType(Clients.Librarian);	
 						me.getCmdLIST().put(Commands.UserPasswordRecovery);
-						me.setCliType(oldtype);
-					
-					
 					} catch (InterruptedException e2) {
 						System.out.println("GUI account:> NON ottenuti dati user ");	
 						e2.printStackTrace(); 
@@ -253,8 +244,6 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText(	"Pass0$");
-									 
 		txtUser = new JTextField();
 		
 		setTxtEmail(txtUser);
@@ -263,17 +252,12 @@ public class Login extends SL_JFrame  {
 		PanelRegi.add(txtUser);
 		txtUser.setColumns(10);
 		
-		txtUser.setText("dexa@hotmail.it");
-		
-		
 		JButton btnIndietro_1 = new JButton("Indietro");
 		btnIndietro_1.setBounds(147, 212, 89, 46);
 		btnIndietro_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				
-				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-				frmSchoolib.dispatchEvent(close);	
+				PanelRegi.setVisible(false);
 			}
 		});
 		PanelRegi.add(btnIndietro_1);
@@ -288,9 +272,7 @@ public class Login extends SL_JFrame  {
 			
 				try 
 				{
-					// query su db ma su tabella SETTING
-					System.out.println(" password temp letta"+MQ_Read.ReadPassTemp1(email));					
-					if(	MQ_Read.ReadPassTemp1(email) == null || (Integer.valueOf(MQ_Read.ReadPassTemp1(email)) == 0))
+					if(MQ_Read.ReadPassTemp1(email) == null)
 					{
 						System.out.println("passo email    :"+email);
 						System.out.println("passo password :"+pass);
@@ -307,10 +289,7 @@ public class Login extends SL_JFrame  {
 						
 						try {
 							System.out.println("GUI login:> controllo user corretto ");
-						//me.setCliType(Clients.Librarian);	
-						
-							Thread.sleep(100);
-							
+						me.setCliType(Clients.Librarian);	
 							me.getCmdLIST().put(Commands.UserREADlogin);
 						} catch (InterruptedException e2) {
 							System.out.println("GUI login :> problemi con controllo user corretto ");	
@@ -396,9 +375,6 @@ public class Login extends SL_JFrame  {
 		JButton btnPrimoAccesso = new JButton("PRIMO ACCESSO");
 		btnPrimoAccesso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
 			}
 		});
 		btnPrimoAccesso.setBounds(443, 212, 135, 46);
@@ -406,28 +382,12 @@ public class Login extends SL_JFrame  {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				
-				textField_2.setText(txtUser.getText());
-				passwordFieldUser.getPassword();
-				
-
-				
-				
 				PanelRegi.setVisible(false);
 				PanelFirstAcc.setVisible(true);
 				PanelForgPass.setVisible(false);
-				
-				
-				
-				
-				
-				
-				
 			}
 		});
 		PanelRegi.add(btnPrimoAccesso);
-		
-		
-		
 		
 		// panel FirstAcc rifare
 		JLabel lblUser_1 = new JLabel("user");
@@ -450,14 +410,6 @@ public class Login extends SL_JFrame  {
 		PanelFirstAcc.add(passwordField_1);
 		
 		JButton btnIndietro_2 = new JButton("Indietro");
-		btnIndietro_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				PanelRegi.setVisible(true);
-				PanelFirstAcc.setVisible(false);
-				PanelForgPass.setVisible(false);
-			}
-		});
 		btnIndietro_2.setBounds(376, 296, 141, 57);
 		PanelFirstAcc.add(btnIndietro_2);
 		
@@ -479,19 +431,15 @@ public class Login extends SL_JFrame  {
 			
 			try {
 				System.out.println("GUI login:> controllo user corretto ");
-			//me.setCliType(Clients.Librarian);
-				
+			me.setCliType(Clients.Librarian);	
 				me.getCmdLIST().put(Commands.UserREADloginFIRST);
-				
 			} catch (InterruptedException e2) {
 				System.out.println("GUI login :> problemi con controllo user corretto ");	
 				e2.printStackTrace(); 
 			}
+
 			
 			
-			
-			
-				
 			/*old
 			try 
 			{
@@ -589,11 +537,6 @@ public class Login extends SL_JFrame  {
 });
 		btnConferma.setBounds(186, 296, 141, 57);
 		PanelFirstAcc.add(btnConferma);	
-		
-		JLabel lblNB = new JLabel("N.B: Dopo 5 tentativi falliti, verr\u00E0 cancellato automaticamente l'utente");
-		lblNB.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNB.setBounds(20, 398, 708, 23);
-		PanelFirstAcc.add(lblNB);
 		
 		// Panel ForgotPass
 		
