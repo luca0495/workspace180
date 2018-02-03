@@ -36,7 +36,6 @@ import Core.Commands;
 import ProvaEmail.EmailSender;
 import connections.Client;
 import database.DBmanager;
-import database.LoadUser;
 import database.MQ_Delete;
 import database.MQ_Read;
 import database.MQ_Update;
@@ -70,7 +69,6 @@ public class Setting2pink extends SL_JFrame{
 	private Setting2pink 			w;	
 	private JFrame 				frmSchoolib;
 	private AppReader 			a;
-	private LoadUser 			l = new LoadUser();
 	private Client 				me;
 	
 	private JTextField 			textFieldsrvIPlocal; 

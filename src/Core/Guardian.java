@@ -1,24 +1,14 @@
 package Core;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.mail.MessagingException;
-
-import com.sun.org.apache.bcel.internal.generic.POP;
-
-import Check.Check;
-import Check.PopUp;
-import Core.Clients;
-import Core.Requests.RS;
 import ProvaEmail.EmailSender;
 import connections.Message;
 import connections.MessageRealServer;
 import connections.Server;
-import connections.ServerReal;
 import database.MQ_Check;
 import database.MQ_Read;
 import database.MQ_Update;

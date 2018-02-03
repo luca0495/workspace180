@@ -1,7 +1,6 @@
 package connections;
 //aggiorna drivers
-import java.awt.Color;
-import java.awt.Cursor;
+
 import java.awt.EventQueue;
 
 
@@ -9,26 +8,12 @@ import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
 
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
-
-
-import javax.swing.DropMode;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import javax.swing.Popup;
 
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.KeySelector.Purpose;
 
-import com.sun.org.apache.bcel.internal.generic.POP;
-import com.sun.org.apache.bcel.internal.generic.POP2;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 
 import Check.PopUp;
 import Core.ClientCMDloans;
@@ -40,46 +25,34 @@ import Core.ClientCMDBook;
 import Core.Clients;
 import Core.Commands;
 import Core.CommandsList;
-import Core.CommandsType;
-import Core.Requests;
-import Core.RequestsList;
-import Core.SearchFor;
+
 import ProvaEmail.EmailSender;
-import Table.TableBooking;
+
 import Table.TableBooks;
-import Table.TableLoans;
+
 import Table.TableModelBooking;
 import Table.TableModelBooks;
 import Table.TableModelLoans;
-import database.MQ_Delete;
-import database.MQ_Insert;
-import database.MQ_Read;
-import database.MQ_Update;
 
-import java.awt.Font;
 import java.awt.event.WindowEvent;
-import java.awt.EventQueue;
+
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.ServerSocket;
-import java.net.Socket;
+
 import java.sql.Date;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.Random;
+
 
 import gui.Account;
-import gui.AppLibrarian;
+
 import gui.AppReader;
 import gui.AppType;
 import gui.Login;
 import gui.ResearchBooks;
 import gui.AppMain;
 import gui.SL_JFrame;
-import gui.SystemClientStub;
-import gui.SystemServer;
-import sun.security.x509.IPAddressName;
+
 
 import java.awt.Component;
 
@@ -141,8 +114,8 @@ public class Client implements Serializable, Runnable  {
 	private 			String				ipadLan;
 	private 			String				ipadWww;
 	
-	private 			String				PASSWORD;	//private String PASSWORD="ACmilan1994$";
-	private 			String				USERNAME;	//private String USERNAME="llazzati@studenti.uninsubria.it";
+	private 			String				PASSWORD;	
+	private 			String				USERNAME;	
 	//SETTING *************************************************
 	private 			String  			Fbook;
 	private 			String  			Fbooking;
@@ -184,8 +157,6 @@ public class Client implements Serializable, Runnable  {
 			public void run() {
 				try {
 					Client x  = new Client();
-					//Server srvx = new Server();
-					
 					
 					x.setStartWindow(new AppMain(x));
 					x.setMeMain(x.getStartWindow());
@@ -225,15 +196,6 @@ public class Client implements Serializable, Runnable  {
 					//Comando Prelevo dalla lista CmdLIST
 					Commands com = getCmdLIST().take();
 							System.out.println("CLI :> Trovata richiesta in coda "+ com.Den );																		
-					/*		
-					while (Busy){
-							System.out.println("CLI :> Trovata richiesta in coda "+ com.Den + " [CLI  BUSY], attendo... ");
-						try {
-							Thread.sleep(10);
-						} catch (Exception e) { e.printStackTrace();
-						}						
-					}
-					*/
 // !!!! --------------------------
 					setBusy(true);
 // !!!! --------------------------					
@@ -455,17 +417,10 @@ public class Client implements Serializable, Runnable  {
 		//************************************************************
 		}	
 	// comandi
-		
-	/*
-	public String testconn (){
-		String testcon1=null;
-		testcon1 = srv.testConnectionSS().getText();
-		return testcon1;
-	}
-	*/
+
 		
 	public MessageBack testconn(){
-		//testcon1 = srv.testConnectionSS().getText();
+		
 		try {
 			return this.mSgBack = 	Request(Commands.ConnTEST);
 		} catch (IOException e) {
@@ -614,6 +569,14 @@ setBusy(false);
 //!!!! --------------------------										
 }//ClientConnectionTest
 
+	/**
+	 * @param MsgSend
+	 * @param Mb
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public void sendM(Message MsgSend,MessageBack Mb) throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			try {
 						System.out.println("CLI :> spedisco a STUB comando: "+MsgSend.getCmd());	
@@ -637,19 +600,13 @@ setBusy(false);
 							
 							case "SRV :> UPRecovery :> OK":
 								System.out.println("TORNATO AL CLIENT UPRECOVERY OK");
-								// mail     == getsql2
-								// password == getpw
-								
-								//email spedita dal server
-								//EmailSender.send_uninsubria_recoverypassword(getSql2(), this, getPw());
-								
+							
 								Login X = (Login)ActW;
 								
-								//X.PanelRegi.setVisible(false);
 								X.getPr().setVisible(true);
-								//X.PanelFirstAcc.setVisible(true);
+								
 								X.getPfa().setVisible(false);
-								//X.PanelForgPass.setVisible(false);
+						
 
 								
 								break;
@@ -659,13 +616,11 @@ setBusy(false);
 								break;
 		
 							case "SRV :> table book populate :> OK":	System.out.println("BOOK metodo old ritornato al client POPULATE OK : ");
-							
-								//PopUp.infoBox(getActW() , "ritornato table book populate OK metodo ANTICO"); 
-								//System.out.println(Mb.getTab().toString());
+						
 								
 								setActTable(Mb.getTab());
 								TableBooks.getTable().setModel(Mb.getTab().getModel());
-								//getActTable().update(null);
+						
 								this.setActF(null);
 								this.setSql(null);
 								setBusy(false);
@@ -758,19 +713,7 @@ setBusy(false);
 									break;
 								}
 								
-								
-								
-								//OLD APRE FINESTRA ACCOUNT
-								/*
-								Account aX = (Account) ActW;
-								System.out.println(" settato finestra attiva : "+ActW.toString());		
-								
-								aX.updateall(Mb.getRowUser());				// PER PANNELLO ACCOUNT 
-								aX.updateallModify(Mb.getRowUser());		// PER PANNELLO MODIFY
-								*/
-								
-								
-								//System.out.println(" updatato finestra account ");		
+		
 
 								
 								System.out.println("ricavo valore nome: "+Mb.getRowUser()[1]);
@@ -820,46 +763,6 @@ setBusy(false);
 									
 								}
 								
-								
-								
-								
-								/*
-								Account x = (Account)getActW();
-								
-								if(x.getT()==AppType.AppAccount) {
-									System.out.println("finestra attiva... account");
-									//UserData
-									
-					
-									x.getTxtNameMod().setText			(UserData[1]);
-									x.getTxtSurnameMod().setText		(UserData[2]);
-									x.getTxtMailMod().setText			(UserData[3]);
-									x.getPasswordField().setText		(UserData[4]);
-									x.getPasswordFieldConfMod().setText	(UserData[4]);
-									x.getTxtInqMod().setText			(UserData[5]);
-									x.getTxtTelMod().setText			(UserData[6]);
-									if(UserData[7].equals("Lettore"))
-								    {
-									  x.getRdbtnTypeUserLetMod().setSelected(true);
-								    }
-								else
-								    {
-								      x.getRdbtnTypeUserLibMod().setSelected(true);
-								    }
-	
-								}else {
-									System.out.println("finestra attiva... NON account");
-									//RITORNA AD APP MAIN								
-									setIdut(Integer.valueOf(Mb.getRowUser()[0]));
-									this.getMeMain().getFrame().setVisible(true);
-									this.getMeMain().getBtnAccount().setVisible(true);
-								}
-								*/	
-									
-									
-								
-								
-								
 								clrParFS();	
 								break;
 								
@@ -871,9 +774,9 @@ setBusy(false);
 								
 								Account accX = new Account(getMeMain().getFrame(),this);				
 								setActW(accX);
-								//accX.setAlwaysOnTop(true);	
+								
 								accX.getPanelAccount().setVisible(true);
-								//accX.getPanelModify().setVisible(false);
+								
 								accX.updateallAfterModify(Mb.getRowUser());			// PER PANNELLO ACCOUNT 
 		
 								clrParFS();	
@@ -1324,6 +1227,12 @@ setBusy(false);
 //*********************************************************************************************************************************************
 //	
 	
+	/**
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	private void ClientCheckExistDB() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.DBExist;
 		MessageBack Mb = new MessageBack();
@@ -1348,6 +1257,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCheckExistTableSetting() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistSetting;
 		MessageBack Mb = new MessageBack();
@@ -1372,6 +1287,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCheckExistTableBooking() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBooking;
 		MessageBack Mb = new MessageBack();
@@ -1399,6 +1320,12 @@ setBusy(false);
 		}	
 	}		
 		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCheckExistTableBook() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistBook;
 		MessageBack Mb = new MessageBack();
@@ -1423,6 +1350,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}			
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCheckExistTablePerson() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistPerson;
 		MessageBack Mb = new MessageBack();
@@ -1447,6 +1380,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCheckExistTableLoans() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.tableExistLoans;
 		MessageBack Mb = new MessageBack();
@@ -1472,6 +1411,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientCHANGEuserRegistration() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.UserRegistration;
 		MessageBack Mb = new MessageBack();
@@ -1497,6 +1442,12 @@ setBusy(false);
 			
 		}	
 	}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void BookLast () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookLast;
@@ -1519,6 +1470,12 @@ setBusy(false);
 	}
 		
 		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void BookPopulate () throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		
 		Commands cmd = Commands.BookExecuteQuery;
@@ -1545,6 +1502,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);	
 		}		
 	}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientBookAdd() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 		Commands cmd = Commands.BookADD;
 		MessageBack Mb = new MessageBack();
@@ -1570,6 +1533,12 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void ClientBookDelete() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.BookDELETE;
 			MessageBack Mb = new MessageBack();
@@ -1593,6 +1562,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserREADcheckCfExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADcheckCF;
 			MessageBack Mb = new MessageBack();
@@ -1615,6 +1590,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserREADcheckEmailExist() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADcheckEmail;
 			MessageBack Mb = new MessageBack();
@@ -1637,6 +1618,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetData() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREAD;
 			MessageBack Mb = new MessageBack();
@@ -1659,6 +1646,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDatabyEmail() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmail;
 			MessageBack Mb = new MessageBack();
@@ -1684,6 +1677,12 @@ setBusy(false);
 				
 			}	
 		}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDatabyEmailAcc() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmailAcc;
 			MessageBack Mb = new MessageBack();
@@ -1711,6 +1710,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDatabyEmailMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmailMod;
 			MessageBack Mb = new MessageBack();
@@ -1735,6 +1740,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}				
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDataLogin() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADlogin;
 			MessageBack Mb = new MessageBack();
@@ -1761,6 +1772,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDataLoginFIRST() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADloginFIRST;
 			MessageBack Mb = new MessageBack();
@@ -1783,6 +1800,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}			
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserGetDataAccountMod() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADaccountMod;
 			MessageBack Mb = new MessageBack();
@@ -1804,6 +1827,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserUPDATE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserUPDATE;
 			MessageBack Mb = new MessageBack();
@@ -1832,6 +1861,12 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}	
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void UserDELETE() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserDELETE;
 			MessageBack Mb = new MessageBack();
@@ -1859,6 +1894,12 @@ setBusy(false);
 			}	
 		}	
 //TODO DA TESTARE		
+		/**
+		 * @throws SendFailedException
+		 * @throws MessagingException
+		 * @throws SQLException
+		 * @throws InterruptedException
+		 */
 		private void LoanGetData() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.LoanREAD;
 			MessageBack Mb = new MessageBack();
@@ -2005,35 +2046,6 @@ setBusy(false);
 			public void setSql2(String sql2) {
 				Sql2 = sql2;
 			}
-		/*	
-			public SystemClientStub getMeG_Sys() {
-				return meG_Sys;
-			}
-			public void setMeG_Sys(SystemClientStub meG_Sys) {
-				this.meG_Sys = meG_Sys;
-			}
-			public Main getMeG_Main() {
-				return meG_Main;
-			}
-			public void setMeG_Main(Main meG_Main) {
-				this.meG_Main = meG_Main;
-			}
-			public AppLibrarian getMeG_Lib() {
-				return meG_Lib;
-			}
-			public void setMeG_Lib(AppLibrarian meG_Lib) {
-				this.meG_Lib = meG_Lib;
-			}
-			public AppReader getMeG_Rd() {
-				return meG_Rd;
-			}
-			public void setMeG_Rd(AppReader meG_Rd) {
-				this.meG_Rd = meG_Rd;
-			}
-		*/	
-			
-			
-			//*************************************
 			public void clrParFS () {
 				this.setActF(null);	//F
 				this.setSql(null);	//S	usato per email

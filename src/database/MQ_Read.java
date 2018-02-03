@@ -1,27 +1,15 @@
 package database;
 
-import java.awt.Component;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import Core.Commands;
-import Table.TableBooks;
-import gui.Account;
-import gui.Login;
 
 
 public class MQ_Read {
 	
-	public LoadUser l;
 	
 	public static String [][] RicercaLibro ()throws SQLException{			
 	 	String 	query = "SELECT * FROM libro;";
@@ -147,7 +135,6 @@ public class MQ_Read {
 	 	
 	 	DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
-		List<String> results = new ArrayList<String>();
 		String[] dati = new String [2];
 		
 		if (!rs.isBeforeFirst()) 
@@ -220,32 +207,7 @@ public class MQ_Read {
 		
 		return dati;
 	}
-	
-	public static LoadUser getUserById(int UserId) {
-		LoadUser loaduser = new LoadUser();
-        try {
-        	DBmanager.openConnection();
-        	Connection conn = DBmanager.openConnection1();
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * utente WHERE id = 1");
-            pstmt.setInt(1, UserId);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-            	loaduser.setId(rs.getInt(1));
-            	loaduser.setName(rs.getString(2));
-            	loaduser.setSurname(rs.getString(3));
-            	loaduser.setEmail(rs.getString(4));
-            	loaduser.setInq(rs.getString(6));
-            	loaduser.setPass(rs.getString(7));
-            	loaduser.setNtel(rs.getString(9));
-            	loaduser.setType_user(rs.getString(10));
-            }
-        } catch (SQLException ex) {
-           ex.printStackTrace();
-        }
-        return loaduser;
-    }
-	
-	
+
 	public static String [][] ReadUser ()throws SQLException{			
 		String query = "SELECT * FROM utente;";
 		DBmanager.openConnection();
@@ -480,7 +442,6 @@ public class MQ_Read {
 	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
 	public static String[] selectUserByQuery(String q) throws SQLException
 	{
-		LoadUser loaduser = new LoadUser();
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);		
 		String[] Person = new String[7]; //3 email, 7 pass_temp		
@@ -493,8 +454,8 @@ public class MQ_Read {
 		{
 			System.out.println("10");
 			rs.next();
-			Person[0] = loaduser.setName(rs.getString("nome"));
-			Person[1] = loaduser.setSurname(rs.getString("cognome"));
+			Person[0] = rs.getString("nome");
+			Person[1] = rs.getString("cognome");
 			Person[2] = rs.getString("email");
 			Person[3] = rs.getString("inquadramento");
 			Person[4] = rs.getString("password");

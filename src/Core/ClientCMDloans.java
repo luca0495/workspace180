@@ -6,8 +6,6 @@ import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
 
 import Check.PopUp;
-import Table.TableBooking;
-import Table.TableBooks;
 import Table.TableLoans;
 import connections.Client;
 import connections.Message;
@@ -15,6 +13,13 @@ import connections.MessageBack;
 
 public class ClientCMDloans {
 
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void LoansNew(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.LoanASK;
@@ -41,6 +46,13 @@ public class ClientCMDloans {
 		}	
 	}
 
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void LoansReturned(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.LoanReturn;
@@ -72,6 +84,11 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
+	/**
+	 * @param me
+	 * @param mes
+	 * @param Mb
+	 */
 	public static void LoansReturnedRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 
@@ -90,6 +107,13 @@ public class ClientCMDloans {
 	
 	
 	
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void LoansDELETE(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.LoanDELETE;
@@ -116,6 +140,11 @@ public class ClientCMDloans {
 		}	
 	}
 	
+	/**
+	 * @param me
+	 * @param mes
+	 * @param Mb
+	 */
 	public static void LoansDELETERES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 
@@ -131,6 +160,13 @@ public class ClientCMDloans {
 		}
 	}	
 
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void Loanspopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
 		//Commands cmd = Commands.BookPopulate;
@@ -158,6 +194,11 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
+	/**
+	 * @param me
+	 * @param mes
+	 * @param Mb
+	 */
 	public static void LoanspopulateRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 

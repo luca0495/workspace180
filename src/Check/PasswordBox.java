@@ -18,7 +18,7 @@ public class PasswordBox extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private static JPasswordField passwordField;
 	public final static String Action = "OK";
-	private Account a;
+
 	
 	public PasswordBox() 
 	{

@@ -2,20 +2,20 @@ package Core;
 import java.sql.SQLException;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
-
-import com.sun.org.apache.bcel.internal.generic.POP;
-
 import Check.PopUp;
-import Table.TableBooking;
-import Table.TableBooks;
-import Table.TableLoans;
 import connections.Client;
 import connections.Message;
 import connections.MessageBack;
 
 public class ClientCMDBook {
 
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void Bookpopulate(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException {
 		String mSg;
 		//Commands cmd = Commands.BookPopulate;
@@ -40,11 +40,14 @@ public class ClientCMDBook {
 					//me.getSelectedIdUser()		// id utente
 					
 					);
-			//MsgSend.setUType(Clients.Librarian);
-			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
+	/**
+	 * @param me
+	 * @param mes
+	 * @param Mb
+	 */
 	public static void BookpopulateRES(Client me,String mes,MessageBack Mb) {
 		
 		System.out.println("ritornato per bookpopulate RES");

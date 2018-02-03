@@ -50,27 +50,7 @@ Client pip;
 				
 				p.setCliType(Clients.Guest);
 				
-				
-	
-				
-				
-			/*	// book					
-				//ChkDBandTab.tableExistBook();
-				MessageBack back = p.Request(Commands.tableExistBook); // me == Client associato alla GUI
-				System.out.println("GUI :> risposta dal DB : "+back.getText());	
 
-			// Person	
-				// ChkDBandTab.tableExistPerson();
-				MessageBack back2 = p.Request(Commands.tableExistPerson);
-				System.out.println("GUI :> risposta dal DB : "+back2.getText());	
-			
-			/*	
-			//  Loans	
-				// ChkDBandTab.tableExistLoans();
-				MessageBack back1 = me.Request(Commands.tableExistLoans);    
-				System.out.println("GUI :> risposta dal DB : "+back1.getText());
-			*/
-				
 				
 				
 			} catch (Exception e) {
@@ -82,7 +62,7 @@ Client pip;
 			
 		}		
 		
-		// TODO Auto-generated constructor stub
+		
 		
 	} 
 	

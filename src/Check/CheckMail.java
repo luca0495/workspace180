@@ -3,7 +3,7 @@ package Check;
 import java.awt.Component;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+
 
 import Core.Clients;
 import Core.Commands;
@@ -25,6 +25,15 @@ public class CheckMail {
 	private 		String 				txtMailMod;
 
 	//TODO DA TESTARE DA LOGIN
+		/**
+		 * @param me
+		 * @param txtMail
+		 * @param txtMailMod
+		 * @param ActF
+		 * @param ActW
+		 * @param ActC
+		 * @return
+		 */
 		public boolean checkmailLoginForgotPassword(
 				Client 		me,
 				String 		txtMail,			//getEmailuser()
@@ -77,6 +86,15 @@ public class CheckMail {
 	
 	
 //TODO DA TESTARE DA ACCOUNT
+	/**
+	 * @param me
+	 * @param txtMail
+	 * @param txtMailMod
+	 * @param ActF
+	 * @param ActW
+	 * @param ActC
+	 * @return
+	 */
 	public boolean checkmailAccount(
 			Client 		me,
 			String 		txtMail,			//getEmailuser()
@@ -141,6 +159,14 @@ public class CheckMail {
 	}
 	
 //TODO DA TESTARE DA App Reader
+	/**
+	 * @param me
+	 * @param txtMailMod
+	 * @param ActF
+	 * @param ActW
+	 * @param ActC
+	 * @return
+	 */
 	public boolean checkmailAppReader(
 		
 		Client 		me,

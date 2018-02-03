@@ -1,9 +1,7 @@
 package Core;
 import java.util.Queue;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import connections.Message;
-import connections.MessageRealServer;
+
 
 	public class CommandsList {
 		
