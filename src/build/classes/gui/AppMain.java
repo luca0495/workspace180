@@ -18,9 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import Core.Clients;
 import Core.Commands;
-import Table.TableBooking;
 import Table.TableBooks;
-import Table.TableLoans;
 import Table.TableUpdateBooks;
 import connections.Client;
 import connections.MessageBack;
@@ -153,22 +151,11 @@ public class AppMain extends SL_JFrame  {
 				try {
 					
 					System.out.println("GUI :> comando inviato dalla gui main");//test tabelle iniziale
-					Clients oldtype = me.getCliType();  
-					me.setCliType(Clients.Librarian);	
 					
+					me.setCliType(Clients.Librarian);				
 					System.out.println("GUI :> sondo in CLI Busy prima : "+me.isBusy());	
 					me.setBusy(true);		
-					// Person		
-
-					
-					
-						try {
-							// ChkDBandTab.tableExistPerson();
-							me.getCmdLIST().put(Commands.DBExist);	
-						} catch (Exception e) {
-							System.out.println("appMain :> problemi con accodamento comando check DBExist");					
-						}
-					
+					// Person				
 						try {
 							// ChkDBandTab.tableExistPerson();
 							me.getCmdLIST().put(Commands.tableExistPerson);	
@@ -183,8 +170,6 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistBook);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist BOOK");					
-							me.setCliType(oldtype);	
-							
 						}
 
 					// Loans				
@@ -193,7 +178,6 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistLoans);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist LOANS");					
-							me.setCliType(oldtype);
 						}
 						
 					// Booking				
@@ -202,7 +186,6 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistBooking );							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist BOOKING");					
-							me.setCliType(oldtype);
 						}		
 					// Setting				
 						try {
@@ -210,10 +193,34 @@ public class AppMain extends SL_JFrame  {
 							me.getCmdLIST().put(Commands.tableExistSetting);							
 						} catch (Exception e) {
 							System.out.println("appMain :> problemi con accodamento comando check table exist SETTING");					
-							me.setCliType(oldtype);
 						}	
 						
-						me.setCliType(oldtype);
+						
+						
+					
+					
+				/*	
+				//  Loans	
+					// ChkDBandTab.tableExistLoans();
+					try {
+						
+						//ChkDBandTab.tableExistBook();
+						MessageBack back = me.Request(Commands.tableExistLoans);    
+
+						System.out.println("GUI :> risposta dal DB : "+back.getText());						
+						if (back.getText()!=""){
+							System.out.println("GUI :> LOANS : non ritorna nullo");
+
+							System.out.println("GUI :> sondo in CLI Busy prima: "+me.isBusy());	
+							me.setBusy(false);
+							System.out.println("GUI :> sondo in CLI Busy dopo: "+me.isBusy());	
+						}
+					} catch (Exception e) {
+						System.out.println("appMain :> problemi con table exist LOANS");
+						me.setBusy(false);
+					}
+					*/			
+				me.setCliType(Clients.Default);	
 		
 				} catch (Exception e) {
 					
@@ -223,7 +230,7 @@ public class AppMain extends SL_JFrame  {
 				
 		});
 		
-		JButton btnNewButton_2 = new JButton("LOGIN/LOGOUT");
+		JButton btnNewButton_2 = new JButton("LOGIN");
 		
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -279,13 +286,7 @@ public class AppMain extends SL_JFrame  {
 				//************************************************************		
 				try {
 					System.out.println("GUI AppMain:> apro account ");	
-					
-					
-					
 					me.getCmdLIST().put(Commands.UserREADbyEmailAcc);
-					
-					
-					
 				} catch (InterruptedException e2) {
 					System.out.println("GUI AppMain:> apro account NG ");	
 					e2.printStackTrace(); 
@@ -389,8 +390,6 @@ public class AppMain extends SL_JFrame  {
 										 try 
 										{	 
 										 ResearchBooks rb = new ResearchBooks(getFrame(),me);
-										 
-										 
 									    } 
 										catch (Exception e) 
 										{
