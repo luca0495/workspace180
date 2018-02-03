@@ -11,6 +11,7 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private static final long serialVersionUID =1;	
 	
 	private 	Clients	 	UType;
+	
 	private 	Commands 	Cmd;
 	private		String		MesId;
 	private 	Date		DateOfRequest;
@@ -22,7 +23,9 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	private 	int			LoginTry;
 	private		int			idut;
 	private		int			idbook;
-
+	private		String		usertype;
+	
+	
 	private 	String  	Fbook;
 	private 	String  	Fbooking;
 	private 	String  	Floans;
@@ -338,5 +341,11 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	}
 	public void setSelectedDataLoanReturn(String selectedDataLoanReturn) {
 		this.selectedDataLoanReturn = selectedDataLoanReturn;
+	}
+	public String getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
 	}
 }

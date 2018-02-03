@@ -328,6 +328,8 @@ public class Check {
 	 public static String checkAdminLogInFIRST(String email, String pass) throws SQLException {
 	    	
 
+		 System.out.println("checkAdminLogInFIRST ");
+		 
 	    	if(email.equals(null) || email.equals("") || pass.equals(null) || pass.equals("")){
 	    			return new String("I Campi Non Possono Essere Vuoti");
 	    	}else{

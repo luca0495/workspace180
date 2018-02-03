@@ -271,7 +271,7 @@ public class Client implements Serializable, Runnable  {
 								//	Person
 								case UserREAD: 				UserGetData();								break;	//necessario setSql con query completa			
 								case UserREADbyEmail: 		UserGetDatabyEmail();						break;	//necessario setSql con email							
-								case UserREADbyEmailAcc:	UserGetDatabyEmailAcc();					break;			//necessario setidut															
+								case UserREADbyEmailAcc:	UserGetDatabyEmailAcc();					break;	//necessario setidut															
 								case UserREADbyEmailMod: 	UserGetDatabyEmailMod();					break;	//necessario setidut																									
 								case UserREADlogin: 		UserGetDataLogin();							break;	//necessario setSql con email setSql2 con password							
 								case UserREADaccountMod: 	UserGetDataAccountMod();					break;	//necessario setSql con email setSql2 con password																				
@@ -781,6 +781,47 @@ setBusy(false);
 								
 								
 								System.err.println("finestra attiva : "+getActW().toString());								
+								System.err.println("finestra attiva : "+getActW().getSL_Type());
+								
+								
+								if ( getActW().getSL_Type()==AppType.AppAccount ) {
+									Account Ax = (Account)getActW();
+									if (Ax.getPanelModify().isVisible()) {
+										
+										Ax.getTxtNameMod().setText(		Mb.getRowUser()[1]);
+										Ax.getTxtSurnameMod().setText(	Mb.getRowUser()[2]);
+										Ax.getTxtMailMod().setText(		Mb.getRowUser()[3]);
+										//pw
+										Ax.getTxtInqMod().setText(		Mb.getRowUser()[5]);
+										Ax.getTxtTelMod().setText(		Mb.getRowUser()[6]);
+										
+										System.out.println("tipo utente "+Mb.getRowUser()[7]);
+										
+										if ( Mb.getRowUser()[7].equals("Libraio")) {
+											Ax.getRdbtnTypeUserLibMod().setSelected(true);
+											Ax.getRdbtnTypeUserLetMod().setSelected(false);	
+										}else {
+											if ( Mb.getRowUser()[7].equals("Lettore")){
+												Ax.getRdbtnTypeUserLibMod().setSelected(false);
+												Ax.getRdbtnTypeUserLetMod().setSelected(true);	
+											}		
+										}
+	
+									}
+									if (Ax.getPanelAccount().isVisible()) {
+										
+										
+										
+									}
+									
+									
+									
+									
+									
+								}
+								
+								
+								
 								
 								/*
 								Account x = (Account)getActW();
@@ -886,6 +927,21 @@ setBusy(false);
 	
 							case "SRV :> selected user login check:> Login Corretto":
 								
+								
+								System.out.println("ottenuto tipo utente : "+Mb.getRowUser()[6]);
+								
+								String tipoutente = Mb.getRowUser()[6];
+									setCliType(Clients.Guest);
+									
+								if (tipoutente.equals("Libraio")) {
+									setCliType(Clients.Librarian);	
+								}
+								if (tipoutente.equals("Lettore")) {
+									setCliType(Clients.Reader);	
+								}
+							 
+								
+								
 								setCurrentUser(Mb.getIdUser());			//settato id utente su Client
 								setIdut(Mb.getIdUser());
 								setSelectedIdUser(getIdut());
@@ -965,28 +1021,21 @@ setBusy(false);
 	
 							case "SRV :> selected user login check FIRST:> Login Corretto":
 								Login lF = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
-								
-								
 								/*
 								Account loF = new Account(getActF(),this);				
 								setActW(loF);
 								*/
-								
-								
-								
-								
 								//MQ_Delete.deletePassTemp(pass);
-								
-								
-								
-								
 								//chiusura finesta login
 								lF.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
 								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
 								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
 								getActF().dispatchEvent(closeF);
+								System.err.println("CLI ottenuto IDUSER " + getIdut());
 								
-				
+								setIdut(Mb.getIdUser());
+								//rendi visibile tasto account
+								getMeMain().getBtnAccount().setVisible(true);
 								
 								//invio comando login
 								try {
@@ -1638,6 +1687,9 @@ setBusy(false);
 		private void UserGetDatabyEmailAcc() throws SendFailedException, MessagingException, SQLException, InterruptedException{
 			Commands cmd = Commands.UserREADbyEmailAcc;
 			MessageBack Mb = new MessageBack();
+			
+			System.out.println("IDUTENTE SU CLIENT: "+this.getIdut());
+			System.out.println("selIDUTENTE SU CLIENT: "+this.getSelectedIdUser());
 			
 			System.out.println("CLI :> Request ricevuto da GUI :> "+cmd.toString()+" by id: "+this.getIdut());
 			if (!stubok){

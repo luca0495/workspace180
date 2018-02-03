@@ -37,6 +37,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private Record		Record;
 	private RecordSet	RecordSet;
 	
+	private		String		usertype;
 	
 	//private ResultSet	rs;
 	private JTable	tab;
@@ -163,6 +164,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setDataloans(Object[][] dataloans) {
 		this.dataloans = dataloans;
+	}
+	public String getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
 	}
 
 

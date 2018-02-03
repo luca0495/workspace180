@@ -370,11 +370,11 @@ public class MQ_Read {
 	public static String[] selectAdminLogInFIRST(String email,String pass) throws SQLException
 	{
 		
-		String query = "SELECT email, password_temp FROM utente WHERE email = '" + email + "';";
+		String query = "SELECT email, password_temp,id,tipo_utente FROM utente WHERE email = '" + email + "';";
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		System.out.println(query);
-		String[] User = new String[2]; //3 email, 7 pass_temp
+		String[] User = new String[4]; //3 email, 7 pass_temp, idut
 		
 		if (!rs.isBeforeFirst()) 
 		{  
@@ -387,6 +387,14 @@ public class MQ_Read {
 			rs.next();
 			User[0] = rs.getString("email");
 			User[1] = rs.getString("password_temp");
+			User[2] = rs.getString("id");	
+			User[3] = rs.getString("tipo_utente");
+			
+			
+			//System.out.println("select admin login FIRST email"+User[0]);
+			//System.out.println("select admin login FIRST pw temp"+User[1]);
+			//System.out.println("select admin login FIRST id ut"+User[2]);
+		
 		}
 		DBmanager.closeConnection();
 		

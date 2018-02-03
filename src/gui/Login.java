@@ -79,6 +79,7 @@ public class Login extends SL_JFrame  {
 	
 	public Login(Component c,Client x)
 	{
+		
 		setW(this);
 		me = x;
 		me.setActW(this);
@@ -89,6 +90,8 @@ public class Login extends SL_JFrame  {
 	}
 	public void Login(Component c)
 	{
+		super.setSL_Type(AppType.AppLogin);
+		
 		frmSchoolib = new JFrame();
 		frmSchoolib.setTitle("Login");
 		frmSchoolib.setBounds(100, 100, 893, 545);
@@ -250,7 +253,7 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText(	"Pe20$Pg20$");
+		passwordFieldUser.setText(	"Pass0$");
 									 
 		txtUser = new JTextField();
 		
@@ -285,8 +288,8 @@ public class Login extends SL_JFrame  {
 			
 				try 
 				{
-					System.out.println(" password temp letta"+MQ_Read.ReadPassTemp1(email));
-					
+					// query su db ma su tabella SETTING
+					System.out.println(" password temp letta"+MQ_Read.ReadPassTemp1(email));					
 					if(	MQ_Read.ReadPassTemp1(email) == null || (Integer.valueOf(MQ_Read.ReadPassTemp1(email)) == 0))
 					{
 						System.out.println("passo email    :"+email);
@@ -468,26 +471,26 @@ public class Login extends SL_JFrame  {
 			System.out.println("passo email    :"+email);
 			System.out.println("passo password :"+pass);
 			
-			/*
 			me.setSql(email);
 			me.setSql2(pass);
-			*/
-			
-			me.setSql(email);
-			me.setSql2(pass);
-			
 			me.setActW(getW());
 			me.setActF(frmSchoolib);
 			me.setActC(c);
 			
 			try {
 				System.out.println("GUI login:> controllo user corretto ");
-			//me.setCliType(Clients.Librarian);	
+			//me.setCliType(Clients.Librarian);
+				
 				me.getCmdLIST().put(Commands.UserREADloginFIRST);
+				
 			} catch (InterruptedException e2) {
 				System.out.println("GUI login :> problemi con controllo user corretto ");	
 				e2.printStackTrace(); 
 			}
+			
+			
+			
+			
 				
 			/*old
 			try 

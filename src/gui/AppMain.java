@@ -279,7 +279,13 @@ public class AppMain extends SL_JFrame  {
 				//************************************************************		
 				try {
 					System.out.println("GUI AppMain:> apro account ");	
+					
+					
+					
 					me.getCmdLIST().put(Commands.UserREADbyEmailAcc);
+					
+					
+					
 				} catch (InterruptedException e2) {
 					System.out.println("GUI AppMain:> apro account NG ");	
 					e2.printStackTrace(); 
