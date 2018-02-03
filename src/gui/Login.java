@@ -114,7 +114,7 @@ public class Login extends SL_JFrame  {
 		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		
-		JLabel lblLogin = new JLabel("LOGIN");
+		JLabel lblLogin = new JLabel("LOGIN/LOGOUT");
 		lblLogin.setBounds(341, 11, 128, 46);
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		PanelRegi.add(lblLogin);

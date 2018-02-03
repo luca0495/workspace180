@@ -223,7 +223,7 @@ public class AppMain extends SL_JFrame  {
 				
 		});
 		
-		JButton btnNewButton_2 = new JButton("LOGIN");
+		JButton btnNewButton_2 = new JButton("LOGIN/LOGOUT");
 		
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
