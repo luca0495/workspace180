@@ -587,6 +587,11 @@ public class Login extends SL_JFrame  {
 		btnConferma.setBounds(186, 296, 141, 57);
 		PanelFirstAcc.add(btnConferma);	
 		
+		JLabel lblNB = new JLabel("N.B: Dopo 5 tentativi falliti, verr\u00E0 cancellato automaticamente l'utente");
+		lblNB.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNB.setBounds(20, 398, 708, 23);
+		PanelFirstAcc.add(lblNB);
+		
 		// Panel ForgotPass
 		
 		JButton btnNewPass = new JButton("Invia");

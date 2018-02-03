@@ -850,7 +850,7 @@ public class ResearchBooks extends SL_JFrame {
 				}else {
 					
 					//if (checkDate(dataC)) {
-						PopUp.infoBox(btnReturnBack, 
+						PopUp.infoBox(frame, 
 								"  idL "+me.getSelectedIdBook()+
 								"  idU "+me.getSelectedIdUser()+
 								"  la data di consegna richiesta : "+dataC );

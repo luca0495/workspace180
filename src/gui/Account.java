@@ -76,6 +76,14 @@ public class Account extends SL_JFrame{
 	private ImageIcon 			iconLogoRA;
 	private ImageIcon 			iconLogoQ;
 	
+	private JLabel              lblNome;
+	private JLabel              lblCognome;
+	private JLabel              lblPass;
+	private JLabel              lblEmail;
+	private JLabel              lblInq;
+	private JLabel              lblTipoUte ;
+	private JLabel              lblTel ;
+	
     private JLabel		 		lblSetNome;
     private JLabel 				lblSetCognome;
     private JLabel 				lblSetEmail;
@@ -313,7 +321,7 @@ public class Account extends SL_JFrame{
 		lblReturnBack.setBorder(null);
 		panelAccount.add(lblReturnBack);
 		
-		JLabel lblNome = new JLabel("Nome: ");
+		lblNome = new JLabel("Nome: ");
 		lblNome.setBounds(10, 31, 42, 30);
 		panelAccount.add(lblNome);
 		
@@ -322,8 +330,8 @@ public class Account extends SL_JFrame{
 		lblSetNome.setBounds(118, 31, 174, 20);
 		panelAccount.add(lblSetNome);
 		
-		JLabel lblCognome = new JLabel("Cognome: ");
-		lblCognome.setBounds(10, 84, 59, 14);
+		lblCognome = new JLabel("Cognome: ");
+		lblCognome.setBounds(10, 84, 98, 14);
 		panelAccount.add(lblCognome);
 		
 		lblSetCognome = new JLabel();
@@ -331,7 +339,7 @@ public class Account extends SL_JFrame{
 		lblSetCognome.setBounds(118, 78, 174, 20);
 		panelAccount.add(lblSetCognome);
 		
-		JLabel lblPass = new JLabel("Password:");
+		lblPass = new JLabel("Password:");
 		lblPass.setBounds(10, 173, 86, 14);
 		panelAccount.add(lblPass);
 		
@@ -339,7 +347,7 @@ public class Account extends SL_JFrame{
 		lblSetPass.setBounds(118, 173, 174, 20);
 		panelAccount.add(lblSetPass);
 		
-		JLabel lblEmail = new JLabel("Email: ");
+		lblEmail = new JLabel("Email: ");
 		lblEmail.setBounds(10, 130, 46, 14);
 		panelAccount.add(lblEmail);
 		
@@ -348,7 +356,7 @@ public class Account extends SL_JFrame{
 		lblSetEmail.setBounds(118, 124, 174, 20);
 		panelAccount.add(lblSetEmail);
 			
-		JLabel lblInq = new JLabel("Inquadramento: ");
+		lblInq = new JLabel("Inquadramento: ");
 		lblInq.setBounds(10, 217, 137, 14);
 		panelAccount.add(lblInq);
 		
@@ -357,7 +365,7 @@ public class Account extends SL_JFrame{
 		lblSetInq.setBounds(140, 211, 174, 20);
 		panelAccount.add(lblSetInq);
 		
-		JLabel lblTipoUte = new JLabel("Tipo Utente:");
+		lblTipoUte = new JLabel("Tipo Utente:");
 		lblTipoUte.setBounds(10, 258, 74, 14);
 		panelAccount.add(lblTipoUte);
 		
@@ -366,7 +374,7 @@ public class Account extends SL_JFrame{
 		lblSetTipoUte.setBounds(118, 252, 186, 20);
 		panelAccount.add(lblSetTipoUte);
 		
-		JLabel lblTel = new JLabel("Telefono:");
+		lblTel = new JLabel("Telefono:");
 		lblTel.setBounds(10, 300, 59, 14);
 		panelAccount.add(lblTel);
 		
