@@ -85,12 +85,11 @@ public class Account extends SL_JFrame{
     private JLabel 				lblMAIL;
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
-<<<<<<< HEAD
-=======
+
 	
 	private String 				emailres;
 
->>>>>>> pulizia cartelle docs mod test mail su account
+
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;

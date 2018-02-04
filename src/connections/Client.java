@@ -1,5 +1,4 @@
 package connections;
-//aggiorna drivers
 
 import java.awt.EventQueue;
 
