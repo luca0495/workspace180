@@ -514,9 +514,9 @@ public class ResearchBooks extends SL_JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//Per informazioni cercare la classe PopUp
-				PopUp.infoBox(getFrame(),"Inserire uno tra: Romanzo,Storico,Giallo,Commedia,Fiaba,Fumetto,Narrativo,Poesia,Racconto,"
-						     + "Fantasy,Azione,Avventura,Drammatico,Favola,Fantascienza,Western,Novella,Thriller,Umoristico,"
-						     + "Psicologico"  );
+				PopUp.infoBox(getFrame(),"Inserire uno tra: Romanzo,Storico,Giallo,Commedia,Fiaba,Fumetto,Narrativo,Poesia,Racconto, \n"
+						                 + "Fantasy,Azione,Avventura,Drammatico,Favola,Fantascienza,Western,Novella,Thriller,Umoristico, \n"
+						                 + "Psicologico"  );
 			}
 		});
 		lblPopUpCat.setIcon(iconLogoQ);
