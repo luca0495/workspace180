@@ -6,12 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import Core.Commands;
-<<<<<<< HEAD
-=======
-
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
-
-
 /**
  * @author Mauro De Salvatore
  *
