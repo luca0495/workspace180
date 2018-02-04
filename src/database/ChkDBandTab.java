@@ -10,12 +10,7 @@ import connections.MessageBack;
 
 
 public class ChkDBandTab {
-	
-	// CHECK DB
-	
-	//	public static boolean DBExist()throws SQLException{
-		
-	
+// DB exist?
 	public static MessageBack DBExist()throws SQLException{
 	MessageBack mb = null;
 			
@@ -49,22 +44,19 @@ public class ChkDBandTab {
 		
 		} catch (SQLException sqlException) {
 					   if (sqlException.getErrorCode() == 1007) {
-					        //Database already exists error
-					   // mb.setText("SRV :> DATABASE ALREADY EXIST");
+
 					    	System.out.println("SYS :> DATABASE ALREADY EXIST");
 					    	
 					    	
 					    } else {
-					        //Some other problems, e.g. Server down, no permission, etc
-					    //	mb.setText("SRV :> Other Problems");
+					     
 					   System.out.println("SYS :> OTHER PROBLEMS");
 					       System.out.println("SYS :> "+sqlException.getErrorCode());					        
 					    sqlException.printStackTrace();
  
 					  }
 		  }   catch (ClassNotFoundException e) {
-		    //No driver class found!
-			//mb.setText("SRV :> ECCEZIONE Class not found");
+
 			System.out.println("SYS :> class not found");
 		}
 		return mb;
@@ -75,6 +67,10 @@ public class ChkDBandTab {
 	 
 
 	// CHECK TAB
+	/**
+	 * Questo metodo crea la tabella libro se non esiste già nel database
+	 * @throws SQLException
+	 */
 	public static void tableExistBook()throws SQLException{
 	Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
 	 DatabaseMetaData metadata = connection.getMetaData();
@@ -104,6 +100,10 @@ public class ChkDBandTab {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo crea la tabella utente se non esiste già nel database
+	 * @throws SQLException
+	 */
 	public static void tableExistPerson()throws SQLException{
 	Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
 	 DatabaseMetaData metadata = connection.getMetaData();
@@ -138,6 +138,10 @@ public class ChkDBandTab {
 		DBmanager.closeConnection();
 
 	}
+	/**
+	 * Questo metodo crea la tabella prestiti se non esiste già nel database
+	 * @throws SQLException
+	 */
 	public static void tableExistLoans()throws SQLException{
 		Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
 		 DatabaseMetaData metadata = connection.getMetaData();
@@ -171,6 +175,10 @@ public class ChkDBandTab {
 			DBmanager.closeConnection();
 
 		}
+	/**
+	 * Questo metodo crea la tabella prenotazioni se non esiste già nel database
+	 * @throws SQLException
+	 */
 	public static void tableExistBooking()throws SQLException{
 		Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
 		 DatabaseMetaData metadata = connection.getMetaData();
@@ -200,13 +208,6 @@ public class ChkDBandTab {
 			DBmanager.closeConnection();
 
 		}
-	/*
-	public static boolean Verifica() throws SQLException{
-		Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
-		String query = "SELECT id FROM utente WHERE email = '" + mail + "';";
-		return false;
-		
-	}
-	*/
+
 }
 

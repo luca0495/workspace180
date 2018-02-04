@@ -185,12 +185,8 @@ public class ClientCMDloans {
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
 					me.getSql()
-					//me.getSelectedIdBook(),		// id libro
-					//me.getSelectedIdUser()		// id utente
 					
 					);
-			//MsgSend.setUType(Clients.Librarian);
-			// **** Client invia Message
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
@@ -201,8 +197,7 @@ public class ClientCMDloans {
 	 */
 	public static void LoanspopulateRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
-		case "OK": 
-			//PopUp.infoBox(me.getActF(), 		"dati tabella loans OK");	
+		case "OK": 	
 			me.setActTable(Mb.getTab());
 			me.setDataloans(Mb.getDatitabella());
 			TableLoans.getTable().setModel(Mb.getTab().getModel());			

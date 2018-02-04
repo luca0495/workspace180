@@ -1,20 +1,11 @@
 package Table;
 
 import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
-
-import Check.Check;
-import Check.PopUp;
 import Core.Commands;
 import connections.Client;
 import database.MQ_Delete;
-import database.MQ_Update;
-
 import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.JFrame;
 import javax.swing.JTable;
 
 public class TableUpdateBooking {
@@ -22,21 +13,30 @@ public class TableUpdateBooking {
 	private static List<String> rowData;
 	private static int column;
 	private static boolean notOk = false;
-	
-	// 	OLD TEST OK
-    // delete row per tabella prestiti?	
-	 public static void deleteRow(List<String> r, JTable t) throws SQLException
+
+	 /**
+	 * @param r
+	 * @param t
+	 * @throws SQLException
+	 */
+	public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
 		 	MQ_Delete.deleteRowBooking(r);
 		}
-	 // NEW IN TEST 27.12.2017
-	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
+	 
+	 /**
+	 * @param r
+	 * @param t
+	 * @param me
+	 * @throws SQLException
+	 */
+	public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
 		 	String q = MQ_Delete.deleteRowBookingGetQuery(r);
 			me.setActTable(t);
 			me.setSql(q);
 			try {
-				// cambiare comando per delete loans
+				
 				me.getCmdLIST().put(Commands.BookingListREMOVE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

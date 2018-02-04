@@ -1,16 +1,8 @@
 package Table;
 
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
-import Core.Commands;
 import connections.Client;
-import database.MQ_Delete;
-import database.MQ_Read;
 
 public class TableModelBooking extends AbstractTableModel implements Serializable {
 	private Client me;
@@ -19,29 +11,15 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
     private String[] columnNames = {"Codice", "Id", "Priorità","Data_Inizio"};
     private Object[][] data = null;
     
+    /**
+     * @param me
+     * @throws InterruptedException
+     */
     public TableModelBooking(Client me) throws InterruptedException
     {
 			setData(me.getDatabooking());
     }
 
-    /*
-	@Override
-    public void fireTableDataChanged()
-    { 
-		
-		try 
-		{
-			
-			//me.getCmdLIST().put(Commands.BookingPopulate);
-			//data = MQ_Read.ResearchBooking();
-			//setData(me.getDatabooking());
-		} 
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-    }
-   */ 
     @Override
     public boolean isCellEditable(int row, int col)
     { 
@@ -80,7 +58,7 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
     }
 
 	public void setColumnNames(String string, String string2) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -90,5 +68,13 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
 
 	public void setData(Object[][] data) {
 		this.data = data;
+	}
+
+	public Client getMe() {
+		return me;
+	}
+
+	public void setMe(Client me) {
+		this.me = me;
 	}
 }

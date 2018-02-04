@@ -8,9 +8,18 @@ import java.util.List;
 
 
 
+/**
+ * @author luca
+ *
+ */
 public class MQ_Read {
 	
 	
+	/**
+	 * Questo metodo restutisce tutti i dati dalla tabella libro e lì inserisce in una matrice
+	 * @return dati
+	 * @throws SQLException
+	 */
 	public static String [][] RicercaLibro ()throws SQLException{			
 	 	String 	query = "SELECT * FROM libro;";
 
@@ -65,7 +74,12 @@ public class MQ_Read {
 			return dati;
 }
 	
- public static String [][] ResearchLoans ()throws SQLException{			
+ /**
+ * Questo metodo restutisce tutti i dati dalla tabella libro e lì inserisce in una matrice
+ * @return dati
+ * @throws SQLException
+ */
+public static String [][] ResearchLoans ()throws SQLException{			
 	 	
 	 	String 	query = "SELECT * FROM prestiti;";
 
@@ -123,7 +137,13 @@ public class MQ_Read {
 	}
 	
  
- public static String [] ResearchBookingFirst (int idus)throws SQLException{			
+ /**
+ * 	Questo metodo restituisce id e la data inizio della prima prenotazione di un libro
+ * @param idus
+ * @return dati
+ * @throws SQLException
+ */
+public static String [] ResearchBookingFirst (int idus)throws SQLException{			
 	 
 	 
 	 
@@ -158,7 +178,11 @@ public class MQ_Read {
 	}
  
  
- 
+/**
+* Questo metodo restutisce tutti i dati dalla tabella prenotazioni e lì inserisce in una matrice
+* @return dati
+* @throws SQLException
+*/
  
  public static String [][] ResearchBooking ()throws SQLException{			
 	 	
@@ -207,7 +231,11 @@ public class MQ_Read {
 		
 		return dati;
 	}
-
+ /**
+ * Questo metodo restutisce tutti i dati dalla tabella utente e lì inserisce in una matrice
+ * @return dati
+ * @throws SQLException
+ */
 	public static String [][] ReadUser ()throws SQLException{			
 		String query = "SELECT * FROM utente;";
 		DBmanager.openConnection();
@@ -267,6 +295,12 @@ public class MQ_Read {
 		return dati;
 	}
 	
+	/**
+	 * Questo metodo inserisce una password temporanea identificando l'email immessa
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String ReadPassTemp1(String email) throws SQLException
 	{
 	String query = "SELECT password_temp FROM utente WHERE email ='" + email +"';";
@@ -300,6 +334,12 @@ public class MQ_Read {
 	return value;
 }
 
+	/**
+	 * Questo metodo conta il numero di password_temp_tentativi per email di un utente
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String[] UserLoginTryCounter(String email) throws SQLException
 	{
 		
@@ -327,7 +367,7 @@ public class MQ_Read {
 		return User;
 	}
 	
-	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	public static String[] selectAdminLogInFIRST(String email,String pass) throws SQLException
 	{
@@ -351,11 +391,7 @@ public class MQ_Read {
 			User[1] = rs.getString("password_temp");
 			User[2] = rs.getString("id");	
 			User[3] = rs.getString("tipo_utente");
-			
-			
-			//System.out.println("select admin login FIRST email"+User[0]);
-			//System.out.println("select admin login FIRST pw temp"+User[1]);
-			//System.out.println("select admin login FIRST id ut"+User[2]);
+
 		
 		}
 		DBmanager.closeConnection();

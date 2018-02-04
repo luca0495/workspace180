@@ -1,42 +1,43 @@
 package Table;
 
 import java.util.List;
-
 import javax.swing.table.DefaultTableModel;
-
-import Check.Check;
-import Check.PopUp;
 import Core.Commands;
 import connections.Client;
 import database.MQ_Delete;
-import database.MQ_Update;
-
 import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.JFrame;
 import javax.swing.JTable;
+
 
 public class TableUpdateLoans {
 	private static String input;
 	private static List<String> rowData;
 	private static int column;
 	private static boolean notOk = false;
-	
-	// 	OLD TEST OK
-    // delete row per tabella prestiti?	
-	 public static void deleteRow(List<String> r, JTable t) throws SQLException
+
+	 /**
+	 * @param r
+	 * @param t
+	 * @throws SQLException
+	 */
+	public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
 		 	MQ_Delete.deleteRowLoans(r);
 		}
-	 // NEW IN TEST 27.12.2017
-	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
+	
+	 /**
+	 * @param r
+	 * @param t
+	 * @param me
+	 * @throws SQLException
+	 */
+	public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
 		 	String q = MQ_Delete.deleteRowLoansGetQuery(r);
 			me.setActTable(t);
 			me.setSql(q);
 			try {
-				// cambiare comando per delete loans
+				
 				me.getCmdLIST().put(Commands.LoanDELETE);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

@@ -1,17 +1,9 @@
 package Table;
 
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-
-
-import Core.Commands;
 import connections.Client;
-import database.MQ_Delete;
-import database.MQ_Read;
+
 
 public class TableModelLoans extends AbstractTableModel implements Serializable {
 	private Client me;
@@ -23,37 +15,6 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
     {
     	setData(me.getDataloans());
     }
-        
-   
-
-	/*
-	@Override
-    public void fireTableDataChanged()
-    { 
-<<<<<<< HEAD
-		setData(me.getDataloans());
-=======
->>>>>>> Idbook ok, update table ok(combobox), verifica update su libro prenotazioni
-		
-		try 
-		{
-			
-<<<<<<< HEAD
-			
-			//me.getCmdLIST().put(Commands.LoanPopulate);	
-			//data = MQ_Read.ResearchLoans();
-=======
-			//me.getCmdLIST().put(Commands.LoanPopulate);	
-			data = MQ_Read.ResearchLoans();
-			setData(me.getDataloans());
->>>>>>> Idbook ok, update table ok(combobox), verifica update su libro prenotazioni
-		} 
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-    }
-    */
     @Override
     public boolean isCellEditable(int row, int col)
     { 
@@ -92,7 +53,6 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
     }
 
 	public void setColumnNames(String string, String string2) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -102,5 +62,11 @@ public class TableModelLoans extends AbstractTableModel implements Serializable 
 
 	public void setData(Object[][] data) {
 		this.data = data;
+	}
+	public Client getMe() {
+		return me;
+	}
+	public void setMe(Client me) {
+		this.me = me;
 	}
 }

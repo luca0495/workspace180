@@ -4,51 +4,21 @@ package gui;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import com.sun.org.apache.bcel.internal.generic.POP;
-import com.sun.org.apache.bcel.internal.generic.POP2;
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
-
 import Check.Check;
-import Check.PasswordBox;
 import Check.PopUp;
-import Core.ClientCMDuser;
 import Core.Clients;
-import Core.Commands;
-import ProvaEmail.EmailSender;
 import connections.Client;
-import database.DBmanager;
-import database.MQ_Delete;
-import database.MQ_Read;
 import database.MQ_Update;
-
 import javax.swing.JLabel;
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -59,15 +29,13 @@ public class Setting extends SL_JFrame{
 	
 
 	private static final long 	serialVersionUID = 1L;
-	private static String[] 	UserData = null;
-    private static JTextField 	s1;
-			static int 			userRow = 0;
-		    static int			rows = 0;
-		    static int			cols = 0; 		    
+
+	static int 			userRow = 0;
+	static int			rows = 0;
+    static int			cols = 0; 		    
 		    
 	private Setting 			w;	
 	private JFrame 				frmSchoolib;
-	private AppReader 			a;
 	private Client 				me;
 
 	
@@ -78,16 +46,7 @@ public class Setting extends SL_JFrame{
 	private JTextField 			textFieldsrvIPdefault; 
 	private JTextField 			textFieldsrvMailAddress; 
 	private JPasswordField		textFieldsrvMailPW; 
-	
-	
-	
-	private String TypePerson = "Lettore";
-	private String input;
-	private List<String> rowData = new ArrayList<String>();
 
-	private String[] user = null;
-	private String[] user1 = null;
-	private boolean User = true;
 	
 	// in test 
 	private String 		emailuser;
@@ -102,10 +61,6 @@ public class Setting extends SL_JFrame{
 	//private boolean mailcheckinprogress=false;
 	public static boolean ModPass = false;
 	//private JPasswordField passwordFieldConfMod;
-
-	
-	private int 				column;
-	private int 				deleteRow;
     private int 				idUser ;
     private JTextField textField;
     private JTextField textField_1;
@@ -123,7 +78,6 @@ public class Setting extends SL_JFrame{
     private JButton button;
     private JButton button_1;
     private JComboBox comboBox;
-    private JTextField textField_5;
 
 
 public Setting(Component c,Client x,String[]userdata)
@@ -151,10 +105,6 @@ public Setting(Component c,Client x,String[]userdata)
 		frmSchoolib.setVisible(true);
 		frmSchoolib.getContentPane().setLayout(new CardLayout(0, 0));
 	
-		ImageIcon iconLogoT = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Tick.png")));
-		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
-		ImageIcon iconLogoRA = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/RedArrow.png")));
-		ImageIcon iconLogoQ = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/question.png")));
 		
 		panelChangePass = new JPanel();
 		frmSchoolib.getContentPane().add(panelChangePass, "name_443629321471336");
@@ -216,12 +166,7 @@ public Setting(Component c,Client x,String[]userdata)
 		passwordField = new JPasswordField();
 		passwordField.setBounds(208, 309, 138, 20);
 		panelChangePass.add(passwordField);
-		
 	
-		
-		
-		
-		
 		
 		button = new JButton("Conferma");
 		button.addActionListener(new ActionListener() {
@@ -274,10 +219,7 @@ public Setting(Component c,Client x,String[]userdata)
 				
 				PopUp.infoBox(frmSchoolib, "dati non modificati ");
 				frmSchoolib.setVisible(false);
-				
-				//Object x = getComboBox().getSelectedItem();
-				//me.getStartWindow().getComboBox().setSelectedItem(x);
-				//me.getStartWindow().aggiornaSrvType(x);
+
 				
 			}
 		});

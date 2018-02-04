@@ -1221,7 +1221,6 @@ public class ServerReal extends ServerSkeleton {
 										//break;
 										
 									case LoanASK:	
-//TODO copiare anche per reader ... far passare dal client 
 										
 										int idut 		= M.getMsg().getSelectedIdUser();
 										int idbook 		= M.getMsg().getSelectedIdBook();		
@@ -1233,7 +1232,7 @@ public class ServerReal extends ServerSkeleton {
 											
 											Boolean CK = true;	//esito di tutti i controlli
 											
-											//Controlli in concorrenza TEST OK	
+												
 											  setChkinprogress1(true);			//
 											  setChkinprogress2(true);			//
 											  setChkinprogress3(true);			//
@@ -1284,20 +1283,16 @@ public class ServerReal extends ServerSkeleton {
 															//	&& 	chkResult5.equals(	rok)
 															//	&& 	chkResult6.equals(	rok)
 														) 	
-													{//se tutti i check restituiscono esito positivo...																										
+													{																									
 														
 														Calendar calendar = new GregorianCalendar();
 														java.util.Date datacorrente = 	calendar.getTime();  
 														String qL =  MQ_Insert.insertLoansGetQuery(idbook, idut,datacorrente);
 														String qB =  MQ_Insert.insertBookingGetQuery(idbook, idut, 10, datacorrente);
 														x.setText(new String ("SRV :> Loans ASK :> OK" ));//System.out.println(" TUTTI I CRITERI RISPETTaTI, LIBRO IN PRESTITO !!!! ");																					
-
-																//q CHECK : prenotazione idut idbook ATTIVA
 														
 														boolean presenteinprestito 	= MQ_Read.checkLoansPresente(idut,idbook);
 														boolean presenteincoda 		= MQ_Read.checkBookingPresente(idut, idbook);
-														
-														
 														
 														
 																if (presenteincoda || presenteinprestito) {		//		presente in coda prenotazioni
@@ -1344,8 +1339,8 @@ public class ServerReal extends ServerSkeleton {
 																		//q aggiorna campo STATO libro in PRENOTATO...
 																			MQ_Update.updateLoansStato(String.valueOf(idbook),"Prenotato, "+coda+" utenti in coda" );	
 																		}
-																}//non presente in coda prenotazione fine
-													}else {	//criteri non rispettati...														
+																}
+													}else {													
 															x.setText(new String ("SRV :> Loans ASK :> OK , PRESTITO NON CONSENTITO" ));
 															String[] rokmsg =new String[6]; 			
 															rokmsg[0]="NN";
@@ -2316,12 +2311,15 @@ public class ServerReal extends ServerSkeleton {
 		this.datitabellaLoans = datitabellaLoans;
 	}
 //**********************************************************************************************************************************************	
+	/**
+	 * @param idut
+	 * @param idbook
+	 */
 	public void ck1(int idut,int idbook) {//TSST prestiti dello stesso libro, limite massimo 2 raggiunto	
 		int pe;
 		try {
 			pe = MQ_Read.checkLoansIdutIdbook_2(idut, idbook);	
-			if (pe==2||pe>2) {		//limite massimo di 2 raggiunto
-				//prestito negato
+			if (pe==2||pe>2) {		
 				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (2) dello stesso libro raggiunto ");
 			}else {
 				setChkResult1("SRV :> Loans ASK :> OK - PRESTITO ACCORDATO ");
@@ -2334,6 +2332,10 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress1(false);		
 	}
 //**********************************************************************************************************************************************	
+	/**
+	 * @param idut
+	 * @param idbook
+	 */
 	public void ck2(int idut,int idbook) {//TEST prestiti dello stesso utente, limite massimo 5 raggiunto	
 		int pe;
 		try {		
@@ -2352,6 +2354,10 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress2(false);		
 	}
 //**********************************************************************************************************************************************	
+		/**
+		 * @param idut
+		 * @param idbook
+		 */
 		public void ck3(int idut,int idbook) {//TEST prestiti dello stesso utente almeno uno SCADUTO	
 			int pe;
 			try {							
@@ -2371,11 +2377,14 @@ public class ServerReal extends ServerSkeleton {
 			setChkinprogress3(false);		
 		}
 //**********************************************************************************************************************************************	
+		/**
+		 * @param idut
+		 * @param idbook
+		 */
 		public void ck4(int idut,int idbook) {//TSST prenotazioni dello stesso utente limite massimo 10 raggiunto	
 			int pe;
 			try {
 
-//TODO testa QUERY	
 				pe = MQ_Read.checkBookingCount_10(idut, idbook);	
 				
 				if (pe==10||pe>10) {		//limite massimo di 10 raggiunto

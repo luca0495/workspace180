@@ -25,7 +25,7 @@ Client pip;
 					
 					// Person				
 					try {
-						// ChkDBandTab.tableExistPerson();
+						
 						p.getCmdLIST().put(Commands.tableExistPerson);	
 					} catch (Exception e) {
 						System.out.println("appMain :> problemi con accodamento comando check table exist PERSON");					
@@ -34,14 +34,14 @@ Client pip;
 					
 				// Book				
 					try {
-						// ChkDBandTab.tableExistPerson();
+						
 						p.getCmdLIST().put(Commands.tableExistBook);							
 					} catch (Exception e) {
 						System.out.println("appMain :> problemi con accodamento comando check table exist BOOK");					
 					}
 					
 				} catch (Exception e) {
-					// TODO: handle exception
+					
 				}
 			
 				
@@ -54,7 +54,6 @@ Client pip;
 				
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

@@ -58,7 +58,6 @@ public class ClientCMDBook {
 			PopUp.infoBox(me.getActF(), 		"dati tabella Book OK");			
 			me.setActTable(Mb.getTab());
 			me.setDatabook(Mb.getDatitabella());
-			//TableBooks.getTable().setModel(Mb.getTab().getModel());
 			me.setActF(null);
 			me.setSql(null);
 			me.setBusy(false);

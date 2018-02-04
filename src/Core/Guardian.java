@@ -44,23 +44,12 @@ public class Guardian implements Runnable {
 		while(!Stop){
 			Calendar c = new GregorianCalendar();
 			datacorrente = c.getTime();  
-			//TEST OK  
-			//System.out.println("datacorrente "	+datacorrente.getTime());
-			//System.out.println("datacorrente "	+datacorrente.toString());
-			//System.out.println("dataultimo "	+dataultimocontrollo.getTime());
-			//System.out.println("dataultimo "	+dataultimocontrollo.toString());
 			
 			xx++;
-			//System.out.println("GPG :> Guardian Busy - Query in esecuzione");	
-			while (isBusy()){}	//attesa query in esecuzione...
+			while (isBusy()){}	
 			
-			
-//	clock	//valuta ora del controllo scadenze...
 			if ((datacorrente.getTime()-dataultimocontrollo.getTime())>30000) {				//controllo otni 30 secondi PER TEST	
-				
-			
-			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>5000) {				//controllo otni 5 secondi PER TEST		
-			//if ((datacorrente.getTime()-dataultimocontrollo.getTime())>300000) {				//controllo ogni 5 minuti				
+					
 				System.err.println("passati 5 secondi, controllo scadenze prestiti");				
 				dataultimocontrollo = c.getTime();
 				
@@ -77,41 +66,15 @@ public class Guardian implements Runnable {
 										} catch (InterruptedException e) {
 													e.printStackTrace();
 				}
-				//TODO
-
-				
-				// Q CONTROLLO PRESTITI NON RITIRATI OLTRE 7 GIORNI
-				
-				// PROCEDURA DI CANCELLAZIONE PRESTITO RIPETI PRASSI CONSEGNA
-				
-				
-				
-				
-				
-				//--------------------------------------------------------				
-				//--------------------------------------------------------
-				//--------------------------------------------------------				
-				
 				
 				
 			}	
-			
-			//TODO RIMETTI println
-			//System.out.println("GPG :> Guardian Valuta no "+xx);
+	
 			
 			if (xx==1000)
 				xx=0;
 			
 			try {
-				/*
-				System.out.println("GPG :> RICHIESTE in attesa per AL : " + R.getAL().getWr()  );
-				System.out.println("GPG :> RICHIESTE in attesa per AR : " + R.getAR().getWr()  );				
-				System.out.println("GPG :> RICHIESTE in attesa per BL : " + R.getBL().getWr()  );
-				System.out.println("GPG :> RICHIESTE in attesa per BR : " + R.getBR().getWr()  );
-				System.out.println("GPG :> RICHIESTE in attesa per PL : " + R.getPL().getWr()  );
-				System.out.println("GPG :> RICHIESTE in attesa per PR : " + R.getPR().getWr()  );
-				 */
-				//System.out.println("GPG :> Guardian dorme");
 				Thread.sleep(10);
 				//System.out.println("GPG :> Guardian Valuta");					
 			Val_BL();	// prima valutazione, le altre vengono richiamate se necessario
@@ -120,23 +83,10 @@ public class Guardian implements Runnable {
 				}
 		}
 	}
-
-
-//Procedure di Valutazione
-//Prioritá :	
-//	Book  			Librarian
-//	Book  					Reader
-//	Loans 			Librarian
-//	Loans 					Reader	
-//	User  Accounts 	Librarian
-//	User  Accounts 			Reader
-	
 	
 	//------------------------------------------------------------
 	public void Val_BL() throws InterruptedException{	
 		int x;
-		
-		//System.out.println("GPG :> Guardian valuta BL");
 		
 		if (R.getBL().getWr()>0){		//richieste in attesa per BL
 				if(R.getLastserved()!=Requests.RS.BL){	//ultima richiesta servita diversa da 	BL
@@ -188,9 +138,7 @@ public class Guardian implements Runnable {
 	
 	public void Val_PL() throws InterruptedException{	
 		int x;
-		
-		//System.out.println("GPG :> Guardian valuta PL");
-		
+	
 		if (R.getPL().getWr()>0){		//richieste in attesa per BL
 				if(R.getLastserved()!=Requests.RS.PL){	//ultima richiesta servita diversa da 	BL
 						ServePL(0);				//SERVITA mod PRIMA RICHIESTA BL					

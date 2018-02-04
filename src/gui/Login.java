@@ -2,27 +2,21 @@ package gui;
 
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
-import javax.print.DocFlavor.STRING;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import Check.Check;
@@ -32,12 +26,9 @@ import Core.Clients;
 import Core.Commands;
 import ProvaEmail.EmailSender;
 import connections.Client;
-import database.MQ_Delete;
-import database.MQ_Insert;
 import database.MQ_Read;
 import database.MQ_Update;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -55,25 +46,14 @@ public class Login extends SL_JFrame  {
 	private JPasswordField 		passwordField_1;
 	private JTextField 			txtUser;
 	private JTextField 			textField_2;
-	private JTextField 			textField;
 	private boolean 			result = false;	
-	private int 				clicked = 0;
 	private JFrame 				frame;
 	private Client 				me;
-	private List<String> 		rowData;
-	private String 				deleteRow;
 	private int 				idUser;
-	private String [] 			user;
-
 	private JTextField 			txtEmail;
 	private JTextField 			txtEmailForgot;
-	
 	private JPasswordField 		passwordFieldNewPass;
 	private JPasswordField 		passwordFieldNewPassC;
-	private JPasswordField 		passwordField_4;
-	private JPasswordField 		passwordField_5;
-	private JPasswordField 		passwordField_6;
-	
 	private boolean 			mailcheckinprogress=false;
 	private String 				mailcheckResult;
 	
@@ -284,7 +264,6 @@ public class Login extends SL_JFrame  {
 				
 				String email = txtUser.getText();
 				String pass = String.copyValueOf(passwordFieldUser.getPassword());
-				String r = null;
 			
 				try 
 				{
@@ -325,70 +304,7 @@ public class Login extends SL_JFrame  {
 					
 					e1.printStackTrace();
 				}
-			
-				
-				
-				//OLD
-				/*
-				try 
-				{
-					r = Check.checkAdminLogIn(email, pass);
-				} 
-				catch (SQLException e1) 
-				{
-					e1.printStackTrace();
-				}
-				*/
-
-				
-/*			
-				if(r.equals("Login Corretto"))
-				    {
-					// cambiare pannello
-					   System.out.println("2");
-					   System.out.println("Numero di clicked1" + clicked);
-
-*/
-	// APERTA FINESTRA		
-					   /*old passato a client
-						try {	
-						MQ_Delete.deletePassTemp(getIdUser(),pass);						
-						} catch (SQLException e1) {							
-							e1.printStackTrace();
-						}
-						*/		   
-/*
-					   	//System.out.println("passato da login a client la email : "+me.getSql());
-						Account lo = new Account(getFrame(),me);				
-						me.setActW(lo);
-						me.setActF(frmSchoolib);
-						
-						PanelFirstAcc.setVisible(false);
-						PanelRegi.setVisible(false);
-						WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-						frmSchoolib.dispatchEvent(close);	
-						
-				// ***
-				
-						try {
-							System.out.println("GUI login:> cmd tentativo di login ");
-						me.setCliType(Clients.Librarian);	
-							me.getCmdLIST().put(Commands.UserREADbyEmail);
-						} catch (InterruptedException e2) {
-							System.out.println("GUI login :> problemi con tentativo di login ");	
-							e2.printStackTrace(); 
-						}	
-						
-				    } 
-		    else 
-		    {
-			PopUp.errorBox(c, r);
-		    }    
-*/
 		}
-		
-		
-		
 	});
 		btnEntra.setBounds(287, 212, 104, 46);
 		PanelRegi.add(btnEntra);
@@ -466,7 +382,6 @@ public class Login extends SL_JFrame  {
 			public void actionPerformed(ActionEvent e) {
 			String email = textField_2.getText();
 			String pass = String.copyValueOf(passwordField_1.getPassword());
-			String r = null;
 		
 			System.out.println("passo email    :"+email);
 			System.out.println("passo password :"+pass);
@@ -487,101 +402,7 @@ public class Login extends SL_JFrame  {
 				System.out.println("GUI login :> problemi con controllo user corretto ");	
 				e2.printStackTrace(); 
 			}
-			
-			
-			
-			
-				
-			/*old
-			try 
-			{
-				  System.out.println("1");
 
-				  // TEST OK
-				  //System.out.println("passo email    :"+email);
-				  //System.out.println("passo password :"+pass);
-				  
-				  r = Check.checkAdminLogInFIRST(email, pass);	
-				
-			} 
-			catch (SQLException e1) 
-			{
-				e1.printStackTrace();
-			}
-			*/
-			
-			/*
-			if(r.equals("Login Corretto"))
-			    {
-				// cambiare pannello
-				   System.out.println("2");
-				   System.out.println("Numero di clicked1" + clicked);
-			
-// APERTA FINESTRA		
-				   
-					try {	
-					MQ_Delete.deletePassTemp(pass);				
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-							   
-				   
-				   
-				   	me.setSql(email);
-				   	System.out.println("passato da login a client la email : "+me.getSql());
-					
-				   	Account lo = new Account(getFrame(),me);				
-					me.setActW(lo);
-					me.setActF(frmSchoolib);
-					
-					
-					PanelFirstAcc.setVisible(false);
-					PanelRegi.setVisible(false);
-					WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-					frmSchoolib.dispatchEvent(close);	
-					
-			// ***
-			
-					try {
-						System.out.println("GUI login:> cmd tentativo di login ");
-					me.setCliType(Clients.Librarian);	
-						me.getCmdLIST().put(Commands.UserREADbyEmail);
-					} catch (InterruptedException e2) {
-						System.out.println("GUI login :> problemi con tentativo di login ");	
-						e2.printStackTrace(); 
-					}	
-					
-			// ***
-				
-			    }
-			    else 
-			    {
-				    System.out.println("3");
-				PopUp.errorBox(c, r);
-				    System.out.println("Numero di clicked3: " + clicked);
-				clicked++;
-				if (clicked ==5){
-					PopUp.errorBox(c, "Hai provato 5 volte, cancellazione automatica del profilo");
-
-				   try {
-					   
-					   rowData = new ArrayList<String>();
-						
-						rowData.add(0, idUser);
-					
-						MQ_Delete.deleteRowPerson(rowData);
-					   
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				
-				}
-			  }
-			  
-			  
-		}
-			*/
-			
-			
       }
 		
 		
@@ -598,8 +419,6 @@ public class Login extends SL_JFrame  {
 		// Panel ForgotPass
 		
 		JButton btnNewPass = new JButton("Invia");
-		
-		
 		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setBounds(10, 31, 176, 33);
 		PanelForgPass.add(lblEmail);

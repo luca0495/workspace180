@@ -10,8 +10,6 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -30,17 +28,15 @@ import Check.PopUp;
 import Core.Commands;
 import connections.Client;
 import gui.ResearchBooks;
-import gui.SL_JFrame;
-
 import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
+
 
 public class TableBooks extends JPanel implements TableModelListener,Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private static 	JTable table;	
 	private ResearchBooks frame;
-//	private 		JFrame frame;
 	private 		TableModelBooks tm;
 	private int 	deleteRow;
 	private int 	selectedR;
@@ -49,15 +45,11 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 	private Client	me;
 	
 	private String 	oldValue;
-	//private static DefaultTableModel dm;
-	
-	
-	
     public TableBooks(ResearchBooks frame,Client me) throws InterruptedException  
     {
 
         super(new GridLayout(1,0));
-    	this.me=me;
+    	this.setMe(me);
         this.setFrame(frame);
 
         
@@ -66,45 +58,24 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
-        //JMenuItem prenotaItem = new JMenuItem("Prenota");
-        
-        
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	System.out.println("1");
                 if(PopUp.confirmBox(frame))
                 {
-                	System.out.println("2");
+                
                 	List<String> rowData = new ArrayList<String>();
-                	System.out.println("3");
+                	
         			for(int i = 0; i<7; i++)
         			{
-        				System.out.println("4");
+        				
         				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
-        				System.out.println("5");      				
-//TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
-        				
-        				//old OK
-						//TableUpdateBooks.deleteRow(rowData, getTable());
-        				
-
-//TODO CANCELLA LIBRO PASSA METODO AL CLIENT        				
-						
-        				//TableUpdateBooks.deleteRow(rowData, table);
-						
-        				//tm.fireTableDataChanged();
-						//table.repaint();					
-						
+        							
         				TableUpdateBooks.deleteRow(rowData, getTable(), me);
-
-						//tm.fireTableDataChanged();
-						//getTable().repaint();
-					
         			
         			} 
 
@@ -115,55 +86,46 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
                }
             }
         });
-        System.out.println("6");
         popupMenu.add(deleteItem);
-       //popupMenu.add(prenotaItem);
         
         
 		getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{
-				System.out.println("7");
 				if(SwingUtilities.isRightMouseButton(e)){ }
 			}
             public void mouseReleased(MouseEvent e)
             {
 				if(SwingUtilities.isRightMouseButton(e))
 				{	
-					System.out.println("8");
 	                if (e.isPopupTrigger())
 	                {
-	                	System.out.println("9");
+	                	
 	                    JTable source = (JTable)e.getSource();
 	                    deleteRow = source.rowAtPoint(e.getPoint());
 	                    int column = source.columnAtPoint(e.getPoint());
 
 	                    if (!source.isRowSelected(deleteRow))
 	                    {
-	                    	System.out.println("10");
+	                    
 	                        source.changeSelection(deleteRow, column, false, false);
 	                    }
-	                    System.out.println("11");
+	                   
 	                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
-	                }//fine trigger    
-				}//fine click rx
+	                }  
+				}
                    
                     JTable source 	= (JTable)e.getSource();
                     selectedRow 	= source.rowAtPoint(e.getPoint());
-                    //colonna idbook == 0
                     String idb		= (String) source.getValueAt(selectedRow, 0);
                     int idbook=Integer.valueOf(idb);                    
-                    //setta su client idbook selezionato
                    
                     me.setSelectedIdBook(idbook);
                     getFrame().getTxtInsertCDBook().setText(String.valueOf(idbook));
-   
-                    //PopUp.infoBox(frame, new String ("ottenuto idbook: "+me.getSelectedIdBook())+""
-                    //		+ "\n id user corrente salvato in client risulta:"+me.getSelectedIdUser());
             }
 		});
-		 System.out.println("12");
+		
 	    getTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel listSelectionModel = getTable().getSelectionModel();
 	    listSelectionModel.addListSelectionListener(new SharedListSelectionHandler(getTm()));	    
@@ -178,14 +140,14 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 			{
 				if(!(getTable().getSelectedRow() == -1) && !(getTable().getSelectedColumn() == -1))
 				{
-					 System.out.println("13");
+					
 					selectedR = getTable().getSelectedRow(); // riga
 					selectedC = getTable().getSelectedColumn(); // colonna	
 					oldValue = (String) getTable().getValueAt(selectedR, selectedC);
 				}
 			}
 	    });
-	    System.out.println("14");
+	    
 		JScrollPane scrollPane = new JScrollPane(getTable());
 		scrollPane.addFocusListener(new FocusAdapter() {
 
@@ -200,7 +162,7 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
     	{            
     		if(TableUpdateBooks.isNotOk())
     		{
-    			System.out.println("15");
+    			
     			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooks.setNotOk(false);
     		}
@@ -211,13 +173,19 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         {            
     		if(TableUpdateBooks.isNotOk())
     		{    
-    			System.out.println("16");
+    			
     			getTm().setValueAt(oldValue, selectedR, selectedC);
     			TableUpdateBooks.setNotOk(false);
     		}
         }
     };
         
+    /**
+     * @param x
+     * @param me
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		// Clear table   
 		getTable().setModel(new DefaultTableModel());	
@@ -329,14 +297,6 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
         	TableUpdateBooks.check(getFrame(), getTable());
 		} 
 	}
-	
-	/*
-	public void update()
-	{
-		tm.fireTableDataChanged();
-		getTable().repaint();
-	}
-*/
 
 	public static JTable getTable() {
 		return table;
@@ -365,6 +325,16 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 
 	public void setFrame(ResearchBooks frame) {
 		this.frame = frame;
+	}
+
+
+	public Client getMe() {
+		return me;
+	}
+
+
+	public void setMe(Client me) {
+		this.me = me;
 	}
 	
 

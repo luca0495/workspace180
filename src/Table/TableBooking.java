@@ -7,10 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
@@ -30,16 +26,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
-
 import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
 import connections.Client;
-import database.DBmanager;
+
 
 public class TableBooking extends JPanel implements TableModelListener,Serializable{
 	
@@ -52,41 +43,37 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 	private int selectedC;	
 	private int 	selectedRow;
 	private Client	me;
-	
 	private String oldValue;
-	//private static DefaultTableModel dm;
 	
 	
 	
     public TableBooking(JFrame frame,Client me) throws InterruptedException  
     {
         super(new GridLayout(1,0));
-    	this.me=me;
-        this.frame = frame;
+    	this.setMe(me);
+        this.setFrame(frame);
         setTm(new TableModelBooking(me));
         setTable(new JTable(getTm()));
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem deleteItem = new JMenuItem("Delete");
-        //JMenuItem prenotaItem = new JMenuItem("Prenota");
-        
+
         deleteItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	
-            	System.out.println("1");
                 if(PopUp.confirmBox(frame))
                 {
-                	System.out.println("2");
+                	
                 	List<String> rowData = new ArrayList<String>();
-                	System.out.println("3");
+                	
         			for(int i = 0; i<4; i++)
         			{
-        				System.out.println("4");
+        				
         				rowData.add((String) getTm().getValueAt(deleteRow, i));
         			}        			
         			try 
         			{ 
-        				System.out.println("5");      							
+        				    							
         				TableUpdateBooking.deleteRow(rowData, getTable(), me);
         			} 
 
@@ -100,37 +87,36 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
             }
             
         });
-        System.out.println("6");
+       
         popupMenu.add(deleteItem);
         
 		getTable().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) 
 			{
-				System.out.println("7");
 				if(SwingUtilities.isRightMouseButton(e)){ }
 			}
             public void mouseReleased(MouseEvent e)
             {
 				if(SwingUtilities.isRightMouseButton(e))
 				{	
-					System.out.println("8");
+					
 	                if (e.isPopupTrigger())
 	                {
-	                	System.out.println("9");
+	                	
 	                    JTable source = (JTable)e.getSource();
 	                    deleteRow = source.rowAtPoint(e.getPoint());
 	                    int column = source.columnAtPoint(e.getPoint());
 
 	                    if (!source.isRowSelected(deleteRow))
 	                    {
-	                    	System.out.println("10");
+	                    	
 	                        source.changeSelection(deleteRow, column, false, false);
 	                    }
-	                    System.out.println("11");
+	                   
 	                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
-	                }//fine trigger    
-				}//fine click rx
+	                }
+				}
 
 				
 				 JTable source 	= (JTable)e.getSource();
@@ -145,14 +131,6 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 	                //setta su client idbook selezionato
 	                me.setSelectedIdBook(idbook);
 	                me.setSelectedIdUser(iduser);
-
-	                /*
-	                PopUp.infoBox(frame, new String (	"\nottenuto idbook  : "+me.getSelectedIdBook()+
-	                									"\nottenuto iduser  : "+me.getSelectedIdUser()+
-	                									"\nottenuto idD init: "+me.getSelectedIdDataStart()+
-														"\nottenuto idD stop: "+me.getSelectedIdDataStop()
-                			));
-	                 */
 		
             }
 		});
@@ -223,14 +201,15 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
         	TableUpdateBooking.setInput((String)model.getValueAt(row, column));
 		} 
 	}
-	/*
-	public void update()
-	{
-		tm.fireTableDataChanged();
-		getTable().repaint();
-	}
-*/
 
+
+
+	/**
+	 * @param x
+	 * @param me
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		
 		System.err.println("storico:"+me.isStorico());
@@ -262,8 +241,6 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 				}
 			}			
 		}
-		//****************************************************************************************
-		//System.err.println("leggo "+me.getDatiUtente()[6]+"tipo utente prima di lanciare query booking POPULATE : "+tipo);
 		
 		switch (tipo) {		//tipo di utente
 					case Librarian	:			
@@ -307,5 +284,21 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 
 	public void setTm(TableModelBooking tm) {
 		this.tm = tm;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public Client getMe() {
+		return me;
+	}
+
+	public void setMe(Client me) {
+		this.me = me;
 	}
 }

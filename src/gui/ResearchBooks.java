@@ -72,20 +72,10 @@ public class ResearchBooks extends SL_JFrame {
 	private static ClientConnectionController ccc;
 	private ResearchBooks 	w;
 	private JFrame frame;
-	
 	private JTextField textField;
-	private JTextField textField2;
-	private JPanel panel;
-	private JPanel panelResearch;
-	private JPanel panel_1;
-    private JTable table4;
-    
     private JButton button_1;//tasto riconsegna
-    
     private JTable tableBooks;
-   
     private JRadioButton rdbtnStoricoPrenotazioni;
-    
 	protected String 	ValToSearch;
 	private JTextField 	txtName;
 	private JTextField 	txtSurname;
@@ -131,12 +121,6 @@ public class ResearchBooks extends SL_JFrame {
 		me.setActF(this);
 		me.setActW(this);
 		me.setMeRes(this);
-		
-		//me.setCliType(Clients.Reader); // sicuro che sia Reader?
-		//TODO LUCA per abilitazione bottone VISUALIZZA ELENCO PRESTITI		
-		// me.getCliType()
-		//IF LIBRAIO VEDI BOTTONE
-		//ELSE NON LO VEDI
 		initialize(c);
 		super.SL_Type = AppType.AppReader;
 		super.setModel("search");
@@ -152,12 +136,7 @@ public class ResearchBooks extends SL_JFrame {
 		getFrame().getContentPane().setLayout(null);
 		getFrame().setLocationRelativeTo(c);
 		getFrame().setVisible(true);
-		
-		//frmSchoolib.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		//frmSchoolib.setLocationRelativeTo(c);
-		//frmSchoolib.setVisible(true);
-		//frmSchoolib.getContentPane().setLayout(new CardLayout(0, 0));
-		
+
 		JPanel panelModify = new JPanel();
 		panelModify.setBounds(10, 36, 997, 614);
 		panelModify.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -200,7 +179,6 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 				
-					//TODO prelevare idbook idutente 
 					me.getCmdLIST().put(Commands.BookingListREMOVE);
 				
 				
@@ -234,7 +212,7 @@ public class ResearchBooks extends SL_JFrame {
 				 WindowEvent close = new WindowEvent(getFrame(), WindowEvent.WINDOW_CLOSING);
 				 getFrame().dispatchEvent(close);
 				 
-				 me.getStartWindow().getFrame().setVisible(true);	//System.out.println("creato start windows");
+				 me.getStartWindow().getFrame().setVisible(true);	
 				 me.getStartWindow().addMsg("ResearchBook closed...");
 				 me.setActW(me.getMeMain());
 				
@@ -259,8 +237,6 @@ public class ResearchBooks extends SL_JFrame {
 					 System.err.println("cli query in esecuzione s "+s);
 					 
 					 
-			    	//TODO PASSA A CLIENT da TableBooks		 				 
-			    	//me.getCmdLIST().put(Commands.tableBookPopulate);
 			    				try {	 	 
 			    				TableBooks.PopulateData(s,me);	
 			    				
@@ -271,10 +247,7 @@ public class ResearchBooks extends SL_JFrame {
 			    					e1.printStackTrace();
 			    				}			
 			    }else{
-			    	//TODO PASSA A CLIENT da TableBooks	
-			    	//me.getCmdLIST().put(Commands.tableBookPopulate);	
-			    	
-			    	
+		
 			    	 System.err.println("cli query in esecuzione s==0");
 			    	
 			    			      try {
@@ -294,29 +267,11 @@ public class ResearchBooks extends SL_JFrame {
    });
 		btnResearch.setBounds(679, 7, 89, 23);
 		getFrame().getContentPane().add(btnResearch);
-		/*
-		tableBooks = new JTable();
-		tableBooks.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"codice", "nome_autore", "cognome_autore", "categoria", "titolo"
-			}
-		));
-		tableBooks.setColumnSelectionAllowed(true);
-		tableBooks.setCellSelectionEnabled(true);
-		tableBooks.setBounds(10, 11, 837, 420);
-		*/
-		
 		btnPrenotazione = new JButton("Prenotazione Libro");
 		btnPrenotazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
-				if (askIdBook()) {		//	test login e test prenotazione con 
-										//	me.iduser
-										//	me.idbook
-					
-				//PopUp.infoBox(frame, "PRESTITO LIBRO "+me.getSelectedIdBook()+"ASSEGNATO ALL'UTENTE "+me.getSelectedIdUser());	
+				if (askIdBook()) {	
 				
 				};
 				
@@ -334,47 +289,40 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxB.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					//panelTableResearch.update();
 					panelResearch.setVisible(	true);
 					panelLoans.setVisible(		false);
 					panelBooking.setVisible(	false);
 					
 					ClientConnectionController.ONEcontrol(me);
 					
-					System.out.println("7" + comboBoxB.toString());
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
 					lblEr4.setIcon(null);
 				}
-				else if(comboBoxB.getSelectedItem().equals("Prestiti"))// mettere qui la di verifica lettore o libraio + query su check
+				else if(comboBoxB.getSelectedItem().equals("Prestiti"))
 				{
 					
-					//panelTableLoansResearch.update();
 					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
 					comboBoxB.setSelectedItem("Ricerca_Libro");
-					//comboBoxB.setSelectedItem("Prenotazioni");
 					
 					ClientConnectionController.ONEcontrol(me);
-					
-					System.out.println("8" + comboBoxB.toString());
+				
 
 				//	icon a null
 			    }
 			   else if(comboBoxB.getSelectedItem().equals("Prenotazioni"))// mettere qui la di verifica lettore o libraio + query su check
 			     {
 				
-				//panelTableBookingResearch.update();
 				panelResearch.setVisible(false);
 				panelLoans.setVisible(false);
 				panelBooking.setVisible(true);
 				comboBoxB.setSelectedItem("Ricerca_Libro");
 				
 				ClientConnectionController.ONEcontrol(me);
-				
-				System.out.println("9" + comboBoxB.toString());
+		
 
 			//	icon a null
 			}
@@ -396,13 +344,10 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxL.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					//panelTableResearch.update();
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(false);
 					comboBoxL.setSelectedItem("Prestiti");
-					//comboBoxL.setSelectedItem("Prenotazioni");
-					System.out.println("1" + comboBoxL.toString());
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
 					lblEr3.setIcon(null);
@@ -412,12 +357,9 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxL.getSelectedItem().equals("Prestiti"))
 				{
-					//panelTableLoansResearch.update();
 					panelBooking.setVisible(false);
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
-
-					System.out.println("2" + comboBoxL.toString());
 					
 					ClientConnectionController.ONEcontrol(me);
 
@@ -430,8 +372,7 @@ public class ResearchBooks extends SL_JFrame {
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(true);
 					comboBoxL.setSelectedItem("Prestiti");
-					System.out.println("3" + comboBoxL.toString());
-					
+				
 					ClientConnectionController.ONEcontrol(me);
 					
 				//	icon a null
@@ -446,8 +387,7 @@ public class ResearchBooks extends SL_JFrame {
 			
 			
 			public void actionPerformed(ActionEvent e) {
-			//PopUp.infoBox(comboBoxL, "REFRESH");
-			
+		
 			try {	 	 
 				
 				TableLoans.PopulateData("",me);
@@ -468,8 +408,7 @@ public class ResearchBooks extends SL_JFrame {
 			
 			
 			public void actionPerformed(ActionEvent e) {
-			//PopUp.infoBox(comboBoxL, "REFRESH");
-			
+		
 			try {	 	 
 				
 				TableBooking.PopulateData("",me);
@@ -501,12 +440,7 @@ public class ResearchBooks extends SL_JFrame {
 		});
 		rdbtnStoricoPrenotazioni.setBounds(342, 442, 142, 23);
 		panelLoans.add(rdbtnStoricoPrenotazioni);
-		
-		
-		
-		
-		
-		
+	
 		JComboBox<String> comboBoxBooking = new JComboBox<String>();
 		comboBoxBooking.addItem("Ricerca_Libro");
 		comboBoxBooking.addItem("Prestiti");
@@ -516,12 +450,11 @@ public class ResearchBooks extends SL_JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxBooking.getSelectedItem().equals("Ricerca_Libro"))
 				{
-					//panelTableResearch.update();
+			
 					panelResearch.setVisible(true);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(false);
 					comboBoxBooking.setSelectedItem("Prenotazioni");
-					System.out.println("4" + comboBoxBooking.toString());
 					
 					lblEr1.setIcon(null);
 					lblEr2.setIcon(null);
@@ -532,28 +465,27 @@ public class ResearchBooks extends SL_JFrame {
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prestiti"))
 				{
-					//panelTableLoansResearch.update();
+				
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(true);
 					panelBooking.setVisible(false);
 					comboBoxBooking.setSelectedItem("Prenotazioni");
-					System.out.println("5" + comboBoxBooking.toString());
-				//	icon a null
+					
 					
 					ClientConnectionController.ONEcontrol(me);
 				}
 				else if(comboBoxBooking.getSelectedItem().equals("Prenotazioni"))
 				{
-					//panelTableBookingResearch.update();
+					
 					panelResearch.setVisible(false);
 					panelLoans.setVisible(false);
 					panelBooking.setVisible(true);
 
-					System.out.println("6" + comboBoxBooking.toString());
+					
 					
 					ClientConnectionController.ONEcontrol(me);
 
-				//	icon a null
+				
 				}
 			}
 		});
@@ -860,10 +792,6 @@ public class ResearchBooks extends SL_JFrame {
 										me.getCmdLIST().put(Commands.LoanReturn);
 						} catch (InterruptedException e1) {e1.printStackTrace();}
 						
-					//}else {
-						
-						//PopUp.infoBox(btnReturnBack,"la data inserita, "+dataC+" non é nel formato correttto" );
-					//}
 				}
 			}
 		});
@@ -897,19 +825,7 @@ public class ResearchBooks extends SL_JFrame {
 		lblDataRiconsegna.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDataRiconsegna.setBounds(151, 540, 98, 14);
 		panelResearch.add(lblDataRiconsegna);
-		
-		/*
-		if (	me.getCliType()==Clients.Admin||
-				me.getCliType()==Clients.Librarian) {
-		 // mettere qui frame
-		}else {
-			
-			PopUp.infoBox(frame, "Reader non abilitato a visualizzare lista prestiti...");
-			
-			System.out.println("non inserisco combo box visualizzazione prestiti per client.type <> Librarian ");
-		}
-			
-		*/
+	
 		
 	}
 	

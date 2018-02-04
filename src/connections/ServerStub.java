@@ -10,6 +10,8 @@ import java.io.IOException;
 
 
 public class ServerStub implements Serializable, IServer {
+
+	private static final long serialVersionUID = 1L;
 	private ObjectInputStream in;
 	private ObjectOutputStream out; 
 	private Socket _socket;
@@ -23,7 +25,7 @@ public class ServerStub implements Serializable, IServer {
 	
 	public ServerStub(Client client, String ADD) throws Exception{
 		Rifclient = client;
-		conntentativi=0;			
+		setConntentativi(0);			
 		
 		addr= InetAddress.getByName(ADD);							//test con Local host PASSATO dal client		
 	
@@ -154,13 +156,13 @@ public class ServerStub implements Serializable, IServer {
 
 		@Override
 		public MessageBack connection(Message msg) {
-			// TODO Auto-generated method stub
+			
 			return null;
 		}
 
 		@Override
 		public MessageBack test(Message M) throws RemoteException {
-			// TODO Auto-generated method stub
+			
 			return null;
 		}
 
@@ -170,6 +172,22 @@ public class ServerStub implements Serializable, IServer {
 
 		public void setAddr(InetAddress addr) {
 			this.addr = addr;
+		}
+
+		public int getConntentativi() {
+			return conntentativi;
+		}
+
+		public void setConntentativi(int conntentativi) {
+			this.conntentativi = conntentativi;
+		}
+
+		public MessageBack getMsg() {
+			return msg;
+		}
+
+		public void setMsg(MessageBack msg) {
+			this.msg = msg;
 		}
 
 	

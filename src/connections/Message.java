@@ -6,7 +6,7 @@ import java.util.Date;
 import Core.Clients;
 import Core.Commands;
 
-// ver 2017 04 10 v 15
+
 public class Message implements Serializable {	/* l'oggetto prodotto da questa classe verrà serializzato ed usato per tx info */
 	private static final long serialVersionUID =1;	
 	

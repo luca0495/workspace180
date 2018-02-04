@@ -1,13 +1,10 @@
 package database;
 
-import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 
 public class MQ_Insert {
 
@@ -18,6 +15,18 @@ public class MQ_Insert {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo inserisce i dati utente nella tabella utente
+	 * @param name
+	 * @param surname
+	 * @param inq
+	 * @param mail
+	 * @param cf
+	 * @param tel
+	 * @param pass
+	 * @param i
+	 * @throws SQLException
+	 */
 	public static void insertUtente(
 			String name, 
 			String surname, 
@@ -104,6 +113,18 @@ public class MQ_Insert {
 			DBmanager.closeConnection();
 		}
 		
+		/**
+		 * Questo metodo inserisce i dati dei libri nella tabella libro
+		 * @param codice
+		 * @param name
+		 * @param surname
+		 * @param cat
+		 * @param title
+		 * @param disp
+		 * @param pren_cod
+		 * @return
+		 * @throws SQLException
+		 */
 		public static String insertBooksGetQuery(
 				int codice,
 				String name, 
@@ -138,6 +159,15 @@ public class MQ_Insert {
 			DBmanager.closeConnection();
 		}
 		
+		/**
+		 * Questo metodo inserisce i dati prenotazioni nella tabella prenotazioni
+		 * @param codice
+		 * @param id
+		 * @param priorita
+		 * @param data_inizio
+		 * @return query
+		 * @throws SQLException
+		 */
 		public static String insertBookingGetQuery(
 				int codice,
 				int id,
@@ -159,20 +189,6 @@ public class MQ_Insert {
 		}		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public static void insertLoans(String query) throws SQLException
 		{
 			DBmanager.openConnection();
@@ -180,19 +196,21 @@ public class MQ_Insert {
 			DBmanager.closeConnection();
 		}
 		
+		/**
+		 *
+		 * @param codice
+		 * @param id
+		 * @param data_inizio
+		 * @return query
+		 * @throws SQLException
+		 */
 		public static String insertLoansGetQuery(
 				int codice,
 				int id,
 				Date data_inizio
-				//Date data_fine, 
-				//boolean rientrato, 
-				//boolean ritirato, 
-				//boolean scaduto,
-				//boolean email_inviata 
 				) throws SQLException
 		{
 			String data_F="";
-			//String datacorrente = "current_date";
 			String falsita		= "false";
 			
 			String query = 		"INSERT INTO prestiti("
@@ -213,6 +231,15 @@ public class MQ_Insert {
 			return 	query;
 		}
 
+/**
+ * Questo metodo inserisce i dati dei prestiti
+ * @param codice
+ * @param id
+ * @param priorita
+ * @param data_inizio
+ * @return query
+ * @throws SQLException
+ */
 public static String insertLoansCodaGetQuery(		
 				int codice,
 				int id,
@@ -224,7 +251,7 @@ public static String insertLoansCodaGetQuery(
 			Date datacorrente = c.getTime();
 			int pr = 10;
 
-			String query = 		"INSERT INTO prenotazioni("
+			String query = 	"INSERT INTO prenotazioni("
 					+ "codice, "
 					+ "id, "
 					+ "priorità, "
@@ -237,11 +264,7 @@ public static String insertLoansCodaGetQuery(
 }				
 	
 
-	
-	
-		
-		
-		
+
 		
 public static void insertLoansCoda(String q) throws SQLException
 		{
@@ -250,16 +273,4 @@ public static void insertLoansCoda(String q) throws SQLException
 			DBmanager.closeConnection();
 }
 		
-		
-		
-/*
-public static void insertPassTemp(int x) throws SQLException
-{  // mettere null tutti
-	String query = "INSERT INTO utente(password_temp) VALUES("+x+")";
-	
-	DBmanager.openConnection();
-	DBmanager.executeUpdate(query);
-	DBmanager.closeConnection();
-}
-*/
 }

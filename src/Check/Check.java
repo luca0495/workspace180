@@ -10,19 +10,12 @@ import database.MQ_Read;
  * @author Luca,Mauro,Matteo
  *
  */
-/**
- * @author luca
- *
- */
+
 public class Check {
 
 	
 	// METODI	
-	
-	/**
-	 * @param s
-	 * @return
-	 */
+
 	public static boolean checkName(String s)
     {
 	    s = s.trim();
@@ -150,7 +143,12 @@ public class Check {
 	    return true;
     }
     
-  
+ 
+    /**
+     * Questo metedo verifica che nel database ci sia già una email 
+     * @param m
+     * @return 
+     */
     public static boolean checkMailExist(String m)
     {
 		String results = null;
@@ -162,7 +160,6 @@ public class Check {
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			System.out.println("errore check selectmail");
 		}
 		
 		if(results.equals("No Data"))
@@ -174,7 +171,12 @@ public class Check {
 			return true;
 		}	
     }
-    
+
+    /**
+     * Questo metedo verifica che nel database ci sia già una password
+     * @param m
+     * @return
+     */
     public static boolean checkPassExist(String m)
     {
 		String results = null;
@@ -186,7 +188,6 @@ public class Check {
 		catch (SQLException e)
 		{
 			e.printStackTrace();
-			System.out.println("errore check selectPass");
 		}
 		
 		if(results.equals("No Data"))
@@ -220,26 +221,7 @@ public class Check {
 
 	    return true;
     }
-	/*
-	public static boolean checkPass(String p)
-    {    	
-	    p = p.trim();
-	    
-	    String emailPattern = new String("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})");
 
-	    if(p == null || p.equals(""))
-	    {
-	    	return false;
-	    }
-	    
-	    if(!p.matches(emailPattern))
-	    {	
-	        return false;
-	    }    
-
-	    return true;
-    }
-*/	  
 	public static boolean checkPassEq(char[] c1,char[] c2)
     {
 		boolean isUguale = false;
@@ -274,6 +256,7 @@ public class Check {
 	
 	
 	/**
+	 * Questo metedo mi restituisce la verifica che nel database ci sia un codice fiscale esistente
 	 * @param c
 	 * @return
 	 */
@@ -319,6 +302,10 @@ public class Check {
 	    return true;
     }
 	 
+	/**
+	 * Questo metodo mi restituisce una password random
+	 * @return saltStr
+	 */
 	public static String s(){
 
 		String SALTCHARS = "abcdefghilmnopqrstuvz";
@@ -335,9 +322,10 @@ public class Check {
 	 
 	 // esamina password TEMPORANEA
 	 /**
+	 * Questo metodo controlla, nel database, i dati inseriti per loggarsi la prima volta
 	 * @param email
 	 * @param pass
-	 * @return
+	 * @return 
 	 * @throws SQLException
 	 */
 	public static String checkAdminLogInFIRST(String email, String pass) throws SQLException {
@@ -366,6 +354,7 @@ public class Check {
 	 
 	 // esamina password 
      /**
+     *  Questo metodo controlla, nel database, i dati inseriti per loggarsi dal bottone principale
      * @param email
      * @param pass
      * @return
@@ -387,20 +376,7 @@ public class Check {
            else
            {
                String[] datiUtente= MQ_Read.selectAdminLogIn(email, pass);
-      
-          	 System.out.println("check admin login");
-        	 System.err.println("email passata"+email);
-        	 System.err.println("pw    passata"+pass);               
-               
-        	 System.out.println(">>>"+datiUtente[0]);
-        	 System.out.println(">>>"+datiUtente[1]);
-        	 System.out.println(">>>"+datiUtente[2]);
-        	 System.out.println(">>>"+datiUtente[3]);
-        	 System.out.println(">>>"+datiUtente[4]);
-        	 System.out.println(">>>"+datiUtente[5]);
-
-               
-               
+           
                if(datiUtente[0].equals("Nessun Dato")||datiUtente[0].equals(""))
                {
                    res[0]=new String("L'Email Non Esiste");
@@ -456,8 +432,6 @@ public class Check {
 				 String nome, 
 				 String cognome, 
 				 String telefono, 
-				 //String email, 
-				 //String codicefiscale, 
 				 char[] pass, 
 				 char[] passC, 
 				 String inq)
@@ -466,10 +440,6 @@ public class Check {
 	    	return 	checkName(nome) 					&& 
 	    			checkName(cognome) 					&& 
 	    			checkTel(telefono) 					&& 
-	    			//checkMail(email) 					&& 
-	    			//!checkMailExist(email) 			&& 
-	    			//checkCF(codicefiscale) 			&& 
-	    			//checkCodFisExist(codicefiscale) 	&& 
 	    			checkPass(pass)	    				&& 
 	    			checkPass(passC) 					&& 
 	    			checkPassEq(pass, passC) 			&&

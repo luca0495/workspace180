@@ -1,22 +1,16 @@
 package gui;
 import connections.*;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.EventQueue;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import Core.Clients;
 
 import java.awt.Font;
-import java.awt.TextArea;
-import java.awt.EventQueue;
-import java.io.IOException;
-import java.util.Random;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -26,9 +20,10 @@ import javax.swing.JTextField;
 
 
 public class SystemClientStub extends SL_JFrame {
-	private boolean stubok			=false;
-	private boolean repeatconn		=true;
-	private int 	repeatconnCount = 1;
+
+	private static final long serialVersionUID = 1L;
+
+
 	private Client  me ;
 	
 	

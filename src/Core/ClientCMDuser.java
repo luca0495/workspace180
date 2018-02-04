@@ -161,10 +161,7 @@ public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 						break;
 					}
 			}
-			
-			System.out.println("indirizzo email utilizzato dal srv: "+me.getUSERNAME());
-			System.out.println("tipo di 	server : "+ datasetting[3]);
-			System.out.println("indirizzo 	server : "+ me.getSRVaddress());
+		
 			
 			StartWindow.getTextField_3().setText(me.getSRVaddress());
 			

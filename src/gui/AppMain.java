@@ -55,7 +55,6 @@ public class AppMain extends SL_JFrame  {
 	private Client  		me ;
 	private Setting 		s;
 	private AppReader 		c;
-	private AppLibrarian 	a;
 	private boolean			ready;
 	
 	private JFrame 			frame;

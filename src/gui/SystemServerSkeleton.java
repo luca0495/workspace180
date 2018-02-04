@@ -1,7 +1,6 @@
 package gui;
 import connections.*;
 import java.awt.Color;
-import java.awt.EventQueue;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -11,13 +10,11 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JComboBox;
 
 public class SystemServerSkeleton extends SL_JFrame {
-	private boolean 	stubok			=false;
-	private boolean 	repeatconn		=true;
-	private int 		repeatconnCount = 1;
+
+	private static final long serialVersionUID = 1L;
+
 	private ServerReal 	me ;
 		
 	// GRAFICA	
@@ -25,7 +22,7 @@ public class SystemServerSkeleton extends SL_JFrame {
 	private JTextArea text;
 	
 	public SystemServerSkeleton(ServerReal mme) throws Exception {
-		me=mme;
+		setMe(mme);
 		initialize();
 	}
 	
@@ -82,10 +79,6 @@ public class SystemServerSkeleton extends SL_JFrame {
 		btnNewButton_2.setBounds(27, 402, 89, 23);
 		frame.getContentPane().add(btnNewButton_2);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(212, 335, 257, 20);
-		frame.getContentPane().add(comboBox);
-		
 	}
 
 	
@@ -105,5 +98,13 @@ public class SystemServerSkeleton extends SL_JFrame {
 		
 		text.setText(msg);
 		
+	}
+
+	public ServerReal getMe() {
+		return me;
+	}
+
+	public void setMe(ServerReal me) {
+		this.me = me;
 	}
 }
