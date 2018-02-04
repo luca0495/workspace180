@@ -3,6 +3,10 @@ import java.util.Queue;
 import java.util.LinkedList;
 import connections.MessageRealServer;
 
+	/**
+	 * @author Mauro De Salvatore
+	 *
+	 */
 	public class RequestsList {
 		
 		
@@ -17,6 +21,10 @@ import connections.MessageRealServer;
 		public RequestsList(){
 		}
 	
+		/**preleva primo elemento MessageRealServer dalla coda
+		 * @return
+		 * @throws InterruptedException
+		 */
 		public synchronized MessageRealServer take() throws InterruptedException{			
 			
 			
@@ -35,7 +43,12 @@ import connections.MessageRealServer;
 			notifyAll();
 			return obj;
 		}
-		
+
+		/**inserisce in coda elemento MessageRealServer
+		 * @return
+		 * @throws InterruptedException
+		 */
+			
 		public synchronized void put(MessageRealServer objName) throws InterruptedException{
 			incWr();
 				

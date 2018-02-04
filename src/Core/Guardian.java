@@ -85,6 +85,9 @@ public class Guardian implements Runnable {
 	}
 	
 	//------------------------------------------------------------
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [BR]
+	 * @throws InterruptedException
+	 */
 	public void Val_BL() throws InterruptedException{	
 		int x;
 		
@@ -109,6 +112,9 @@ public class Guardian implements Runnable {
 		
 	}
 	//------------------------------------------------------------
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [PL]
+	 * @throws InterruptedException
+	 */	
 	public void Val_BR() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta BR");
@@ -135,7 +141,9 @@ public class Guardian implements Runnable {
 		}		
 	}
 	//------------------------------------------------------------
-	
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [PR]
+	 * @throws InterruptedException
+	 */	
 	public void Val_PL() throws InterruptedException{	
 		int x;
 	
@@ -160,6 +168,9 @@ public class Guardian implements Runnable {
 		
 	}
 	//------------------------------------------------------------
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [BKL]
+	 * @throws InterruptedException
+	 */
 	public void Val_PR() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta BR");
@@ -187,7 +198,9 @@ public class Guardian implements Runnable {
 		}		
 	}
 	//------------------------------------------------------------
-// INS BOOKING
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [BKR]
+	 * @throws InterruptedException
+	 */
 	public void Val_BKL() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta BKL");
@@ -239,10 +252,12 @@ public class Guardian implements Runnable {
 				Val_AL();
 		}		
 	}
-	
-// INS BOOKING 	
 	//------------------------------------------------------------
-	public void Val_AL() throws InterruptedException{	
+	
+	/**considera in base ai contatori se prendere dalla coda un comando da eseguire o passare al successivo controllo [AR]
+	 * @throws InterruptedException
+	 */
+		public void Val_AL() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta AL");
 		
@@ -268,7 +283,11 @@ public class Guardian implements Runnable {
 		}
 	}
 	//------------------------------------------------------------
-	public void Val_AR() throws InterruptedException{	
+		/**considera in base ai contatori se prendere dalla coda un comando da eseguire
+		 * @throws InterruptedException
+		 */
+		
+		public void Val_AR() throws InterruptedException{	
 		
 		//System.out.println("GPG :> Guardian valuta AR");
 		
@@ -287,13 +306,14 @@ public class Guardian implements Runnable {
 	}	
 	//-----------------------------------------------------------
 	
-	//TODO INSERISCI VALUTAZIONE PRENOTAZIONI
-	
 
+		//Procedure di Gestione Richieste	
 	
-
-//Procedure di Gestione Richieste	
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeBL(int cs) throws InterruptedException{		
 		System.out.println("GPG :> Guardian SERVE BL");		
 		
@@ -331,6 +351,11 @@ public class Guardian implements Runnable {
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 		
 	}
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeBR(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE BR");		
 		R.incBRcs();		//incrementa contatore in ogni caso
@@ -361,7 +386,11 @@ public class Guardian implements Runnable {
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 		
 	}
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */	
 	public void ServePR(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE PR");		
 		R.incPRcs();		//incrementa contatore in ogni caso
@@ -392,6 +421,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */	
 	public void ServePL(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE PL");		
 		R.incPLcs();		//incrementa contatore in ogni caso
@@ -421,7 +455,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */	
 	public void ServeAR(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE AR");		
 		R.incARcs();		//incrementa contatore in ogni caso
@@ -451,6 +489,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeAL(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE AL");		
 		R.incALcs();		//incrementa contatore in ogni caso
@@ -481,6 +524,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeBKL(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE BKL");		
 		R.incBKLcs();		//incrementa contatore in ogni caso
@@ -510,7 +558,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeBKR(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE BKR");		
 		R.incBKRcs();		//incrementa contatore in ogni caso
@@ -540,7 +592,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}	
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeSL(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE SL");		
 		R.incSLcs();		//incrementa contatore in ogni caso
@@ -571,7 +627,11 @@ public class Guardian implements Runnable {
 		// Thread di controllo
 		new Thread(new GuardianTimeOut(this,r,10)).start();	
 	}
-	
+	/**resetta contatori delle altre code, prende dalla coda un messageserver contenente comando da eseguire
+	 * e realserver go da sbloccare
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void ServeSR(int cs) throws InterruptedException{
 		System.out.println("GPG :> Guardian SERVE SR");		
 		R.incSRcs();		//incrementa contatore in ogni caso
@@ -607,7 +667,10 @@ public class Guardian implements Runnable {
 	
 	
 	// PROCEDURA CONTROLLO SCADENZE PRESTITI
-	
+	/** controllo su prestiti scaduti e aggiornamento flags 
+	 * @param cs
+	 * @throws InterruptedException
+	 */
 	public void CheckLoans() throws InterruptedException{
 		meS.getMeG().addMsg("GpG:> connessioni attive: "+meS.getOperatori().size()+"\n"+
 							"GpG:> Aggiorno Flag Prestiti scaduti... ");
@@ -624,7 +687,10 @@ public class Guardian implements Runnable {
 		Busy=false;
 	}
 	
-
+	/** controllo su flags di prestiti scaduti ed invio email di avviso 
+	 * @param cs
+	 * @throws InterruptedException
+	 */	
 	public void checkLoansSendEmail() throws InterruptedException{
 		String [] em=null;
 		

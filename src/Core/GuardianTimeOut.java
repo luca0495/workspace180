@@ -12,6 +12,13 @@ int 		TOMillisenconds ;
 Message 	Mess;	
 	
 	
+/**creato dal Guardiano, monitorizza lo stato del messaggio con cui viene inizializzato, 
+ * se dopo TOMmilliseconds di attesa il messaggio servito é lo stesso , sblocca il BUSY del Guardiano
+ * ritenendolo bloccato da un eccezione imprevista
+ * @param Gpg
+ * @param Mes
+ * @param TOM
+ */
 public GuardianTimeOut(Guardian Gpg,MessageRealServer Mes,int TOM) {
 	GpG				=Gpg;
 	TOMillisenconds	=TOM;

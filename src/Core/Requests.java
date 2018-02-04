@@ -1,5 +1,9 @@
 package Core;
 
+/**
+ * @author Mauro
+ *
+ */
 public class Requests {
 	
 	private static int Max;
