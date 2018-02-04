@@ -19,11 +19,9 @@ import gui.AppMain;
  */
 public class ClientCMDuser {
 	
-<<<<<<< HEAD
+
 	/**invia il comando di user password recovery con cui il server spedira una mail con una nuova password temporanea all'utente
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -60,11 +58,9 @@ public class ClientCMDuser {
 
 	//UserPasswordDelTemp
 	
-<<<<<<< HEAD
+
 	/**invia al server il comando di cancellazione password temporanea, permettendo al successivo login di entrare normalemente.
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -97,11 +93,9 @@ public class ClientCMDuser {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
-<<<<<<< HEAD
+
 /**il ritorno indica l'avvenuta cancellazione password temp
-=======
 /**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
  * @param me
  * @param mes
  * @param Mb
@@ -132,11 +126,9 @@ public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 	
 	
 	
-<<<<<<< HEAD
+
 	/**lancia una query per ricevere dati setting applicazione
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param StartWindow
 	 */

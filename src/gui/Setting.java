@@ -33,12 +33,9 @@ public class Setting extends SL_JFrame{
 	static int 			userRow = 0;
 	static int			rows = 0;
     static int			cols = 0; 		    
-<<<<<<< HEAD
-		    
-	
+
 	public 	JTextField			text;	    
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
 		    
 	private Setting 			w;	
 	private JFrame 				frmSchoolib;

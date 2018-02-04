@@ -93,14 +93,9 @@ public class Account extends SL_JFrame{
     private JLabel 				lblMAIL;
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
-<<<<<<< HEAD
 
-	
 	private String 				emailres;
 
-
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;
@@ -282,15 +277,9 @@ public class Account extends SL_JFrame{
 		panelAccount.add(btnDelete);
 // Panel Account
 		
-<<<<<<< HEAD
-<<<<<<< HEAD
 			btnDelete.setBounds(192, 381, 193, 54);
 			panelAccount.add(btnDelete);
-			
-=======
->>>>>>> miglioramenti
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
 			JButton btnModify = new JButton("Modifica Profilo");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -302,20 +291,12 @@ public class Account extends SL_JFrame{
 					
 					//************************************************************
 					String email = lblSetEmail.getText();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 					//System.out.println("passo email    :"+email);
 					//System.out.println(" settato finestra attiva : "+getW().toString());	
-=======
->>>>>>> miglioramenti
-=======
+
 					setEmailres(email);
-					
-					
->>>>>>> conflitit
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
 					me.setSql(email);				
 					me.setActW(getW());
 					me.setActF(frmSchoolib);
@@ -333,15 +314,9 @@ public class Account extends SL_JFrame{
 					System.err.println("finesta attiva "+me.getActW().toString());
 					
 					Account x = (Account)me.getActW();
-<<<<<<< HEAD
-<<<<<<< HEAD
-					x.setEmailOLD(email);
-=======
+
 					x.setEmailOLD(email); // vedere qui
->>>>>>> miglioramenti
-=======
-					x.setEmailOLD(email); // vedere qui
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
 					
 					System.err.println("finesta attiva tipo: "+ x.getT());
 					
@@ -350,44 +325,7 @@ public class Account extends SL_JFrame{
 			});
 			btnModify.setBounds(428, 381, 186, 54);
 			panelAccount.add(btnModify);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
 		
-		JButton btnModify = new JButton("Modifica Profilo");
-		btnModify.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				panelAccount.setVisible(false);
-				panelModify.setVisible(true);				
-				//************************************************************
-				String email = lblSetEmail.getText();
-				//System.out.println("passo email    :"+email);
-				//System.out.println(" settato finestra attiva : "+getW().toString());	
-				me.setSql(email);				
-				me.setActW(getW());
-				me.setActF(frmSchoolib);
-				me.setActC(c);				
-				try {
-					System.out.println("GUI account:> ottenuti dati user ");
-				me.setCliType(Clients.Librarian);	
-					me.getCmdLIST().put(Commands.UserREADbyEmail);
-				} catch (InterruptedException e2) {
-					System.out.println("GUI account:> NON ottenuti dati user ");	
-					e2.printStackTrace(); 
-				}
-				//*************************************************************
-				System.out.println(" gui account comando modifica  ");	
-				System.err.println("finesta attiva "+me.getActW().toString());
-				
-				Account x = (Account)me.getActW();
-				System.err.println("finesta attiva tipo: "+ x.getT());
-				
-				
-			}
-		});
 		btnModify.setBounds(428, 381, 186, 54);
 		panelAccount.add(btnModify);
 		lblReturnBack.setBounds(835, 11, 30, 30);
@@ -456,14 +394,7 @@ public class Account extends SL_JFrame{
 		//lblSetTel.setText(user[5]);
 		lblSetTel.setBounds(118, 294, 184, 20);
 		panelAccount.add(lblSetTel);
->>>>>>> Migliorerie varie
-=======
 
->>>>>>> miglioramenti
->>>>>>> nnnn
-=======
-
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
@@ -600,14 +531,8 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				if (!getTxtMailMod().equals(emailOLD)) {			
-					
-			
-<<<<<<< HEAD
+
 					//checkmail();
-=======
-					checkmail();
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
-				
 				
 				}
 			}
@@ -703,6 +628,7 @@ public class Account extends SL_JFrame{
 		
 		JButton btnModData = new JButton("Modifica Dati");
 		btnModData.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
 
 				//Assegna a delle variabili il contenuto dei text field
@@ -713,8 +639,8 @@ public class Account extends SL_JFrame{
 				String inq 				= txtInqMod.getText();
 				String tel 				= txtTelMod.getText();
 				String stato 			= TypePerson;
-<<<<<<< HEAD
 
+/*
 				//************************************************************
 				try
 				{
@@ -740,9 +666,11 @@ public class Account extends SL_JFrame{
 					e.printStackTrace();
 				}					
 				//*************************************************************	
-				
+			
 			}	
-=======
+*/	
+			
+			
 				System.out.println("1");				
 
 				//TEST OK 
@@ -825,7 +753,6 @@ public class Account extends SL_JFrame{
 					break;
 				} 
 		}		
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	});
 	
 		btnModData.setBounds(301, 391, 175, 67);

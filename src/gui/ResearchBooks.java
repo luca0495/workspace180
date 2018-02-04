@@ -71,17 +71,12 @@ public class ResearchBooks extends SL_JFrame {
 	private Client  		me ;
 	private static ClientConnectionController ccc;
 	private ResearchBooks 	w;
-<<<<<<< HEAD
+
 	private JFrame 		frame;
 	private JTextField 	textField;
     private JButton 	button_1;		//tasto riconsegna
     private JButton 	btnNewButton;	//tasto ritirato
-    
-=======
-	private JFrame frame;
-	private JTextField textField;
-    private JButton button_1;//tasto riconsegna
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
     private JTable tableBooks;
     private JRadioButton rdbtnStoricoPrenotazioni;
 	protected String 	ValToSearch;
@@ -833,7 +828,6 @@ public class ResearchBooks extends SL_JFrame {
 		lblDataRiconsegna.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDataRiconsegna.setBounds(151, 540, 98, 14);
 		panelResearch.add(lblDataRiconsegna);
-<<<<<<< HEAD
 		
 		setBtnNewButton(new JButton("Ritirato"));
 		getBtnNewButton().addActionListener(new ActionListener() {
@@ -865,8 +859,8 @@ public class ResearchBooks extends SL_JFrame {
 		});
 		getBtnNewButton().setBounds(31, 493, 110, 23);
 		panelResearch.add(getBtnNewButton());
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
+
 	
 		
 	}

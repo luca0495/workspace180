@@ -2,14 +2,11 @@ package Core;
 import java.util.Queue;
 import java.util.LinkedList;
 
-<<<<<<< HEAD
-
 	/**
 	 * @author Mauro De Salvatore
 	 *
 	 */
-=======
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
+
 
 	public class CommandsList {
 		

@@ -18,11 +18,9 @@ import connections.MessageBack;
  */
 public class ClientCMDBooking {
 
-<<<<<<< HEAD
+
 	/**spedisce al server il comando di cancellazione prenotazione
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -61,11 +59,9 @@ public class ClientCMDBooking {
 		}	
 	}
 	
-<<<<<<< HEAD
+
 	/**	/**il messaggio di ritorno dal server é la conferma della prenotazione eliminata
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 */
@@ -104,13 +100,11 @@ public class ClientCMDBooking {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
-<<<<<<< HEAD
+
 	
 	
 	/**il messaggio di ritorno dal server viene usato per ripopolare la jtable booking
-=======
 	/**
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 * @param Mb

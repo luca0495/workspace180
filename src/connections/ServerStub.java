@@ -7,10 +7,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.io.EOFException;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 
->>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 
 
 /**
