@@ -9,7 +9,8 @@ import connections.MessageBack;
 
 public class ClientCMDBook {
 
-	/**
+	/** spedisce al server comando bookexecutequery, la query viene prima memorizzata nel campo sql del Client,
+	 * nella creazione del messaggio viene copiato nel campo sql. il ritorno é gestito da BookpopulateRES 
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -43,7 +44,7 @@ public class ClientCMDBook {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
-	/**
+	/**il messaggio di ritorno dal server viene usato per ripopolare la jtable book
 	 * @param me
 	 * @param mes
 	 * @param Mb

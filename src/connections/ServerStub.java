@@ -9,6 +9,10 @@ import java.io.EOFException;
 import java.io.IOException;
 
 
+/**
+ * @author Mauro
+ *
+ */
 public class ServerStub implements Serializable, IServer {
 
 	private static final long serialVersionUID = 1L;
@@ -117,6 +121,7 @@ public class ServerStub implements Serializable, IServer {
 				return mb;
 			}		
 	}		
+		
 		public void closeConnectionSS() throws EOFException {
 			MessageBack msg=null;
 			

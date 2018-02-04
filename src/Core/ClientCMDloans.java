@@ -13,7 +13,7 @@ import connections.MessageBack;
 
 public class ClientCMDloans {
 
-	/**
+	/**spedisce al server il comando richiesta prestito
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -46,8 +46,8 @@ public class ClientCMDloans {
 		}	
 	}
 
-	/**
-	 * @param me
+	/**spedisce al server il comando ritorno prestito
+	 * @param me 
 	 * @throws SendFailedException
 	 * @throws MessagingException
 	 * @throws SQLException
@@ -84,7 +84,7 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
-	/**
+	/**il ritorno é la conferma dell'avvenuta registrazione del ritorno prestito
 	 * @param me
 	 * @param mes
 	 * @param Mb
@@ -107,7 +107,7 @@ public class ClientCMDloans {
 	
 	
 	
-	/**
+	/**spedisce al server il comando di cancellazione prestito
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -140,7 +140,7 @@ public class ClientCMDloans {
 		}	
 	}
 	
-	/**
+	/**il ritorno rappresenta la conferma dell'avvenuta cancellazione prestito
 	 * @param me
 	 * @param mes
 	 * @param Mb
@@ -160,7 +160,7 @@ public class ClientCMDloans {
 		}
 	}	
 
-	/**
+	/**invia al server la richiesta tabella prestiti per ripopolare tabella prestiti
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -190,7 +190,7 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
-	/**
+	/**il ritorno contiene i dati per ripopoalre tabella prestiti
 	 * @param me
 	 * @param mes
 	 * @param Mb

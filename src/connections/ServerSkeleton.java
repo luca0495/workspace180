@@ -8,6 +8,10 @@ import java.rmi.RemoteException;
 import Core.Commands;
 
 
+/**
+ * @author Mauro De Salvatore
+ *
+ */
 public class ServerSkeleton implements IServer, Runnable {
 			Socket 		_socket;
 			ServerReal 	_meServer;
@@ -17,6 +21,9 @@ public class ServerSkeleton implements IServer, Runnable {
 	private ObjectOutputStream ostream ;
 	
 	
+	/**accetta Socket, setta canali di comunicazione istream / ostream
+	 * @param socket
+	 */
 	public ServerSkeleton(Socket socket){	
 			_socket = socket;
 			try {
@@ -202,6 +209,7 @@ public class ServerSkeleton implements IServer, Runnable {
 	@Override
 	public void closeConnectionDB() {	
 	}		
+	
 	public ServerReal get_meServer() {
 		return _meServer;
 	}

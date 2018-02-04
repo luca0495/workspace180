@@ -19,7 +19,7 @@ import gui.AppMain;
  */
 public class ClientCMDuser {
 	
-	/**
+	/**invia il comando di user password recovery con cui il server spedira una mail con una nuova password temporanea all'utente
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -56,7 +56,7 @@ public class ClientCMDuser {
 
 	//UserPasswordDelTemp
 	
-	/**
+	/**invia al server il comando di cancellazione password temporanea, permettendo al successivo login di entrare normalemente.
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -89,7 +89,7 @@ public class ClientCMDuser {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
-/**
+/**il ritorno indica l'avvenuta cancellazione password temp
  * @param me
  * @param mes
  * @param Mb
@@ -120,7 +120,7 @@ public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 	
 	
 	
-	/**
+	/**lancia una query per ricevere dati setting applicazione
 	 * @param me
 	 * @param StartWindow
 	 */
@@ -174,7 +174,7 @@ public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 	
 	}
 	
-	
+	//test
 	public static void ClientGetDataFromSettingTestResult(String[]datasetting) {
 		//test
 		System.out.println("ottengo campo 0 :"+datasetting[0]);
