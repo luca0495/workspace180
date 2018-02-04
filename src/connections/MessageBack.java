@@ -10,6 +10,10 @@ import javax.swing.JTable;
 
 
 // ver 2017 04 01 v7
+/**
+ * @author Mauro De Salvatore
+ * 
+ */
 public class MessageBack implements Serializable {	/* l'oggetto prodotto da questa classe verrà serializzato ed usato per tx info */
 	private static final long serialVersionUID =1;	
 	

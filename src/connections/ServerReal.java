@@ -2311,7 +2311,9 @@ public class ServerReal extends ServerSkeleton {
 		this.datitabellaLoans = datitabellaLoans;
 	}
 //**********************************************************************************************************************************************	
-	/**
+	/**accetta id_utente e id_book, check su PRESTITI, se l'utente ha gia ricevuto il prestito per 2 volte, 
+	 * setCkkResult1== "SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (2) dello stesso libro raggiunto",
+	 * altrimenti   == "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO "
 	 * @param idut
 	 * @param idbook
 	 */
@@ -2332,7 +2334,9 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress1(false);		
 	}
 //**********************************************************************************************************************************************	
-	/**
+	/**	/**accetta id_utente e id_book, check su PRESTITI, se l'utente ha gia ricevuto 5 prestiti, 
+	 * setCkkResult2== "SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prestiti (5) per lo stesso utente raggiunto ",
+	 * altrimenti   == "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO "
 	 * @param idut
 	 * @param idbook
 	 */
@@ -2354,7 +2358,9 @@ public class ServerReal extends ServerSkeleton {
 		setChkinprogress2(false);		
 	}
 //**********************************************************************************************************************************************	
-		/**
+	/**	/**accetta id_utente e id_book, check su PRESTITI, se l'utente ha almeno un prestito scaduto, 
+	 * setCkkResult3== "SRV :> Loans ASK :> OK - PRESTITO NEGATO PER prestito SCADUTO risultante ",
+	 * altrimenti   == "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO "
 		 * @param idut
 		 * @param idbook
 		 */
@@ -2377,7 +2383,9 @@ public class ServerReal extends ServerSkeleton {
 			setChkinprogress3(false);		
 		}
 //**********************************************************************************************************************************************	
-		/**
+		/**	/**accetta id_utente e id_book, check su PRENOTAZIONI, se l'utente ha giá 10 prenotazioni, 
+		 * setCkkResult4== "SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (10) dello stesso utente ",
+		 * altrimenti   == "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO "
 		 * @param idut
 		 * @param idbook
 		 */
@@ -2403,6 +2411,10 @@ public class ServerReal extends ServerSkeleton {
 		
 		
 		// *************************************************************	
+	/**accetta Message e restituisce un MessageRealServer aggiungendo il riferimento al Client
+	 * @param msg
+	 * @return
+	 */
 	public MessageRealServer MessageEncapsulation (Message msg){
 		MessageRealServer mrs=new MessageRealServer(msg, this);
 		return mrs;
