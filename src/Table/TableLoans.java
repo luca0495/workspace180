@@ -224,7 +224,7 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
 		String query=null;
 		
 		System.out.println("Client me " + me.toString());		
-		System.out.println("Client me type " + me.getCliType().toString());		
+		//System.out.println("Client me type " + me.getCliType().toString());		
 		System.out.println("Valore ritornato:" + x);	
 		System.out.println("RICONOSCO COME UTENTE : "+me.getIdut());
 

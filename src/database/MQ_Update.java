@@ -73,6 +73,93 @@ public class MQ_Update {
 	 * @param col
 	 * @throws SQLException
 	 */
+
+	
+	public static int updateLoansRetired(int idut, int idbook) throws SQLException
+	{	int prestitiaggiornati=0;
+	System.out.println(90);
+	String qctll = "select count (codice) from prestiti WHERE id='"+idut+"'AND codice='"+idbook+"'AND rientrato 	= false AND ritirato= false";
+	
+	
+	try {
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(qctll);
+		DBmanager.closeConnection();
+		
+		System.out.println(91);	
+		if (!rs.isBeforeFirst()) {
+			prestitiaggiornati=0;			
+			System.out.println("NON HO TROVATO TUPLE DA AGGIORNARE");	
+		}else {		
+			rs.next();
+			prestitiaggiornati=rs.getInt(1);			
+			System.out.println("HO TROVATO TUPLE DA AGGIORNARE: "+prestitiaggiornati);
+
+			System.err.println("ho contato tuple da aggiornare : "+prestitiaggiornati);	
+			
+			String qup = "update prestiti set ritirato = true WHERE id ='"+idut+"'AND codice='"+idbook+"'AND rientrato 	= false AND ritirato = false";
+		
+		DBmanager.openConnection();
+		DBmanager.executeUpdate(qup);
+		DBmanager.closeConnection();			
+			
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+		System.out.println(92);
+	}
+
+	
+		
+		
+	
+		
+	
+
+		
+		
+		return prestitiaggiornati;
+		
+	}
+	
+	/**
+	 * Questo metodo aggiorna tutti i campi di un utente dopo averli modificati
+	 * @param r
+	 * @param input
+	 * @param col
+	 * @throws SQLException
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void updateTableLoans(String cd,String input, int col) throws SQLException
 	{	
 		

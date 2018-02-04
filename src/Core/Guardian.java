@@ -67,6 +67,8 @@ public class Guardian implements Runnable {
 													e.printStackTrace();
 				}
 				
+				//ctll ritiro non effettuato
+				//procedura rientro
 				
 			}	
 	

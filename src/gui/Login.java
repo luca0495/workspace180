@@ -226,7 +226,7 @@ public class Login extends SL_JFrame  {
 		passwordFieldUser.setBounds(287, 115, 282, 20);
 		PanelRegi.add(passwordFieldUser);
 		
-		passwordFieldUser.setText(	"Pass0$");
+	
 									 
 		txtUser = new JTextField();
 		
@@ -235,8 +235,6 @@ public class Login extends SL_JFrame  {
 		txtUser.setBounds(287, 75, 282, 20);
 		PanelRegi.add(txtUser);
 		txtUser.setColumns(10);
-		
-		txtUser.setText("dexa@hotmail.it");
 		
 		
 		JButton btnIndietro_1 = new JButton("Indietro");

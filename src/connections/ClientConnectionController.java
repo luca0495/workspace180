@@ -79,12 +79,15 @@ public class ClientConnectionController implements Runnable {
 												ResearchBooks x = (ResearchBooks)me.getActW();	
 												if (me.getIdut()==0) {
 													x.getButton_1().setVisible(false);//Guest
+													x.getBtnNewButton().setVisible(false);
 												}else {
 														if (me.getDatiUtente()[6].equals("Libraio")) {//librarian	
 															x.getButton_1().setVisible(true);
+															x.getBtnNewButton().setVisible(true);
 															System.out.println("per utente diverso da libraio copro il tasto riconsegna");
 														}else {
 															x.getButton_1().setVisible(false);//reader
+															x.getBtnNewButton().setVisible(false);
 														}
 												}			
 												//-----------------------------------------------------------------

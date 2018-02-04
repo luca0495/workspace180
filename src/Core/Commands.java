@@ -29,7 +29,7 @@ public enum Commands{
 			LoanListREMOVE			("Loan del 			"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanDELETE				("Loan Delete		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		4,	0),	
 			LoanReturn				("Loan Return		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		1,	0),	
-			
+			LoanRetired				("Loan Retired		"			,	SearchFor.Prenotation,	CommandsType.CHANGE,		1,	0),	
 			
 			LoanNoticeAvaiable		("Loan notice av	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),
 			LoanNoticeExpiration	("Loan notice ex	"			,	SearchFor.Prenotation,	CommandsType.CHANGE	,		4,	0),

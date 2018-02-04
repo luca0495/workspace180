@@ -119,6 +119,8 @@ public class Client implements Serializable, Runnable  {
 	private 			String  			Floans;
 	
 	private 			String 				DataLoanReturn;
+	private 			String 				DataLoanRetired;
+	
 	private 			String 				Sql;
 	private 			String 				Sql2;
 	private				String				pw;
@@ -265,6 +267,7 @@ public class Client implements Serializable, Runnable  {
 								case UserActivation: 													break;				
 								//	Loans
 								case LoanReturn:			ClientCMDloans.LoansReturned(this);			break;
+								case LoanRetired:			ClientCMDloans.LoansRetired(this);			break;
 								case LoanASK:				ClientCMDloans.LoansNew(this);				break;	//richiesta nuovo prestito -- System.err.println("leggo da client ... idbook: "+getIdbook()); 
 								case LoanNew: 															break;
 								case LoanListADD: 														break;	
@@ -1119,7 +1122,8 @@ setBusy(false);
 							case 	"SRV :> DEL pw TEMP :> OK"			:ClientCMDuser.UserPasswordDelTempRES(this, "OK", Mb);break;
 							case 	"SRV :> DEL pw TEMP :> NG"			:ClientCMDuser.UserPasswordDelTempRES(this, "NG", Mb);break;
 							
-							
+							case	"SRV :> Loans RETIRED :> OK"		:ClientCMDloans.LoansRetiredRES(this, "OK", Mb);break;
+							case	"SRV :> Loans RETIRED :> NG"		:ClientCMDloans.LoansRetiredRES(this, "NG", Mb);break;
 							
 							default:							
 								System.out.println("CLI :> ritornato da STUB messaggio : "+Mb.getText());
@@ -2221,6 +2225,12 @@ setBusy(false);
 			}
 			public void setIpadWww(String ipadWww) {
 				this.ipadWww = ipadWww;
+			}
+			public String getDataLoanRetired() {
+				return DataLoanRetired;
+			}
+			public void setDataLoanRetired(String dataLoanRetired) {
+				DataLoanRetired = dataLoanRetired;
 			}
 		
 	

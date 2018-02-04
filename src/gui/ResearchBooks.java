@@ -71,9 +71,11 @@ public class ResearchBooks extends SL_JFrame {
 	private Client  		me ;
 	private static ClientConnectionController ccc;
 	private ResearchBooks 	w;
-	private JFrame frame;
-	private JTextField textField;
-    private JButton button_1;//tasto riconsegna
+	private JFrame 		frame;
+	private JTextField 	textField;
+    private JButton 	button_1;		//tasto riconsegna
+    private JButton 	btnNewButton;	//tasto ritirato
+    
     private JTable tableBooks;
     private JRadioButton rdbtnStoricoPrenotazioni;
 	protected String 	ValToSearch;
@@ -89,6 +91,8 @@ public class ResearchBooks extends SL_JFrame {
     private JLabel  	lblPopUpCat;
 	private JButton 	btnPrenotazione;
 	private ImageIcon 	iconLogoQ;
+	
+	
 	
 	private boolean 	LastIDbookcheckinprogress=false;
 	private int 		LastIDbookcheckResult;
@@ -823,6 +827,37 @@ public class ResearchBooks extends SL_JFrame {
 		lblDataRiconsegna.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDataRiconsegna.setBounds(151, 540, 98, 14);
 		panelResearch.add(lblDataRiconsegna);
+		
+		setBtnNewButton(new JButton("Ritirato"));
+		getBtnNewButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String dataC = getDatariconsegna().getText();
+				if (dataC.equals("")||dataC==null||me.getSelectedIdBook()==0){
+					//campo nullo
+				
+				}else {
+					
+					//if (checkDate(dataC)) {
+						PopUp.infoBox(frame, 
+								"  idL "+me.getSelectedIdBook()+
+								"  idU "+me.getSelectedIdUser()+
+								"  la data di ritiro richiesta : "+dataC );
+						
+						try {
+								me.setDataLoanRetired(dataC);							
+								me.getCmdLIST().put(Commands.LoanRetired);
+										
+						} catch (InterruptedException e1) {e1.printStackTrace();}
+						
+				}
+				
+				
+				
+			}
+		});
+		getBtnNewButton().setBounds(31, 493, 110, 23);
+		panelResearch.add(getBtnNewButton());
 	
 		
 	}
@@ -1123,5 +1158,15 @@ public JButton getButton_1() {
 
 public void setButton_1(JButton button_1) {
 	this.button_1 = button_1;
+}
+
+
+public JButton getBtnNewButton() {
+	return btnNewButton;
+}
+
+
+public void setBtnNewButton(JButton btnNewButton) {
+	this.btnNewButton = btnNewButton;
 }
 }

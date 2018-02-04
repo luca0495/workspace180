@@ -25,6 +25,7 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	private String  	Wtype;
 	private int			IdUser;
 	private int			IdBook;
+	private int	        conteggio;
 	
 	private String[] 	RowUser;
 	private String[] 	RowBook;
@@ -164,6 +165,12 @@ public class MessageBack implements Serializable {	/* l'oggetto prodotto da ques
 	}
 	public void setUsertype(String usertype) {
 		this.usertype = usertype;
+	}
+	public int getConteggio() {
+		return conteggio;
+	}
+	public void setConteggio(int conteggio) {
+		this.conteggio = conteggio;
 	}
 
 

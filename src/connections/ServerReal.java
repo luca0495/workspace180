@@ -1080,8 +1080,31 @@ public class ServerReal extends ServerSkeleton {
 										System.out.println("SYS BL :> srv ritorna "+x.getText());
 										return x;
 										//break;										
-
+									
+									case LoanRetired://aggiorna campo flag ritirato
 										
+										//ChkDBandTab.tableExistLoans();
+										M.getMsg().getSelectedIdBook();
+										M.getMsg().getSelectedIdUser();
+										System.out.println("99");
+										
+										
+										try {
+											//query di aggiornamento campo ritirato	
+											
+										int aggiornate = MQ_Update.updateLoansRetired(M.getMsg().getSelectedIdUser(), M.getMsg().getSelectedIdBook());
+											
+											x.setConteggio(aggiornate);
+											x.setText(new String ("SRV :> Loans RETIRED :> OK"));	
+										} catch (Exception e) {
+											
+											x.setConteggio(0);
+											x.setText(new String ("SRV :> Loans RETIRED:> NG"));	
+										}
+										
+										
+										
+										return x;
 									case LoanReturn://procedura loan return...
 										
 										System.err.println("SRV> Arrivato al server loan return...");
