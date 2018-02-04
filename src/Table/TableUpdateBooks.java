@@ -22,68 +22,25 @@ public class TableUpdateBooks {
 	private static List<String> rowData;
 	private static int column;
 	private static boolean notOk = false;
-	
-	public static void check(JFrame frame, JTable t) 
-	{	
-		if(column == 1)
-		{
-			
-			
-			if(Check.checkName(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Nome Errato");
-				setNotOk(true);
-			}
-		}
-		else if(column == 2)
-		{
-			
-			if(Check.checkName(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Cognome Errato");
-				setNotOk(true);
-			}
-		}
-		else if(column == 3)
-		{
-			
-			if(Check.checkCat(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Categoria errata");
-				setNotOk(true);
-			}
-		}
-		else if(column == 4)
-		{
-			if(Check.checkTitle(input))
-			{
-				execute(frame, t);
-			}
-			else
-			{
-				PopUp.errorBox(frame, "Campo Invalido - Titolo errato");
-				setNotOk(true);
-			}
-		}
-	}
-	
+
+	/**
+	 * Questo metodo elimina una riga da prenotazione utente
+	 * @param r
+	 * @param t
+	 * @param me
+	 * @throws SQLException
+	 */
 		 public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
 		 	MQ_Delete.deleteRowBooks(r);
 		}
-	
+		 /**
+			 * Questo metodo elimina una riga da prenotazione utente
+			 * @param r
+			 * @param t
+			 * @param me
+			 * @throws SQLException
+			 */
 	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
 		 	String q = MQ_Delete.deleteRowBooksGetQuery(r);
@@ -109,22 +66,6 @@ public class TableUpdateBooks {
 		TableUpdateBooks.notOk = notOk;
 	}
 
-	public static void execute(JFrame frame, JTable t) 
-	{
-		try 
-		{
-			MQ_Update.updateTableCliente(rowData.get(0), input, column);
-			PopUp.infoBox(frame, "Modifica Corretta");
-			if(!isNotOk())
-			{
-				t.getSelectionModel().clearSelection();
-			}
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
-	}
 	
 	public static String getInput() {
 		return input;

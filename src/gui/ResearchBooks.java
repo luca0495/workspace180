@@ -502,7 +502,7 @@ public class ResearchBooks extends SL_JFrame {
 		panelResearch.add(lblEr2);
 		
 		lblEr3 = new JLabel();
-		lblEr3.setBounds(542, 438, 19, 14);
+		lblEr3.setBounds(555, 449, 19, 14);
 		panelResearch.add(lblEr3);
 		
 		lblEr4 = new JLabel();
@@ -606,9 +606,7 @@ public class ResearchBooks extends SL_JFrame {
 		System.out.println("1" );
 		lblAdd.addMouseListener(new MouseAdapter() {
 			@Override
-	
-	
-			
+
 			public void mousePressed(MouseEvent arg0) {				
 				if(Check.checkAllBooks(txtName.getText(), txtSurname.getText(),txtCat.getText(),txtTitle.getText()))//controllo sintattico
 				{

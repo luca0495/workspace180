@@ -120,12 +120,7 @@ public class Login extends SL_JFrame  {
 		lblClickHere.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//***
-				
-		//Assegna a delle variabili il contenuto dei text field
-				
-				
-				
+
 				String mail = getTxtEmail().getText();
 				setMailcheckinprogress(true);
 				
@@ -181,9 +176,7 @@ public class Login extends SL_JFrame  {
 				case "OK E":
 					System.out.println("ritornato dal check mail EXIST");
 					PopUp.infoBox(frmSchoolib, "Inizio PROCEDURA INVIO EMAIL CON PW TEMP");
-					//random password check ok
 					String newpass= Check.s();
-					//String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
 					
 					String q = MQ_Update.updateNewPassForgotGETQUERY(mail, newpass);
 					
@@ -267,7 +260,7 @@ public class Login extends SL_JFrame  {
 			
 				try 
 				{
-					// query su db ma su tabella SETTING
+				
 					System.out.println(" password temp letta"+MQ_Read.ReadPassTemp1(email));					
 					if(	MQ_Read.ReadPassTemp1(email) == null || (Integer.valueOf(MQ_Read.ReadPassTemp1(email)) == 0))
 					{
@@ -279,10 +272,7 @@ public class Login extends SL_JFrame  {
 						me.setActW(getW());
 						me.setActF(frmSchoolib);
 						me.setActC(c);
-						
-						//da client se login ok:
-						//Account lo = new Account(getActF,this);				
-						//me.setActW(lo);
+					
 						
 						try {
 							System.out.println("GUI login:> controllo user corretto ");
@@ -325,25 +315,13 @@ public class Login extends SL_JFrame  {
 				textField_2.setText(txtUser.getText());
 				passwordFieldUser.getPassword();
 				
-
-				
-				
 				PanelRegi.setVisible(false);
 				PanelFirstAcc.setVisible(true);
 				PanelForgPass.setVisible(false);
 				
-				
-				
-				
-				
-				
-				
 			}
 		});
 		PanelRegi.add(btnPrimoAccesso);
-		
-		
-		
 		
 		// panel FirstAcc rifare
 		JLabel lblUser_1 = new JLabel("user");

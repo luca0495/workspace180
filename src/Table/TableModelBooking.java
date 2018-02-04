@@ -11,10 +11,6 @@ public class TableModelBooking extends AbstractTableModel implements Serializabl
     private String[] columnNames = {"Codice", "Id", "Priorità","Data_Inizio"};
     private Object[][] data = null;
     
-    /**
-     * @param me
-     * @throws InterruptedException
-     */
     public TableModelBooking(Client me) throws InterruptedException
     {
 			setData(me.getDatabooking());
