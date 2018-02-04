@@ -206,6 +206,10 @@ public class Message implements Serializable {	/* l'oggetto prodotto da questa c
 	
 	
 	// Metodo utilizzato per verifica da GuardianTimeOut
+	/**ritorna booleano indicatore di corrispondenza tra il messaggio ed un altro passato come parametro x
+	 * @param x
+	 * @return
+	 */
 	public boolean equalTo(Message x){
 		boolean equal=false;
 		if (x.getMesId()	==	this.getMesId()){
