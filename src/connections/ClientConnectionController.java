@@ -1,9 +1,5 @@
 package connections;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
-import com.sun.org.apache.bcel.internal.generic.POP;
 
 import Core.Commands;
 import Table.TableBooking;
@@ -12,8 +8,7 @@ import Table.TableLoans;
 import gui.ResearchBooks;
 public class ClientConnectionController implements Runnable {
 	private 			Client 				me;
-	private 			MessageBack			mSgBack;
-	private 			String				mSg;	
+
 	private 			int 				FCC=500;	//FrequenzaControlloConnessione [millisecondi]
 	private 			int 				turniBusy=10;
 //------------------------------------------------------------------------	
@@ -148,6 +143,9 @@ public class ClientConnectionController implements Runnable {
 //------------------------------------------------------------------------
 	
 	
+	/**
+	 * @param me
+	 */
 	public static void ONEcontrol (Client me) {
 		
 			if (me.getMePannelBook().isVisible()) {			
@@ -208,7 +206,7 @@ public class ClientConnectionController implements Runnable {
 																			
 			}
 			
-}//me.getMeRes
+}
 		
 	
 	

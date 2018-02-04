@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.rmi.RemoteException;
 import java.io.EOFException;
 import java.io.IOException;
-import gui.SystemClientStub;
+
 
 public class ServerStub implements Serializable, IServer {
 	private ObjectInputStream in;
@@ -23,11 +23,7 @@ public class ServerStub implements Serializable, IServer {
 	
 	public ServerStub(Client client, String ADD) throws Exception{
 		Rifclient = client;
-		conntentativi=0;		
-	//	InetAddress addr= InetAddress.getByName(null);
-	//	InetAddress addr= InetAddress.getByName("192.168.1.3");		//test con Dexo note 
-	//	default su local host
-	//  addr= InetAddress.getByName("127.0.0.1");					//test con Local host		
+		conntentativi=0;			
 		
 		addr= InetAddress.getByName(ADD);							//test con Local host PASSATO dal client		
 	
@@ -60,25 +56,7 @@ public class ServerStub implements Serializable, IServer {
 			Rifclient.setStubok(false);
 			Rifclient.setRepeatconn(true);	
 	} 
-/*	
-	try {
-		_socket = new Socket(addr, IServer.PORT );
-			
-			System.out.print(mSg = "STUB:> Socket = " + _socket +"\n")		;// leggi testo nel messaggio);
-			Rifclient.getMeG().addMsg(mSg);	
-		out = new ObjectOutputStream(_socket.getOutputStream());
-		in 	= new ObjectInputStream(_socket.getInputStream());						
-			System.out.print(mSg = "STUB:> Check in/out:> OK "+"\n")		;// leggi testo nel messaggio);
-			Rifclient.getMeG().addMsg(mSg);		
-			Rifclient.setStubok(true);
-		
-	} catch (Exception e) {
-			System.out.print(mSg = "STUB:> Server Assente \n")				;// leggi testo nel messaggio);
-			Rifclient.getMeG().addMsg(mSg);	
-			Rifclient.setStubok(false);
-			Rifclient.setRepeatconn(true);	
-	} 
-*/
+
 }
 		
 	@Override
@@ -122,10 +100,8 @@ public class ServerStub implements Serializable, IServer {
 				}
 					
 					
-				
 				System.out.print(mSg = "STUB:> RITORNO DA TEST CONN \n"+ mb.getText())		;// leggi testo nel messaggio);
 				
-				//Rifclient.getMeG().addMsg(mSg);		
 				Rifclient.getActW().addMsg(mSg);		
 		
 				// test ok
@@ -153,82 +129,7 @@ public class ServerStub implements Serializable, IServer {
 				msg.setText("STUB:> problemi con la chiusura socket");
 			}
 			
-			
-			/*
-			try{
-				
-				_socket.close();
-				
-			}catch(IOException e ){
-				e.printStackTrace();
-			}
-			*/
-			
-			
 		}
-/*		
-		// TEST Metodi 1 2 3
-		@Override
-		public Message metodotest1() throws IOException, ClassNotFoundException {
-			Message x=null;
-			//out.println("<test1>");
-			out.writeObject(new Message(Core.Commands.Test1));
-			
-			String strResult;
-			try{
-				//strResult=in.readLine();
-				return (Message)in.readObject();
-				//strResult=in.readObject()	
-				//return strResult;
-			
-			}catch (IOException e){
-				e.printStackTrace();
-				//String x = "";
-				x.setText(new String ("problemi con metodo test 1"));
-				return x;
-			}	
-		}
-		@Override
-		public Message metodotest2() throws IOException, ClassNotFoundException {
-			Message x=null;
-			//out.println("<test1>");
-			out.writeObject(new Message(Core.Commands.Test2));
-			
-			String strResult;
-			try{
-				//strResult=in.readLine();
-				return (Message)in.readObject();
-				//strResult=in.readObject()	
-				//return strResult;
-			
-			}catch (IOException e){
-				e.printStackTrace();
-				//String x = "";
-				x.setText(new String ("problemi con metodo test 2"));
-				return x;
-			}	
-		}
-		@Override
-		public Message metodotest3() throws RemoteException, IOException, ClassNotFoundException {
-			Message x=null;
-			//out.println("<test1>");
-			out.writeObject(new Message(Core.Commands.Test3));
-			
-			String strResult;
-			try{
-				//strResult=in.readLine();
-				return (Message)in.readObject();
-				//strResult=in.readObject()	
-				//return strResult;
-			
-			}catch (IOException e){
-				e.printStackTrace();
-				//String x = "";
-				x.setText(new String ("problemi con metodo test 3"));
-				return x;
-			}
-		}
-*/		
 		// Connection DB
 		@Override
 		public MessageBack 	visualizza(Message M) {

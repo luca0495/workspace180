@@ -11,10 +11,21 @@ import connections.Message;
 import connections.MessageBack;
 import database.MQ_Read;
 import gui.AppMain;
-import gui.Setting;
 
+
+/**
+ * @author luca
+ *
+ */
 public class ClientCMDuser {
 	
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void UserPasswordRecovery(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.UserPasswordRecovery;
@@ -45,6 +56,13 @@ public class ClientCMDuser {
 
 	//UserPasswordDelTemp
 	
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void UserPasswordDelTemp(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.UserPasswordRemovetemp;
@@ -71,6 +89,11 @@ public class ClientCMDuser {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
+/**
+ * @param me
+ * @param mes
+ * @param Mb
+ */
 public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 		
 		System.out.println("ritorna da password del temp RES");
@@ -97,6 +120,10 @@ public static void UserPasswordDelTempRES(Client me,String mes,MessageBack Mb) {
 	
 	
 	
+	/**
+	 * @param me
+	 * @param StartWindow
+	 */
 	public static void ClientGetDataFromSetting(Client me,AppMain StartWindow) {
 		String dlh = "127.0.0.1";//default localhost
 				

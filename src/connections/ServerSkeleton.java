@@ -1,16 +1,12 @@
 package connections;
-import java.awt.event.WindowEvent;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
-import java.util.StringTokenizer;
-import javax.swing.SingleSelectionModel;
-
-
 import Core.Commands;
-import database.ChkDBandTab;
+
 
 public class ServerSkeleton implements IServer, Runnable {
 			Socket 		_socket;
@@ -42,8 +38,7 @@ public class ServerSkeleton implements IServer, Runnable {
 				case CHANGE:
 					System.out.println("Skeleton SWITCH Type:> rx cmd :> MODIFICA");
 					MessageBack mb = new MessageBack();
-					//mb.setText("SRVSKT:> Cmd accodato");
-					//ostream.writeObject(mb);
+
 					ostream.writeObject(modifica(myOper));
  					ostream.flush();					
 					//------------------------------------------------------------------------------------------
@@ -51,20 +46,17 @@ public class ServerSkeleton implements IServer, Runnable {
  					switch (myOper.getCommand()) {					
 					case tableExistBook:						
 						System.out.println("Skeleton SWITCH:>  test Table Book exist ");					
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-	 					//ostream.flush();										
+									
 						break;						
-						// TODO per Mauro verifica
+						
                     case tableExistLoans:     					
                     	System.out.println("Skeleton SWITCH:>  test Table Loans exist ");	
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-	 					//ostream.flush();									
+							
 						break;						
-						// TODO per Mauro verifica
+					
                     case tableExistPerson:     							
                     	System.out.println("Skeleton SWITCH:>  test Table Person exist ");	
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-		 				//ostream.flush();										
+									
 						break;		
  					//------------------------------------------------------------------------------------------
 					default: 					
@@ -89,27 +81,7 @@ public class ServerSkeleton implements IServer, Runnable {
  					//------------------------------------------------------------------------------------------
  					
  					switch (myOper.getCommand()) {					
- 					/*
- 					case tableExistBook:						
-						System.out.println("Skeleton :>  test Table Book exist ");					
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-	 					//ostream.flush();										
-						break;						
-						// TODO per Mauro verifica
-                    case tableExistLoans:     					
-                    	System.out.println("Skeleton :>  test Table Loans exist ");	
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-	 					//ostream.flush();									
-						break;						
-						// TODO per Mauro verifica
-                    case tableExistPerson:     							
-                    	System.out.println("Skeleton :>  test Table Person exist ");	
-						//ostream.writeObject(ChkDBandTab.tableExistBook());	
-		 				//ostream.flush();										
-						break;		
- 					
-					*/	
-					//------------------------------------------------------------------------------------------
+
 					default:
 						break;	
  					}
@@ -134,75 +106,40 @@ public class ServerSkeleton implements IServer, Runnable {
 				default:// CATEGORIE SPECIALI
 					
 						switch (myOper.getCommand()) {
-								//case "TestConnection":
-								
-								/*
-								case ConnTEST:
-									System.out.println(" Test connessione richiesto "); 
-									ostream.writeObject(testConnectionSS());
-				 					ostream.flush();		
-				 					break;										
-								
-								case ConnSTOP:
-									closeConnectionSS();
-									System.out.println("chiusura socket..."); 
-									break;
-								*/
-								
-								
+											
 									case tableExistBook:
 									
 									System.out.println("Skeleton :>  test DB exist ");
 									System.out.println("Skeleton :>  testaggio esistenza DB");
 									
-								//	ostream.writeObject(ChkDBandTab.tableExistBook());	
+								
 				 					ostream.flush();									
 									
 									
 									break;
 									
-									// TODO per Mauro verifica
+								
                                    case tableExistLoans:     
 									
 									System.out.println("Skeleton :>  test DB exist ");
 									System.out.println("Skeleton :>  testaggio esistenza DB");
 									System.out.println("Loans");
-								//ostream.writeObject(ChkDBandTab.tableExistBook());	
+									
 				 					ostream.flush();									
 									
 									
 									break;
-									// TODO per Mauro verifica
+									
                                    case tableExistPerson:     
    									
    									System.out.println("Skeleton :>  test DB exist ");
    									System.out.println("Skeleton :>  testaggio esistenza DB");
    									System.out.println("Loans");
-   								//ostream.writeObject(ChkDBandTab.tableExistBook());	
+   								
    				 					ostream.flush();									
    									
    									
    									break;
-								/*	
-								// metodi test
-								case Test1:
-									System.out.println("Skeleton :> M1");
-									ostream.writeObject(metodotest1());
-				 					ostream.flush();	
-									break;										
-								case Test2:
-									System.out.println("Skeleton :> M2");
-									ostream.writeObject(metodotest2());
-				 					ostream.flush();	
-									break;									
-								case Test3:
-									System.out.println("Skeleton :> M3");
-									ostream.writeObject(metodotest3());
-				 					ostream.flush();	
-									break;			
-							// metodi test
-							 *  			
-							 */
 								default:
 									System.out.println("Skeleton :> richiesta indefinita "); 
 									break;
@@ -210,12 +147,12 @@ public class ServerSkeleton implements IServer, Runnable {
 						}	//fine switch command
 						break;
 						
-				}			//fine switch command type	
+				}		
 						
 						
 						
 						
-				}//socket close
+				}
 				
 				_meServer.getMeS().getFrame().setVisible(false);			
 				_meServer.getSrv().setSrvconnDEC();		//DECREASE Server Connections counter
@@ -230,21 +167,7 @@ public class ServerSkeleton implements IServer, Runnable {
 				// Socket chiuso...
 			}	
 	}
-/*
-	@Override
-	public Message metodotest1() {
-		return null;
-	}
-	@Override
-	public Message metodotest2() {
-		return null;	
-	}	
-	@Override
-	public Message metodotest3() {
-		return null;
-	}
-*/	
-	// Connessione stub - skeleton
+
 	@Override
 	public MessageBack testConnectionSS() {
 		return null;

@@ -13,35 +13,23 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
 
 import Check.Check;
 import Check.PasswordBox;
 import Check.PopUp;
 import Core.Clients;
 import Core.Commands;
-import ProvaEmail.EmailSender;
+
 import connections.Client;
-import database.DBmanager;
-import database.LoadUser;
-import database.MQ_Delete;
-import database.MQ_Read;
+
 import database.MQ_Update;
 
 import javax.swing.JLabel;
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -55,10 +43,9 @@ public class Account extends SL_JFrame{
 
 	private static final long 	serialVersionUID = 1L;
 	private static String[] 	UserData = null;
-    private static JTextField 	s1;
-			static int 			userRow = 0;
-		    static int			rows = 0;
-		    static int			cols = 0; 		    
+	static int 			userRow = 0;
+    static int			rows = 0;
+    static int			cols = 0; 		    
 		    
 	private Account 			w;	
 	private AppType				t;
@@ -66,8 +53,6 @@ public class Account extends SL_JFrame{
 	private String				emailOLD;
 	
 	private JFrame 				frmSchoolib;
-	private AppReader 			a;
-	private LoadUser 			l = new LoadUser();
 	private Client 				me;
 	private JPanel 				panelAccount;
 	private JPanel 				panelModify;	
@@ -84,7 +69,6 @@ public class Account extends SL_JFrame{
     private JLabel 				lblSetInq;
     private JLabel 				lblSetTipoUte;
     private JLabel 				lblSetTel;
-    private JLabel 				lblSetNumPrenPend;
     private JLabel 				lblReturnBack;
 
 	private	JLabel 				lblChangeNameCheck; 
@@ -94,7 +78,6 @@ public class Account extends SL_JFrame{
 	private	JLabel 				lblChangePassConfCheck ;
 	private	JLabel 				lblChangeInqCheck ;
 	private	JLabel 				lblChangePhoneCheck ;
-	private	JLabel 				lblTypeUserMod ;
     private JLabel 				lblMAIL;
 
 	private JRadioButton 		rdbtnTypeUserLibMod;
@@ -111,7 +94,6 @@ public class Account extends SL_JFrame{
 	private JTextField 			txtTelMod;
 	private JTextField 			passwordFieldMod1;
 	private JTextField 			passwordFieldConfMod1;
-	private JTextField 			s = null;
 
 			String 				r = null;	
 	public 	String 				p1,p2,p3,p4,p5,p6,p7 = null; 	
@@ -132,12 +114,7 @@ public class Account extends SL_JFrame{
 	private JLabel lblPopUpPass;
 	
 	private String TypePerson = "Lettore";
-	private String input;
-	private List<String> rowData = new ArrayList<String>();
 
-	private String[] user = new String[4];
-	private String[] user1 = null;
-	private boolean User = true;
 	
 	// in test 
 	private String 		emailuser;
@@ -158,9 +135,6 @@ public class Account extends SL_JFrame{
 	private JPasswordField passwordField;
 	//private JPasswordField passwordFieldConfMod;
 
-	
-	private int 				column;
-	private int 				deleteRow;
     private int 				idUser ;
 
 	
@@ -214,67 +188,62 @@ public class Account extends SL_JFrame{
 		panelChangePass = new JPanel();
 		frmSchoolib.getContentPane().add(panelChangePass, "name_443629321471336");
 		panelChangePass.setLayout(null);
-		
-		//old ora comando passato da finestra login a client
-		//***
-		/*
-		 
-		 */
 			
-			JLabel lblNome = new JLabel("Nome: ");
-			lblNome.setBounds(10, 31, 42, 30);
-			panelAccount.add(lblNome);
-			
-			JLabel lblCognome = new JLabel("Cognome: ");
-			lblCognome.setBounds(10, 84, 59, 14);
-			panelAccount.add(lblCognome);
-			
-			JLabel lblPass = new JLabel("Password:");
-			lblPass.setBounds(10, 173, 86, 14);
-			panelAccount.add(lblPass);
-			
-			JLabel lblEmail = new JLabel("Email: ");
-			lblEmail.setBounds(10, 130, 46, 14);
-			panelAccount.add(lblEmail);
-			
-		JLabel lblInq = new JLabel("Inquadramento: ");
-		lblInq.setBounds(10, 217, 137, 14);
-		panelAccount.add(lblInq);
-		
-		lblSetTel = new JLabel();
-		//lblSetTel.setText(user[5]);
-		lblSetTel.setBounds(118, 294, 184, 20);
-		panelAccount.add(lblSetTel);
-		
-		lblSetCognome = new JLabel();
-		//lblSetCognome.setText(user[1]);
-		lblSetCognome.setBounds(118, 78, 174, 20);
-		panelAccount.add(lblSetCognome);
+		lblNome = new JLabel("Nome: ");
+		lblNome.setBounds(10, 31, 42, 30);
+		panelAccount.add(lblNome);
 		
 	    lblSetNome = new JLabel();
-	    //lblSetNome.setText(user[0]);
 		lblSetNome.setBounds(118, 31, 174, 20);
 		panelAccount.add(lblSetNome);
 		
-		lblSetInq = new JLabel();
-		//lblSetInq.setText(user[4]);
-		lblSetInq.setBounds(117, 211, 174, 20);
-		panelAccount.add(lblSetInq);
+		lblCognome = new JLabel("Cognome: ");
+		lblCognome.setBounds(10, 84, 98, 14);
+		panelAccount.add(lblCognome);
 		
-		lblSetEmail = new JLabel();
-		//lblSetEmail.setText(user[2]);
-		lblSetEmail.setBounds(118, 124, 174, 20);
-		panelAccount.add(lblSetEmail);
+		lblSetCognome = new JLabel();
+		lblSetCognome.setBounds(118, 78, 174, 20);
+		panelAccount.add(lblSetCognome);
 		
-		lblSetTipoUte = new JLabel();
-		//lblSetTipoUte.setText(user[6]);
-		lblSetTipoUte.setBounds(118, 252, 186, 20);
-		panelAccount.add(lblSetTipoUte);
+		lblPass = new JLabel("Password:");
+		lblPass.setBounds(10, 173, 86, 14);
+		panelAccount.add(lblPass);
 		
 		lblSetPass = new JLabel();
 		lblSetPass.setBounds(118, 173, 174, 20);
 		panelAccount.add(lblSetPass);
-		//***
+		
+		lblEmail = new JLabel("Email: ");
+		lblEmail.setBounds(10, 130, 46, 14);
+		panelAccount.add(lblEmail);
+		
+		lblSetEmail = new JLabel();
+		lblSetEmail.setBounds(118, 124, 174, 20);
+		panelAccount.add(lblSetEmail);
+			
+		lblInq = new JLabel("Inquadramento: ");
+		lblInq.setBounds(10, 217, 137, 14);
+		panelAccount.add(lblInq);
+		
+		lblSetInq = new JLabel();
+		lblSetInq.setBounds(140, 211, 174, 20);
+		panelAccount.add(lblSetInq);
+		
+		lblTipoUte = new JLabel("Tipo Utente:");
+		lblTipoUte.setBounds(10, 258, 74, 14);
+		panelAccount.add(lblTipoUte);
+		
+		lblSetTipoUte = new JLabel();
+		lblSetTipoUte.setBounds(118, 252, 186, 20);
+		panelAccount.add(lblSetTipoUte);
+		
+		lblTel = new JLabel("Telefono:");
+		lblTel.setBounds(10, 300, 59, 14);
+		panelAccount.add(lblTel);
+		
+		lblSetTel = new JLabel();
+		lblSetTel.setBounds(118, 294, 184, 20);
+		panelAccount.add(lblSetTel);
 		
 // PANEL ACCOUNT // ***************************************************************************************************
 		
@@ -299,19 +268,6 @@ public class Account extends SL_JFrame{
              PopUp.warningBox(frmSchoolib,"Questa azione cancellerà in modo completo e definitivo il profilo utenete attualmente in uso !!!");
 				if(PopUp.confirmBox(frmSchoolib))
 				{
-				//TODO DA PASSARE A CLIENT
-/*				//test OK da locale	
-				rowData = new ArrayList<String>();	
-				rowData.add(0, String.valueOf(idUser));				
-				try {
-					MQ_Delete.deleteRowPerson(rowData);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-				WindowEvent close = new WindowEvent(frmSchoolib, WindowEvent.WINDOW_CLOSING);
-			    frmSchoolib.dispatchEvent(close);
-*/
-					//************************************************************
 					int idUs = getIdUser();
 					
 					me.setIdut(idUs);				
@@ -331,18 +287,16 @@ public class Account extends SL_JFrame{
 			}
 			}
 		});
-			
-			JLabel lblTipoUte = new JLabel("Tipo Utente:");
-			lblTipoUte.setBounds(10, 258, 74, 14);
-			panelAccount.add(lblTipoUte);
-			
-			JLabel lblTel = new JLabel("Telefono:");
-			lblTel.setBounds(10, 300, 59, 14);
-			panelAccount.add(lblTel);
+		btnDelete.setBounds(192, 381, 193, 54);
+		panelAccount.add(btnDelete);
+// Panel Account
 		
+<<<<<<< HEAD
 			btnDelete.setBounds(192, 381, 193, 54);
 			panelAccount.add(btnDelete);
 			
+=======
+>>>>>>> miglioramenti
 			JButton btnModify = new JButton("Modifica Profilo");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -351,8 +305,11 @@ public class Account extends SL_JFrame{
 					panelModify.setVisible(true);				
 					//************************************************************
 					String email = lblSetEmail.getText();
+<<<<<<< HEAD
 					//System.out.println("passo email    :"+email);
 					//System.out.println(" settato finestra attiva : "+getW().toString());	
+=======
+>>>>>>> miglioramenti
 					me.setSql(email);				
 					me.setActW(getW());
 					me.setActF(frmSchoolib);
@@ -370,7 +327,11 @@ public class Account extends SL_JFrame{
 					System.err.println("finesta attiva "+me.getActW().toString());
 					
 					Account x = (Account)me.getActW();
+<<<<<<< HEAD
 					x.setEmailOLD(email);
+=======
+					x.setEmailOLD(email); // vedere qui
+>>>>>>> miglioramenti
 					
 					System.err.println("finesta attiva tipo: "+ x.getT());
 					
@@ -379,6 +340,116 @@ public class Account extends SL_JFrame{
 			});
 			btnModify.setBounds(428, 381, 186, 54);
 			panelAccount.add(btnModify);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+		
+		JButton btnModify = new JButton("Modifica Profilo");
+		btnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panelAccount.setVisible(false);
+				panelModify.setVisible(true);				
+				//************************************************************
+				String email = lblSetEmail.getText();
+				//System.out.println("passo email    :"+email);
+				//System.out.println(" settato finestra attiva : "+getW().toString());	
+				me.setSql(email);				
+				me.setActW(getW());
+				me.setActF(frmSchoolib);
+				me.setActC(c);				
+				try {
+					System.out.println("GUI account:> ottenuti dati user ");
+				me.setCliType(Clients.Librarian);	
+					me.getCmdLIST().put(Commands.UserREADbyEmail);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI account:> NON ottenuti dati user ");	
+					e2.printStackTrace(); 
+				}
+				//*************************************************************
+				System.out.println(" gui account comando modifica  ");	
+				System.err.println("finesta attiva "+me.getActW().toString());
+				
+				Account x = (Account)me.getActW();
+				System.err.println("finesta attiva tipo: "+ x.getT());
+				
+				
+			}
+		});
+		btnModify.setBounds(428, 381, 186, 54);
+		panelAccount.add(btnModify);
+		lblReturnBack.setBounds(835, 11, 30, 30);
+		lblReturnBack.setIcon(getIconLogoRA());
+		lblReturnBack.setBorder(null);
+		panelAccount.add(lblReturnBack);
+		
+		lblNome = new JLabel("Nome: ");
+		lblNome.setBounds(10, 31, 42, 30);
+		panelAccount.add(lblNome);
+		
+	    lblSetNome = new JLabel();
+	    //lblSetNome.setText(user[0]);
+		lblSetNome.setBounds(118, 31, 174, 20);
+		panelAccount.add(lblSetNome);
+		
+		lblCognome = new JLabel("Cognome: ");
+		lblCognome.setBounds(10, 84, 98, 14);
+		panelAccount.add(lblCognome);
+		
+		lblSetCognome = new JLabel();
+		//lblSetCognome.setText(user[1]);
+		lblSetCognome.setBounds(118, 78, 174, 20);
+		panelAccount.add(lblSetCognome);
+		
+		lblPass = new JLabel("Password:");
+		lblPass.setBounds(10, 173, 86, 14);
+		panelAccount.add(lblPass);
+		
+		lblSetPass = new JLabel();
+		lblSetPass.setBounds(118, 173, 174, 20);
+		panelAccount.add(lblSetPass);
+		
+		lblEmail = new JLabel("Email: ");
+		lblEmail.setBounds(10, 130, 46, 14);
+		panelAccount.add(lblEmail);
+		
+		lblSetEmail = new JLabel();
+		//lblSetEmail.setText(user[2]);
+		lblSetEmail.setBounds(118, 124, 174, 20);
+		panelAccount.add(lblSetEmail);
+			
+		lblInq = new JLabel("Inquadramento: ");
+		lblInq.setBounds(10, 217, 137, 14);
+		panelAccount.add(lblInq);
+		
+		lblSetInq = new JLabel();
+		//lblSetInq.setText(user[4]);
+		lblSetInq.setBounds(140, 211, 174, 20);
+		panelAccount.add(lblSetInq);
+		
+		lblTipoUte = new JLabel("Tipo Utente:");
+		lblTipoUte.setBounds(10, 258, 74, 14);
+		panelAccount.add(lblTipoUte);
+		
+		lblSetTipoUte = new JLabel();
+		//lblSetTipoUte.setText(user[6]);
+		lblSetTipoUte.setBounds(118, 252, 186, 20);
+		panelAccount.add(lblSetTipoUte);
+		
+		lblTel = new JLabel("Telefono:");
+		lblTel.setBounds(10, 300, 59, 14);
+		panelAccount.add(lblTel);
+		
+		lblSetTel = new JLabel();
+		//lblSetTel.setText(user[5]);
+		lblSetTel.setBounds(118, 294, 184, 20);
+		panelAccount.add(lblSetTel);
+>>>>>>> Migliorerie varie
+=======
+
+>>>>>>> miglioramenti
+>>>>>>> nnnn
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
@@ -459,22 +530,9 @@ public class Account extends SL_JFrame{
 		JLabel lblTypeUserMod = new JLabel("Tipo Utente");
 		lblTypeUserMod.setBounds(379, 226, 157, 19);
 		panelModify.add(lblTypeUserMod);
-	
-/*		
-		try {
-				//user = MQ_Read.retrieveUserId();
-			setUserdata( MQ_Read.retrieveUserIdbyemail(getEmailuser()));
-			
-			} catch (SQLException e1) {
-				
-				e1.printStackTrace();
-			}
-*/	
-//		user=getUserdata();
 		
 		txtNameMod = new JTextField();
 		txtNameMod.setEditable(false);
-		//txtNameMod.setText(user[1]);
 		txtNameMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -486,18 +544,6 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				checkname();
-				
-				
-		/*		
-				if(Check.checkName(txtNameMod.getText()))
-				{
-					lblChangeNameCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangeNameCheck.setIcon(iconLogoC);
-				}
-		*/
 			}
 		
 			
@@ -520,17 +566,6 @@ public class Account extends SL_JFrame{
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				checksurname();
-				
-				/*
-				if(Check.checkName(txtSurnameMod.getText()))
-				{
-					lblChangeSurnameCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangeSurnameCheck.setIcon(iconLogoC);
-				}
-				*/
 			}
 		});
 		txtSurnameMod.setBounds(120, 102, 224, 20);
@@ -552,52 +587,11 @@ public class Account extends SL_JFrame{
 			public void focusLost(FocusEvent arg0) {
 				if (!getTxtMailMod().equals(emailOLD)) {			
 					
-				
-					
+			
 					checkmail();
 				
 				
 				}
-				
-				
-				/*
-				System.out.println(" ***** sto controllando la email ");
-				System.out.println(" ***** sto controllando la email : REGISTRATA : "+getEmailuser());
-				System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod().getText());
-
-				//******************************************************************
-				if(Check.checkMail(getTxtMailMod().getText())){
-				System.out.println(" ***** sto controllando la email : SINTATTICAMENTE Corretta");
-				//sintatticamente corretta		
-								if (!getTxtMailMod().getText().equals(getEmailuser())) {
-									// modifica alla email
-									System.out.println(" ***** sto controllando la email : email MODIFICATA");
-									//************************************************************
-									String email = getTxtMailMod().getText();
-									me.setSql(email);				
-									me.setActW(getW());
-									me.setActF(frmSchoolib);
-									me.setActC(c);									
-									try {
-										System.out.println("GUI account:> ottenuti dati user ");
-									me.setCliType(Clients.Reader);	
-										me.getCmdLIST().put(Commands.UserREADcheckEmail);
-									} catch (InterruptedException e2) {
-										System.out.println("GUI account:> NON ottenuti dati user ");	
-										e2.printStackTrace(); 
-									}
-									//*************************************************************	
-								}else {	//non modificata
-									System.out.println(" ***** sto controllando la email : email non modificata");
-									lblChangeEmailCheck.setIcon(iconLogoT);
-								}	
-				}else {
-				//sintatticamente non corretta
-					System.out.println(" ***** sto controllando la email : sintatticamente non corretta");
-					lblChangeEmailCheck.setIcon(iconLogoC);
-				}
-				//******************************************************************
-				*/
 			}
 		});
 		getTxtMailMod().setBounds(120, 173, 224, 20);
@@ -607,7 +601,6 @@ public class Account extends SL_JFrame{
 		
 		txtInqMod = new JTextField();
 		txtInqMod.setEditable(false);
-		//txtInqMod.setText(user[5]);
 		txtInqMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -637,7 +630,6 @@ public class Account extends SL_JFrame{
 		
 		txtTelMod = new JTextField();
 		txtTelMod.setEditable(false);
-		//txtTelMod.setText(user[6]);
 		txtTelMod.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -744,9 +736,7 @@ public class Account extends SL_JFrame{
 						//************************************************************
 						try
 						{
-						// TEST DA LOCALE OK	
-						//MQ_Update.updateModUserId(getIdUser(),nome,cognome,mail,inq ,p,tel,stato);						
-											
+		
 						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, tel, stato);
 						me.setIdut(getIdUser());
 						me.setSql(Q);

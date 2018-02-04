@@ -2,18 +2,21 @@ package Core;
 import java.sql.SQLException;
 import javax.mail.MessagingException;
 import javax.mail.SendFailedException;
-
-import com.sun.org.apache.bcel.internal.generic.POP;
-
 import Check.PopUp;
 import Table.TableBooking;
-import Table.TableBooks;
 import connections.Client;
 import connections.Message;
 import connections.MessageBack;
 
 public class ClientCMDBooking {
 
+	/**
+	 * @param me
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
 	public static void BookingDelete(Client me) throws SendFailedException, MessagingException, SQLException, InterruptedException{	
 		String mSg;
 		Commands cmd = Commands.BookingListREMOVE;
@@ -46,6 +49,10 @@ public class ClientCMDBooking {
 		}	
 	}
 	
+	/**
+	 * @param me
+	 * @param mes
+	 */
 	public static void BookingDeleteRES(Client me,String mes) {
 		switch (mes){
 		case "OK": PopUp.infoBox(me.getActF(), 	"Prenotazione Eliminata con successo");					break;
@@ -83,6 +90,11 @@ public class ClientCMDBooking {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
+	/**
+	 * @param me
+	 * @param mes
+	 * @param Mb
+	 */
 	public static void BookingpopulateRES(Client me,String mes,MessageBack Mb) {
 		switch (mes){
 		case "OK": 

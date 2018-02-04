@@ -37,7 +37,6 @@ import Core.Commands;
 import ProvaEmail.EmailSender;
 import connections.Client;
 import database.DBmanager;
-import database.LoadUser;
 import database.MQ_Delete;
 import database.MQ_Read;
 import database.MQ_Update;
@@ -72,7 +71,6 @@ public class Setting extends SL_JFrame{
 	private Setting 			w;	
 	private JFrame 				frmSchoolib;
 	private AppReader 			a;
-	private LoadUser 			l = new LoadUser();
 	private Client 				me;
 
 	

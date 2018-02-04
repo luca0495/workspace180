@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import connections.MessageBack;
-import connections.MessageRealServer;
+
 
 public class ChkDBandTab {
 	

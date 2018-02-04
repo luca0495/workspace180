@@ -1,46 +1,34 @@
 package connections;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.io.Serializable;
+
 import java.net.Socket;
-import java.rmi.RemoteException;
-import java.sql.Connection;
-//import java.sql.Date;
+
 import java.util.Date;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.swing.JLabel;
+
 import javax.swing.JTable;
-import javax.swing.JTextField;
+
 import javax.swing.table.DefaultTableModel;
 
-import com.sun.corba.se.impl.presentation.rmi.IDLTypesUtil;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
 import Check.Check;
-import Check.PopUp;
-import Core.Clients;
-import Core.Commands;
+
 import Core.Guardian;
 import Core.Requests;
-import Core.SearchFor;
-import ProvaEmail.EmailSender;
-import Table.TableBooks;
-import Table.TableModelBooks;
-import Table.TableUpdateBooks;
 
-import gui.SystemClientStub;
+import ProvaEmail.EmailSender;
+
 import gui.SystemServerSkeleton;
 
 import database.*;
@@ -560,28 +548,7 @@ public class ServerReal extends ServerSkeleton {
 	}		
 		return AnswerM;
 	}
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-	//**------------------------------------------------------------------------------------------------------------- Modifica
-		
-	//**------------------------------------------------------------------------------------------------------------- Modifica
+
 	@Override
 	public MessageBack modifica(Message Mes) {	//	----> 	[	Guardian	[GpG]				]
 												//	---->	[	 			  Librarian	 		]
@@ -596,14 +563,6 @@ public class ServerReal extends ServerSkeleton {
 		MessageBack x 		= new MessageBack();
 		MessageBack Answer 	= new MessageBack();
 
-		
-		/*
-		if (!Srv.isDbOK()) {	
-			System.out.println("SRV CONTROLLO DI ESISTENZA DB NG");
-			x.setText("DB down");
-			return x;
-		}
-		 */
 
 		//**********************************************************************************		
 		switch (M.getMsg().getUType()) {			// estrae tipo di utente da Message 				
@@ -614,9 +573,7 @@ public class ServerReal extends ServerSkeleton {
 				switch ( M.getMsg().getCommand().getTarget()){
 
 				case Setting:	
-					
-					//SL	//-->[GpG [SL]] ---->[DB]	
-					//System.out.println("RealServer :> Rx Account");
+
 					try {					
 							System.out.println("RealServer :> Accodo M [ SL ]");
 							System.out.println("RealServer :> AL in attesa prima... "+Req.getSL().getWr());
@@ -657,8 +614,8 @@ public class ServerReal extends ServerSkeleton {
 				break;
 
 				
-				case Booking:		//BKL	//-->[GpG [BKL]] ---->[DB]	
-					//System.out.println("RealServer :> Rx Account");
+				case Booking:		
+				
 					try {					
 							System.out.println("RealServer :> Accodo M [ BKL ]");
 							System.out.println("RealServer :> AL in attesa prima... "+Req.getBKL().getWr());		
@@ -721,8 +678,7 @@ public class ServerReal extends ServerSkeleton {
 					}
 				break;
 			
-					case Account:		//AL	//-->[GpG [AL]] ---->[DB]	
-										//System.out.println("RealServer :> Rx Account");
+					case Account:		
 						try {					
 										System.out.println("RealServer :> Accodo M [ AL ]");
 										System.out.println("RealServer :> AL in attesa prima... "+Req.getAL().getWr());
@@ -1200,17 +1156,7 @@ public class ServerReal extends ServerSkeleton {
 											System.out.println("il libro "+idbook+" verra riassegnato a : "+iduserNext);
 											System.err.println("arrivato al server loan return... idusernext != 0");
 											//creo loans con il primo della lista...
-											
-											//*** aggiorno STATO del Libro [ Coda di utenti... ]								
-						
-											
-											// TODO AGGIORNA STATO LIBRO 
-											
-											 	
-											
-											
-											
-						//TODO PREVEDERE PASSAGGIO DELLA DATA DIVERSA DA DATACURRENT
+									
 											
 											if (!M.getMsg().getDateOfRequest().equals(null)) {
 												dataultimocontrollo=M.getMsg().getDateOfRequest();
@@ -1423,78 +1369,13 @@ public class ServerReal extends ServerSkeleton {
 									default:
 										break;
 								}
-								//******************************************************************************
-								/*
-								//16 01 2018 inserito switch per gestione diversi comandi PRENOTAZIONI
-								System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPrenotation ");					
-								try {
-									
-									ChkDBandTab.tableExistLoans();
 											
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> CHECK TABLE Loans Exist :> OK"));	
-								} catch (SQLException e) {
-									getMeS().addMsg(mSg);
-									x.setText(new String ("SRV :> CHECK TABLE Loans Exist :> NG..."));
-									System.out.println("problemi con controllo tabella Loans ");
-									e.printStackTrace();
-								}
-								System.out.println("SYS BL :> srv ritorna "+x.getText());
-								return x;
-								*/
-								//******************************************************************************												
 							} catch (InterruptedException e) {
 								System.out.println("RealServer :> Problemi Accodamento CMD PL");
 								e.printStackTrace();
 							}	
 							break;
 
-					
-					/*
-					 try {							
-					 
-						System.out.println("RealServer :> Accodo M [ PL ]");
-	
-	//TODO inserire nell algoritmo...
-	//TODO non esiste ancora il codice comando per GUARDIANO
-						
-						
-						System.out.println("RealServer :> PL in attesa prima... "+Req.getBL().getWr());
-				//Req.getPL().put(M);
-						
-						
-						System.out.println("RealServer :> PL in attesa dopo... "+Req.getBL().getWr());	
-						System.out.println("RealServer :> GO : "+Go);	
-						while (!Go){
-							try {
-								Thread.sleep(10);
-							} catch (Exception e) 
-							{}
-							System.out.println("REAL SERVER :> go "+Go);						
-						}	//Attesa del turno...
-						//******************************************************************************
-						System.out.println("REAL SERVER :> fine attesa \nREAL SERVER :> Gestisco RICHIESTA :> tableExistPrenotations ");					
-						try {
-							ChkDBandTab.tableExistPerson();
-							getMeS().addMsg(mSg);
-							x.setText(new String ("SRV :> CHECK TABLE Prenotations Exist :> OK"));	
-						} catch (SQLException e) {
-							getMeS().addMsg(mSg);
-							x.setText(new String ("SRV :> CHECK TABLE Prenotations Exist :> NG..."));
-							System.out.println("problemi con controllo tabella Prenotations");
-							e.printStackTrace();
-						}
-						
-						
-						System.out.println("SYS PL :> srv ritorna "+x.getText());
-						return x;
-						//******************************************************************************
-										
-					} catch (InterruptedException e) {
-						System.out.println("RealServer :> Problemi Accodamento CMD PL");
-						e.printStackTrace();
-					}	
-					*/
 
 				default:
 				//
@@ -1505,29 +1386,6 @@ public class ServerReal extends ServerSkeleton {
 				}
 			break;	
 
-			//**********************************************************************************	
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-			//**------------------------------------------------------------------------------------------------------------- Modifica
-		
-			
 			case Reader :						//-->[GpG [?R]] ---->[DB] 
 				System.out.println("RealServer :> Rx Reader");			
 				
@@ -2111,24 +1969,10 @@ public class ServerReal extends ServerSkeleton {
 												
 												System.out.println("il libro "+idbook+" verra riassegnato a : "+iduserNext);
 												System.err.println("arrivato al server loan return... idusernext != 0");
-												//creo loans con il primo della lista...
-												
-												//*** aggiorno STATO del Libro [ Coda di utenti... ]								
-							
-												
-												// TODO AGGIORNA STATO LIBRO 
-												
-												 	
-												
-												
-												
-							//TODO PREVEDERE PASSAGGIO DELLA DATA DIVERSA DA DATACURRENT
-												
+	
 												if (!M.getMsg().getDateOfRequest().equals(null)) {
 													dataultimocontrollo=M.getMsg().getDateOfRequest();
 												}
-												
-												
 												
 												//inserisce prossimo in lista prenotazioni come in prestito 
 												String qINS = MQ_Insert.insertLoansGetQuery(idbook, iduserNext,datacorrente);
@@ -2586,14 +2430,6 @@ public class ServerReal extends ServerSkeleton {
 	public void setGo(Boolean go) {
 		Go = go;
 	}
-	
-	/*
-	public MessageBack getmSgB() {
-		return mSgB;
-	}
-	public void setmSgB(MessageBack mSgB) {
-		this.mSgB = mSgB;
-	}
-	*/
+
 	
 }

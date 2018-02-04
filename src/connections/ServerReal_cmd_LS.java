@@ -7,6 +7,12 @@ import database.CheckDBSetting;
 public class ServerReal_cmd_LS {
 
 	
+	/**
+	 * @param ME
+	 * @param M
+	 * @param x
+	 * @return
+	 */
 	public static MessageBack exe (ServerReal ME,MessageRealServer M,MessageBack x) {
 		x.setText("eseguito");
 		//
