@@ -182,7 +182,7 @@ public class Client implements Serializable, Runnable  {
 										
 					while ( getCmdLIST().getCmdList().size() < 1){	//Attesa comandi...	//System.out.println("CLI :> cmdLIST.size : "+getCmdLIST().getCmdList().size());							
 						try {		//System.out.println("CLI :> IN ATTESA di COMANDI... dormo100");
-							Thread.sleep(100);
+							Thread.sleep(10);
 						} catch (Exception e) { e.printStackTrace();
 						}
 					}
