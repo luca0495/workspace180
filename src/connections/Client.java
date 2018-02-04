@@ -56,6 +56,10 @@ import gui.SL_JFrame;
 
 import java.awt.Component;
 
+/**
+ * @author Mauro De Salvatore
+ *
+ */
 public class Client implements Serializable, Runnable  {
 	
 
@@ -561,7 +565,9 @@ setBusy(false);
 //!!!! --------------------------										
 }//ClientConnectionTest
 
-	/**
+	/**il metodo accetta un Message contenente il comando ( Commands ) che invia al server, la risposta é contenuta in un MessageBack.
+	 * dipendentemente dai comandi inviati la risposta potra contenere nei parametri del MessageBack di ritorno dal server dati di 
+	 * diversa natura come recordset piuttosto che String  
 	 * @param MsgSend
 	 * @param Mb
 	 * @throws SendFailedException
@@ -1140,9 +1146,10 @@ setBusy(false);
 //	
 //*********************************************************************************************************************************************
 //	
-	
-	/**
-	 * @throws SendFailedException
+	/**il metodo accetta un Message contenente il comando ( Commands ) che invia al server, la risposta é contenuta in un MessageBack.
+	 * dipendentemente dai comandi inviati la risposta potra contenere nei parametri del MessageBack di ritorno dal server dati di 
+	 * diversa natura come recordset piuttosto che String  
+	 * @param MsgSend
 	 * @throws MessagingException
 	 * @throws SQLException
 	 * @throws InterruptedException
@@ -1171,6 +1178,7 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}		
+	
 		/**
 		 * @throws SendFailedException
 		 * @throws MessagingException
@@ -1837,6 +1845,9 @@ setBusy(false);
 			}	
 		}
 		
+		/**scrive nel campo testo predefinito della GUI (ReseachBooks) la stringa t
+		 * @param t
+		 */
 		public void printonResearch(String t) {
 			
 			JFrame x = getActF();
