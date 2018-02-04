@@ -146,10 +146,14 @@ public class ClientConnectionController implements Runnable {
 //------------------------------------------------------------------------
 	
 	
+<<<<<<< HEAD
 
 	/**esegue verifica pannello attivo nella GUI ResearchBook, in base al risultato
 	 * aggiorna la relativa jtable interrogando il server, i dati richiesti sono in relazione
 	 * al profilo utente in login ( settato sul Client ) 
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 */
 	public static void ONEcontrol (Client me) {

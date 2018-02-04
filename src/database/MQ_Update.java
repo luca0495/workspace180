@@ -73,6 +73,7 @@ public class MQ_Update {
 	 * @param col
 	 * @throws SQLException
 	 */
+<<<<<<< HEAD
 
 	
 	public static int updateLoansRetired(int idut, int idbook) throws SQLException
@@ -160,6 +161,8 @@ public class MQ_Update {
 	
 	
 	
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	public static void updateTableLoans(String cd,String input, int col) throws SQLException
 	{	
 		

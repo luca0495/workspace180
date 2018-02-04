@@ -13,7 +13,10 @@ public class ServerReal_cmd_LS {
 	 * @param x
 	 * @return
 	 */
+<<<<<<< HEAD
 	
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	public static MessageBack exe (ServerReal ME,MessageRealServer M,MessageBack x) {
 		x.setText("eseguito");
 		//

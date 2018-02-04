@@ -66,6 +66,14 @@ public class Account extends SL_JFrame{
 	private ImageIcon 			iconLogoRA;
 	private ImageIcon 			iconLogoQ;
 	
+	private JLabel              lblNome;
+	private JLabel              lblCognome;
+	private JLabel              lblPass;
+	private JLabel              lblEmail;
+	private JLabel              lblInq;
+	private JLabel              lblTipoUte ;
+	private JLabel              lblTel ;
+	
     private JLabel		 		lblSetNome;
     private JLabel 				lblSetCognome;
     private JLabel 				lblSetEmail;
@@ -85,11 +93,14 @@ public class Account extends SL_JFrame{
     private JLabel 				lblMAIL;
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
+<<<<<<< HEAD
 
 	
 	private String 				emailres;
 
 
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;
@@ -272,11 +283,14 @@ public class Account extends SL_JFrame{
 // Panel Account
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 			btnDelete.setBounds(192, 381, 193, 54);
 			panelAccount.add(btnDelete);
 			
 =======
 >>>>>>> miglioramenti
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 			JButton btnModify = new JButton("Modifica Profilo");
 			btnModify.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -290,6 +304,7 @@ public class Account extends SL_JFrame{
 					String email = lblSetEmail.getText();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 					//System.out.println("passo email    :"+email);
 					//System.out.println(" settato finestra attiva : "+getW().toString());	
 =======
@@ -299,6 +314,8 @@ public class Account extends SL_JFrame{
 					
 					
 >>>>>>> conflitit
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 					me.setSql(email);				
 					me.setActW(getW());
 					me.setActF(frmSchoolib);
@@ -317,10 +334,14 @@ public class Account extends SL_JFrame{
 					
 					Account x = (Account)me.getActW();
 <<<<<<< HEAD
+<<<<<<< HEAD
 					x.setEmailOLD(email);
 =======
 					x.setEmailOLD(email); // vedere qui
 >>>>>>> miglioramenti
+=======
+					x.setEmailOLD(email); // vedere qui
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 					
 					System.err.println("finesta attiva tipo: "+ x.getT());
 					
@@ -329,6 +350,7 @@ public class Account extends SL_JFrame{
 			});
 			btnModify.setBounds(428, 381, 186, 54);
 			panelAccount.add(btnModify);
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
@@ -439,6 +461,9 @@ public class Account extends SL_JFrame{
 
 >>>>>>> miglioramenti
 >>>>>>> nnnn
+=======
+
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 		
 // PANEL MODIFY // ****************************************************************************************************
 		
@@ -447,9 +472,9 @@ public class Account extends SL_JFrame{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//Per informazioni cercare la classe PopUp
-				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi:"
-						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C,"
-						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C,"
+				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi: \n"
+						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C, \n"
+						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C, \n"
 						       +          "Studente-5A,Studente-5B,Studente-5C,Insegnante,Tecnico,Amministrativo");
 			}
 		});
@@ -577,7 +602,11 @@ public class Account extends SL_JFrame{
 				if (!getTxtMailMod().equals(emailOLD)) {			
 					
 			
+<<<<<<< HEAD
 					//checkmail();
+=======
+					checkmail();
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 				
 				
 				}
@@ -684,6 +713,7 @@ public class Account extends SL_JFrame{
 				String inq 				= txtInqMod.getText();
 				String tel 				= txtTelMod.getText();
 				String stato 			= TypePerson;
+<<<<<<< HEAD
 
 				//************************************************************
 				try
@@ -712,6 +742,90 @@ public class Account extends SL_JFrame{
 				//*************************************************************	
 				
 			}	
+=======
+				System.out.println("1");				
+
+				//TEST OK 
+				setMailcheckinprogress(true);
+				//parte check mail...
+				
+				me.setSql2("Account");
+				checkmail();
+
+				while (isMailcheckinprogress()) {	//attendi... //System.out.println("attesa per check email exist");		
+					System.out.println("attendo check result"+getMailcheckResult());
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				//-------------------------------------------------------------------------------------------------------	
+				
+				System.out.println("ritornato mail check result"+getMailcheckResult());
+				
+				
+				switch (getMailcheckResult()) {
+				
+				case "problemi con user read check mail":
+					
+					System.out.println("problemi con user read check mail");
+					
+					
+					break;
+				
+				
+				case "OK NE":
+				case "non modificata":{
+					
+					
+					if (checkall()) {				//check su tutti i campi
+						
+						//************************************************************
+						try
+						{
+		
+						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, tel, stato);
+						me.setIdut(getIdUser());
+						me.setSql(Q);
+						me.setSql2(getTxtMailMod().getText());					
+						me.setActW(getW());
+						me.setActF(frmSchoolib);
+						me.setActC(c);				
+						try {
+							System.out.println("GUI account:> ottenuti dati user ");
+						me.setCliType(Clients.Librarian);	
+							me.getCmdLIST().put(Commands.UserUPDATE);
+						} catch (InterruptedException e2) {
+							System.out.println("GUI account:> NON ottenuti dati user ");	
+							e2.printStackTrace(); 
+						}
+						}
+						catch (SQLException e) 
+						{
+							e.printStackTrace();
+						}					
+						//*************************************************************						
+					
+					}else {						
+						PopUp.errorBox1(frmSchoolib,"Campi non corretti");							
+					}
+				}
+					break;
+					
+				case "OK E":
+					System.out.println("ritornato dal check mail EXIST");
+					break;
+
+				case "NG":
+					System.out.println("ritornato dal check mail NG");
+					break;
+
+				default:
+					break;
+				} 
+		}		
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	});
 	
 		btnModData.setBounds(301, 391, 175, 67);

@@ -98,7 +98,7 @@ public class Login extends SL_JFrame  {
 		ImageIcon iconLogoC = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Cross.png")));
 		
 		JLabel lblLogin = new JLabel("LOGIN/LOGOUT");
-		lblLogin.setBounds(341, 11, 128, 46);
+		lblLogin.setBounds(341, 11, 214, 46);
 		lblLogin.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		PanelRegi.add(lblLogin);
 		
@@ -386,6 +386,11 @@ public class Login extends SL_JFrame  {
 });
 		btnConferma.setBounds(186, 296, 141, 57);
 		PanelFirstAcc.add(btnConferma);	
+		
+		JLabel lblNB = new JLabel("N.B: Dopo 5 tentativi falliti, verr\u00E0 cancellato automaticamente l'utente");
+		lblNB.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNB.setBounds(20, 398, 708, 23);
+		PanelFirstAcc.add(lblNB);
 		
 		// Panel ForgotPass
 		

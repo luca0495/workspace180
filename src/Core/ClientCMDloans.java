@@ -13,7 +13,11 @@ import connections.MessageBack;
 
 public class ClientCMDloans {
 
+<<<<<<< HEAD
 	/**spedisce al server il comando richiesta prestito
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -46,8 +50,13 @@ public class ClientCMDloans {
 		}	
 	}
 
+<<<<<<< HEAD
 	/**spedisce al server il comando ritorno prestito
 	 * @param me 
+=======
+	/**
+	 * @param me
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @throws SendFailedException
 	 * @throws MessagingException
 	 * @throws SQLException
@@ -84,7 +93,11 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}	
 	}
+<<<<<<< HEAD
 	/**il ritorno é la conferma dell'avvenuta registrazione del ritorno prestito
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 * @param Mb
@@ -170,10 +183,14 @@ public class ClientCMDloans {
 	}	
 	
 	
+<<<<<<< HEAD
 	
 	
 	
 	/**spedisce al server il comando di cancellazione prestito
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -206,7 +223,11 @@ public class ClientCMDloans {
 		}	
 	}
 	
+<<<<<<< HEAD
 	/**il ritorno rappresenta la conferma dell'avvenuta cancellazione prestito
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 * @param Mb
@@ -226,7 +247,11 @@ public class ClientCMDloans {
 		}
 	}	
 
+<<<<<<< HEAD
 	/**invia al server la richiesta tabella prestiti per ripopolare tabella prestiti
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -256,7 +281,11 @@ public class ClientCMDloans {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
+<<<<<<< HEAD
 	/**il ritorno contiene i dati per ripopoalre tabella prestiti
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 * @param Mb

@@ -10,8 +10,12 @@ import gui.ResearchBooks;
 
 public class ClientCMDAllTables {
 
+<<<<<<< HEAD
 	/**accetta Client, spedisce comando getdatafortables al server con il quale ottiene dati per tutte 
 	 * e tre le tabelle di researchbook il ritorno viene gestito da ATpopulateRES
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @throws SendFailedException
 	 * @throws MessagingException
@@ -44,8 +48,12 @@ public class ClientCMDAllTables {
 			me.sendM(MsgSend, Mb);	
 		}		
 	}
+<<<<<<< HEAD
 	/**con le tabelle ottenute tramite ATpopulate, dopo il rientro dei dati dal server, 
 	 * aggiorna dati delle tabelle della gui researchbook
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param me
 	 * @param mes
 	 * @param Mb

@@ -33,9 +33,12 @@ public class Setting extends SL_JFrame{
 	static int 			userRow = 0;
 	static int			rows = 0;
     static int			cols = 0; 		    
+<<<<<<< HEAD
 		    
 	
 	public 	JTextField			text;	    
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 		    
 	private Setting 			w;	
 	private JFrame 				frmSchoolib;
@@ -135,7 +138,7 @@ public Setting(Component c,Client x,String[]userdata)
 		panelChangePass.add(lblWwwIp);
 		
 		lblEmailPw = new JLabel("email PW");
-		lblEmailPw.setBounds(64, 312, 43, 14);
+		lblEmailPw.setBounds(64, 312, 127, 14);
 		panelChangePass.add(lblEmailPw);
 		
 		lblDefault = new JLabel("Default Server Type");
@@ -143,7 +146,7 @@ public Setting(Component c,Client x,String[]userdata)
 		panelChangePass.add(lblDefault);
 		
 		lblEmailAddress = new JLabel("email Address");
-		lblEmailAddress.setBounds(64, 281, 66, 14);
+		lblEmailAddress.setBounds(64, 281, 127, 14);
 		panelChangePass.add(lblEmailAddress);
 		
 		textField_2 = new JTextField();
@@ -243,11 +246,6 @@ public Setting(Component c,Client x,String[]userdata)
 		 getComboBox().addItem("lan"); 
 		 getComboBox().addItem("www"); 
 		panelChangePass.add(comboBox);
-		
-		text=new JTextField();
-		text.setBounds(64, 56, 416, 20);
-		panelChangePass.add(text);
-		text.setColumns(10);
 	
 	}
 //********************************************************	

@@ -1,4 +1,8 @@
 package connections;
+<<<<<<< HEAD
+=======
+//aggiorna drivers
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 
 import java.awt.EventQueue;
 
@@ -567,9 +571,13 @@ setBusy(false);
 //!!!! --------------------------										
 }//ClientConnectionTest
 
+<<<<<<< HEAD
 	/**il metodo accetta un Message contenente il comando ( Commands ) che invia al server, la risposta é contenuta in un MessageBack.
 	 * dipendentemente dai comandi inviati la risposta potra contenere nei parametri del MessageBack di ritorno dal server dati di 
 	 * diversa natura come recordset piuttosto che String  
+=======
+	/**
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @param MsgSend
 	 * @param Mb
 	 * @throws SendFailedException
@@ -1149,10 +1157,16 @@ setBusy(false);
 //	
 //*********************************************************************************************************************************************
 //	
+<<<<<<< HEAD
 	/**il metodo accetta un Message contenente il comando ( Commands ) che invia al server, la risposta é contenuta in un MessageBack.
 	 * dipendentemente dai comandi inviati la risposta potra contenere nei parametri del MessageBack di ritorno dal server dati di 
 	 * diversa natura come recordset piuttosto che String  
 	 * @param MsgSend
+=======
+	
+	/**
+	 * @throws SendFailedException
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 	 * @throws MessagingException
 	 * @throws SQLException
 	 * @throws InterruptedException
@@ -1181,7 +1195,10 @@ setBusy(false);
 			sendM(MsgSend, Mb);
 		}	
 	}		
+<<<<<<< HEAD
 	
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 		/**
 		 * @throws SendFailedException
 		 * @throws MessagingException
@@ -2225,12 +2242,15 @@ setBusy(false);
 			public void setIpadWww(String ipadWww) {
 				this.ipadWww = ipadWww;
 			}
+<<<<<<< HEAD
 			public String getDataLoanRetired() {
 				return DataLoanRetired;
 			}
 			public void setDataLoanRetired(String dataLoanRetired) {
 				DataLoanRetired = dataLoanRetired;
 			}
+=======
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 		
 	
 	

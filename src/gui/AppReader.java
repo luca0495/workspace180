@@ -197,9 +197,15 @@ public class AppReader extends SL_JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//Per informazioni cercare la classe PopUp
+<<<<<<< HEAD
 				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi:/n"
 						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C,/n"
 						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C,/n"
+=======
+				PopUp.infoBox(frmSchoolib,"Si deve mettere uno tra questi campi: \n"
+						       +          "Studente-1A,Studente-1B,Studente-1C,Studente-2A,Studente-2B,Studente-2C, \n"
+						       +          "Studente-3A,Studente-3B,Studente-3C,Studente-4A,Studente-4B,Studente-4C, \n"
+>>>>>>> b1453130cb80434d47050fe317ad670cfa60adf5
 						       +          "Studente-5A,Studente-5B,Studente-5C,Insegnante,Tecnico,Amministrativo");
 			}
 		});
