@@ -15,6 +15,7 @@ public class TableUpdateBooking {
 	private static boolean notOk = false;
 
 	 /**
+	  * Questo metodo elimina una riga da prenotazione utente
 	 * @param r
 	 * @param t
 	 * @throws SQLException
@@ -25,6 +26,7 @@ public class TableUpdateBooking {
 		}
 	 
 	 /**
+	 * Questo metodo elimina una riga da prenotazione utente
 	 * @param r
 	 * @param t
 	 * @param me

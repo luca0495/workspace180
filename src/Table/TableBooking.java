@@ -205,6 +205,7 @@ public class TableBooking extends JPanel implements TableModelListener,Serializa
 
 
 	/**
+	 * Questo metodo serve per popolare i dati della tabella booking e intanto controlla il tipo di utente
 	 * @param x
 	 * @param me
 	 * @throws SQLException

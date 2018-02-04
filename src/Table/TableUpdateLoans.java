@@ -16,6 +16,7 @@ public class TableUpdateLoans {
 	private static boolean notOk = false;
 
 	 /**
+	  * Questo metodo elimina una riga da prestiti utente
 	 * @param r
 	 * @param t
 	 * @throws SQLException
@@ -26,6 +27,7 @@ public class TableUpdateLoans {
 		}
 	
 	 /**
+	  * Questo metodo elimina una riga da prestiti utente
 	 * @param r
 	 * @param t
 	 * @param me

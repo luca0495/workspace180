@@ -24,6 +24,14 @@ public class EmailSender{
 	static String usr;
 	static String pwd;
 	static Client me;
+/**
+ * Questo metodo invia una email all'utente che si è appena registrato (con il codice temporaneo da utilizzare sul primo accesso)
+ * @param to
+ * @param Me
+ * @throws SendFailedException
+ * @throws MessagingException
+ * @throws SQLException
+ */
 public static void send_uninsubria_email(String to,Client Me) throws SendFailedException, MessagingException, SQLException{
   
 		 me=Me;
@@ -84,11 +92,17 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 
 	 
 	 
-	 
-	 
-	 
 
-	 public static void send_uninsubria_recoverypassword(String to,Client Me,String newpassword) throws SendFailedException, MessagingException, SQLException{
+	 /**
+	 * Questo metodo invia una email di recupero password all'utente(verrà inserita una password casuale)
+	 * @param to
+	 * @param Me
+	 * @param newpassword
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 */
+	public static void send_uninsubria_recoverypassword(String to,Client Me,String newpassword) throws SendFailedException, MessagingException, SQLException{
 		 
 		 	String [] userdata = MQ_Read.readSettingTable();
 		 	String tox=userdata[4];
@@ -132,7 +146,22 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 		 }
 
 	 
-	 public static void send_LoansExpired(	String UN,
+	 /**
+	  * Questo metodo invia una email all'utente che ha un libro scaduto o in scadenza di uno o più prestiti
+	 * @param UN
+	 * @param PW
+	 * @param email
+	 * @param idlibro
+	 * @param utnome
+	 * @param utcognome
+	 * @param nome_autore
+	 * @param cognome_autore
+	 * @param titolo
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 */
+	public static void send_LoansExpired(	String UN,
 			 								String PW,
 			 
 											 String email,
@@ -187,7 +216,24 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 		 }
 	 
 
-	 public static void send_email_books_loans(	String idlibro,
+	 /**
+	 * Questo metodo invia una email all'utente che ha preso in prestito un libro
+	 * @param idlibro
+	 * @param utnome
+	 * @param utcognome
+	 * @param email
+	 * @param nome_autore
+	 * @param cognome_autore
+	 * @param titolo
+	 * @param data_inizio
+	 * @param data_fine
+	 * @param UN
+	 * @param PW
+	 * @throws SendFailedException
+	 * @throws MessagingException
+	 * @throws SQLException
+	 */
+	public static void send_email_books_loans(	String idlibro,
 				 								String utnome,
 				 								String utcognome,
 				 								String email,
@@ -244,26 +290,6 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
         }      
 	 }
 
-		//test ok -------------------------------------------------------
-		public static void main(String[] args) {
-			
-			Client me;
-			try {
-				me = new Client();
-				me.setPASSWORD("ACmilan1994$");
-				me.setUSERNAME("llazzati@studenti.uninsubria.it");				
-
-				String to="dexa@hotmail.it";
-			
-				send_uninsubria_email (to,me);
-				System.out.println("classe test");
-				
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		//test ok -------------------------------------------------------		
-		}
 	 
 	 
 	

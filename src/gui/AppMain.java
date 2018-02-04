@@ -2,7 +2,6 @@ package gui;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,63 +17,32 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import Core.Clients;
 import Core.Commands;
-import Table.TableBooking;
 import Table.TableBooks;
-import Table.TableLoans;
 import Table.TableUpdateBooks;
 import connections.Client;
-import connections.MessageBack;
-import connections.Message;
-import database.ChkDBandTab;
 import database.MQ_Read;
-
-import java.awt.Label;
-import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-
 import java.sql.SQLException;
-import java.util.List;
-
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import com.sun.org.apache.bcel.internal.generic.POP;
-
 import Check.PopUp;
-
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JComboBox;
 
 public class AppMain extends SL_JFrame  {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	private AppMain			meMain;
 	
 	private Client  		me ;
 	private Setting 		s;
-	private AppReader 		c;
 	private boolean			ready;
 	
 	private JFrame 			frame;
 	public 	JPanel 			ac = new JPanel();
 	private JTextField 		text;
-	private JTextField txtResearch;
-	private JTable tableBooks;
-	private JTextField textField;
-	private JPanel panel;
-	private JPanel panelResearch;
-	private JPanel panel_1;
-    private TableBooks table;
-    private TableUpdateBooks table1;
-    private JTable table4;
-    private JPasswordField passwordField;
-    private JTextField textField_1;
-    private JPasswordField passwordField_1;
-    private JTextField textField_2;
-    private JPasswordField passwordField_2;
-    private JPasswordField passwordField_3;
 	private JComboBox comboBox;
 	
     private JButton btnAccount;
@@ -411,19 +379,6 @@ public class AppMain extends SL_JFrame  {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//vecchia prassi per interrompere connessione
-				/*
-				try {
-					System.out.println(" CLICK ");
-				me.setCliType(Clients.Reader);	
-					me.getCmdLIST().put(Commands.ConnSTOP);
-					
-				} catch (InterruptedException e2) {
-					System.out.println("  ");	
-					e2.printStackTrace(); 
-				}	
-				 */
-				
 				EventQueue.invokeLater(new Runnable() {
 					@SuppressWarnings("unchecked")
 					public void run() 
@@ -433,16 +388,7 @@ public class AppMain extends SL_JFrame  {
 						 System.out.println("lancio la q");
 						 String [] datasetting = MQ_Read.readSettingTable();
 						 Setting s = new Setting(getFrame(), me,datasetting);
-						 
-						 
-						 
-						 /*
-						 s.getTextFieldsrvIPlan().setText(datasetting[1]);
-						 getS().getTextFieldsrvIPwww().setText(datasetting[2]);
-						 getS().getTextFieldsrvIPdefault().setText(datasetting[3]);
-						 getS().getTextFieldsrvMailAddress().setText(datasetting[4]);
-						 getS().getTextFieldsrvMailPW().setText(datasetting[5]);
-						 */
+
 				    } 
 					catch (Exception e) 
 					{
@@ -450,7 +396,6 @@ public class AppMain extends SL_JFrame  {
 					}
 				}		
 				
-				//lancia comando per inserire dati nei campi finestra setting	
 
 				});			
 				
@@ -476,49 +421,7 @@ public class AppMain extends SL_JFrame  {
 			public void actionPerformed(ActionEvent arg0) {
 				Object x = getComboBox().getSelectedItem();
 				aggiornaSrvType(x);	
-				/*
-				// gestisci cambio srvtype
-				// chiusura attuale connessione
-				try {
-					me.getCmdLIST().put(Commands.ConnSTOP);
-					Thread.sleep(20);					
-				} catch (InterruptedException e2) {
-					System.out.println("  ");	
-					e2.printStackTrace(); 
-				}					
-				try {
-					String [] datasetting = MQ_Read.readSettingTable();
-					switch (getComboBox().getSelectedItem().toString()) {
-					
-					case "local":					
-						getComboBox().setSelectedIndex(0);
-						me.setSRVaddress(datasetting[0]);
-						
-						getTextField_3().setText(datasetting[0]);				
-						System.out.println("selezionato srv: local");
-						break;
-					case "lan":
-						getComboBox().setSelectedIndex(1);
-						getTextField_3().setText(datasetting[1]);
-						me.setSRVaddress(datasetting[1]);				//me.setSRVaddress("192.168.0.2");
-						System.out.println("selezionato srv: lan");
-						break;
-					case "www":
-						getComboBox().setSelectedIndex(2);
-						getTextField_3().setText(datasetting[2]);
-						me.setSRVaddress(datasetting[2]);				//me.setSRVaddress("dexa215.homepc.it");
-						System.out.println("selezionato srv: www");
-						break;	
-
-					default:
-						break;
-					}						
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				*/	
-			
-			
+	
 			}
 		});
 		
@@ -573,6 +476,10 @@ public class AppMain extends SL_JFrame  {
 		return frame;
 	}
 	
+	/**
+	 * Questo metodo setta il Frame e controlla il tipo di utente attivo
+	 * @param frame
+	 */
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
 		frame.addFocusListener(new FocusAdapter() {
@@ -629,11 +536,11 @@ public class AppMain extends SL_JFrame  {
 		}
 	}
 	
+	/**
+	 * Questo metodo aggiorna il tipo del server 
+	 * @param x
+	 */
 	public void aggiornaSrvType(Object x) {	
-		// gestisci cambio srvtype
-		// chiusura attuale connessione
-		//Object x = getComboBox().getSelectedItem();
-
 		try {
 			
 			me.setStubok(false);

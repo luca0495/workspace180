@@ -181,11 +181,12 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
     };
         
     /**
-     * @param x
-     * @param me
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+	 * Questo metodo serve per popolare i dati della tabella libri e intanto controlla il tipo di utente
+	 * @param x
+	 * @param me
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
     public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		// Clear table   
 		getTable().setModel(new DefaultTableModel());	
@@ -294,7 +295,6 @@ public class TableBooks extends JPanel implements TableModelListener,Serializabl
 		{
         	TableUpdateBooks.setColumn(column);
         	TableUpdateBooks.setInput((String)model.getValueAt(row, column));
-        	TableUpdateBooks.check(getFrame(), getTable());
 		} 
 	}
 

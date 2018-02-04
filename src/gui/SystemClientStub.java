@@ -22,11 +22,7 @@ import javax.swing.JTextField;
 public class SystemClientStub extends SL_JFrame {
 
 	private static final long serialVersionUID = 1L;
-
-
 	private Client  me ;
-	
-	
 	// GRAFICA	
 	private JFrame frame;
 	private JTextArea text;
@@ -99,51 +95,7 @@ public class SystemClientStub extends SL_JFrame {
 		lblSchoollibFinestraControllo.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		lblSchoollibFinestraControllo.setBounds(120, 31, 310, 51);
 		getFrame().getContentPane().add(lblSchoollibFinestraControllo);	
-
 		
-		
-/*		
-		JButton btnNewButton = new JButton("metodo 1");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-										try {
-					me.metodo1();
-										} 	catch (ClassNotFoundException | IOException e) {
-											e.printStackTrace();
-											}
-			}
-		});
-		btnNewButton.setBounds(27, 334, 89, 23);
-		frame.getContentPane().add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("metodo 2");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {			
-										try {
-					me.metodo2();
-										} 	catch (ClassNotFoundException | IOException e) {
-											e.printStackTrace();
-											}
-			}
-		});
-		btnNewButton_1.setBounds(27, 368, 89, 23);
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("metodo 3");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-									try {
-					me.metodo3();
-									} 	catch (ClassNotFoundException | IOException e) {
-										e.printStackTrace();
-										}			
-			}
-		});
-
-		
-		btnNewButton_2.setBounds(27, 402, 89, 23);
-		frame.getContentPane().add(btnNewButton_2);
-*/		
 		JLabel lblNewLabel_1 = new JLabel("richiedi stringhe");
 		lblNewLabel_1.setForeground(Color.BLUE);
 		lblNewLabel_1.setBounds(126, 338, 112, 14);

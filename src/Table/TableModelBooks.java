@@ -12,9 +12,6 @@ public class TableModelBooks extends AbstractTableModel implements Serializable 
     private String[] columnNames = {"Codice", "Nome_Autore", "Cognome_Autore", "Categoria", "Titolo","Disponibilità","Prenotazioni_in_coda"};
     private Object[][] data = null;
     
-    /**
-     * @param me
-     */
     public TableModelBooks(Client me) 
     {
     	setData(me.getDatabook());

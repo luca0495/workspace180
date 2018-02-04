@@ -198,13 +198,13 @@ public class TableLoans extends JPanel implements TableModelListener,Serializabl
     		}
         }
     };
-            
     /**
-     * @param x
-     * @param me
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+	 * Questo metodo serve per popolare i dati della tabella prestiti e intanto controlla il tipo di utente
+	 * @param x
+	 * @param me
+	 * @throws SQLException
+	 * @throws InterruptedException
+	 */
     public static void PopulateData(String x,Client me) throws SQLException, InterruptedException {
 		
     	System.err.println("storico:"+me.isStorico());

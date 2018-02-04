@@ -91,12 +91,8 @@ public class Account extends SL_JFrame{
 	private	JLabel 				lblChangeInqCheck ;
 	private	JLabel 				lblChangePhoneCheck ;
     private JLabel 				lblMAIL;
-
 	private JRadioButton 		rdbtnTypeUserLibMod;
 	private JRadioButton 		rdbtnTypeUserLetMod;
-	
-
-
 	private JPasswordField 		passwordFieldMod;
 	private JPasswordField 		passwordFieldConfMod;
 	private JTextField 			txtNameMod;
@@ -106,47 +102,22 @@ public class Account extends SL_JFrame{
 	private JTextField 			txtTelMod;
 	private JTextField 			passwordFieldMod1;
 	private JTextField 			passwordFieldConfMod1;
-
-			String 				r = null;	
+    String 				r = null;	
 	public 	String 				p1,p2,p3,p4,p5,p6,p7 = null; 	
-
-	
 	private String 				mailcheckResult;
 	private boolean 			mailcheckinprogress=false;	
-	
-
 	private JLabel lblCheckChangePass;
-
 	private JLabel lblCheckChangePassC;
-
-
-    
 	private JLabel lblPopUpInq;
 	private JLabel lblPopUpTel;
 	private JLabel lblPopUpPass;
-	
 	private String TypePerson = "Lettore";
-
-	
-	// in test 
 	private String 		emailuser;
 	private boolean 	cambioemail=false;
 	private String [] 	userdata;
-	
-
-
-
-	
-	//private JPanel panelAccount;
-	//private JPanel panelModify;
 	private JPanel panelChangePass;
-	
-	//private boolean mailcheckinprogress=false;
 	public static boolean ModPass = false;
-	//private String mailcheckResult;
 	private JPasswordField passwordField;
-	//private JPasswordField passwordFieldConfMod;
-
     private int 				idUser ;
 
 	
@@ -685,25 +656,18 @@ public class Account extends SL_JFrame{
 					txtNameMod.setText(null);
 					txtSurnameMod.setText(null);
 					getTxtMailMod().setText(null);
-					//passwordFieldMod.setText(null);
-					//passwordFieldConfMod.setText(null);
 					txtInqMod.setText(null);
 					txtTelMod.setText(null);	
 		
 					txtNameMod.setEditable(false);
 					txtSurnameMod.setEditable(false);
 					getTxtMailMod().setEditable(false);
-					//passwordFieldMod.setEditable(false);
-					//passwordFieldConfMod.setEditable(false);
 					txtInqMod.setEditable(false);
 					txtTelMod.setEditable(false);
 					
 					lblChangeNameCheck.setIcon(null);
 					lblChangeSurnameCheck.setIcon(null);
-					//lblChangeEmailCheck.setIcon(null);
 					getLblMAIL().setIcon(null);
-					//lblChangePassCheck.setIcon(null);
-					//lblChangePassConfCheck.setIcon(null);
 					lblChangeInqCheck.setIcon(null);
 					lblChangePhoneCheck.setIcon(null);
 				}
@@ -786,7 +750,6 @@ public class Account extends SL_JFrame{
 		
 		passwordField = new JPasswordField();
 		passwordField.setEditable(false);
-		//txtSurnameMod.setText(user[2]);
 		passwordField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -891,20 +854,6 @@ public class Account extends SL_JFrame{
 		btnReturnBack.setBounds(330, 295, 158, 82);
 		panelChangePass.add(btnReturnBack);
 	}
-		/*
-
-		char[] pass 			= passwordFieldMod.getPassword();
-		
-		String 	p 				= String.copyValueOf(passwordFieldMod.getPassword());
-		
-		char[] checkPassword 	= passwordFieldConfMod.getPassword();
-		String 	s 				= String.copyValueOf(passwordFieldConfMod.getPassword());
-		String passW = String.copyValueOf(pass);
-		
-		checkPass1()	&&
-		checkPass2()	&&
-		checkPassEq()	&&
-		*/
 		
 	//Fine**********************************************************************************************************	
 	
@@ -1006,6 +955,7 @@ public class Account extends SL_JFrame{
 	}
 
 	/**
+	 * Questo metodo setta i valori trovati da una query di lettura dati (MQ_Read.retrieveUserIdbyemail) nelle jlabel del pannello Account 
 	 * @param user
 	 */
 	public void updateall(String[] user )
@@ -1018,11 +968,11 @@ public class Account extends SL_JFrame{
 		lblSetInq.setText(user[5]);
 		lblSetTel.setText(user[6]);
 		lblSetTipoUte.setText(user[7]);
-		//in test..
 		
 		
 	}
 	/**
+	 * Questo metodo legge i dati dell' utente e li setta nei jtext del pannello Modify
 	 * @param user
 	 */
 	public void updateallModify(String[] user )
@@ -1056,6 +1006,7 @@ public class Account extends SL_JFrame{
 	}	
 	
 	/**
+	 * Questo metodo aggiorna tutti i campi modificati dall'utente, dal pannello Modify, e aggiorna le jlabel nel pannello Account 
 	 * @param user
 	 */
 	public void updateallAfterModify(String[] user )
@@ -1097,6 +1048,10 @@ public class Account extends SL_JFrame{
 	
 	}
 	// verifcare checkall
+	/**
+	 * Questo metodo verifica la correttezza di tutti i campi inseriti dall'utente
+	 * @return checkok
+	 */
 	public boolean checkall() {
 		boolean checkok=true;
 		
@@ -1215,6 +1170,10 @@ public class Account extends SL_JFrame{
 	}	
 
 	
+	/**
+	 * Questo metodo controlla l'email inserita dall'utente che sia sintatticamente corretta e che non ci sia nel database una uguale
+	 * @return checkok
+	 */
 	public boolean checkmail(){
 		boolean checkok=true;
 		

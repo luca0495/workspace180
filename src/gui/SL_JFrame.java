@@ -33,11 +33,11 @@ public class SL_JFrame extends JFrame implements Serializable  {		/**
 	public SL_JFrame (){		
 	}
 	
+	/**
+	 * Questo metodo serve per aggiungere un testo alle gui della superclasse
+	 * @param msg
+	 */
 	public void addMsg(String msg){
-
-		
-		
-		
 		if (msg!=null) {
 		System.out.println("ERRORE... "+msg);
 			
