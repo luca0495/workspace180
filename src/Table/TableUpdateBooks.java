@@ -12,7 +12,7 @@ import database.MQ_Delete;
 import database.MQ_Update;
 
 import java.sql.SQLException;
-import java.util.List;
+
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -27,7 +27,7 @@ public class TableUpdateBooks {
 	{	
 		if(column == 1)
 		{
-			//Nome
+			
 			
 			if(Check.checkName(input))
 			{
@@ -41,7 +41,7 @@ public class TableUpdateBooks {
 		}
 		else if(column == 2)
 		{
-			//Cognome
+			
 			if(Check.checkName(input))
 			{
 				execute(frame, t);
@@ -54,7 +54,7 @@ public class TableUpdateBooks {
 		}
 		else if(column == 3)
 		{
-			//nome
+			
 			if(Check.checkCat(input))
 			{
 				execute(frame, t);
@@ -79,12 +79,11 @@ public class TableUpdateBooks {
 		}
 	}
 	
-	// 	OLD TEST OK
-	 public static void deleteRow(List<String> r, JTable t) throws SQLException
+		 public static void deleteRow(List<String> r, JTable t) throws SQLException
 		{
 		 	MQ_Delete.deleteRowBooks(r);
 		}
-	 // NEW IN TEST 27.12.2017
+	
 	 public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
 		 	String q = MQ_Delete.deleteRowBooksGetQuery(r);

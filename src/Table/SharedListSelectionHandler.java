@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
 public class SharedListSelectionHandler implements ListSelectionListener  {
 
 	private TableModelBooks tb;
@@ -20,7 +19,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
     {
     	super();
     	tb = t;
-    	selection = true;
+    	setSelection(true);
     	setSel("book");
     }
     
@@ -28,7 +27,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
     {
     	super();
     	tl = t;
-    	selection = false;
+    	setSelection(false);
     	setSel("loans");
     }
     
@@ -36,7 +35,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
     {
     	super();
     	tc = t;
-    	selection = false;
+    	setSelection(false);
     	setSel("booking");
     }
 	
@@ -46,9 +45,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 		int index = e.getFirstIndex();
 		boolean isAdjusting = e.getValueIsAdjusting();
 		String sel=getSel();
-		
-		
-		//mauro TEST
+
 		if(!isAdjusting)
 		{		
 				switch (sel) {
@@ -83,48 +80,7 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 				}
 		}
 		
-	/*	
-		
-		if(selection)
-		{
-			if(!isAdjusting)
-			{
-				for(int j = 0; j<7; j++)
-				{
-					rowData.add((String) tb.getValueAt(index, j));
-				}
-			}
-			
-			TableUpdateBooks.setRowData(rowData);
-		}
-		else
-		{
-			if(!isAdjusting)
-			{
-				for(int j = 0; j<4; j++)
-				{
-					
-					//errore da booking
-					rowData.add((String) tl.getValueAt(index, j));
-				}
-				
-				//TableUpdateLoans.setRowData(rowData);
-				TableUpdateBooking.setRowData(rowData);	
-			}
-			else
-			{
-				if(!isAdjusting)
-				{
-					for(int j = 0; j<4; j++)
-					{
-						rowData.add((String) tl.getValueAt(index, j));
-					}
-					TableUpdateBooking.setRowData(rowData);
-				}
-			}
-			
-		}
-		*/
+	
 		
 	}
 
@@ -135,59 +91,13 @@ public class SharedListSelectionHandler implements ListSelectionListener  {
 	public void setSel(String sel) {
 		this.sel = sel;
 	}
-    
-    
-    
-  /*  
-	public void valueChanged(ListSelectionEvent e) 
-	{		
-		List<String> rowData = new ArrayList<String>();
-		
-		int index = e.getFirstIndex();
-		System.err.println("first index: "+e.toString());
-		
-		
-		boolean isAdjusting = e.getValueIsAdjusting();
-		
-		if(selection)
-		{
-			if(!isAdjusting)
-			{
-				for(int j = 0; j<7; j++)
-				{
-					rowData.add((String) tb.getValueAt(index, j));
-				}
-			}
-			
-			TableUpdateBooks.setRowData(rowData);
-		}
-		else
-		{
-			if(!isAdjusting)
-			{
-				for(int j = 0; j<4; j++)
-				{
-					
-					//errore da booking
-					rowData.add((String) tl.getValueAt(index, j));
-				}
-				
-				//TableUpdateLoans.setRowData(rowData);
-				TableUpdateBooking.setRowData(rowData);	
-			}
-			else
-			{
-				if(!isAdjusting)
-				{
-					for(int j = 0; j<4; j++)
-					{
-						rowData.add((String) tl.getValueAt(index, j));
-					}
-					TableUpdateBooking.setRowData(rowData);
-				}
-			}
-			
-		}
+
+	public boolean isSelection() {
+		return selection;
 	}
-*/
+
+	public void setSelection(boolean selection) {
+		this.selection = selection;
+	}
+   
 }

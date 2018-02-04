@@ -2,17 +2,13 @@ package gui;
 
 
 import java.awt.Component;
-import java.awt.Container;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 
 import java.awt.Font;
-import java.awt.Frame;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,11 +21,7 @@ import java.sql.SQLException;
 
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
 
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 import Check.Check;
 import Check.PopUp;
@@ -37,19 +29,11 @@ import Core.Clients;
 import Core.Commands;
 import ProvaEmail.EmailSender;
 import connections.Client;
-import database.MQ_Check;
 import database.MQ_Insert;
-
-import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
-import javax.mail.MessagingException;
-import javax.mail.SendFailedException;
 import javax.swing.ButtonGroup;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JMenuBar;
 
 
 public class AppReader extends SL_JFrame {
@@ -57,9 +41,7 @@ public class AppReader extends SL_JFrame {
 	private Client  		me ;
 	private static final long serialVersionUID = 1L;
 	private JFrame frmSchoolib;	
-
 	private AppReader w;
-	
 	private JTextField txtCF;
 	private JTextField txtName;
 	private JTextField txtSurname;
@@ -77,24 +59,14 @@ public class AppReader extends SL_JFrame {
 	private	JLabel lblCheckPass ;
 	private	JLabel lblCheckVerifyPass ;
 	private	JLabel lblCheckPhone ;
-
 	private JRadioButton rdbtnReader;
 	private JRadioButton rdbtnLibrarian;
-	
-	
 	private JTextField text;
 	private String TypePerson;
-	//private static JComboBox<String> Inq;
-	//private static final String[] Students =
-		// {"	A1" , "A2"};
-	
 	private JLabel 		lblCheckMail ;
-	
-	
 	private ImageIcon 	iconLogoT;
 	private ImageIcon 	iconLogoC;
 	private ImageIcon iconLogoQ;
-	
 	private boolean 	cfcheckinprogress=false;
 	private String 		cfcheckResult;
 	private boolean 	mailcheckinprogress=false;
@@ -339,26 +311,14 @@ public class AppReader extends SL_JFrame {
 			public void focusLost(FocusEvent arg0) {
 				
 				checkmail();
-				
-				/*
-				if(Check.checkMail(txtEmail.getText()) && !Check.checkMailExist(txtEmail.getText())) 
-				{
-					lblCheckEmail.setIcon(iconLogoT);	
-				}
-				else
-				{
-					lblCheckEmail.setIcon(iconLogoC);	
-				}
-				 */
+
 			
 			}
 		});
 		txtEmail.setBounds(143, 187, 183, 20);
 		panelSelection.add(txtEmail);
 		txtEmail.setColumns(10);
-		
-		
-		//txtinqu e check
+	
 		
 		txtInquadr = new JTextField();
 		txtInquadr.addFocusListener(new FocusAdapter() {
@@ -399,18 +359,7 @@ public class AppReader extends SL_JFrame {
 			public void focusLost(FocusEvent arg0) {
 				
 				checkcf();
-				
-				
-				/*
-				if(Check.checkCF(txtCF.getText()) && Check.checkCodFisExist(txtCF.getText()))
-				{
-					lblCheckCF.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblCheckCF.setIcon(iconLogoC);	
-				}
-				*/
+
 				
 			}
 		});
@@ -442,8 +391,7 @@ public class AppReader extends SL_JFrame {
 		});
 		passwordField.setBounds(650, 31, 169, 20);
 		panelSelection.add(passwordField);
-		
-		// verifico la conferma della password
+
 		passwordFieldCh = new JPasswordField();
 		passwordFieldCh.addFocusListener(new FocusAdapter() {
 			@Override
@@ -521,11 +469,7 @@ public class AppReader extends SL_JFrame {
 		bgMod.add(rdbtnReader);
 		bgMod.add(rdbtnLibrarian);	
 		
-		btnReg.addActionListener(new ActionListener() {
-			//check email
-			
-			// se ok, check.checkallareg
-			
+		btnReg.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent e) {
 				
 				me.setSql2("AppReader");
@@ -569,8 +513,6 @@ public class AppReader extends SL_JFrame {
 							(		txtName.getText(), 
 									txtSurname.getText(),
 									txtPhone.getText(),
-									//txtEmail.getText(),
-									//txtCF.getText(),
 									passwordField.getPassword(), 
 									passwordFieldCh.getPassword(), 
 									txtInquadr.getText()													
@@ -632,11 +574,9 @@ public class AppReader extends SL_JFrame {
 							
 							checkname();
 							checksurname();
-							//checkmail1();
 							checkPass1();
 							checkPass2();
 							checkPassEq();
-							//checkCF1();
 							checkTel();
 							checkinq();
 					}
@@ -680,30 +620,6 @@ public class AppReader extends SL_JFrame {
 		btnCancelReg.setBounds(288, 443, 147, 23);
 		panelSelection.add(btnCancelReg);
 		
-		
-		
-		
-		text = new JTextField();
-		text.setBounds(20, 444, 239, 20);
-		panelSelection.add(text);
-		text.setColumns(10);
-	
-		/*
-		Inq = new JComboBox<String>(Students); // set up JComboBox
-		Inq.setMaximumRowCount(5);
-		Inq.setBounds(318, 263, 28, 20);
-		panelSelection.add(Inq);
-		
-		JRadioButton rdbtnA1 = new JRadioButton("A1");
-		rdbtnA1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				SearchParam = "1A";
-			}
-		});
-   
-		rdbtnA1.setBounds(345, 262, 109, 23);
-		panelSelection.add(rdbtnA1);
-	*/	
     }
 
 	

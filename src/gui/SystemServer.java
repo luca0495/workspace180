@@ -1,7 +1,6 @@
 package gui;
 import connections.*;
 import java.awt.Color;
-import java.awt.EventQueue;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
@@ -13,9 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class SystemServer {
-	private boolean 	stubok			=false;
-	private boolean 	repeatconn		=true;
-	private int 		repeatconnCount = 1;
+
 	
 	private Server 	me ;
 		
@@ -24,7 +21,7 @@ public class SystemServer {
 	private JTextArea text;
 	
 	public SystemServer(Server mme) throws Exception {
-		me=mme;
+		setMe(mme);
 		initialize();
 	}
 	
@@ -107,6 +104,14 @@ public class SystemServer {
 		
 		text.setText(msg);
 		
+	}
+
+	public Server getMe() {
+		return me;
+	}
+
+	public void setMe(Server me) {
+		this.me = me;
 	}
 	
 	

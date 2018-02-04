@@ -1,12 +1,15 @@
 package database;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class MQ_Delete {
 	
+	/**
+	 * Questo metodo cancella il libro selezionato dall'utente(reader e libraio)
+	 * @param r
+	 * @throws SQLException
+	 */
 	public static void deleteRowBooks(List<String> r) throws SQLException
 	{			
 		String query = "DELETE FROM libro WHERE "
@@ -21,7 +24,11 @@ public class MQ_Delete {
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
-	
+	/**
+	 * Questo metodo cancella il prestito selezionato dall'utente(libraio)
+	 * @param r
+	 * @throws SQLException
+	 */
 	public static void deleteRowLoans(List<String> r) throws SQLException
 	{		
 		String query = "DELETE FROM prestiti WHERE "
@@ -34,6 +41,11 @@ public class MQ_Delete {
 		DBmanager.closeConnection();
 	}	
 	
+	/**
+	 * Questo metodo cancella la prenotazione selezionata dall'utente(libraio)
+	 * @param r
+	 * @throws SQLException
+	 */
 	public static void deleteRowBooking(List<String> r) throws SQLException
 	{		
 		String query = "DELETE FROM prenotazioni WHERE "
@@ -51,6 +63,7 @@ public class MQ_Delete {
 		DBmanager.executeUpdate(q);
 		DBmanager.closeConnection();
 	}
+
 	public static String deleteRowBooksGetQuery(List<String> r) throws SQLException
 	{		
 		String query = "DELETE FROM libro WHERE "
@@ -105,6 +118,12 @@ public class MQ_Delete {
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
+	/**
+	 * Questo metodo aggiorna la password temporanea dell'utente riferendosi all'email
+	 * @param EM
+	 * @param PW
+	 * @throws SQLException
+	 */
 	public static void deletePassTempEP(String EM,String PW) throws SQLException
 	{			
 		String query = "UPDATE utente SET password_temp=0 WHERE email = '"+EM+"'";
@@ -122,18 +141,7 @@ public class MQ_Delete {
 		
 		String query = " DELETE FROM utente WHERE "
 				+ "  id = '" 				+ r.get(0) + "';";
-			
-		
-		
-			//	+ "' AND nome = '" 		    + r.get(1) 
-			//	+ "' AND cognome  = '" 	    + r.get(2) 
-			//	+ "' AND email = '" 	    + r.get(3) 
-			//	+ "' AND codice_fiscale = '"+ r.get(4) 
-		    //    + "' AND inquadramento = '" + r.get(5) 
-		    //    + "' AND password = '"      + r.get(6)
-		    //    + "' AND password_temp = '" + r.get(7) 
-		    //    + "' AND ntel = '"          + r.get(8) 
-		    //    + "' AND tipo_utente = '"   + r.get(9) + "';";
+
 		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(query);

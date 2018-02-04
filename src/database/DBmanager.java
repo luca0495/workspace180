@@ -11,9 +11,7 @@ public class DBmanager {
 	//METODI
 	public static Connection openConnection1() 			throws SQLException
 	{
-		//String url ="jdbc:postgresql://localhost:5432/GestioneSpiaggia";
-		//String url ="jdbc:postgresql://localhost:5432/Dexodb";
-		
+	
 		String url ="jdbc:postgresql://localhost:5432/schoolib";
 		String username="postgres";
 		String password="postgres";
@@ -22,8 +20,6 @@ public class DBmanager {
 	
 	public static void 		openConnection() 			throws SQLException
 	{
-		//String url ="jdbc:postgresql://localhost:5432/GestioneSpiaggia";
-		//String url ="jdbc:postgresql://localhost:5432/Dexodb";
 		
 		String url ="jdbc:postgresql://localhost:5432/schoolib";
 		String username="postgres";
@@ -37,10 +33,6 @@ public class DBmanager {
 	}
 	public static void 		execute(String query) 		throws SQLException
 	{
-		//Returns true if the first object that the query returns is a ResultSet object. 
-		//Use this method if the query could return one or more ResultSet objects.
-		//Retrieve the ResultSet objects returned from the query by repeatedly calling Statement.getResultSet.
-		
 		Statement stmt = connection.createStatement();
 		stmt.execute(query);
 		// rs ?
@@ -54,16 +46,12 @@ public class DBmanager {
 	}
 	public static void 		executeUpdate(String query) throws SQLException
 	{
-		//Returns an integer representing the number of rows affected by the SQL statement.
-		//Use this method if you are using INSERT, DELETE, or UPDATE SQL statements.
-		
+
 		PreparedStatement stmt = connection.prepareStatement(query);
 		stmt.executeUpdate();
 	}	
 	public static void 		executeUpdate1(Statement stmt2) throws SQLException
 	{
-		//Returns an integer representing the number of rows affected by the SQL statement.
-		//Use this method if you are using INSERT, DELETE, or UPDATE SQL statements.
 		
 		PreparedStatement stmt = connection.prepareStatement(null);
 		stmt.executeUpdate();

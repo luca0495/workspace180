@@ -1,11 +1,9 @@
 package gui;
 import java.io.Serializable;
-import java.lang.annotation.Documented;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Core.Clients;
 import connections.Client;
 
 /**

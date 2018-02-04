@@ -8,8 +8,6 @@ import Core.Requests;
 import gui.SystemServer;
 
 
-// 2017 04 01 V9
-
 public class Server {						
 	private	static 			Server 			me;
 	private static 			SystemServer 	meG		=null;
@@ -57,17 +55,9 @@ public class Server {
 	    			
 			} catch (Exception e) {
 				
-					e.printStackTrace();
-					
-			
-					
-					
-					
-				
-				
+					e.printStackTrace();	
 			} 
-	    	 //System.out.println("schoolLib Server // connessioni attive : "+srvconnlist.size());
-	    	 //srvconnlist.add(socket);	 
+
 	    }
 	}
 	public static int getSrvconn() {

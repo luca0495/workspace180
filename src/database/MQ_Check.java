@@ -8,6 +8,12 @@ import java.util.List;
 
 public class MQ_Check {
 
+	/**
+	 * Questo metodo serve per controllare, se esiste nel database, un codice fiscale 
+	 * @param cf
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String selectCFexist(String cf) throws SQLException
 	{
 		String query = "SELECT codice_fiscale FROM utente WHERE codice_fiscale = '" + cf + "';";
@@ -32,6 +38,12 @@ public class MQ_Check {
 		return results;
 	}
 	
+	/**
+	 * Questo metodo serve identificare l'email dell'utente 
+	 * @param mail
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String selectMail(String mail) throws SQLException
 	{
 		String query = "SELECT id FROM utente WHERE email = '" + mail + "';";
@@ -56,6 +68,12 @@ public class MQ_Check {
 		return datiCliente;
 	}
 	
+	/**
+	 * Questo metodo serve per leggere i dati dei prestiti riferito ad un utente
+	 * @param idut
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String[] readReaderUserLoans(int idut) throws SQLException
 	{
 		
@@ -95,6 +113,12 @@ public class MQ_Check {
 		return user;
 	}
 	
+	/**
+	 * Questo metodo serve per leggere i dati delle prenotazioni riferite ad un utente
+	 * @param idut
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String[] readReaderUserBooking(int idut) throws SQLException
 	{
 		
@@ -129,6 +153,12 @@ public class MQ_Check {
 		return user;
 	}
 	
+	/**
+	 * Questo metodo restituisce l'id dell'utente riferite ad una password già esistente
+	 * @param pass
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String selectPass(String pass) throws SQLException
 	{
 		String query = "SELECT id FROM utente WHERE password = '" + pass + "';";
@@ -153,7 +183,12 @@ public class MQ_Check {
 		return datiCliente;
 	}
 	
-	// check prestiti su bottone check box (fare parte reader e librarian)
+	/**
+	 * Questo metodo restutisce tutti i dati dalla tabella prestiti per un certo id e lì inserisce in una matrice
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String [][] checkIdUserLoans (int id)throws SQLException{			
 		String query = "SELECT * FROM prestiti WHERE id ='" + id + "';";
 		DBmanager.openConnection();
@@ -203,6 +238,11 @@ public class MQ_Check {
 		
 		return dati;
 	}
+	/**
+	 * Questo metodo resistuisce l'ultimo libro immesso(una sola riga)
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String checkCFLastInsert() throws SQLException
 	{
 		String query1 = "SELECT codice FROM libro ORDER by codice DESC LIMIT 1";
@@ -227,6 +267,13 @@ public class MQ_Check {
 		return codCF;
 	}
 	
+	/**
+	 * Questo metodo resituisce il numero di libri presi in prestito da un utente che non li ha ancora restituiti(Max 5 prestiti)
+	 * @param idut
+	 * @param idbook
+	 * @return
+	 * @throws SQLException
+	 */
 	public static int checkLoansIdutIdbook_5(int idut,int idbook) throws SQLException
 	{
 		System.err.println("idut  :"+idut);
@@ -261,7 +308,10 @@ public class MQ_Check {
 		return count;
 	}
 
-	
+	/**
+	 * /**
+	 * Questo metodo aggiorna la tabella dei prestiti dicendo che un libro è scaduto, non è stato ancora resituito e sono passati i 30 giorni 
+	 */
 	public static void updatePrestitoScaduto() throws SQLException
 	{	
 		String q = "update prestiti set scaduto=true where data_fine is null AND scaduto = false AND current_date - data_inizio >= '30';";

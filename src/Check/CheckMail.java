@@ -26,18 +26,19 @@ public class CheckMail {
 
 	//TODO DA TESTARE DA LOGIN
 		/**
+		 * Questo metodo restituisce una password(in questo caso la password dimenticata) dall'email
 		 * @param me
 		 * @param txtMail
 		 * @param txtMailMod
 		 * @param ActF
 		 * @param ActW
 		 * @param ActC
-		 * @return
+		 * @return checkok
 		 */
 		public boolean checkmailLoginForgotPassword(
 				Client 		me,
-				String 		txtMail,			//getEmailuser()
-				String 		txtMailMod,			//getTxtMailMod().getText())
+				String 		txtMail,			
+				String 		txtMailMod,			
 				JFrame 		ActF,
 				SL_JFrame	ActW,
 				Component	ActC			){
@@ -83,10 +84,8 @@ public class CheckMail {
 			}
 		}	
 	
-	
-	
-//TODO DA TESTARE DA ACCOUNT
 	/**
+	 * Questo metodo controlla se è già stata inserita, nel database, un email uguale a quella immessa dall'utente(parte modify Account)
 	 * @param me
 	 * @param txtMail
 	 * @param txtMailMod
@@ -111,10 +110,6 @@ public class CheckMail {
 			setTxtMailMod(txtMailMod);
 			
 		boolean checkok=true;
-			
-			System.out.println(" ***** sto controllando la email ");
-			System.out.println(" ***** sto controllando la email : REGISTRATA : "+getTxtMail());
-			System.out.println(" ***** sto controllando la email : NEL CAMPO  : "+getTxtMailMod());
 		 
 			//******************************************************************
 			if(Check.checkMail(getTxtMailMod())){
@@ -157,9 +152,9 @@ public class CheckMail {
 			//******************************************************************
 			return checkok;
 	}
-	
-//TODO DA TESTARE DA App Reader
+
 	/**
+	 * Questo metodo controlla se è già stata inserita, nel database, un email uguale a quella immessa dall'utente(parte AppReader)
 	 * @param me
 	 * @param txtMailMod
 	 * @param ActF

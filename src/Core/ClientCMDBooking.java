@@ -81,8 +81,6 @@ public class ClientCMDBooking {
 					me.getCliType() ,			// tipo di Client , Admin,Librarian,Reader
 					me.toString(),				// id Client
 					me.getSql()
-					//me.getSelectedIdBook(),		// id libro
-					//me.getSelectedIdUser()		// id utente
 					
 					);
 			MsgSend.setUType(Clients.Librarian);

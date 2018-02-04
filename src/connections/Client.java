@@ -59,7 +59,7 @@ import java.awt.Component;
 public class Client implements Serializable, Runnable  {
 	
 
-	
+	private static final long serialVersionUID = 1L;
 	public 				int 				ctc=0;
 	private				int 				LoginTry=0;
 	private				int 				CurrentUser=0;	// if ( CurrentUser==0 ) non loggato 
@@ -96,17 +96,10 @@ public class Client implements Serializable, Runnable  {
 	
 	private 			Message				mSgTOsend;
 	
-	private				boolean				Busy=false;			//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
-	private				boolean				BusyControl=false;	//SE ARRIVA RICHIESTA INVIO COMANDO BUSY == TRUE
+	private				boolean				Busy=false;			
+	private				boolean				BusyControl=false;	
 	private 			boolean				RefreshData=false;
-	
-	//TEST OK...
-	
-	//private 			String				SRVaddress="127.0.0.1";		//localhost
-	//private 			String				SRVaddress="192.168.0.6";	//localhost
-	//private 			String				SRVaddress;
 
-	//SETTING *************************************************
 	private 			String				SRVtype;
 	private 			String				SRVaddress;	
 	
@@ -142,7 +135,6 @@ public class Client implements Serializable, Runnable  {
 	private 			int 				idbook;	
 	private 			int 				idut;
 	private 			String				to;					//email destinatario per registrazione, PUò ESSERE IL PROBLEMA
-	//private 			String				emailR;				//email tramite la quale ricercare utente da LOGIN
 	private 			boolean				storico=false;
 	
 	
@@ -671,25 +663,11 @@ setBusy(false);
 						// USER Read Data by email
 							case "SRV :> selected user by email:> OK":
 								
-								System.out.println("ritornato al client UserDATA by email OK : ");
 								
 								//devo riottenere id utente e modificare typeuser QUI
 								String [] UserData= Mb.getRowUser();
 								String UserType = UserData[7];
-								
-								
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[0]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[1]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[2]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[3]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[4]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[5]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[6]);
-								System.err.println("CLI> DATI ottenuti da UserREADbyEmail :"+UserData[7]);
-								
-								
-								
-								
+
 								switch (UserType) {
 								case "Administrator":
 									System.out.println("riconosco "+ getCliType());
@@ -712,21 +690,7 @@ setBusy(false);
 									System.out.println("riconosco ");
 									break;
 								}
-								
-		
 
-								
-								System.out.println("ricavo valore nome: "+Mb.getRowUser()[1]);
-								System.out.println("ricavo valore nome: "+Mb.getRowUser()[2]);
-								System.out.println("ricavo valore nome: "+Mb.getRowUser()[3]);
-								System.out.println("ricavo valore nome: "+Mb.getRowUser()[4]);
-								
-								
-								
-								System.err.println("finestra attiva : "+getActW().toString());								
-								System.err.println("finestra attiva : "+getActW().getSL_Type());
-								
-								
 								if ( getActW().getSL_Type()==AppType.AppAccount ) {
 									Account Ax = (Account)getActW();
 									if (Ax.getPanelModify().isVisible()) {
@@ -756,11 +720,7 @@ setBusy(false);
 										
 										
 									}
-									
-									
-									
-									
-									
+
 								}
 								
 								clrParFS();	
@@ -768,9 +728,7 @@ setBusy(false);
 								
 								// USER Read Data by email
 							case "SRV :> selected user by email panel Account:> OK":								
-								System.out.println("ritornato al client UserDATA by email OK : ");																							
-								
-//INSERISCI ACTW NUOVA ACCOUNT								
+								System.out.println("ritornato al client UserDATA by email OK : ");																													
 								
 								Account accX = new Account(getMeMain().getFrame(),this);				
 								setActW(accX);
@@ -800,7 +758,6 @@ setBusy(false);
 							case "SRV :> selected user by email panel Modify:> NG"	:
 							case "SRV :> selected user by email panel Account:> NG" :{
 							
-								System.out.println("ritornato al client UserDATA  by email NG : ");
 								
 								clrParFS();	
 								break;								
@@ -850,18 +807,8 @@ setBusy(false);
 								setSelectedIdUser(getIdut());
 								
 								setDatiUtente(Mb.getRowUser());
-								
-								System.out.println("settato id utente..."+getIdut());
-								
-								
-								
+							
 								Login l = (Login)getActW();								
-								//System.out.println("login attiva: "+l.toString());								
-								/*
-								Account lo = new Account(getActF(),this);				
-								setActW(lo);
-								*/								
-								//chiusura finesta login
 								l.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
 								l.getPr().setVisible(false);				//PanelRegi.setVisible(false);	
 								WindowEvent close = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
@@ -869,19 +816,6 @@ setBusy(false);
 								
 								//invio comando login
 								try {
-									System.out.println("GUI login:> cmd tentativo di login ");
-									
-									
-									//this.setCliType(Clients.Librarian);
-									
-									
-									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
-									
-									/*
-									this.setSql(Mb.getUserEmail());			//risetta email in campo sql
-									this.getCmdLIST().put(Commands.UserREADbyEmail);
-									*/
-									
 									
 									this.getMeMain().getFrame().setVisible(true);
 									this.getMeMain().getBtnAccount().setVisible(true);
@@ -889,11 +823,7 @@ setBusy(false);
 									
 									
 									
-								} /*catch (InterruptedException e2) {
-									System.out.println("GUI login :> problemi con tentativo di login ");	
-									e2.printStackTrace(); 
-								
-								}*/
+								} 
 								finally {
 									
 								}
@@ -923,13 +853,7 @@ setBusy(false);
 								break;	
 	
 							case "SRV :> selected user login check FIRST:> Login Corretto":
-								Login lF = (Login)getActW();					//System.out.println("login attiva: "+l.toString());								
-								/*
-								Account loF = new Account(getActF(),this);				
-								setActW(loF);
-								*/
-								//MQ_Delete.deletePassTemp(pass);
-								//chiusura finesta login
+								Login lF = (Login)getActW();													
 								lF.getPfa().setVisible(false);				//PanelFirstAcc.setVisible(false);
 								lF.getPr().setVisible(false);				//PanelRegi.setVisible(false);
 								WindowEvent closeF = new WindowEvent(getActF(), WindowEvent.WINDOW_CLOSING);
@@ -943,30 +867,23 @@ setBusy(false);
 								//invio comando login
 								try {
 									System.out.println("GUI login:> cmd tentativo di login ");
-									//this.setCliType(Clients.Librarian);
-									//System.out.println("CLI sendMESSAGE return : riottengo da MB email "+Mb.getUserEmail());
-									//this.setSql(Mb.getUserEmail());			//risetta email in campo sql
-//TODO ELIMINA PASSWORD TEMPORANEA
 									
 									this.getCmdLIST().put(Commands.UserPasswordRemovetemp);
 									PopUp.infoBox(getActW(), "LOGIN EFFETTUATO CON SUCCESSO");
-									
-									//this.getCmdLIST().put(Commands.UserREADbyEmail);
+						
 
 								} catch (InterruptedException e2) {
 									System.out.println("GUI login :> problemi con tentativo di login ");	
 									e2.printStackTrace(); 
 								}
-								//clrParFS();	i campi verranno ripuliti da user read by email	
 								break;
-							// LOGIN FIRST ACCESS FINE	
+						
 							
 							case "SRV :> selected user login check FIRST:> PROCEDURA CANCELLAZIONE UTENTE":								
 								PopUp.errorBox(getActC(), Mb.getText());
 								clrParFS();	
 								break;	
-								
-//USER \ READ \ CK Email	
+	
 							case"SRV :> URCE :> NG":					
 								switch (Mb.getWtype()) {
 									case "Account":
@@ -1173,16 +1090,13 @@ setBusy(false);
 								resBk.setLastIDbookcheckinprogress(false);
 								break;								
 
-							//Booking Delete	
+								
 							case 	"SRV :> Del-Booking:> OK": 	ClientCMDBooking.BookingDeleteRES(this, "OK");	break;
 							case	"SRV :> Del-Booking:> NG":	ClientCMDBooking.BookingDeleteRES(this, "NG");	break;
 								
-							//table populate
+							
 							case	"SRV :> table loans populate :> OK":	ClientCMDloans.LoanspopulateRES(	this,"OK", Mb);	break;
 							case	"SRV :> table loans populate :> NG":	ClientCMDloans.LoanspopulateRES(	this,"NG", Mb);	break;
-
-							//case	"SRV :> table Book populate :> OK":	ClientCMDBook.BookpopulateRES(		this,"OK", Mb);	break;
-							//case	"SRV :> table Book populate :> NG":	ClientCMDBook.BookpopulateRES(		this,"NG", Mb);	break;
 							
 							case	"SRV :> table booking populate :> OK":	ClientCMDBooking.BookingpopulateRES(this,"OK", Mb);	break;
 							case	"SRV :> table booking populate :> NG":	ClientCMDBooking.BookingpopulateRES(this,"NG", Mb);	break;
@@ -1893,7 +1807,7 @@ setBusy(false);
 				sendM(MsgSend, Mb);
 			}	
 		}	
-//TODO DA TESTARE		
+	
 		/**
 		 * @throws SendFailedException
 		 * @throws MessagingException
@@ -2248,6 +2162,54 @@ setBusy(false);
 			}
 			public void setClientTypeOLD(Clients clientTypeOLD) {
 				ClientTypeOLD = clientTypeOLD;
+			}
+			public Account getMeAcc() {
+				return meAcc;
+			}
+			public void setMeAcc(Account meAcc) {
+				this.meAcc = meAcc;
+			}
+			public static int getConn() {
+				return conn;
+			}
+			public static void setConn(int conn) {
+				Client.conn = conn;
+			}
+			public String getTc() {
+				return tc;
+			}
+			public void setTc(String tc) {
+				this.tc = tc;
+			}
+			public Message getMess() {
+				return mess;
+			}
+			public void setMess(Message mess) {
+				this.mess = mess;
+			}
+			public Message getmSgTOsend() {
+				return mSgTOsend;
+			}
+			public void setmSgTOsend(Message mSgTOsend) {
+				this.mSgTOsend = mSgTOsend;
+			}
+			public String getIpaddLocal() {
+				return ipaddLocal;
+			}
+			public void setIpaddLocal(String ipaddLocal) {
+				this.ipaddLocal = ipaddLocal;
+			}
+			public String getIpadLan() {
+				return ipadLan;
+			}
+			public void setIpadLan(String ipadLan) {
+				this.ipadLan = ipadLan;
+			}
+			public String getIpadWww() {
+				return ipadWww;
+			}
+			public void setIpadWww(String ipadWww) {
+				this.ipadWww = ipadWww;
 			}
 		
 	

@@ -38,6 +38,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 
+/**
+ * @author luca
+ *
+ */
 public class Account extends SL_JFrame{
 	
 
@@ -776,180 +780,7 @@ public class Account extends SL_JFrame{
 				default:
 					break;
 				} 
-
-//PRIMO TEST
-/*				
-				
-				
-				if(Check.checkAllRegMod(nome,cognome,mail,pass,checkPassword,inq,tel))		//Controllo sintattico / riempimento campi
-				{
-
-
-					//String 	p 	= String.copyValueOf(passwordFieldMod.getPassword());					
-					// MQ_Update.updateModUser(txtNameMod.getText(), txtSurnameMod.getText(), getTxtMailMod().getText(),txtInqMod.getText(),p,txtTelMod.getText(),stato);
-
-
-
-					
-					PopUp.infoBox(frmSchoolib,"Modifica avvenuta con successo");
-					 try 
-					{
-					  //user = MQ_Read.retrieveUserId();
-					user = MQ_Read.retrieveUserIdbyemail(mail);
-					
-					
-					} catch (SQLException e) {
-							e.printStackTrace();
-					}
-				    
-				    
-//TODO aggiorna campi da CLIENT
-					
-					
-					lblSetNome.setText(user[1]);
-					lblSetCognome.setText(user[2]);
-					lblSetEmail.setText(user[3]);
-					lblSetPass.setText(user[4]);
-					lblSetInq.setText(user[5]);
-					lblSetTel.setText(user[6]);
-					lblSetTipoUte.setText(user[7]);
-					
-					panelAccount.setVisible(true);
-					panelModify.setVisible(false);
-					
-					txtNameMod.setEditable(false);
-					txtSurnameMod.setEditable(false);
-					getTxtMailMod().setEditable(false);
-					passwordFieldMod.setEditable(false);
-					passwordFieldConfMod.setEditable(false);
-					txtInqMod.setEditable(false);
-					txtTelMod.setEditable(false);
-					
-					lblChangeNameCheck.setIcon(null);
-					lblChangeSurnameCheck.setIcon(null);
-					lblChangeEmailCheck.setIcon(null);
-					lblChangePassCheck.setIcon(null);
-					lblChangePassCheck.setIcon(null);
-					lblChangePassConfCheck.setIcon(null);
-					lblChangeInqCheck.setIcon(null);
-					lblChangePhoneCheck.setIcon(null);
-					
-			    }
-				else 
-				{
-				PopUp.errorBox1(frmSchoolib,"Campi non corretti");				
-				
-				checkname();
-				
-				if(Check.checkName(nome))
-				{
-					System.out.println("7");
-					lblChangeNameCheck.setIcon(iconLogoT);
-				}
-				else
-				{ 
-					System.out.println("8");
-					lblChangeNameCheck.setIcon(iconLogoC);
-				}
-				
-				
-				checksurname();
-				
-				System.out.println("9");
-				if(Check.checkName(cognome))
-				{
-					System.out.println("10");
-					lblChangeSurnameCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					System.out.println("11");					
-					lblChangeSurnameCheck.setIcon(iconLogoC);
-				}
-				 
-
-				
-				
-				
-				if(Check.checkMail(mail) && (!Check.checkMailExist(mail)))
-				{
-					lblChangeEmailCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangeEmailCheck.setIcon(iconLogoC);
-				}
-				
-
-
-				if(Check.checkPass(pass))
-				{
-					lblChangePassCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePassCheck.setIcon(iconLogoC);
-				}
-				
-				if(Check.checkPass(checkPassword))
-				{
-					lblChangePassConfCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePassConfCheck.setIcon(iconLogoC);
-				}
-				
-				
-				
-				if(Check.checkPassEq(pass, checkPassword))
-				{
-					lblChangePassConfCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePassConfCheck.setIcon(iconLogoC);
-				}
-				System.out.println("12");	
-				
-				
-				checkinq();
-				
-				if(Check.checkName(inq))
-				{
-					System.out.println("13");	
-					lblChangeInqCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					System.out.println("14");
-					lblChangeInqCheck.setIcon(iconLogoC);
-				}
-				
-				
-
-				
-				checkTel();
-				
-				if(Check.checkTel(tel))
-				{
-					lblChangePhoneCheck.setIcon(iconLogoT);
-				}
-				else
-				{
-					lblChangePhoneCheck.setIcon(iconLogoC);
-				}
-				
-					
-				}
-			 
-*/
-//PRIMO TEST	
-		}
-			
-		
-			
-			
+		}		
 	});
 	
 		btnModData.setBounds(301, 391, 175, 67);
@@ -1290,6 +1121,9 @@ public class Account extends SL_JFrame{
 		this.passwordField = passwordField;
 	}
 
+	/**
+	 * @param user
+	 */
 	public void updateall(String[] user )
 	{
 		setIdUser(Integer.valueOf(user[0]));
@@ -1304,6 +1138,9 @@ public class Account extends SL_JFrame{
 		
 		
 	}
+	/**
+	 * @param user
+	 */
 	public void updateallModify(String[] user )
 	{
 		String idutente = user[0];
@@ -1334,6 +1171,9 @@ public class Account extends SL_JFrame{
 		
 	}	
 	
+	/**
+	 * @param user
+	 */
 	public void updateallAfterModify(String[] user )
 	{
 		

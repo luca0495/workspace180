@@ -8,6 +8,10 @@ import java.sql.Statement;
 
 public class CheckDBSetting {
 	// CHECKSETTINGDB
+		/**
+		 * Questo metodo crea la tabella setting se non esiste
+		 * @throws SQLException
+		 */
 		public static void TableExistSetting()throws SQLException{
 		Connection connection = DBmanager.getConnection("jdbc:postgresql://localhost:5432/schoolib", "postgres", "postgres");
 		 DatabaseMetaData metadata = connection.getMetaData();

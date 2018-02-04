@@ -5,14 +5,7 @@ public enum Commands{
 // Connection Stub / Skeleton
 			ConnSTOP				("StopConnection"				,	SearchFor.SystemPar,	CommandsType.CONNECTION,	4,	0), 
 			ConnTEST				("TestConnection"				,	SearchFor.SystemPar,	CommandsType.CONNECTION,	10,	0),		
-// Test
-			
-			//tableExistBook		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
-			//tableExistLoans		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
-			//tableExistPerson		("Check Tb Exist"				,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
-			//Test1					("Test 1"						,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
-			//Test2					("Test 2"						,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),
-			//Test3					("Test 3"						,	SearchFor.SystemPar,	CommandsType.TEST,			1,	0),	
+
 // Initialize
 			DBExist 				("Check DB Exist"				,	SearchFor.Database,	    CommandsType.CHANGE,		1,	0),
 			tableExistSetting		("Check Tb Exist"				,	SearchFor.Setting,		CommandsType.CHANGE,		1,	0),
