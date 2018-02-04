@@ -322,7 +322,7 @@ public class MQ_Update {
 				+ "SET " 						+ 
 				"data_fine = '"+datacorrente+"'," 	+ 
 				"rientrato=true " 				+ 
-				"where id='"+idus+"'and codice='"+idbook+"';";
+				"where codice='"+idbook+"'and data_fine is null and ritirato = true and rientrato = false;";
 		return q;
 	}
 	public static void updateLoansReturned(String q) throws SQLException
