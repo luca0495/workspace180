@@ -3,6 +3,11 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 
+	/**
+	 * @author Mauro De Salvatore
+	 *
+	 */
+
 	public class CommandsList {
 		
 		
@@ -18,6 +23,10 @@ import java.util.LinkedList;
 			maxRequests=100;
 		}
 	
+		/**restituisce primo elemento Commands della coda
+		 * @return
+		 * @throws InterruptedException
+		 */
 		public synchronized Commands take() throws InterruptedException{			
 	
 			while(getCmdList().size()<1){
@@ -36,6 +45,10 @@ import java.util.LinkedList;
 			return obj;
 		}
 		
+		/**posiziona l'elemento Commands in fondo alla coda
+		 * @param objName
+		 * @throws InterruptedException
+		 */
 		public synchronized void put(Commands objName) throws InterruptedException{
 			incWr();
 				
