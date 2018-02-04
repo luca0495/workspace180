@@ -1,19 +1,25 @@
 package database;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import java.util.List;
 
+/**
+ * @author luca
+ *
+ */
 public class MQ_Update {
 
+	/**
+	 * Questo metodo setta libro come LIBERO
+	 * @param idbook
+	 * @throws SQLException
+	 */
 	public static void updateBookFree(int idbook) throws SQLException
-	{	
-		System.out.println("UPDATE BOOK FREE, setto libro come LIBERO "+idbook);					
+	{					
 		
 		String q = "UPDATE libro SET disponibilità = 'Libero' WHERE codice = '" + idbook + "';";
     	
@@ -25,6 +31,13 @@ public class MQ_Update {
 	
 	
 
+	/**
+	 * Questo metodo aggiorna i campi del libro di un determinato codice
+	 * @param cd
+	 * @param input
+	 * @param col
+	 * @throws SQLException
+	 */
 	public static void updateTableCliente(String cd,String input, int col) throws SQLException
 	{	
 		
@@ -53,6 +66,13 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo aggiorna i campi della tabella prestiti, quando un utente vuole prendere in prestito un libro
+	 * @param cd
+	 * @param input
+	 * @param col
+	 * @throws SQLException
+	 */
 	public static void updateTableLoans(String cd,String input, int col) throws SQLException
 	{	
 		
@@ -81,6 +101,13 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo aggiorna tutti i campi di un utente dopo averli modificati
+	 * @param r
+	 * @param input
+	 * @param col
+	 * @throws SQLException
+	 */
 	public static void updateModUser1(List<String> r,String input, int col) throws SQLException
 	{	
 		
@@ -120,7 +147,7 @@ public class MQ_Update {
 		DBmanager.executeUpdate(query);
 		DBmanager.closeConnection();
 	}
-	
+
 	public static void updateModUser(String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
 	{	
 
@@ -132,6 +159,12 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo aggiorna la password di un utente (Panel di modifica dati)
+	 * @param idus
+	 * @param pass
+	 * @throws SQLException
+	 */
 	public static void updatePassMod(int idus,String pass) throws SQLException
 	{	
 		String q=null;
@@ -143,6 +176,13 @@ public class MQ_Update {
 		
 		
 	}
+	/**
+	 * Questo metodo aggiorna la password di un utente se ha dimenticato la password(Password dimenticata)
+	 * @param email
+	 * @param pass
+	 * @param i
+	 * @throws SQLException
+	 */
 	public static void updatePassForgot(String email,String pass, int i) throws SQLException
 	{	
 		String query1 = "UPDATE utente SET email = '" + email + "', password = '" + pass + "' , password_temp = '" + i + "';";
@@ -151,6 +191,12 @@ public class MQ_Update {
 		DBmanager.executeUpdate(query1);
 		DBmanager.closeConnection();
 	}
+	/**
+	 * Questo metodo aggiona la password guardando l'email inserita dall'utente
+	 * @param email
+	 * @param pass
+	 * @throws SQLException
+	 */
 	public static void updatePassForgotDirect(String email,String pass) throws SQLException
 	{	
 		String query1 = "UPDATE utente SET  password = '" + pass + "' WHERE email = '" + email + "'';";
@@ -160,6 +206,12 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
+	/**
+	 * Questo metodo aggiona la password guardando l'email inserita dall'utente
+	 * @param email
+	 * @param pass
+	 * @return q
+	 */
 	public static String updateNewPassForgotGETQUERY (String email,String pass) {
 		String q = "UPDATE utente SET password = '" + pass +"' WHERE email = '" + email +"';";
 		return q;
@@ -174,6 +226,12 @@ public class MQ_Update {
 	}
 	
 	
+	/**
+	 * Questo metodo aggiorna i tentativi di password temp di un utente(se arriva a 5 password_temp_tentativi falliti)
+	 * @param email
+	 * @param tentativi
+	 * @throws SQLException
+	 */
 	public static void updateLoginTry(String email, int tentativi) throws SQLException
 	{	
 
@@ -186,16 +244,14 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	//UPDATE LOANS RETURNED	*********************************************************************
-	//public static String updateLoansReturnedGetQuery(int idbook,int idus, java.sql.Date datacorrente) throws SQLException
-	//in test
+	/**
+	 * Questo metodo aggiorna i campi dei prestiti al ritorno di un libro 
+	 * @param idbook
+	 * @param idus
+	 * @param datacorrente
+	 * @return q
+	 * @throws SQLException
+	 */
 	public static String updateLoansReturnedGetQuery(int idbook,int idus, String datacorrente) throws SQLException
 	{
 		String q=null;
@@ -215,20 +271,24 @@ public class MQ_Update {
 		DBmanager.executeUpdate(q);
 		DBmanager.closeConnection();
 	}
-	//UPDATE LOANS RETURNED	*********************************************************************
+	//UPDATE LOANS RETURNED	******************************************************************
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Questo metodo aggiorna i campi dell'utente dopo averli modificati dal pannello di modifica dati
+	 * @param idus
+	 * @param nome
+	 * @param cognome
+	 * @param email
+	 * @param inq
+	 * @param ntel
+	 * @param tipo_utente
+	 * @return q
+	 * @throws SQLException
+	 */
 	public static String updateModUserIdGetQuery(int idus, String nome,  String cognome, String email,  String inq, String ntel,String tipo_utente) throws SQLException
 	{
 		String q=null;
-		//int id = Integer.valueOf(idus);
+		
 		
 		q = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "'"
 				+ ", inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + idus +"';";
@@ -246,16 +306,22 @@ public class MQ_Update {
 
 	}
 	
-	
-	
-	
-	
+	/**
+	 * Questo metodo aggiorna i campi dell'utente dopo averli modificati dal pannello di modifica dati 
+	 * @param id
+	 * @param nome
+	 * @param cognome
+	 * @param email
+	 * @param inq
+	 * @param pass
+	 * @param ntel
+	 * @param tipo_utente
+	 * @return user
+	 * @throws SQLException
+	 */
 	public static String[] updateModUserId(String id, String nome,  String cognome, String email,  String inq, String pass, String ntel,String tipo_utente) throws SQLException
 	{		
-		
-		//String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
-		//		"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"';";
-		
+
 		String query1 = "UPDATE utente SET nome = '" + nome + "', cognome = '" + cognome + "' , email = '" + email + "' , password = '" + pass +
 				"' , inquadramento = '" + inq + "' , ntel = '" + ntel +"' , tipo_utente = '" + tipo_utente +"' WHERE id = '" + id +"';";
 		
@@ -294,6 +360,16 @@ public class MQ_Update {
 		
 		return user;
 	}
+	/**
+	 * Questo metodo aggiorna tutti i campi della tabella setting
+	 * @param localhost
+	 * @param lan
+	 * @param www
+	 * @param srvtype
+	 * @param emailUSER
+	 * @param emailPW
+	 * @throws SQLException
+	 */
 	public static void updateSetting(	String localhost,  
 										String lan, 
 										String www,  
@@ -315,9 +391,13 @@ public class MQ_Update {
 		DBmanager.closeConnection();
 	}
 	
-	
-	//UPDATE prestiti set email_inviata = true where id='1' and codice='2';
-	
+		
+	/**
+	 * Questo metodo serve per dire che è stata inviata una email di richiesta di un prestito da parte di un utente
+	 * @param idut
+	 * @param idlib
+	 * @throws SQLException
+	 */
 	public static void updateLoansEmailSent(	String idut,   
 												String idlib) 	throws SQLException
 							{	
@@ -329,6 +409,12 @@ public class MQ_Update {
 							DBmanager.closeConnection();
 	}	
 	
+		/**
+		 * Questo metodo aggiorna la disponibilità di un determinato libro(aggiorna lo stato da libero/in prestito/in coda)
+		 * @param idlib
+		 * @param newStato
+		 * @throws SQLException
+		 */
 		public static void updateLoansStato(String idlib,String newStato) 	throws SQLException
 	{	
 	

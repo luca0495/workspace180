@@ -298,7 +298,7 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	/**
 	 * Questo metodo inserisce una password temporanea identificando l'email immessa
 	 * @param email
-	 * @return
+	 * @return value
 	 * @throws SQLException
 	 */
 	public static String ReadPassTemp1(String email) throws SQLException
@@ -337,7 +337,7 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	/**
 	 * Questo metodo conta il numero di password_temp_tentativi per email di un utente
 	 * @param email
-	 * @return
+	 * @return User
 	 * @throws SQLException
 	 */
 	public static String[] UserLoginTryCounter(String email) throws SQLException
@@ -369,6 +369,13 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	
+	/**
+	 * Questo metodo restituisce email, password_temp,id,tipo_utente di un utente per loggarsi la prima volta 
+	 * @param email
+	 * @param pass
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String[] selectAdminLogInFIRST(String email,String pass) throws SQLException
 	{
 		
@@ -400,6 +407,13 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	}
 	
 	
+	/**
+	 * Questo metodo restituisce email, password_temp,id,tipo_utente di un utente per loggarsi la prima volta
+	 * @param email
+	 * @param pass
+	 * @return User
+	 * @throws SQLException
+	 */
 	public static String[] selectAdminLogIn(String email,String pass) throws SQLException
 	{
 		
@@ -429,6 +443,13 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		
 		return User;
 	}
+	/**
+	 * Questo metodo restituisce email, password_temp,id,tipo_utente di un utente per loggarsi la prima volta
+	 * @param email
+	 * @param password
+	 * @return
+	 * @throws SQLException
+	 */
 	public static String[] selectUser(String email,String password) throws SQLException
 	{
 		
@@ -462,19 +483,18 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	}
 	
 
-	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
-	
-	//TODO il comando deve comprendere:
-	//TODO String q = MQ_READ.selectUserGetQuery(email);
-	//TODO me.setSql(q);
-	//TODO me.setActW(FINESTRA ATTIVA CON ACCOUNT UTENTE);
-	//TODO me.getCmdLIST().put(Commands.UserREAD);
-
+	/**
+	 * Questo metodo ottiene i dati dell'utente ( nome,cognome,email,inquadramento,password,ntel,tipo_utente) dall'email utente 
+	 * @param email
+	 * @return Person
+	 * @throws SQLException
+	 */
 	public static String selectUserGetQuery(String email) throws SQLException
 	{	
 		String query = "SELECT nome,cognome,email,inquadramento,password,ntel,tipo_utente FROM utente WHERE email = '" + email +"';";
 		return query;
 	}
+	
 	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
 	public static String[] selectUserByQuery(String q) throws SQLException
 	{
@@ -502,8 +522,13 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		return Person;
 	}
 
-	
-	//TODO DA USARE PER FINESTRA USER ACCOUNT DA LOGIN
+
+	/**
+	 * Questo metodo serve per selezionare il tipo di utente dove l' email è l'email dell'utente 
+	 * @param email
+	 * @return Person
+	 * @throws SQLException
+	 */
 	public static String[] selectUser(String email) throws SQLException
 	{
 		
@@ -511,16 +536,14 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 		
-		String[] Person = new String[7]; //3 email, 7 pass_temp
+		String[] Person = new String[7]; 
 		
 		if (!rs.isBeforeFirst()) 
 		{  
-			System.out.println("9");
 			Person[0] = "Nessun Dato";
 		}
 		else
 		{
-			System.out.println("10");
 			rs.next();
 			Person[1] = rs.getString("nome");
 			Person[2] = rs.getString("cognome");
@@ -537,6 +560,11 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	}
 
 	
+	/**
+	 * Questo metodo serve per ritrovare i campi dell'ultimo utente inserito
+	 * @return user
+	 * @throws SQLException
+	 */
 	public static String[] retrieveUserId() throws SQLException
 	{		
 		String query = "SELECT id, nome, cognome, email, password,inquadramento,ntel,tipo_utente FROM utente ORDER BY id DESC LIMIT 1;";
@@ -577,6 +605,12 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		return user;
 	}
 	
+	/**
+	 * Questo metodo serve per ritrovare i campi di un utente tramite email
+	 * @param email
+	 * @return user
+	 * @throws SQLException
+	 */
 	public static String[] retrieveUserIdbyemail(String email) throws SQLException
 	{		
 		
@@ -620,6 +654,12 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		return user;
 	}
 	
+	/**
+	 * Questo metodo serve per ritrovare i campi di un utente tramite iduser
+	 * @param iduser
+	 * @return user
+	 * @throws SQLException
+	 */
 	public static String[] retrieveUserIdbyid(int iduser) throws SQLException
 	{		
 		
@@ -666,6 +706,11 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	
 //***********************SETTING****************************************************
 	
+	/**
+	 * Questo metodo leggi tutti i dati dalla tabella setting
+	 * @return user
+	 * @throws SQLException
+	 */
 	public static String[] readSettingTable() throws SQLException
 	{
 		
@@ -706,25 +751,20 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	}
 
 //PRESTITI***************************************************************************************************************
-/*
-select id,codice from prestiti 
-where 
-	data_fine is null 					AND
-    scaduto = true						AND
-	email_inviata  = false
-    ;	
-	*/
 	
+	/**
+	 * Questo metodo leggi i campi dei prestiti di un utente e restituisce il primo prestito SCADUTO con email NON inviata
+	 * @return loan
+	 * @throws SQLException
+	 */
 	public static String[] readLoansForSendEmail() throws SQLException
 	{
-		//restituisce il primo prestito SCADUTO con email NON inviata
 		String query = "select prestiti.codice,utente.id,nome,cognome,email,tipo_utente,nome_autore,cognome_autore,titolo from prestiti ,utente,libro " + 
 				"where 	prestiti.id		=utente.id		AND"	+ 
 				"		prestiti.codice	=libro.codice	AND"	+
-				
-				"		data_fine 		is null 	AND" + 
-				"    	scaduto 		= true		AND" + 
-				"		email_inviata  	= false" + 
+				"		data_fine 		is null 	    AND"    + 
+				"    	scaduto 		= true		    AND"    + 
+				"		email_inviata  	= false"                + 
 				"    ;";
 		
 		DBmanager.openConnection();
@@ -756,6 +796,11 @@ where
 		return loan;
 	}	
 	
+	/**
+	 * Questo metodo invia l'email ad un utente se il libro è scaduto
+	 * @return loan
+	 * @throws SQLException
+	 */
 	public static String[] sendEmailLoans() throws SQLException
 	{
 		//restituisce il primo prestito SCADUTO con email NON inviata
@@ -796,6 +841,13 @@ where
 	
 
 	
+	/**
+	 * Questo metodo conta il numero di libri di utente(un utente non può prenotare lo stesso libro per più di 2 volte)
+	 * @param idut
+	 * @param idbook
+	 * @return
+	 * @throws SQLException
+	 */
 	public static int checkLoansIdutIdbook_2(int idut,int idbook) throws SQLException
 	{
 		System.err.println("idut  :"+idut);
@@ -827,13 +879,14 @@ where
 		DBmanager.closeConnection();
 		return count;
 	}
-	
-/*select count (scaduto) from prestiti where 
-id = '1'		and
-ritirato=true 	and
-scaduto=true 	
-;
-*/
+
+	/**
+	 * Questo metodo conta il numero di scaduti di un utente che non sono stati riconsegnati
+	 * @param idut
+	 * @param idbook
+	 * @return count
+	 * @throws SQLException
+	 */
 	public static int checkLoansIdutScaduti(int idut,int idbook) throws SQLException
 	{
 		System.err.println("idut  :"+idut);
@@ -864,6 +917,12 @@ scaduto=true
 	}
 
 
+	/**
+	 * Questo metodo conta il numero di utenti in attesa di ricevere in prestito il libro 
+	 * @param idbook
+	 * @return count
+	 * @throws SQLException
+	 */
 	public static int checkLoansIdBookWait(int idbook) throws SQLException
 	{	
 		System.err.println("idbook  :"+idbook);
@@ -893,6 +952,13 @@ scaduto=true
 
 	}
 	
+	/**
+	 * 
+	 * @param idut
+	 * @param idbook
+	 * @return presente
+	 * @throws SQLException
+	 */
 	public static boolean checkBookingPresente(int idut,int idbook) throws SQLException
 	{
 		System.err.println("idut  :"+idut);
@@ -923,6 +989,13 @@ scaduto=true
 	} 
 	
 	
+	/**
+	 * Questo metodo conta il numero di prenotazioni di un utente 
+	 * @param idut
+	 * @param idbook
+	 * @return count
+	 * @throws SQLException
+	 */
 	public static int checkBookingCount_10(int idut,int idbook) throws SQLException
 	{
 		System.err.println("idut  :"+idut);
@@ -950,6 +1023,13 @@ scaduto=true
 	} 
 	
 	
+/**
+ * Questo metodo conta il numero di prestiti di un utente che non ha ancora riconsegnato i libri
+ * @param idut
+ * @param idbook
+ * @return presente
+ * @throws SQLException
+ */
 public static boolean checkLoansPresente(int idut,int idbook) throws SQLException
 {
 	System.err.println("idut  :"+idut);
