@@ -1117,7 +1117,8 @@ public class ServerReal extends ServerSkeleton {
 										
 										
 										
-										int iduserNext=0;	
+										int iduserNext=0; 
+										
 										boolean bene=false;
 										List <String> r = new ArrayList<String>(2);	
 										
@@ -1185,7 +1186,7 @@ public class ServerReal extends ServerSkeleton {
 												dataultimocontrollo=M.getMsg().getDateOfRequest();
 											}
 											
-											
+										
 											
 											//inserisce prossimo in lista prenotazioni come in prestito 
 											String qINS = MQ_Insert.insertLoansGetQuery(idbook, iduserNext,datacorrente);
@@ -1219,7 +1220,7 @@ public class ServerReal extends ServerSkeleton {
 																			de[6],//cognome autore
 																			de[7],//titolo
 																			java.sql.Date.valueOf(de[8]),//data inizio
-																			java.sql.Date.valueOf(de[9]),//data fine	
+																			//java.sql.Date.valueOf(de[9]),//data fine	
 																			UN,
 																			PW													
 													);
@@ -1230,7 +1231,8 @@ public class ServerReal extends ServerSkeleton {
 											return x;
 										
 										}catch (Exception e) {
-										
+											
+										 e.printStackTrace();
 											
 											
 											
@@ -2024,7 +2026,7 @@ public class ServerReal extends ServerSkeleton {
 																				de[6],//cognome autore
 																				de[7],//titolo
 																				java.sql.Date.valueOf(de[8]),//data inizio
-																				java.sql.Date.valueOf(de[9]),//data fine	
+																				//java.sql.Date.valueOf(de[9]),//data fine	
 																				UN,
 																				PW													
 														);
@@ -2408,7 +2410,7 @@ public class ServerReal extends ServerSkeleton {
 			setChkinprogress3(false);		
 		}
 //**********************************************************************************************************************************************	
-		/**accetta id_utente e id_book, check su PRENOTAZIONI, se l'utente ha giá 10 prenotazioni, 
+		/**	accetta id_utente e id_book, check su PRENOTAZIONI, se l'utente ha giá 10 prenotazioni, 
 		 * setCkkResult4== "SRV :> Loans ASK :> OK - PRESTITO NEGATO PER limite massimo prenotazioni (10) dello stesso utente ",
 		 * altrimenti   == "SRV :> Loans ASK :> OK - PRESTITO ACCORDATO "
 		 * @param idut

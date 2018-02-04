@@ -241,7 +241,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 					                            String cognome_autore,
 					                            String titolo,
 					                            Date  data_inizio,
-					                            Date  data_fine,					                               
+					                           // Date  data_fine,					                               
 					                            String UN,
 					                            String PW
 				                               
@@ -269,7 +269,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 			  			.append("TITOLO: "+titolo).append("  <br/>")
 			  			.append("Autore: "+nome_autore+" "+cognome_autore ).append("  <br/>")
 			  			.append("La data di inizio prestito è:" + data_inizio ).append("  <br/>")
-			  			.append("La data di fine prestito è: " + data_fine + 30).append("  <br/>")
+			  			.append("La data di fine prestito è: " + data_inizio + 30).append("  <br/>")
 			  			.append(" <br/>").append("Grazie per averci scelto, Arrivederci <br/>").append("</div>");
 		try{		
 		 
