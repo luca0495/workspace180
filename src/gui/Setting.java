@@ -96,6 +96,9 @@ public Setting(Component c,Client x,String[]userdata)
 		
 		System.out.println("da lettura query ... userdata [4] " + getUserdata()[4]);
 		
+		
+		
+		
 	}
 	
 	public void Setting(Component c) {
@@ -147,9 +150,13 @@ public Setting(Component c,Client x,String[]userdata)
 		panelChangePass.add(lblEmailAddress);
 		
 		textField_2 = new JTextField();
+		textField_2.setText( "127.0.0.1");
+		
 		textField_2.setBounds(208, 98, 137, 20);
 		panelChangePass.add(textField_2);
 		textField_2.setColumns(10);
+		textField_2.setEditable(false);
+		textField_2.setEnabled(false);
 		
 		textField_3 = new JTextField();
 		textField_3.setColumns(10);
