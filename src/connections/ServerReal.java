@@ -1218,7 +1218,7 @@ public class ServerReal extends ServerSkeleton {
 											System.out.println("ottengo de[5]: ["+de[5]+"]");
 											System.out.println("ottengo de[6]: ["+de[6]+"]");
 											System.out.println("ottengo de[7]: ["+de[7]+"]");
-											System.out.println("ottengo de[7]: ["+de[8]+"]");
+											System.out.println("ottengo de[8]: ["+de[8]+"]");
 											System.out.println("ottengo userdata[4]: ["+userdata[4]+"]");
 											System.out.println("ottengo userdata[5]: ["+userdata[5]+"]");
 										

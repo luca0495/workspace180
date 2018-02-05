@@ -847,9 +847,10 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		System.err.println("idbook  :"+idbook);
 		
 		String q="select libro.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio from prestiti,utente,libro " + 
-				"where 	prestiti.codice	='"+idbook+"'	 AND"	+
+				"where 	prestiti.codice	=libro.codice	 AND"	+
 				"    	prestiti.id	=utente.id	         AND"	+
-				"       ritirato= true                   ;";			
+				"    	prestiti.codice	='"+idbook+"'	 AND"	+
+				"       data_fine is null                   ;";			
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(q);
 
