@@ -246,7 +246,20 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 					                            String PW
 				                               
 				 ) throws SendFailedException, MessagingException, SQLException{
-		 String[] all = MQ_Read.sendEmailLoans();
+		
+		System.out.println("ottengo idlibro: ["+idlibro+"]");
+		System.out.println("ottengo utnome: ["+utnome+"]");
+		System.out.println("ottengo utcognome: ["+utcognome+"]");
+		System.out.println("ottengo email: ["+email+"]");
+		System.out.println("ottengo nome_autore: ["+nome_autore+"]");
+		System.out.println("ottengo cognome_autore: ["+cognome_autore+"]");
+		System.out.println("ottengo titolo: ["+titolo+"]");
+		System.out.println("ottengo data_inizio: ["+data_inizio+"]");
+		System.out.println("ottengo UN: ["+UN+"]");
+		System.out.println("ottengo PW: ["+PW+"]");
+		
+	
+		// String[] all = MQ_Read.sendEmailLoans();
 	     String host = "smtp.office365.com";
 	     String from= UN; 
 	     Authenticator authenticator = new Authenticator()
@@ -269,7 +282,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 			  			.append("TITOLO: "+titolo).append("  <br/>")
 			  			.append("Autore: "+nome_autore+" "+cognome_autore ).append("  <br/>")
 			  			.append("La data di inizio prestito è:" + data_inizio ).append("  <br/>")
-			  			.append("La data di fine prestito è: " + data_inizio + 30).append("  <br/>")
+			  			.append("La data di fine prestito è: " + data_inizio ).append("  <br/>")
 			  			.append(" <br/>").append("Grazie per averci scelto, Arrivederci <br/>").append("</div>");
 		try{		
 		 

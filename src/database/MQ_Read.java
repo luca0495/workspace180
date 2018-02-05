@@ -719,7 +719,7 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 		ResultSet rs = DBmanager.executeQuery(query);
 		
 		List<String> results = new ArrayList<String>();
-		String[] user = new String[7]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
+		String[] user = new String[6]; // nome,cognome,email,password,inquadramento,ntel,tipo_utente,numpren(mancante)
 		
 		if (!rs.isBeforeFirst()) 
 		{
@@ -801,18 +801,21 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	 * @return loan
 	 * @throws SQLException
 	 */
-	public static String[] sendEmailLoans() throws SQLException
+	public static String[] sendEmailLoans(int idbook) throws SQLException
 	{
-		//restituisce il primo prestito SCADUTO con email NON inviata
-		String query = "select prestiti.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio,data_fine from prestiti,utente,libro " + 
-				"where 	prestiti.id		=utente.id		AND"	+ 
-				"		prestiti.codice	=libro.codice	   "	+
-				" ;";
+		//  tolto data_fine    ////////////////////////////////
 		
+		
+		//restituisce il primo prestito SCADUTO con email NON inviata
+		String query = "select libro.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio from prestiti,utente,libro " + 
+				"where 	prestiti.id		=utente.id		AND"	+ 
+				"		prestiti.codice	=libro.codice	AND"	+
+				";";
+		                                                          
 		DBmanager.openConnection();
 		ResultSet rs = DBmanager.executeQuery(query);
 
-		String[] loan = new String[11]; // codice utente codice libro
+		String[] loan = new String[9]; // codice utente codice libro
 		
 		if (!rs.isBeforeFirst()) 
 		{
@@ -831,7 +834,45 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 			loan[6]=(rs.getString("cognome_autore")); 		//6
 			loan[7]=(rs.getString("titolo")); 	            //7
 			loan[8]=(rs.getString("data_inizio")); 			//8
-			loan[9]=(rs.getString("data_fine"));            //9
+			//loan[9]=(rs.getString("data_fine"));            //9
+		}
+		rs.close();
+		DBmanager.closeConnection();
+		return loan;
+	}	
+	
+	
+	public static String [] checkLoansIdBookIdUt(int idbook) throws SQLException
+	{
+		System.err.println("idbook  :"+idbook);
+		
+		String q="select prestiti.codice,utente.id,nome,cognome,email,nome_autore,cognome_autore,titolo,data_inizio from prestiti,utente,libro " + 
+				"where	prestiti.codice='"+idbook+"'	 AND"	+
+				"      prestiti.id=utente.id    AND"   +  
+				"       ritirato= true                   ;";			
+		DBmanager.openConnection();
+		ResultSet rs = DBmanager.executeQuery(q);
+
+		String[] loan = new String[10]; // codice utente codice libro
+		
+		if (!rs.isBeforeFirst()) 
+		{
+			loan[0]=("Nessun Dato");
+		}
+		else
+		{
+			rs.next(); 
+			
+			loan[0]=(rs.getString("codice")); 			    //0 
+			loan[1]=(rs.getString("id"));				    //1
+			loan[2]=(rs.getString("nome")); 		       	//2
+			loan[3]=(rs.getString("cognome")); 			    //3
+			loan[4]=(rs.getString("email")); 			    //4
+			loan[5]=(rs.getString("nome_autore")); 		    //5
+			loan[6]=(rs.getString("cognome_autore")); 		//6
+			loan[7]=(rs.getString("titolo")); 	            //7
+			loan[8]=(rs.getString("data_inizio")); 			//8
+			//loan[9]=(rs.getString("data_fine"));            //9
 		}
 		rs.close();
 		DBmanager.closeConnection();
@@ -1024,7 +1065,7 @@ public static String [] ResearchBookingFirst (int idus)throws SQLException{
 	
 	
 /**
- * Questo metodo conta il numero di prestiti di un utente che non ha ancora riconsegnato i libri
+ * Questo metodo conta il numero di prestiti di un utente che non ha ancora riconsegnato il prestito
  * @param idut
  * @param idbook
  * @return presente

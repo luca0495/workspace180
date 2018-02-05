@@ -1193,18 +1193,24 @@ public class ServerReal extends ServerSkeleton {
 											MQ_Insert.insertLoans(qINS);
 											
 											//invio email di avviso
-												String [] de = MQ_Read.sendEmailLoans();
+												String [] de = MQ_Read.checkLoansIdBookIdUt(idbook);
 												System.err.println("arrivato al server loan return... send email...");
 											
 											String [] userdata = MQ_Read.readSettingTable();
 											
-											System.out.println("ottengo userdata[0]: ["+userdata[0]+"]");
-											System.out.println("ottengo userdata[1]: ["+userdata[1]+"]");
-											System.out.println("ottengo userdata[2]: ["+userdata[2]+"]");
-											System.out.println("ottengo userdata[3]: ["+userdata[3]+"]");
+											
+											System.out.println("ottengo de[0]: ["+de[0]+"]");
+											System.out.println("ottengo de[1]: ["+de[1]+"]");
+											System.out.println("ottengo de[2]: ["+de[2]+"]");
+											System.out.println("ottengo de[3]: ["+de[3]+"]");
+											System.out.println("ottengo de[4]: ["+de[4]+"]");
+											System.out.println("ottengo de[5]: ["+de[5]+"]");
+											System.out.println("ottengo de[6]: ["+de[6]+"]");
+											System.out.println("ottengo de[7]: ["+de[7]+"]");
+											System.out.println("ottengo de[7]: ["+de[8]+"]");
 											System.out.println("ottengo userdata[4]: ["+userdata[4]+"]");
 											System.out.println("ottengo userdata[5]: ["+userdata[5]+"]");
-											System.out.println("ottengo userdata[6]: ["+userdata[6]+"]");
+										
 											
 											
 											
@@ -1220,7 +1226,7 @@ public class ServerReal extends ServerSkeleton {
 																			de[6],//cognome autore
 																			de[7],//titolo
 																			java.sql.Date.valueOf(de[8]),//data inizio
-																			//java.sql.Date.valueOf(de[9]),//data fine	
+																			//java.sql.Date.valueOf(d[9]),//data fine	
 																			UN,
 																			PW													
 													);
@@ -1999,23 +2005,26 @@ public class ServerReal extends ServerSkeleton {
 												MQ_Insert.insertLoans(qINS);
 												
 												//invio email di avviso
-													String [] de = MQ_Read.sendEmailLoans();
+												String [] de = MQ_Read.checkLoansIdBookIdUt(idbook);
 													System.err.println("arrivato al server loan return... send email...");
 												
 												String [] userdata = MQ_Read.readSettingTable();
 												
-												System.out.println("ottengo userdata[0]: ["+userdata[0]+"]");
-												System.out.println("ottengo userdata[1]: ["+userdata[1]+"]");
-												System.out.println("ottengo userdata[2]: ["+userdata[2]+"]");
-												System.out.println("ottengo userdata[3]: ["+userdata[3]+"]");
+												System.out.println("ottengo de[0]: ["+de[0]+"]");
+												System.out.println("ottengo de[1]: ["+de[2]+"]");
+												System.out.println("ottengo de[2]: ["+de[3]+"]");
+												System.out.println("ottengo de[3]: ["+de[4]+"]");
+												System.out.println("ottengo de[4]: ["+de[5]+"]");
+												System.out.println("ottengo de[5]: ["+de[6]+"]");
+												System.out.println("ottengo de[6]: ["+de[7]+"]");
+												System.out.println("ottengo de[7]: ["+de[8]+"]");
 												System.out.println("ottengo userdata[4]: ["+userdata[4]+"]");
 												System.out.println("ottengo userdata[5]: ["+userdata[5]+"]");
-												System.out.println("ottengo userdata[6]: ["+userdata[6]+"]");
-												
 												
 												
 												String UN=userdata[4];
-												String PW=userdata[5];											
+												String PW=userdata[5];		
+												System.out.println("");
 												EmailSender.send_email_books_loans(
 																				de[0],//codice
 																				
