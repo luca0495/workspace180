@@ -447,7 +447,7 @@ public class Account extends SL_JFrame{
 				if (!getTxtMailMod().equals(emailOLD)) {			
 					
 			
-					checkmail();
+					//checkmail();
 				
 				
 				}
@@ -556,85 +556,34 @@ public class Account extends SL_JFrame{
 				String stato 			= TypePerson;
 				System.out.println("1");				
 
-				//TEST OK 
-				setMailcheckinprogress(true);
-				//parte check mail...
 				
-				me.setSql2("Account");
-				checkmail();
+				//************************************************************
+				try
+				{
 
-				while (isMailcheckinprogress()) {	//attendi... //System.out.println("attesa per check email exist");		
-					System.out.println("attendo check result"+getMailcheckResult());
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, tel, stato);
+				me.setIdut(getIdUser());
+				me.setSql(Q);
+				me.setSql2(getTxtMailMod().getText());					
+				me.setActW(getW());
+				me.setActF(frmSchoolib);
+				me.setActC(c);				
+				try {
+					System.out.println("GUI account:> ottenuti dati user ");
+				me.setCliType(Clients.Librarian);	
+					me.getCmdLIST().put(Commands.UserUPDATE);
+				} catch (InterruptedException e2) {
+					System.out.println("GUI account:> NON ottenuti dati user ");	
+					e2.printStackTrace(); 
 				}
-				//-------------------------------------------------------------------------------------------------------	
-				
-				System.out.println("ritornato mail check result"+getMailcheckResult());
-				
-				
-				switch (getMailcheckResult()) {
-				
-				case "problemi con user read check mail":
-					
-					System.out.println("problemi con user read check mail");
-					
-					
-					break;
-				
-				
-				case "OK NE":
-				case "non modificata":{
-					
-					
-					if (checkall()) {				//check su tutti i campi
-						
-						//************************************************************
-						try
-						{
-		
-						String Q = MQ_Update.updateModUserIdGetQuery(getIdUser(), nome, cognome, mail, inq, tel, stato);
-						me.setIdut(getIdUser());
-						me.setSql(Q);
-						me.setSql2(getTxtMailMod().getText());					
-						me.setActW(getW());
-						me.setActF(frmSchoolib);
-						me.setActC(c);				
-						try {
-							System.out.println("GUI account:> ottenuti dati user ");
-						me.setCliType(Clients.Librarian);	
-							me.getCmdLIST().put(Commands.UserUPDATE);
-						} catch (InterruptedException e2) {
-							System.out.println("GUI account:> NON ottenuti dati user ");	
-							e2.printStackTrace(); 
-						}
-						}
-						catch (SQLException e) 
-						{
-							e.printStackTrace();
-						}					
-						//*************************************************************						
-					
-					}else {						
-						PopUp.errorBox1(frmSchoolib,"Campi non corretti");							
-					}
 				}
-					break;
-					
-				case "OK E":
-					System.out.println("ritornato dal check mail EXIST");
-					break;
-
-				case "NG":
-					System.out.println("ritornato dal check mail NG");
-					break;
-
-				default:
-					break;
-				} 
+				catch (SQLException e) 
+				{
+					e.printStackTrace();
+				}					
+				//*************************************************************	
+				
+								 
 		}		
 	});
 	
