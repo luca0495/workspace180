@@ -79,7 +79,9 @@ public class MQ_Update {
 	public static int updateLoansRetired(int idut, int idbook) throws SQLException
 	{	int prestitiaggiornati=0;
 	System.out.println(90);
-	String qctll = "select count (codice) from prestiti WHERE id='"+idut+"'AND codice='"+idbook+"'AND rientrato 	= false AND ritirato= false";
+	System.err.println("idbook: " + idbook);
+	String qctll = "select count (codice) from prestiti WHERE codice='"+idbook+"'AND rientrato = false AND ritirato= false AND " +
+	"data_fine is null AND data_inizio is not null";
 	
 	
 	try {
@@ -93,12 +95,16 @@ public class MQ_Update {
 			System.out.println("NON HO TROVATO TUPLE DA AGGIORNARE");	
 		}else {		
 			rs.next();
-			prestitiaggiornati=rs.getInt(1);			
+			prestitiaggiornati=rs.getInt(1);
+			
+			System.err.println("getInt(1) "+rs.getInt(1));
+			
 			System.out.println("HO TROVATO TUPLE DA AGGIORNARE: "+prestitiaggiornati);
 
 			System.err.println("ho contato tuple da aggiornare : "+prestitiaggiornati);	
 			
-			String qup = "update prestiti set ritirato = true WHERE id ='"+idut+"'AND codice='"+idbook+"'AND rientrato 	= false AND ritirato = false";
+			String qup = "update prestiti set ritirato = true WHERE codice='"+idbook+"'AND rientrato = false AND " +
+					"ritirato= false AND data_fine is null AND data_inizio is not null";
 		
 		DBmanager.openConnection();
 		DBmanager.executeUpdate(qup);

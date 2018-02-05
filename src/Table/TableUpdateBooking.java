@@ -34,7 +34,8 @@ public class TableUpdateBooking {
 	 */
 	public static void deleteRow(List<String> r, JTable t,Client me) throws SQLException
 		{
-		 	String q = MQ_Delete.deleteRowBookingGetQuery(r);
+		    int idbook=Integer.valueOf(r.get(0));
+		 	String q = MQ_Delete.deleteRowBookingGetQuery(idbook);
 			me.setActTable(t);
 			me.setSql(q);
 			try {

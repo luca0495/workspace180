@@ -1084,8 +1084,8 @@ public class ServerReal extends ServerSkeleton {
 									case LoanRetired://aggiorna campo flag ritirato
 										
 										//ChkDBandTab.tableExistLoans();
-										M.getMsg().getSelectedIdBook();
-										M.getMsg().getSelectedIdUser();
+										//M.getMsg().getSelectedIdBook();
+										//M.getMsg().getSelectedIdUser();   
 										System.out.println("99");
 										
 										
@@ -1129,21 +1129,32 @@ public class ServerReal extends ServerSkeleton {
 										
 										
 									//*** cancello dati dalla tabella prenotazioni	
-												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));
-												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));	
+												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));  //  aggiungo alla lista idut indice 0
+												//r.add(String.valueOf( M.getMsg().getSelectedIdUser()));	
 												int idbook=M.getMsg().getSelectedIdBook();
-													System.err.println("idbook :"+r.get(0));
-													System.err.println("iduser :"+r.get(1));
-												String q = MQ_Delete.deleteRowBookingGetQuery(r);
+											
+												String q = MQ_Delete.deleteRowBookingGetQuery(idbook);
+												if(q.equals("Nessun Dato"))
+												{
+													
+												}
+												else
+												{
+													int idut= Integer.valueOf(q);
+												    r.add(q);  //  aggiungo alla lista idut indice 1
+												    
+													MQ_Delete.deleteRowBookingWithQuery(idut,idbook);
+												}
+												
 													System.err.println("query ottenuta: "+q);
 													System.err.println("arrivato al server loan return...1");
-												MQ_Delete.deleteRowBooking(q);
+												   // MQ_Delete.deleteRowBooking(q);
+													
+												   
 													System.err.println("arrivato al server loan return...2");		
 										
 									//*** aggiorno Prestito [ rientrato _> true / data fine> now ]
-												r.add(String.valueOf( M.getMsg().getSelectedIdBook()));		//0	book
-												r.add(String.valueOf( M.getMsg().getSelectedIdUser()));		//1 user										
-												
+																					
 												//in test:
 												//java.sql.Date dataS = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 												String dataS = DataRiconsegna;
@@ -1954,7 +1965,10 @@ public class ServerReal extends ServerSkeleton {
 													int idbook=M.getMsg().getSelectedIdBook();
 														System.err.println("idbook :"+r.get(0));
 														System.err.println("iduser :"+r.get(1));
-													String q = MQ_Delete.deleteRowBookingGetQuery(r);
+														
+													String q = MQ_Delete.deleteRowBookingGetQuery(idbook);
+													
+													
 														System.err.println("query ottenuta: "+q);
 														System.err.println("arrivato al server loan return...1");
 													MQ_Delete.deleteRowBooking(q);

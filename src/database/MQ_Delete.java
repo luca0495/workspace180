@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -99,14 +100,49 @@ public class MQ_Delete {
 		DBmanager.executeUpdate(q);
 		DBmanager.closeConnection();
 	}
-	public static String deleteRowBookingGetQuery(List<String> r) throws SQLException
-	{		
-		String query = "DELETE FROM prenotazioni WHERE "
-				+ "codice = '" 					   + r.get(0) 
-				+ "' AND id = '" 		           + r.get(1) 
-		        + "';";
-		return query;
+	public static String deleteRowBookingGetQuery(int idbook) throws SQLException
+	{	
+		String q="select id from prestiti where codice= '"+idbook+"'ORDER BY data_inizio ASC ;";
+		
+		String ritorno=null;
+		DBmanager.openConnection();
+		
+	    ResultSet rs = DBmanager.executeQuery(q);
+        
+	    System.out.println("idbook" + idbook);
+		
+		if (!rs.isBeforeFirst()) 
+		{ 
+			ritorno = "Nessun Dato";
+		}
+		else
+		{
+			rs.next();
+			ritorno = rs.getString("id");
+			
+		}
+		rs.close();
+		DBmanager.closeConnection();
+		
+		
+	return ritorno;
+	
 	}
+	
+	public static void deleteRowBookingWithQuery(int idut,int idbook) throws SQLException
+	{
+		
+	String query = "DELETE FROM prenotazioni WHERE "
+			+ "codice = '" 	+ idbook  + "' AND " 
+			+ "id     = '" 	+ idut 
+	        + "';";
+	
+	DBmanager.openConnection();
+	DBmanager.executeUpdate(query);
+	DBmanager.closeConnection();
+	
+	}
+	
 	
 	public static void deletePassTemp(int id,String pass) throws SQLException
 	{			

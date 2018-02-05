@@ -233,6 +233,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 	 * @throws MessagingException
 	 * @throws SQLException
 	 */
+	
 	public static void send_email_books_loans(	String idlibro,
 				 								String utnome,
 				 								String utcognome,
