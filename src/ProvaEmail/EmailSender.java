@@ -290,7 +290,7 @@ public static void send_uninsubria_email(String to,Client Me) throws SendFailedE
 		Message msg = new MimeMessage(session);
 		 msg.setFrom(new InternetAddress(from));
 		 msg.setRecipients(Message.RecipientType.TO,InternetAddress.parse(email));
-		 msg.setSubject("Avviso Scadenza Prestito");
+		 msg.setSubject("Avviso Prestito Accordato");
 		 msg.setContent(bodyText.toString(), "text/html; charset=utf-8");
 		 
 		 System.out.println("Controllo msg:" + msg + "Controllo user:" + UN + "Controllo password:" + PW);
